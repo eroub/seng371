@@ -1,0 +1,8 @@
+[
+  { "id": 1, "size": 10, "brand": "Air Jordan", "model": "1 UNC",
+    "current_price": 215, "retail_price": 215 },
+  { "id": 2, "size": 10, "brand": "Nike", "model": "Airmax 90 Sean Witherspoon",
+    "current_price": 700, "retail_price": 150 },
+  { "id": 3, "size": 10, "brand": "Off White x Air Jordan", "model": "1 Chicago",
+    "current_price": 4890, "retail_price": 215 }
+]
