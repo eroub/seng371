@@ -71,6 +71,7 @@ export class HeroRouter extends BaseRoute {
                 console.log("err.message");
             }) */
             // res.send(Heroes);
+            console.log("Hello")
             const heroArray: any[] = [];
             Heroes.forEach((element: any) => {
                 heroArray.push(JSON.parse(JSON.stringify(element)));
