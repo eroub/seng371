@@ -1,4 +1,6 @@
-echo "This is where we will run all our tests"
+echo "***********************"
+echo "**** TESTING SUITE ****"
+echo "***********************" 
 
 echo "Running through unit tests via mocha ... "
 mocha -r ts-node/register **/*.spec.ts
