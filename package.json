@@ -28,5 +28,8 @@
     "tslint-html-report": "^2.0.3",
     "typescript": "^3.6.4",
     "unit.js": "^2.1.1"
+  },
+  "devDependencies": {
+    "c8": "^6.0.0"
   }
 }
