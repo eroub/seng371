@@ -1,8 +1,8 @@
+import { NextFunction, Request, Response, Router} from "express";
+import Heroes = require("../../dist/data.json");
 import DbClient = require("../DbClient");
 import { BaseRoute } from "./router";
-import { NextFunction, Request, Response, Router} from "express";
 // import DbClient from '../DbClient'
-const Heroes = require("../../dist/data.json");
 export class HeroRouter extends BaseRoute {
     public static create(router: Router) {
         // log
@@ -83,10 +83,11 @@ export class HeroRouter extends BaseRoute {
      * GET one hero by id
      */
     public getOne(req: Request, res: Response, next: NextFunction) {
-        const query = parseInt(req.params.id);
-        const hero = Heroes.find((hero: any) => hero.id === query);
+        const query = parseInt(req.params.id, 10);
+        const hero = Heroes.find((element: any) => hero.id === query);
         if (hero) {
-            hero["diff"] = hero.current_price - hero.retail_price;
+            const diff = "diff";
+            hero[diff] = hero.current_price - hero.retail_price;
             this.render(req, res, "oneShoe", hero);
             /* res.status(200)
                 .send({

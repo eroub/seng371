@@ -14,8 +14,6 @@ import { IndexRoute } from "./routes/index";
  */
 export class Server {
 
-    public app: express.Application;
-
     /**
      * Bootstrap the application.
      *
@@ -27,6 +25,8 @@ export class Server {
     public static bootstrap(): Server {
         return new Server();
     }
+
+    public app: express.Application;
 
     /**
      * Constructor.
