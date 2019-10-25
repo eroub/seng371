@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "***********************"
 echo "**** TESTING SUITE ****"
 echo "***********************" 
@@ -8,4 +10,4 @@ mocha -r ts-node/register **/*.spec.ts
 echo "Running through static analysis via TSLint ... "
 tslint -c tslint/tslint.json '../src/**/*.ts'
 
-
+echo "Success ! "
