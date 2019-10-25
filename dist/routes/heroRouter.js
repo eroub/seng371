@@ -25,18 +25,38 @@ var HeroRouter = /** @class */ (function (_super) {
         //log
         console.log("[HeroRoute::create] Creating HeroRoutes route.");
         //add home page route
-        router.get("/api/heroes", function (req, res, next) {
+        router.get("/api/shoes", function (req, res, next) {
             new HeroRouter().getAll(req, res, next);
         });
         // add getOne route
-        router.get("/api/heroes/:id", function (req, res, next) {
+        router.get("/api/shoes/:id", function (req, res, next) {
             new HeroRouter().getOne(req, res, next);
+        });
+        router.get("/api/sortpricelow", function (req, res, next) {
+            new HeroRouter().sortPriceLow(req, res, next);
+        });
+        router.get("/api/sortpricehigh", function (req, res, next) {
+            new HeroRouter().sortPriceHigh(req, res, next);
         });
         //router.get("/api/heroes/")
     };
     //constructor() {
     // not much here yet
     //}
+    HeroRouter.prototype.sortPriceLow = function (req, res, next) {
+        var shoes = [];
+        Heroes.forEach(function (element) { shoes.push(JSON.parse(JSON.stringify(element))); });
+        shoes.sort(function (a, b) { return a.current_price - b.current_price; });
+        console.log(shoes);
+        this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
+    };
+    HeroRouter.prototype.sortPriceHigh = function (req, res, next) {
+        var shoes = [];
+        Heroes.forEach(function (element) { shoes.push(JSON.parse(JSON.stringify(element))); });
+        shoes.sort(function (a, b) { return b.current_price - a.current_price; });
+        console.log(shoes);
+        this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
+    };
     /**
      * GET all Heroes.
      */
@@ -52,7 +72,11 @@ var HeroRouter = /** @class */ (function (_super) {
             .catch((err) => {
                 console.log("err.message");
             }) */
-        res.send(Heroes);
+        //res.send(Heroes);
+        var hero_array = [];
+        Heroes.forEach(function (element) { hero_array.push(JSON.parse(JSON.stringify(element))); });
+        console.log(hero_array);
+        this.render(req, res, "allShoes", { title: "Shoes", data: hero_array });
     };
     /**
      * GET one hero by id
@@ -61,6 +85,7 @@ var HeroRouter = /** @class */ (function (_super) {
         var query = parseInt(req.params.id);
         var hero = Heroes.find(function (hero) { return hero.id === query; });
         if (hero) {
+            hero["diff"] = hero.current_price - hero.retail_price;
             this.render(req, res, "oneShoe", hero);
             /* res.status(200)
                 .send({

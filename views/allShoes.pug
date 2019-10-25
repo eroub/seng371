@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h1 User Shoes:
+    for shoe in data
+        a(href='/api/shoes/' + shoe.id) #{shoe.brand} #{shoe.model} #{shoe.colorway}
+        p Size: #{shoe.size}
+        p Current market value: $#{shoe.current_price}
+        p ----------------------
+    p Sort #[a(href="/api/sortpricehigh") High] #[a(href="/api/sortpricelow") Low]

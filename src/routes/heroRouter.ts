@@ -9,13 +9,21 @@ export class HeroRouter extends BaseRoute {
         console.log("[HeroRoute::create] Creating HeroRoutes route.");
 
         //add home page route
-        router.get("/api/heroes", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/api/shoes", (req: Request, res: Response, next: NextFunction) => {
             new HeroRouter().getAll(req, res, next);
         });
 
         // add getOne route
-        router.get("/api/heroes/:id", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/api/shoes/:id", (req: Request, res: Response, next: NextFunction) => {
             new HeroRouter().getOne(req, res, next);
+        });
+
+        router.get("/api/sortpricelow", (req: Request, res: Response, next: NextFunction) => {
+            new HeroRouter().sortPriceLow(req, res, next);
+        });
+
+        router.get("/api/sortpricehigh", (req: Request, res: Response, next: NextFunction) => {
+            new HeroRouter().sortPriceHigh(req, res, next);
         });
 
         //router.get("/api/heroes/")
@@ -24,6 +32,24 @@ export class HeroRouter extends BaseRoute {
     //constructor() {
         // not much here yet
     //}
+
+    public sortPriceLow (req: Request, res: Response, next: NextFunction){
+        let shoes: any[] = [];
+        Heroes.forEach((element:any) => {shoes.push(JSON.parse(JSON.stringify(element)))});
+        shoes.sort((a, b) => a.current_price - b.current_price)
+        console.log(shoes);
+        this.render(req, res, "allShoes", {title: "Shoes", data: shoes});
+
+    }
+
+    public sortPriceHigh (req: Request, res: Response, next: NextFunction){
+        let shoes: any[] = [];
+        Heroes.forEach((element:any) => {shoes.push(JSON.parse(JSON.stringify(element)))});
+        shoes.sort((a, b) => b.current_price - a.current_price)
+        console.log(shoes);
+        this.render(req, res, "allShoes", {title: "Shoes", data: shoes});
+
+    }
 
     /**
      * GET all Heroes.
@@ -40,7 +66,11 @@ export class HeroRouter extends BaseRoute {
             .catch((err) => {
                 console.log("err.message");
             }) */
-            res.send(Heroes);
+            //res.send(Heroes);
+            let hero_array: any[] = [];
+            Heroes.forEach((element:any) => {hero_array.push(JSON.parse(JSON.stringify(element)))});
+            console.log(hero_array);
+            this.render(req, res, "allShoes", {title: "Shoes", data: hero_array});
     }
 
     /**
@@ -50,6 +80,7 @@ export class HeroRouter extends BaseRoute {
         let query = parseInt(req.params.id);
         let hero = Heroes.find((hero:any) => hero.id === query);
         if (hero) {
+            hero["diff"] = hero.current_price - hero.retail_price;
             this.render(req, res, "oneShoe", hero);
             /* res.status(200)
                 .send({
