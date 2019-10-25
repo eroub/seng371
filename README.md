@@ -1,7 +1,11 @@
 ## Team AES
 #### Authored by: Evan Roubekas, Asim Ali, & Shaun Lyne
 
-### Ideation:
-1. Uberesque Courier System
-2. Restaurant Delivery Service Optimization/Management System
-3. Wholistic Financial Portal
+### Instructions:
+`git clone https://github.com/seng350/seng350f19-project-2-3.git`
+`npm install`
+`npm start # build & start`
+`npm test # runs testing suite`
+
+### Written Docs:
+All written documents can be found in /written_docs within their respective milestone folders.
