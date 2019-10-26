@@ -12,7 +12,7 @@ import { ShoeRouter } from "./routes/shoeRouter";
  *
  * @class Server
  */
-export class Server {
+export default class Server {
 
     /**
      * Bootstrap the application.

@@ -3,17 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b87299e4-f433-4379-9b9c-026897eb16c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/dist/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/dist/data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/DbClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/DbClient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/DbClient.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/DbClient.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/routes/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/routes/shoeRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/shoeRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/routes/shoeRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/shoeRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/test/unit_tests/hello-world.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/test/unit_tests/hello-world.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/test/unit_tests/hello-world.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/test/unit_tests/hello-world.spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/shoeRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/shoeRouter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/unit_tests/hello-world.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/test/unit_tests/hello-world.spec.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,8 +34,8 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="6.14.3" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/dist" />
+    <property name="javascript.nodejs.core.library.configured.version" value="8.11.4" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
@@ -97,6 +92,7 @@
       <workItem from="1572045655576" duration="15000" />
       <workItem from="1572045671370" duration="4986000" />
       <workItem from="1572051348562" duration="1341000" />
+      <workItem from="1572054416161" duration="4058000" />
     </task>
     <servers />
   </component>

@@ -24,7 +24,9 @@ export class ShoeRouter extends BaseRoute {
         router.get("/api/sortpricehigh", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().sortPriceHigh(req, res, next);
         });
+
     }
+
 
     // constructor() {
         // not much here yet
