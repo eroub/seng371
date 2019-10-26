@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h1 #{brand} #{model} #{colorway}
+    p Current Price: $#{current_price}
+    p Retail Price: $#{retail_price}
+    p Difference: $#{diff}
+    a(href='/api/shoes') Back

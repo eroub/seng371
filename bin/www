@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var appModule = require('../dist/app');
+var appModule = require('../dist/src/app');
 var debug = require('debug')('lab2:server');
 var http = require('http');
 var app = appModule.Server.bootstrap().app;

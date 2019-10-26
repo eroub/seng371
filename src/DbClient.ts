@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Db, MongoClient } from "mongodb";
 
 class DbClient {

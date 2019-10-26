@@ -19,6 +19,7 @@ export class IndexRoute extends BaseRoute {
         // log
         console.log("[IndexRoute::create] Creating index route.");
 
+        console.log("Hello World");
         // add home page route
         router.get("/", (req: Request, res: Response, next: NextFunction) => {
             new IndexRoute().index(req, res, next);
@@ -47,7 +48,7 @@ export class IndexRoute extends BaseRoute {
     public index(req: Request, res: Response, next: NextFunction) {
         // set custom title
         this.title = "StalkStockX";
-
+        console.log("hello");
         // set message
         const options: object = {
             message: "Welcome!",

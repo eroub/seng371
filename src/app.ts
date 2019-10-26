@@ -4,8 +4,8 @@ import errorHandler from "errorhandler";
 import express from "express";
 import logger from "morgan";
 import path from "path";
-import { HeroRouter } from "./routes/heroRouter";
 import { IndexRoute } from "./routes/index";
+import { ShoeRouter } from "./routes/shoeRouter";
 
 /**
  * The server.
@@ -95,7 +95,7 @@ export class Server {
         router = express.Router();
 
         IndexRoute.create(router);
-        HeroRouter.create(router);
+        ShoeRouter.create(router);
 
         // use router middleware
         this.app.use(router);

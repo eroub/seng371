@@ -1,32 +1,29 @@
 import { NextFunction, Request, Response, Router} from "express";
-import Heroes = require("../../dist/data.json");
-import DbClient = require("../DbClient");
+import Shoes = require("../../dist/data.json");
 import { BaseRoute } from "./router";
-// import DbClient from '../DbClient'
-export class HeroRouter extends BaseRoute {
+
+export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
         // log
-        console.log("[HeroRoute::create] Creating HeroRoutes route.");
+        console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
 
         // add home page route
         router.get("/api/shoes", (req: Request, res: Response, next: NextFunction) => {
-            new HeroRouter().getAll(req, res, next);
+            new ShoeRouter().getAll(req, res, next);
         });
 
         // add getOne route
         router.get("/api/shoes/:id", (req: Request, res: Response, next: NextFunction) => {
-            new HeroRouter().getOne(req, res, next);
+            new ShoeRouter().getOne(req, res, next);
         });
 
         router.get("/api/sortpricelow", (req: Request, res: Response, next: NextFunction) => {
-            new HeroRouter().sortPriceLow(req, res, next);
+            new ShoeRouter().sortPriceLow(req, res, next);
         });
 
         router.get("/api/sortpricehigh", (req: Request, res: Response, next: NextFunction) => {
-            new HeroRouter().sortPriceHigh(req, res, next);
+            new ShoeRouter().sortPriceHigh(req, res, next);
         });
-
-        // router.get("/api/heroes/")
     }
 
     // constructor() {
@@ -35,7 +32,7 @@ export class HeroRouter extends BaseRoute {
 
     public sortPriceLow(req: Request, res: Response, next: NextFunction) {
         const shoes: any[] = [];
-        Heroes.forEach((element: any) => {
+        Shoes.forEach((element: any) => {
             shoes.push(JSON.parse(JSON.stringify(element)));
         });
         shoes.sort((a, b) => a.current_price - b.current_price);
@@ -46,7 +43,7 @@ export class HeroRouter extends BaseRoute {
 
     public sortPriceHigh(req: Request, res: Response, next: NextFunction) {
         const shoes: any[] = [];
-        Heroes.forEach((element: any) => {
+        Shoes.forEach((element: any) => {
             shoes.push(JSON.parse(JSON.stringify(element)));
         });
         shoes.sort((a, b) => b.current_price - a.current_price);
@@ -56,7 +53,7 @@ export class HeroRouter extends BaseRoute {
     }
 
     /**
-     * GET all Heroes.
+     * GET all Shoes.
      */
     public getAll(req: Request, res: Response, next: NextFunction) {
         /* DbClient.connect()
@@ -70,36 +67,41 @@ export class HeroRouter extends BaseRoute {
             .catch((err) => {
                 console.log("err.message");
             }) */
-            // res.send(Heroes);
-            console.log("Hello")
-            const heroArray: any[] = [];
-            Heroes.forEach((element: any) => {
-                heroArray.push(JSON.parse(JSON.stringify(element)));
+            // res.send(Shoes);
+            const shoeArray: any[] = [];
+            Shoes.forEach((element: any) => {
+                shoeArray.push(JSON.parse(JSON.stringify(element)));
             });
-            console.log(heroArray);
-            this.render(req, res, "allShoes", {title: "Shoes", data: heroArray});
+            console.log(shoeArray);
+            this.render(req, res, "allShoes", {title: "Shoes", data: shoeArray});
     }
 
     /**
-     * GET one hero by id
+     * GET one shoe by id
      */
     public getOne(req: Request, res: Response, next: NextFunction) {
-        const query = parseInt(req.params.id, 10);
-        const hero = Heroes.find((element: any) => hero.id === query);
-        if (hero) {
+        const idString = "id";
+        const query: any = req.params[idString];
+        let shoe: any = Shoes[1];
+        for (const item in Shoes) {
+            if (Shoes[item].id === query) {
+                shoe = Shoes[item];
+            }
+        }
+        if (shoe) {
             const diff = "diff";
-            hero[diff] = hero.current_price - hero.retail_price;
-            this.render(req, res, "oneShoe", hero);
+            shoe[diff] = shoe.current_price - shoe.retail_price;
+            this.render(req, res, "oneShoe", shoe);
             /* res.status(200)
                 .send({
                     message: 'Success',
                     status: res.status,
-                    hero
+                    shoe
                 }); */
         } else {
             res.status(404)
                 .send({
-                    message: "No hero found with the given id.",
+                    message: "No shoe found with the given id.",
                     status: res.status,
                 });
         }
