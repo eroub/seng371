@@ -24,7 +24,9 @@ export class ShoeRouter extends BaseRoute {
         router.get("/api/sortpricehigh", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().sortPriceHigh(req, res, next);
         });
+
     }
+
 
     // constructor() {
         // not much here yet
@@ -81,11 +83,14 @@ export class ShoeRouter extends BaseRoute {
      */
     public getOne(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
-        const query: any = req.params[idString];
+        const queryint = parseInt(req.params[idString], 10);
         let shoe: any = Shoes[1];
         for (const item in Shoes) {
-            if (Shoes[item].id === query) {
-                shoe = Shoes[item];
+            if (Shoes.hasOwnProperty(item)) {
+                const shoeid: number = Shoes[item].id;
+                if (shoeid === queryint) {
+                    shoe = Shoes[item];
+                }
             }
         }
         if (shoe) {

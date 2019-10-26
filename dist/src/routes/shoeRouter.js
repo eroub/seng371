@@ -15,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Shoes = require("../../dist/data.json");
 var router_1 = require("./router");
-// import DbClient from '../DbClient'
 var ShoeRouter = /** @class */ (function (_super) {
     __extends(ShoeRouter, _super);
     function ShoeRouter() {
@@ -87,15 +86,17 @@ var ShoeRouter = /** @class */ (function (_super) {
      * GET one shoe by id
      */
     ShoeRouter.prototype.getOne = function (req, res, next) {
-        // const query = parseInt(req.params['id'], 10);
-        var query = req.params['id'];
+        var idString = "id";
+        var queryint = parseInt(req.params[idString], 10);
         var shoe = Shoes[1];
         for (var item in Shoes) {
-            if (Shoes[item].id == query) {
-                shoe = Shoes[item];
+            if (Shoes.hasOwnProperty(item)) {
+                var shoeid = Shoes[item].id;
+                if (shoeid === queryint) {
+                    shoe = Shoes[item];
+                }
             }
         }
-        //const shoe:any = Shoes.find((element: any) => shoe.id === query);
         if (shoe) {
             var diff = "diff";
             shoe[diff] = shoe.current_price - shoe.retail_price;
