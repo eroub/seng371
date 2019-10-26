@@ -3,27 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="b87299e4-f433-4379-9b9c-026897eb16c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/DbClient.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/DbClient.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/heroRouter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/heroRouter.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/index.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/route.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/route.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/router.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/router.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DbClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DbClient.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/heroRouter.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/written_docs/milestone_3/static_analysis_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/written_docs/milestone_3/static_analysis_report.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/dist/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/dist/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/DbClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/DbClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/DbClient.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/DbClient.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/routes/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/routes/shoeRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/shoeRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/routes/shoeRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/shoeRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/test/unit_tests/hello-world.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/test/unit_tests/hello-world.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/test/unit_tests/hello-world.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/test/unit_tests/hello-world.spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/shoeRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/shoeRouter.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,12 +39,12 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="10.16.0" />
+    <property name="javascript.nodejs.core.library.configured.version" value="6.14.3" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/dist" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
-    <property name="ts.external.directory.path" value="C:\Users\evanr\Documents\Folders\Lets get this shit rolling\MOVEMENT\seng350\seng350f19-project-2-3\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -106,6 +96,7 @@
       <workItem from="1571969022223" duration="925000" />
       <workItem from="1572045655576" duration="15000" />
       <workItem from="1572045671370" duration="4986000" />
+      <workItem from="1572051348562" duration="1341000" />
     </task>
     <servers />
   </component>
