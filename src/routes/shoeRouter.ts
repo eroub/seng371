@@ -27,7 +27,6 @@ export class ShoeRouter extends BaseRoute {
 
     }
 
-
     // constructor() {
         // not much here yet
     // }

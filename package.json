@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "c8 mocha -r ts-node/register test/**/*.spec.ts && tslint -c test/tslint/tslint.json src/**/*.ts"
+    "test": "tslint -c test/tslint/tslint.json src/**/*.ts"
   },
   "dependencies": {
     "@types/body-parser": "^1.17.1",
