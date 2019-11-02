@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response, Router} from "express";
 import Shoes = require("../../dist/data.json");
 import { BaseRoute } from "./router";
+import DbClient = require("../DbClient");
+import { user_model } from "../models/user_model";
 
 export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
@@ -8,12 +10,12 @@ export class ShoeRouter extends BaseRoute {
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
 
         // add home page route
-        router.get("/api/shoes", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getAll(req, res, next);
         });
 
         // add getOne route
-        router.get("/api/shoes/:id", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getOne(req, res, next);
         });
 
@@ -56,10 +58,19 @@ export class ShoeRouter extends BaseRoute {
     /**
      * GET all Shoes.
      */
-    public getAll(req: Request, res: Response, next: NextFunction) {
-        /* DbClient.connect()
+    public async getAll(req: Request, res: Response, next: NextFunction) {
+            const idString = "id";
+            const queryint = parseInt(req.params[idString], 10);
+            const yeet = new user_model();
+            const shoes = await yeet.get_all(queryint);
+            console.log(shoes);
+            if(shoes.length != 0) {
+                res.send(shoes);
+            }
+            else res.send("404 not found lol");
+           /* DbClient.connect()
             .then((db) => {
-                return db!.collection("sneakers").find().toArray();
+                return db!.collection("users").find().toArray();
             })
             .then((sneakers:any) => {
                 console.log(sneakers);
@@ -67,14 +78,14 @@ export class ShoeRouter extends BaseRoute {
             })
             .catch((err) => {
                 console.log("err.message");
-            }) */
+            })
             // res.send(Shoes);
-            const shoeArray: any[] = [];
+            /* const shoeArray: any[] = [];
             Shoes.forEach((element: any) => {
                 shoeArray.push(JSON.parse(JSON.stringify(element)));
             });
             console.log(shoeArray);
-            this.render(req, res, "allShoes", {title: "Shoes", data: shoeArray});
+            this.render(req, res, "allShoes", {title: "Shoes", data: shoeArray}); */
     }
 
     /**

@@ -89,5 +89,5 @@ var Server = /** @class */ (function () {
     };
     return Server;
 }());
-exports.Server = Server;
+exports.default = Server;
 //# sourceMappingURL=app.js.map

@@ -7,8 +7,8 @@ class DbClient {
     public async connect() {
 
         try {
-            const client = await MongoClient.connect("mongodb://157.245.131.120:27017");
-            this.db = client.db("sneaker_app");
+            const client = await MongoClient.connect("mongodb+srv://shaun:yeet@cluster0-rn1fn.gcp.mongodb.net/stalkx?retryWrites=true&w=majority");
+            this.db = client.db("stalkx");
             console.log("Connected to db");
             return this.db;
         } catch (error) {
