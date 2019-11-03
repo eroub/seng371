@@ -46,7 +46,7 @@ export class IndexRoute extends BaseRoute {
      */
     public index(req: Request, res: Response, next: NextFunction) {
         // set custom title
-        this.title = "StalkStockX";
+        this.title = "StalkX";
         console.log("hello");
         // set message
         const options: object = {
