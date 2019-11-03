@@ -53,7 +53,47 @@ export default class shoe_model {
                 console.log("err.message");
             })
 
-        //console.log(users);
+        return shoes;
+    }
+
+    /*
+     Input type: integer that refers to the shoe_id. ex: 3
+     Output type: a json shoe obejct ex: {shoe_id:3 ... }
+     */
+
+    public get_one_shoe(shoeID:any) {
+
+
+        console.log(shoeID);
+
+        // an array of objects holding indvidual json objects for each of the shoes the user has
+        let json_shoe_Arr:any[] = []
+
+        const shoes = DbClient.connect()
+            .then((db) => {
+
+                // will return all the shoes in db
+                return db!.collection("shoes").find().toArray();
+
+            })
+
+            .then((sneakers:any) => {
+
+                // loop over all the shoes in db and push into json_shoe_Arr only the shoe that has id
+                // shoeID
+                let shoe;
+                for ( shoe of sneakers ) {
+                        // if current shoe is also a shoe whose id is shoeID, shoeID is type string so we typecast to number
+                        if (shoe.shoe_id === Number(shoeID)){
+                            json_shoe_Arr.push(shoe);
+                            break;
+                        }
+                }
+                return json_shoe_Arr[0];
+            })
+            .catch((err) => {
+                console.log("err.message");
+            })
 
         return shoes;
     }

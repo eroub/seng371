@@ -9,18 +9,10 @@ export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
         // log
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
-
-
-        // all shoses of a user
-        router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().getAll_sho(req, res, next);
-        });
-
         // add home page route
-      /*  router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
+       router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getAll(req, res, next);
         });
-*/
         // add getOne route
         router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getOne(req, res, next);
@@ -62,19 +54,6 @@ export class ShoeRouter extends BaseRoute {
 
     }
 
-    public async getAll_sho(req: Request, res: Response, next: NextFunction) {
-        console.log("hello in get all")
-        const yeet = new shoe_model();
-        let test_arr = [{"1":300},{ "3":400},{"5":500}]
-
-        let shoes = await yeet.get_all_shoes(test_arr);
-
-        if(shoes.length != 0) {
-            res.send(shoes);
-        }
-        else res.send("404 not found lol");
-
-    }
 
 
     /**

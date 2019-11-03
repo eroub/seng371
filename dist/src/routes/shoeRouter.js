@@ -107,18 +107,18 @@ var ShoeRouter = /** @class */ (function (_super) {
     };
     ShoeRouter.prototype.getAll_sho = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var yeet, test_arr, shoes;
+            var yeet, shoe;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         console.log("hello in get all");
                         yeet = new shoe_model_1.default();
-                        test_arr = [{ "1": 300 }, { "3": 400 }, { "5": 500 }];
-                        return [4 /*yield*/, yeet.get_all_shoes(test_arr)];
+                        return [4 /*yield*/, yeet.get_one_shoe("3")];
                     case 1:
-                        shoes = _a.sent();
-                        if (shoes.length != 0) {
-                            res.send(shoes);
+                        shoe = _a.sent();
+                        // let shoes = await yeet.get_all_shoes(test_arr);
+                        if (shoe.length != 0) {
+                            res.send(shoe);
                         }
                         else
                             res.send("404 not found lol");
