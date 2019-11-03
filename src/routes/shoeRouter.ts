@@ -56,36 +56,23 @@ export class ShoeRouter extends BaseRoute {
     }
 
     /**
-     * GET all Shoes.
+     * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
      */
     public async getAll(req: Request, res: Response, next: NextFunction) {
             const idString = "id";
             const queryint = parseInt(req.params[idString], 10);
             const yeet = new user_model();
+
+            // fetch all the shoes for a user with user id = queryint
             const shoes = await yeet.get_all(queryint);
+
             console.log(shoes);
+
             if(shoes.length != 0) {
                 res.send(shoes);
             }
             else res.send("404 not found lol");
-           /* DbClient.connect()
-            .then((db) => {
-                return db!.collection("users").find().toArray();
-            })
-            .then((sneakers:any) => {
-                console.log(sneakers);
-                res.send(sneakers);
-            })
-            .catch((err) => {
-                console.log("err.message");
-            })
-            // res.send(Shoes);
-            /* const shoeArray: any[] = [];
-            Shoes.forEach((element: any) => {
-                shoeArray.push(JSON.parse(JSON.stringify(element)));
-            });
-            console.log(shoeArray);
-            this.render(req, res, "allShoes", {title: "Shoes", data: shoeArray}); */
+
     }
 
     /**

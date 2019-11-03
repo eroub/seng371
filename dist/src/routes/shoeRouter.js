@@ -65,7 +65,7 @@ var ShoeRouter = /** @class */ (function (_super) {
             new ShoeRouter().getAll(req, res, next);
         });
         // add getOne route
-        router.get("/api/shoes/:id", function (req, res, next) {
+        router.get("/user/:id/shoes/:id2", function (req, res, next) {
             new ShoeRouter().getOne(req, res, next);
         });
         router.get("/api/sortpricelow", function (req, res, next) {
