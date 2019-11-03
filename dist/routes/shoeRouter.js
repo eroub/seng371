@@ -50,8 +50,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Shoes = require("../../dist/data.json");
-var router_1 = require("./router");
 var user_model_1 = require("../models/user_model");
+var router_1 = require("./router");
 var ShoeRouter = /** @class */ (function (_super) {
     __extends(ShoeRouter, _super);
     function ShoeRouter() {
@@ -80,18 +80,18 @@ var ShoeRouter = /** @class */ (function (_super) {
     // }
     ShoeRouter.prototype.sortPriceLow = function (req, res, next) {
         var shoes = [];
-        Shoes.forEach(function (element) {
-            shoes.push(JSON.parse(JSON.stringify(element)));
-        });
+        // Shoes.forEach((element: any) => {
+        //     shoes.push(JSON.parse(JSON.stringify(element)));
+        // });
         shoes.sort(function (a, b) { return a.current_price - b.current_price; });
         console.log(shoes);
         this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
     };
     ShoeRouter.prototype.sortPriceHigh = function (req, res, next) {
         var shoes = [];
-        Shoes.forEach(function (element) {
-            shoes.push(JSON.parse(JSON.stringify(element)));
-        });
+        // Shoes.forEach((element: any) => {
+        //     shoes.push(JSON.parse(JSON.stringify(element)));
+        // });
         shoes.sort(function (a, b) { return b.current_price - a.current_price; });
         console.log(shoes);
         this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
@@ -107,16 +107,17 @@ var ShoeRouter = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         queryint = parseInt(req.params[idString], 10);
-                        yeet = new user_model_1.user_model();
-                        return [4 /*yield*/, yeet.get_all(queryint)];
+                        yeet = new user_model_1.UserModel();
+                        return [4 /*yield*/, yeet.getAll(queryint)];
                     case 1:
                         shoes = _a.sent();
                         console.log(shoes);
-                        if (shoes.length != 0) {
+                        if (shoes.length !== 0) {
                             res.send(shoes);
                         }
-                        else
+                        else {
                             res.send("404 not found lol");
+                        }
                         return [2 /*return*/];
                 }
             });
@@ -128,13 +129,14 @@ var ShoeRouter = /** @class */ (function (_super) {
     ShoeRouter.prototype.getOne = function (req, res, next) {
         var idString = "id";
         var queryint = parseInt(req.params[idString], 10);
-        var shoe = Shoes[1];
+        // let shoe: any = Shoes[1];
+        var shoe = Shoes;
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
-                var shoeid = Shoes[item].id;
-                if (shoeid === queryint) {
-                    shoe = Shoes[item];
-                }
+                // const shoeid: number = Shoes[item].id;
+                // if (shoeid === queryint) {
+                // shoe = Shoes[item];
+                // }
             }
         }
         if (shoe) {

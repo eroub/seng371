@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response, Router} from "express";
 import Shoes = require("../../dist/data.json");
-import { BaseRoute } from "./router";
 import DbClient = require("../DbClient");
-import { user_model } from "../models/user_model";
+import { UserModel } from "../models/user_model";
+import { BaseRoute } from "./router";
 
 export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
@@ -61,13 +61,14 @@ export class ShoeRouter extends BaseRoute {
     public async getAll(req: Request, res: Response, next: NextFunction) {
             const idString = "id";
             const queryint = parseInt(req.params[idString], 10);
-            const yeet = new user_model();
-            const shoes = await yeet.get_all(queryint);
+            const yeet = new UserModel();
+            const shoes = await yeet.getAll(queryint);
             console.log(shoes);
-            if(shoes.length != 0) {
+            if (shoes.length !== 0) {
                 res.send(shoes);
+            } else {
+                res.send("404 not found lol");
             }
-            else res.send("404 not found lol");
            /* DbClient.connect()
             .then((db) => {
                 return db!.collection("users").find().toArray();
@@ -94,8 +95,8 @@ export class ShoeRouter extends BaseRoute {
     public getOne(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        //let shoe: any = Shoes[1];
-        let shoe: any = Shoes;
+        // let shoe: any = Shoes[1];
+        const shoe: any = Shoes;
         for (const item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 // const shoeid: number = Shoes[item].id;
