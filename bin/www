@@ -8,6 +8,7 @@ var appModule = require('../dist/src/app');
 var debug = require('debug')('lab2:server');
 var http = require('http');
 var app = appModule.default.bootstrap().app;
+require = require("esm")(module /*, options*/);
 
 /**
  * Get port from environment and store in Express.

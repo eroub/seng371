@@ -1,12 +1,13 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var hello_world_1 = require("./hello-world");
-var chai_1 = require("chai");
-require("mocha");
+var shoe_model = require('../../src/models/shoe_model').shoe_model;
+require = require("esm")(module /*, options*/);
 describe('Hello function', function () {
-    it('should return hello world', function () {
-        var result = hello_world_1.hello();
-        chai_1.expect(result).to.equal('Hello World!');
+    it('should return all shoes', function () {
+        var test_arr = [{ "1": 300, "3": 400, "5": 500 }];
+        var SM = new shoe_model();
+        var shoes = SM.get_all_shoes(test_arr);
+        console.log(shoes);
+        //expect(result).to.equal('Hello World!');
     });
 });
 //# sourceMappingURL=hello-world.spec.js.map
