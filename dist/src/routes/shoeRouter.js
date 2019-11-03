@@ -97,7 +97,7 @@ var ShoeRouter = /** @class */ (function (_super) {
         this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
     };
     /**
-     * GET all Shoes.
+     * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
      */
     ShoeRouter.prototype.getAll = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {

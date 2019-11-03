@@ -1,6 +1,6 @@
 import DbClient = require("../DbClient");
 
-export class shoe_model {
+export default class shoe_model {
 
     constructor(){}
 /*
@@ -8,27 +8,33 @@ export class shoe_model {
  */
     public get_all_shoes(shoeKeys_val:any) {
 
-
         let key_arr =[];
 
         // get the keys from the input, keys_arr should be equal to [1,3,5] from the example above
+
         for (let prop of shoeKeys_val){
             key_arr.push(Object.keys(prop)[0])
         }
 
         // an array of objects holding indvidual json objects for each of the shoes the user has
-        let jsonArr = []
+        let json_shoe_Arr:any[] = []
 
         const shoes = DbClient.connect()
             .then((db) => {
-                for (let i =0; i< key_arr.length; i++){
-                    jsonArr.push()
-                }
-                return db!.collection("shoes").find({"user_id":user_id}).toArray();
+
+                // inefficient will return all the shoes in db
+
+                return db!.collection("shoes").find().toArray();
+
             })
+
             .then((sneakers:any) => {
                 //console.log(sneakers);
-                return sneakers;
+                sneakers.forEach(function(shoe:any){
+                    json_shoe_Arr.push(shoe);
+                })
+                console.log(json_shoe_Arr);
+                return json_shoe_Arr;
                 //res.send(sneakers);
             })
             .catch((err) => {
@@ -37,7 +43,7 @@ export class shoe_model {
 
         //console.log(users);
 
-        return users;
+        return shoes;
     }
 
 }
