@@ -10,7 +10,6 @@ ENV NODE_CONFIG_ENV dev
 
 # Update Container
 RUN apk update
-#RUN apk add --update pm2
 RUN npm install pm2 -g
 RUN apk add --no-cache bash
 
