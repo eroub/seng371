@@ -1,19 +1,18 @@
 import { NextFunction, Request, Response, Router} from "express";
 // import Shoes = require("../../dist/data.json");
 import DbClient = require("../DbClient");
-import { UserModel } from "../models/user_model";
+import { user_model } from "../models/user_model";
 import { BaseRoute } from "./router";
+import shoe_model from "../models/shoe_model";
 
 export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
         // log
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
-
         // add home page route
-        router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
+       router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getAll(req, res, next);
         });
-
         // add getOne route
         router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getOne(req, res, next);
@@ -55,10 +54,13 @@ export class ShoeRouter extends BaseRoute {
 
     }
 
+
+
     /**
-     * GET all Shoes.
+     * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
      */
     public async getAll(req: Request, res: Response, next: NextFunction) {
+        console.log("in ther other one")
             const idString = "id";
             const queryint = parseInt(req.params[idString], 10);
             const yeet = new UserModel();
@@ -69,24 +71,10 @@ export class ShoeRouter extends BaseRoute {
             } else {
                 res.send("404 not found lol");
             }
-           /* DbClient.connect()
-            .then((db) => {
-                return db!.collection("users").find().toArray();
-            })
-            .then((sneakers:any) => {
-                console.log(sneakers);
-                res.send(sneakers);
-            })
-            .catch((err) => {
-                console.log("err.message");
-            })
-            // res.send(Shoes);
-            /* const shoeArray: any[] = [];
-            Shoes.forEach((element: any) => {
-                shoeArray.push(JSON.parse(JSON.stringify(element)));
-            });
-            console.log(shoeArray);
-            this.render(req, res, "allShoes", {title: "Shoes", data: shoeArray}); */
+
+            else res.send("404 not found lol");
+
+
     }
 
     /**

@@ -56,7 +56,11 @@ var IndexRoute = /** @class */ (function (_super) {
      */
     IndexRoute.prototype.index = function (req, res, next) {
         // set custom title
+<<<<<<< HEAD
         this.title = "StalkX";
+=======
+        this.title = "StalkStockX";
+>>>>>>> dev_wip
         console.log("hello");
         // set message
         var options = {
