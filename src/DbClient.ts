@@ -14,7 +14,6 @@ class DbClient {
         } catch (error) {
             console.log("Unable to connect to db");
         }
-
     }
 }
 
