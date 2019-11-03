@@ -30,7 +30,6 @@ COPY . ./
 Run npm run build
 
 # Start
-# CMD [ "pm2-runtime", "start", "ecosystem.config.js" ]
 CMD ["npm", "start"]
 
 EXPOSE 7000
