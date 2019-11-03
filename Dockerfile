@@ -33,6 +33,6 @@ Run npm run build
 # CMD [ "pm2-runtime", "start", "ecosystem.config.js" ]
 CMD ["npm", "start"]
 
-EXPOSE 5000
+EXPOSE 7000
 
 

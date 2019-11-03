@@ -49,7 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Shoes = require("../../dist/data.json");
+// var Shoes = require("../../dist/data.json");
 var router_1 = require("./router");
 var user_model_1 = require("../models/user_model");
 var ShoeRouter = /** @class */ (function (_super) {

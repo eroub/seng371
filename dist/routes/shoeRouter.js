@@ -49,7 +49,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Shoes = require("../../dist/data.json");
 var user_model_1 = require("../models/user_model");
 var router_1 = require("./router");
 var ShoeRouter = /** @class */ (function (_super) {
@@ -127,36 +126,35 @@ var ShoeRouter = /** @class */ (function (_super) {
      * GET one shoe by id
      */
     ShoeRouter.prototype.getOne = function (req, res, next) {
-        var idString = "id";
-        var queryint = parseInt(req.params[idString], 10);
-        // let shoe: any = Shoes[1];
-        var shoe = Shoes;
-        for (var item in Shoes) {
-            if (Shoes.hasOwnProperty(item)) {
-                // const shoeid: number = Shoes[item].id;
-                // if (shoeid === queryint) {
-                // shoe = Shoes[item];
-                // }
-            }
-        }
-        if (shoe) {
-            var diff = "diff";
-            shoe[diff] = shoe.current_price - shoe.retail_price;
-            this.render(req, res, "oneShoe", shoe);
-            /* res.status(200)
-                .send({
-                    message: 'Success',
-                    status: res.status,
-                    shoe
-                }); */
-        }
-        else {
-            res.status(404)
-                .send({
-                message: "No shoe found with the given id.",
-                status: res.status,
-            });
-        }
+        // const idString = "id";
+        // const queryint = parseInt(req.params[idString], 10);
+        // // let shoe: any = Shoes[1];
+        // const shoe: any = Shoes;
+        // for (const item in Shoes) {
+        //     if (Shoes.hasOwnProperty(item)) {
+        //         // const shoeid: number = Shoes[item].id;
+        //         // if (shoeid === queryint) {
+        //             // shoe = Shoes[item];
+        //         // }
+        //     }
+        // }
+        // if (shoe) {
+        //     const diff = "diff";
+        //     shoe[diff] = shoe.current_price - shoe.retail_price;
+        //     this.render(req, res, "oneShoe", shoe);
+        //     /* res.status(200)
+        //         .send({
+        //             message: 'Success',
+        //             status: res.status,
+        //             shoe
+        //         }); */
+        // } else {
+        //     res.status(404)
+        //         .send({
+        //             message: "No shoe found with the given id.",
+        //             status: res.status,
+        //         });
+        // }
     };
     return ShoeRouter;
 }(router_1.BaseRoute));

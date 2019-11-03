@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router} from "express";
-import Shoes = require("../../dist/data.json");
+// import Shoes = require("../../dist/data.json");
 import DbClient = require("../DbClient");
 import { UserModel } from "../models/user_model";
 import { BaseRoute } from "./router";
@@ -93,35 +93,35 @@ export class ShoeRouter extends BaseRoute {
      * GET one shoe by id
      */
     public getOne(req: Request, res: Response, next: NextFunction) {
-        const idString = "id";
-        const queryint = parseInt(req.params[idString], 10);
-        // let shoe: any = Shoes[1];
-        const shoe: any = Shoes;
-        for (const item in Shoes) {
-            if (Shoes.hasOwnProperty(item)) {
-                // const shoeid: number = Shoes[item].id;
-                // if (shoeid === queryint) {
-                    // shoe = Shoes[item];
-                // }
-            }
-        }
-        if (shoe) {
-            const diff = "diff";
-            shoe[diff] = shoe.current_price - shoe.retail_price;
-            this.render(req, res, "oneShoe", shoe);
-            /* res.status(200)
-                .send({
-                    message: 'Success',
-                    status: res.status,
-                    shoe
-                }); */
-        } else {
-            res.status(404)
-                .send({
-                    message: "No shoe found with the given id.",
-                    status: res.status,
-                });
-        }
+        // const idString = "id";
+        // const queryint = parseInt(req.params[idString], 10);
+        // // let shoe: any = Shoes[1];
+        // const shoe: any = Shoes;
+        // for (const item in Shoes) {
+        //     if (Shoes.hasOwnProperty(item)) {
+        //         // const shoeid: number = Shoes[item].id;
+        //         // if (shoeid === queryint) {
+        //             // shoe = Shoes[item];
+        //         // }
+        //     }
+        // }
+        // if (shoe) {
+        //     const diff = "diff";
+        //     shoe[diff] = shoe.current_price - shoe.retail_price;
+        //     this.render(req, res, "oneShoe", shoe);
+        //     /* res.status(200)
+        //         .send({
+        //             message: 'Success',
+        //             status: res.status,
+        //             shoe
+        //         }); */
+        // } else {
+        //     res.status(404)
+        //         .send({
+        //             message: "No shoe found with the given id.",
+        //             status: res.status,
+        //         });
+        // }
 
     }
 
