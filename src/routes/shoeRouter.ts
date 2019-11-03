@@ -3,17 +3,24 @@ import Shoes = require("../../dist/data.json");
 import { BaseRoute } from "./router";
 import DbClient = require("../DbClient");
 import { user_model } from "../models/user_model";
+import shoe_model from "../models/shoe_model";
 
 export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
         // log
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
 
-        // add home page route
+
+        // all shoses of a user
         router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().getAll(req, res, next);
+            new ShoeRouter().getAll_sho(req, res, next);
         });
 
+        // add home page route
+      /*  router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
+            new ShoeRouter().getAll(req, res, next);
+        });
+*/
         // add getOne route
         router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getOne(req, res, next);
@@ -55,19 +62,32 @@ export class ShoeRouter extends BaseRoute {
 
     }
 
+    public async getAll_sho(req: Request, res: Response, next: NextFunction) {
+        console.log("hello in get all")
+        const yeet = new shoe_model();
+        let test_arr = [{"1":300},{ "3":400},{"5":500}]
+
+        let shoes = await yeet.get_all_shoes(test_arr);
+
+        if(shoes.length != 0) {
+            res.send(shoes);
+        }
+        else res.send("404 not found lol");
+
+    }
+
+
     /**
      * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
      */
     public async getAll(req: Request, res: Response, next: NextFunction) {
+        console.log("in ther other one")
             const idString = "id";
             const queryint = parseInt(req.params[idString], 10);
             const yeet = new user_model();
-
-            // fetch all the shoes for a user with user id = queryint
             const shoes = await yeet.get_all(queryint);
 
             console.log(shoes);
-
             if(shoes.length != 0) {
                 res.send(shoes);
             }

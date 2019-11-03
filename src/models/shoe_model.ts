@@ -4,17 +4,20 @@ export default class shoe_model {
 
     constructor(){}
 /*
-    input type: arr [{"1":300, "3":400,"5":500}]
+    input type: key value arr, example :  [{"1":300}, {"3":400},{"5":500}]
+    returns an array of shoe objects ex: [ {shoe_1 ...}, {shoe_2 ...}, {shoe_3}...]
  */
     public get_all_shoes(shoeKeys_val:any) {
 
-        let key_arr =[];
+        let key_arr:any[] =[];
 
         // get the keys from the input, keys_arr should be equal to [1,3,5] from the example above
 
-        for (let prop of shoeKeys_val){
+        let prop;
+        for ( prop of shoeKeys_val){
             key_arr.push(Object.keys(prop)[0])
         }
+        console.log(key_arr);
 
         // an array of objects holding indvidual json objects for each of the shoes the user has
         let json_shoe_Arr:any[] = []
@@ -22,20 +25,29 @@ export default class shoe_model {
         const shoes = DbClient.connect()
             .then((db) => {
 
-                // inefficient will return all the shoes in db
-
+                // will return all the shoes in db
                 return db!.collection("shoes").find().toArray();
 
             })
 
             .then((sneakers:any) => {
-                //console.log(sneakers);
-                sneakers.forEach(function(shoe:any){
-                    json_shoe_Arr.push(shoe);
-                })
-                console.log(json_shoe_Arr);
+
+                // loop over all the shoes in db and push into json_shoe_Arr only those that are
+                // owned by user
+                let shoe;
+                let id;
+                for ( shoe of sneakers ) {
+                    for(  id of key_arr) {
+                        // if current shoe is also a shoe owned by user, id is type string so we typecast to number
+
+                        if (shoe.shoe_id === Number(id)){
+                            json_shoe_Arr.push(shoe);
+                            break;
+                        }
+                    }
+                }
+
                 return json_shoe_Arr;
-                //res.send(sneakers);
             })
             .catch((err) => {
                 console.log("err.message");

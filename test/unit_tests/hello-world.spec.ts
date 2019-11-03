@@ -1,11 +1,6 @@
-import { expect } from 'chai';
-import 'mocha';
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-chai.use(chaiHttp);
-chai.should();
 
-import shoe_model from '../../src/models/shoe_model'
+const {shoe_model} = require( '../../src/models/shoe_model')
+require = require("esm")(module /*, options*/);
 
 
 
