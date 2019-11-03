@@ -65,7 +65,7 @@ var ShoeRouter = /** @class */ (function (_super) {
             new ShoeRouter().getAll(req, res, next);
         });
         // add getOne route
-        router.get("/api/shoes/:id", function (req, res, next) {
+        router.get("/user/:id/shoes/:id2", function (req, res, next) {
             new ShoeRouter().getOne(req, res, next);
         });
         router.get("/api/sortpricelow", function (req, res, next) {
@@ -80,18 +80,18 @@ var ShoeRouter = /** @class */ (function (_super) {
     // }
     ShoeRouter.prototype.sortPriceLow = function (req, res, next) {
         var shoes = [];
-        Shoes.forEach(function (element) {
-            shoes.push(JSON.parse(JSON.stringify(element)));
-        });
+        // Shoes.forEach((element: any) => {
+        //     shoes.push(JSON.parse(JSON.stringify(element)));
+        // });
         shoes.sort(function (a, b) { return a.current_price - b.current_price; });
         console.log(shoes);
         this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
     };
     ShoeRouter.prototype.sortPriceHigh = function (req, res, next) {
         var shoes = [];
-        Shoes.forEach(function (element) {
-            shoes.push(JSON.parse(JSON.stringify(element)));
-        });
+        // Shoes.forEach((element: any) => {
+        //     shoes.push(JSON.parse(JSON.stringify(element)));
+        // });
         shoes.sort(function (a, b) { return b.current_price - a.current_price; });
         console.log(shoes);
         this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
@@ -128,13 +128,14 @@ var ShoeRouter = /** @class */ (function (_super) {
     ShoeRouter.prototype.getOne = function (req, res, next) {
         var idString = "id";
         var queryint = parseInt(req.params[idString], 10);
-        var shoe = Shoes[1];
+        //let shoe: any = Shoes[1];
+        var shoe = Shoes;
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
-                var shoeid = Shoes[item].id;
-                if (shoeid === queryint) {
-                    shoe = Shoes[item];
-                }
+                // const shoeid: number = Shoes[item].id;
+                // if (shoeid === queryint) {
+                // shoe = Shoes[item];
+                // }
             }
         }
         if (shoe) {

@@ -35,9 +35,9 @@ export class ShoeRouter extends BaseRoute {
 
     public sortPriceLow(req: Request, res: Response, next: NextFunction) {
         const shoes: any[] = [];
-        Shoes.forEach((element: any) => {
-            shoes.push(JSON.parse(JSON.stringify(element)));
-        });
+        // Shoes.forEach((element: any) => {
+        //     shoes.push(JSON.parse(JSON.stringify(element)));
+        // });
         shoes.sort((a, b) => a.current_price - b.current_price);
         console.log(shoes);
         this.render(req, res, "allShoes", {title: "Shoes", data: shoes});
@@ -46,9 +46,9 @@ export class ShoeRouter extends BaseRoute {
 
     public sortPriceHigh(req: Request, res: Response, next: NextFunction) {
         const shoes: any[] = [];
-        Shoes.forEach((element: any) => {
-            shoes.push(JSON.parse(JSON.stringify(element)));
-        });
+        // Shoes.forEach((element: any) => {
+        //     shoes.push(JSON.parse(JSON.stringify(element)));
+        // });
         shoes.sort((a, b) => b.current_price - a.current_price);
         console.log(shoes);
         this.render(req, res, "allShoes", {title: "Shoes", data: shoes});
@@ -94,13 +94,14 @@ export class ShoeRouter extends BaseRoute {
     public getOne(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        let shoe: any = Shoes[1];
+        //let shoe: any = Shoes[1];
+        let shoe: any = Shoes;
         for (const item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
-                const shoeid: number = Shoes[item].id;
-                if (shoeid === queryint) {
-                    shoe = Shoes[item];
-                }
+                // const shoeid: number = Shoes[item].id;
+                // if (shoeid === queryint) {
+                    // shoe = Shoes[item];
+                // }
             }
         }
         if (shoe) {

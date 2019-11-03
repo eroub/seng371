@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build": "tsc",
     "start": "node ./bin/www",
     "test": "tslint -c test/tslint/tslint.json src/**/*.ts"
   },
@@ -21,6 +22,7 @@
     "errorhandler": "^1.5.1",
     "express": "^4.16.4",
     "http-errors": "~1.6.3",
+    "mongodb": "^3.3.3",
     "morgan": "~1.9.1",
     "pug": "^2.0.4",
     "save": "^2.4.0",
