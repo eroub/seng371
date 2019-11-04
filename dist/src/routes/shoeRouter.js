@@ -48,12 +48,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-<<<<<<< HEAD
-Object.defineProperty(exports, "__esModule", { value: true });
-// var Shoes = require("../../dist/data.json");
-var router_1 = require("./router");
-var user_model_1 = require("../models/user_model");
-=======
+
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -62,7 +57,6 @@ var Shoes = require("../../dist/data.json");
 var router_1 = require("./router");
 var user_model_1 = require("../models/user_model");
 var shoe_model_1 = __importDefault(require("../models/shoe_model"));
->>>>>>> dev_wip
 var ShoeRouter = /** @class */ (function (_super) {
     __extends(ShoeRouter, _super);
     function ShoeRouter() {
@@ -71,22 +65,11 @@ var ShoeRouter = /** @class */ (function (_super) {
     ShoeRouter.create = function (router) {
         // log
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
-<<<<<<< HEAD
         // add home page route
         router.get("/user/:id/shoes", function (req, res, next) {
             new ShoeRouter().getAll(req, res, next);
         });
-=======
-        // all shoses of a user
-        router.get("/user/:id/shoes", function (req, res, next) {
-            new ShoeRouter().getAll_sho(req, res, next);
-        });
-        // add home page route
-        /*  router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
-              new ShoeRouter().getAll(req, res, next);
-          });
-  */
->>>>>>> dev_wip
+
         // add getOne route
         router.get("/user/:id/shoes/:id2", function (req, res, next) {
             new ShoeRouter().getOne(req, res, next);
@@ -119,10 +102,7 @@ var ShoeRouter = /** @class */ (function (_super) {
         console.log(shoes);
         this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
     };
-<<<<<<< HEAD
-    /**
-     * GET all Shoes.
-=======
+
     ShoeRouter.prototype.getAll_sho = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var yeet, shoe;
@@ -147,7 +127,6 @@ var ShoeRouter = /** @class */ (function (_super) {
     };
     /**
      * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
->>>>>>> dev_wip
      */
     ShoeRouter.prototype.getAll = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
@@ -155,10 +134,8 @@ var ShoeRouter = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-<<<<<<< HEAD
-=======
+
                         console.log("in ther other one");
->>>>>>> dev_wip
                         idString = "id";
                         queryint = parseInt(req.params[idString], 10);
                         yeet = new user_model_1.user_model();

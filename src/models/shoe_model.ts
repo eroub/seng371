@@ -1,6 +1,6 @@
 import DbClient = require("../DbClient");
 
-export default class shoe_model {
+export class ShoeModel {
 
     constructor(){}
 /*
