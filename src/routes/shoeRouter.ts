@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response, Router} from "express";
 // import Shoes = require("../../dist/data.json");
 import DbClient = require("../DbClient");
-import { user_model } from "../models/user_model";
+import { UserModel } from "../models/user_model";
 import { BaseRoute } from "./router";
-import shoe_model from "../models/shoe_model";
+import {ShoeModel} from "../models/shoe_model";
 
 export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
@@ -63,7 +63,7 @@ export class ShoeRouter extends BaseRoute {
         console.log("in ther other one")
             const idString = "id";
             const queryint = parseInt(req.params[idString], 10);
-            const yeet = new UserModel();
+            const yeet = new UserModel ();
             const shoes = await yeet.getAll(queryint);
             console.log(shoes);
             if (shoes.length !== 0) {
@@ -72,7 +72,6 @@ export class ShoeRouter extends BaseRoute {
                 res.send("404 not found lol");
             }
 
-            else res.send("404 not found lol");
 
 
     }

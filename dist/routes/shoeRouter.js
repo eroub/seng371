@@ -49,8 +49,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var user_model_1 = require("../models/user_model");
 var router_1 = require("./router");
+var shoe_model_1 = require("../models/shoe_model");
 var ShoeRouter = /** @class */ (function (_super) {
     __extends(ShoeRouter, _super);
     function ShoeRouter() {
@@ -96,7 +96,7 @@ var ShoeRouter = /** @class */ (function (_super) {
         this.render(req, res, "allShoes", { title: "Shoes", data: shoes });
     };
     /**
-     * GET all Shoes.
+     * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
      */
     ShoeRouter.prototype.getAll = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
@@ -104,10 +104,11 @@ var ShoeRouter = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        console.log("in ther other one");
                         idString = "id";
                         queryint = parseInt(req.params[idString], 10);
-                        yeet = new user_model_1.UserModel();
-                        return [4 /*yield*/, yeet.getAll(queryint)];
+                        yeet = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, yeet.get_one_shoe(2)];
                     case 1:
                         shoes = _a.sent();
                         console.log(shoes);
