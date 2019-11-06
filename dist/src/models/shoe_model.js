@@ -14,7 +14,7 @@ var shoe_model = /** @class */ (function () {
         var prop;
         for (var _i = 0, shoeKeys_val_1 = shoeKeys_val; _i < shoeKeys_val_1.length; _i++) {
             prop = shoeKeys_val_1[_i];
-            key_arr.push(Object.keys(prop)[0]);
+            key_arr.push(JSON.parse(JSON.stringify(prop)).shoe_id);
         }
         console.log(key_arr);
         // an array of objects holding indvidual json objects for each of the shoes the user has
@@ -79,7 +79,23 @@ var shoe_model = /** @class */ (function () {
         });
         return shoes;
     };
+    shoe_model.prototype.get_all = function () {
+        var shoes = DbClient.connect()
+            .then(function (db) {
+            return db.collection("shoes").find().toArray();
+        })
+            .then(function (sneakers) {
+            //console.log(sneakers);
+            return sneakers;
+            //res.send(sneakers);
+        })
+            .catch(function (err) {
+            console.log("err.message");
+        });
+        //console.log(users);
+        return shoes;
+    };
     return shoe_model;
 }());
-exports.default = shoe_model;
+exports.shoe_model = shoe_model;
 //# sourceMappingURL=shoe_model.js.map

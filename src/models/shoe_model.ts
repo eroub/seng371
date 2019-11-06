@@ -1,12 +1,12 @@
 import DbClient = require("../DbClient");
 
-export class ShoeModel {
+export class shoe_model {
 
     constructor(){}
-/*
-    input type: key value arr, example :  [{"1":300}, {"3":400},{"5":500}]
-    returns an array of shoe objects ex: [ {shoe_1 ...}, {shoe_2 ...}, {shoe_3}...]
- */
+    /*
+        input type: key value arr, example :  [{"1":300}, {"3":400},{"5":500}]
+        returns an array of shoe objects ex: [ {shoe_1 ...}, {shoe_2 ...}, {shoe_3}...]
+     */
     public get_all_shoes(shoeKeys_val:any) {
 
         let key_arr:any[] =[];
@@ -15,7 +15,7 @@ export class ShoeModel {
 
         let prop;
         for ( prop of shoeKeys_val){
-            key_arr.push(Object.keys(prop)[0])
+            key_arr.push(JSON.parse(JSON.stringify(prop)).shoe_id);
         }
         console.log(key_arr);
 
@@ -83,17 +83,36 @@ export class ShoeModel {
                 // shoeID
                 let shoe;
                 for ( shoe of sneakers ) {
-                        // if current shoe is also a shoe whose id is shoeID, shoeID is type string so we typecast to number
-                        if (shoe.shoe_id === Number(shoeID)){
-                            json_shoe_Arr.push(shoe);
-                            break;
-                        }
+                    // if current shoe is also a shoe whose id is shoeID, shoeID is type string so we typecast to number
+                    if (shoe.shoe_id === Number(shoeID)){
+                        json_shoe_Arr.push(shoe);
+                        break;
+                    }
                 }
                 return json_shoe_Arr[0];
             })
             .catch((err) => {
                 console.log("err.message");
             })
+
+        return shoes;
+    }
+
+    public get_all() {
+        const shoes = DbClient.connect()
+            .then((db) => {
+                return db!.collection("shoes").find().toArray();
+            })
+            .then((sneakers:any) => {
+                //console.log(sneakers);
+                return sneakers;
+                //res.send(sneakers);
+            })
+            .catch((err) => {
+                console.log("err.message");
+            })
+
+        //console.log(users);
 
         return shoes;
     }
