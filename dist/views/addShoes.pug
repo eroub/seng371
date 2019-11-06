@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    a(href='/user/' + id + '/shoes') Back
+    h1 All Shoes:
+    for shoe in data
+        h2 #{shoe.brand} #{shoe.model} #{shoe.colorway}
+        p Size: #{shoe.size}
+        p Current market value: $#{shoe.current_price}
+        p Retail Price: #{shoe.retail_price}
+        p ----------------------
