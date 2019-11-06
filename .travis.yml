@@ -12,5 +12,5 @@ branches:
 
 after_success:
         - docker login -u eroubekas -p software350 ; 
-          docker build -t eroubekas/seng350:latest .
+          docker build -t eroubekas/seng350:latest . ;
           docker push eroubekas/seng350:latest ;
