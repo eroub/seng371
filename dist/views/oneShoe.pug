@@ -1,8 +1,10 @@
 extends layout
 
 block content
-    h1 #{brand} #{model} #{colorway}
-    p Current Price: $#{current_price}
-    p Retail Price: $#{retail_price}
+    h1 #{shoe.brand} #{shoe.model} #{shoe.colorway}
+    p Current Price: $#{shoe.current_price}
+    p Purchase Price: $#{purchase}
     p Difference: $#{diff}
-    a(href='/api/shoes') Back
+    p Retail Price: $#{shoe.retail_price}
+    p Size: #{shoe.size}
+    a(href='/user/' + id + '/shoes') Back
