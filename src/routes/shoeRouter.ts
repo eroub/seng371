@@ -1,17 +1,12 @@
 import { NextFunction, Request, Response, Router} from "express";
-<<<<<<< HEAD
 // import Shoes = require("../../dist/data.json");
 import DbClient = require("../DbClient");
-import { UserModel } from "../models/user_model";
-import { BaseRoute } from "./router";
-import {ShoeModel} from "../models/shoe_model";
-=======
-import { BaseRoute } from "./router";
 import { user_model } from "../models/user_model";
+import { BaseRoute } from "./router";
 import { shoe_model } from "../models/shoe_model";
+
 let user_json:any;
 let user_shoes:any;
->>>>>>> shaun
 
 export class ShoeRouter extends BaseRoute {
 
@@ -49,22 +44,13 @@ export class ShoeRouter extends BaseRoute {
         // not much here yet
     // }
 
-<<<<<<< HEAD
-    public sortPriceLow(req: Request, res: Response, next: NextFunction) {
-        const shoes: any[] = [];
-        // Shoes.forEach((element: any) => {
-        //     shoes.push(JSON.parse(JSON.stringify(element)));
-        // });
-        shoes.sort((a, b) => a.current_price - b.current_price);
-        console.log(shoes);
-        this.render(req, res, "allShoes", {title: "Shoes", data: shoes});
-=======
+
+
     public async notificationCentre(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const user_id = parseInt(req.params[idString], 10);
         this.render(req, res, "notificationCentre", {id: user_id, title: "Shoes"});
     }
->>>>>>> shaun
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -74,16 +60,6 @@ export class ShoeRouter extends BaseRoute {
         this.render(req, res, "addShoes", {id: user_id, title: "Shoes", data: all_shoes});
     }
 
-<<<<<<< HEAD
-    public sortPriceHigh(req: Request, res: Response, next: NextFunction) {
-        const shoes: any[] = [];
-        // Shoes.forEach((element: any) => {
-        //     shoes.push(JSON.parse(JSON.stringify(element)));
-        // });
-        shoes.sort((a, b) => b.current_price - a.current_price);
-        console.log(shoes);
-        this.render(req, res, "allShoes", {title: "Shoes", data: shoes});
-=======
     public async sortPriceLow(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -97,7 +73,7 @@ export class ShoeRouter extends BaseRoute {
         }
         else res.send("this user has no shoes");
     }
->>>>>>> shaun
+
 
     public async sortPriceHigh(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -122,18 +98,7 @@ export class ShoeRouter extends BaseRoute {
         console.log("in ther other one")
             const idString = "id";
             const queryint = parseInt(req.params[idString], 10);
-<<<<<<< HEAD
-            const yeet = new UserModel ();
-            const shoes = await yeet.getAll(queryint);
-            console.log(shoes);
-            if (shoes.length !== 0) {
-                res.send(shoes);
-            } else {
-                res.send("404 not found lol");
-            }
 
-
-=======
             user_json = await this.get_user_info(queryint);
             user_shoes = await this.get_user_shoes(user_json);
             console.log("Here's the user info lol: " + user_json);
@@ -159,45 +124,15 @@ export class ShoeRouter extends BaseRoute {
                 shoeArray.push(JSON.parse(JSON.stringify(element)));
             });
             console.log(shoeArray); */
->>>>>>> shaun
+
 
     }
 
     /**
      * GET one shoe by id
      */
-<<<<<<< HEAD
-    public getOne(req: Request, res: Response, next: NextFunction) {
-        // const idString = "id";
-        // const queryint = parseInt(req.params[idString], 10);
-        // // let shoe: any = Shoes[1];
-        // const shoe: any = Shoes;
-        // for (const item in Shoes) {
-        //     if (Shoes.hasOwnProperty(item)) {
-        //         // const shoeid: number = Shoes[item].id;
-        //         // if (shoeid === queryint) {
-        //             // shoe = Shoes[item];
-        //         // }
-        //     }
-        // }
-        // if (shoe) {
-        //     const diff = "diff";
-        //     shoe[diff] = shoe.current_price - shoe.retail_price;
-        //     this.render(req, res, "oneShoe", shoe);
-        //     /* res.status(200)
-        //         .send({
-        //             message: 'Success',
-        //             status: res.status,
-        //             shoe
-        //         }); */
-        // } else {
-        //     res.status(404)
-        //         .send({
-        //             message: "No shoe found with the given id.",
-        //             status: res.status,
-        //         });
-        // }
-=======
+
+
     public async getOne(req: Request, res: Response, next: NextFunction) {
         const shoe_if = new shoe_model();
         const user_id_string = "id";
@@ -224,7 +159,6 @@ export class ShoeRouter extends BaseRoute {
                     status: res.status,
                 });
         }
->>>>>>> shaun
 
     }
 

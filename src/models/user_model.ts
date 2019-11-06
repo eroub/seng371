@@ -1,13 +1,13 @@
 import DbClient = require("../DbClient");
 
-export class UserModel {
+export class user_model {
 
     constructor() {}
 
-    public getAll(userId: any) {
+    public get_all(userId: any) {
         const users = DbClient.connect()
             .then((db) => {
-                return db!.collection("users").find({userId}).toArray();
+                return db!.collection("users").find({user_id:userId}).toArray();
             })
             .then((sneakers: any) => {
                 // console.log(sneakers);
