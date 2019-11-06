@@ -6,4 +6,9 @@ cache:
                 - "node_modules"
 services:
         - docker
+branches:
+        only:
+                - master
 
+after_success:
+        - docker login -u eroubekas -p software350 ; docker push eroubekas/seng350:latest
