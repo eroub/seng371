@@ -1,26 +1,26 @@
 import DbClient = require("../DbClient");
 
-export class shoe_model {
+export class ShoeModel {
 
-    constructor(){}
+    constructor() {}
     /*
         input type: key value arr, example :  [{"1":300}, {"3":400},{"5":500}]
         returns an array of shoe objects ex: [ {shoe_1 ...}, {shoe_2 ...}, {shoe_3}...]
      */
-    public get_all_shoes(shoeKeys_val:any) {
+    public getAllShoes(shoeKeysVal: any) {
 
-        let key_arr:any[] =[];
+        const keyArr: any[] = [];
 
         // get the keys from the input, keys_arr should be equal to [1,3,5] from the example above
 
         let prop;
-        for ( prop of shoeKeys_val){
-            key_arr.push(JSON.parse(JSON.stringify(prop)).shoe_id);
+        for (prop of shoeKeysVal) {
+            keyArr.push(JSON.parse(JSON.stringify(prop)).shoe_id);
         }
-        console.log(key_arr);
+        console.log(keyArr);
 
         // an array of objects holding indvidual json objects for each of the shoes the user has
-        let json_shoe_Arr:any[] = []
+        const jsonShoeArr: any[] = [];
 
         const shoes = DbClient.connect()
             .then((db) => {
@@ -30,28 +30,27 @@ export class shoe_model {
 
             })
 
-            .then((sneakers:any) => {
+            .then((sneakers: any) => {
 
-                // loop over all the shoes in db and push into json_shoe_Arr only those that are
+                // loop over all the shoes in db and push into jsonShoeArr only those that are
                 // owned by user
                 let shoe;
                 let id;
-                for ( shoe of sneakers ) {
-                    for(  id of key_arr) {
+                for (shoe of sneakers ) {
+                    for (id of keyArr) {
                         // if current shoe is also a shoe owned by user, id is type string so we typecast to number
-
-                        if (shoe.shoe_id === Number(id)){
-                            json_shoe_Arr.push(shoe);
+                        if (shoe.shoe_id === Number(id)) {
+                            jsonShoeArr.push(shoe);
                             break;
                         }
                     }
                 }
 
-                return json_shoe_Arr;
+                return jsonShoeArr;
             })
             .catch((err) => {
                 console.log("err.message");
-            })
+            });
 
         return shoes;
     }
@@ -61,13 +60,11 @@ export class shoe_model {
      Output type: a json shoe obejct ex: {shoe_id:3 ... }
      */
 
-    public get_one_shoe(shoeID:any) {
-
+    public getOneShoe(shoeID: any) {
 
         console.log(shoeID);
-
         // an array of objects holding indvidual json objects for each of the shoes the user has
-        let json_shoe_Arr:any[] = []
+        const jsonShoeArr: any[] = [];
 
         const shoes = DbClient.connect()
             .then((db) => {
@@ -77,23 +74,23 @@ export class shoe_model {
 
             })
 
-            .then((sneakers:any) => {
+            .then((sneakers: any) => {
 
-                // loop over all the shoes in db and push into json_shoe_Arr only the shoe that has id
+                // loop over all the shoes in db and push into jsonShoeArr only the shoe that has id
                 // shoeID
                 let shoe;
                 for ( shoe of sneakers ) {
                     // if current shoe is also a shoe whose id is shoeID, shoeID is type string so we typecast to number
-                    if (shoe.shoe_id === Number(shoeID)){
-                        json_shoe_Arr.push(shoe);
+                    if (shoe.shoe_id === Number(shoeID)) {
+                        jsonShoeArr.push(shoe);
                         break;
                     }
                 }
-                return json_shoe_Arr[0];
+                return jsonShoeArr[0];
             })
             .catch((err) => {
                 console.log("err.message");
-            })
+            });
 
         return shoes;
     }
@@ -103,18 +100,13 @@ export class shoe_model {
             .then((db) => {
                 return db!.collection("shoes").find().toArray();
             })
-            .then((sneakers:any) => {
-                //console.log(sneakers);
+            .then((sneakers: any) => {
                 return sneakers;
-                //res.send(sneakers);
             })
             .catch((err) => {
                 console.log("err.message");
-            })
-
-        //console.log(users);
+            });
 
         return shoes;
     }
-
 }
