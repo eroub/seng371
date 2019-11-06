@@ -17,7 +17,7 @@ All written documents can be found in /written_docs within their respective mile
 
 Master should always be stable and good to go. 
  
-Start with Develop branch being a copy of master. If you want to add a new feature create a branch based on develop. Make your changes and then merge to develop. If there are any conflicts make changes to fix conflicts and merge to develop. 
+Start with Develop branch being a copy of master. If you want to add a new feature create a branch based on develop. Make your changes and then merge to develop(create a pull request and if there are no conflicts you can merge from within the pull request). If there are any conflicts make changes to fix conflicts and merge to develop. 
 Run tests to make sure develop is working fine. And then merge into master.
 This way master will always remain stable. 
  
