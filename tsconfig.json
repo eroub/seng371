@@ -3,17 +3,15 @@
     "module": "commonjs",
     "target": "es5",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./dist/src",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "inlineSources": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["node", "mocha", "chai"]
   },
-  "exclude": [
-    "node_modules",
-    "test/*",
-    "data.json",
-    "dist/data.json"
-  ]
+  "typeRoots": [ "./node_modules/@types" ],
+  "include": [ "**/.*" ],
+  "exclude": [ "node_modules" ]
 }

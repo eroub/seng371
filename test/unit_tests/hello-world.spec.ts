@@ -1,8 +1,8 @@
+import "mocha";
+import "chai";
 
 const {shoe_model} = require( '../../src/models/shoe_model')
 require = require("esm")(module /*, options*/);
-
-
 
 describe ('Hello function', () => {
 

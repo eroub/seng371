@@ -1,16 +1,13 @@
 language: node_js
 node_js:
-        - "stable"
+  - "stable"
 cache:
-        directories:
-                - "node_modules"
+  directories:
+    - "node_modules"
 services:
-        - docker
-branches:
-        only:
-                - master
+  - docker
 
 after_success:
-        - docker login -u eroubekas -p software350 ; 
-          docker build -t eroubekas/seng350:latest . ;
-          docker push eroubekas/seng350:latest ;
+  - docker login -u eroubekas -p software350 ; 
+    docker build -t eroubekas/seng350:latest . ;
+    docker push eroubekas/seng350:latest ;
