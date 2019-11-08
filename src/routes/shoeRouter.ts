@@ -1,12 +1,11 @@
 import { NextFunction, Request, Response, Router} from "express";
-// import Shoes = require("../../dist/data.json");
 import DbClient = require("../DbClient");
-import { user_model } from "../models/user_model";
+import { ShoeModel } from "../models/shoe_model";
+import { UserModel } from "../models/user_model";
 import { BaseRoute } from "./router";
-import { shoe_model } from "../models/shoe_model";
 
-let user_json:any;
-let user_shoes:any;
+let userJson: any;
+let userShoes: any;
 
 export class ShoeRouter extends BaseRoute {
 
@@ -14,7 +13,7 @@ export class ShoeRouter extends BaseRoute {
         // log
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
         // add home page route
-       router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getAll(req, res, next);
         });
         // add getOne route
@@ -50,18 +49,17 @@ export class ShoeRouter extends BaseRoute {
             new ShoeRouter().removeShoe(req, res, next);
         });
 
+
     }
 
     // constructor() {
         // not much here yet
     // }
 
-
-
     public async notificationCentre(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
-        const user_id = parseInt(req.params[idString], 10);
-        this.render(req, res, "notificationCentre", {id: user_id, title: "Shoes"});
+        const userId = parseInt(req.params[idString], 10);
+        this.render(req, res, "notificationCentre", {id: userId, title: "Shoes"});
     }
 
     public async removeShoe(req:Request, res:Response, next:NextFunction) {
@@ -129,6 +127,7 @@ export class ShoeRouter extends BaseRoute {
                     status: res.status,
                 });
         }
+
     }
 
     public async sortPriceLow(req: Request, res: Response, next: NextFunction) {
@@ -143,8 +142,8 @@ export class ShoeRouter extends BaseRoute {
             this.render(req, res, "allShoes", {id: queryint, username:user_json.username, title: "Shoes", data: sorted_shoes});
         }
         else res.send("invalid user");
-    }
 
+    }
 
     public async sortPriceHigh(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -157,9 +156,8 @@ export class ShoeRouter extends BaseRoute {
             this.render(req, res, "allShoes", {id: queryint, username:user_json.username, title: "Shoes", data: sorted_shoes});
         }
         else res.send("invalid user");
+
     }
-
-
 
     /**
      * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
@@ -201,12 +199,42 @@ export class ShoeRouter extends BaseRoute {
             console.log(shoeArray); */
 
 
+    public async getAll(req: Request, res: Response, next: NextFunction) {
+        const idString = "id";
+        const queryint = parseInt(req.params[idString], 10);
+
+        userJson = await this.getUserInfo(queryint);
+        userShoes = await this.getUserShoes(userJson);
+        console.log("Here's the user info lol: " + userJson);
+        console.log("Here's the shoes lol: " + userShoes);
+        if (userShoes) {
+            this.render(req, res, "allShoes",
+              {id: queryint, title: "Shoes", username: userJson.username, data: userShoes});
+        } else {
+            res.send("404 not found lol");
+        }
+        /* DbClient.connect()
+        .then((db) => {
+            return db!.collection("users").find().toArray();
+        })
+        .then((sneakers:any) => {
+            console.log(sneakers);
+            res.send(sneakers);
+        })
+        .catch((err) => {
+            console.log("err.message");
+        })
+        // res.send(Shoes);
+        /* const shoeArray: any[] = [];
+        Shoes.forEach((element: any) => {
+            shoeArray.push(JSON.parse(JSON.stringify(element)));
+        });
+        console.log(shoeArray); */
     }
 
     /**
      * GET one shoe by id
      */
-
 
     public async getOne(req: Request, res: Response, next: NextFunction) {
         const user_id_string = "id";
@@ -269,13 +297,13 @@ export class ShoeRouter extends BaseRoute {
         return false;
     }
 
-    private get_purchase_price(user_shoes:any, id:number) {
+    private getPurchasePrice(userShoes: any, id: number) {
         let purchase = 0;
-        for (const item in user_shoes) {
-            if (user_shoes.hasOwnProperty(item)) {
-                const shoeid: number = user_shoes[item].shoe_id;
+        for (const item in userShoes) {
+            if (userShoes.hasOwnProperty(item)) {
+                const shoeid: number = userShoes[item].shoeId;
                 if (shoeid === id) {
-                    purchase = user_shoes[item].purchase_price;
+                    purchase = userShoes[item].purchase_price;
                 }
             }
         }
@@ -292,10 +320,10 @@ export class ShoeRouter extends BaseRoute {
         else return;
     }
 
-    private async get_user_shoes(user_json:any){
-        const shoe_if = new shoe_model();
-        const user_shoes =  await shoe_if.get_all_shoes(user_json.shoelist);
-        return user_shoes;
+    private async getUserShoes(userJson: any) {
+        const shoeIf = new ShoeModel();
+        const uShoes = await shoeIf.getAllShoes(userJson.shoelist);
+        return uShoes;
     }
 
     private async getShoe(shoeId: number) {
