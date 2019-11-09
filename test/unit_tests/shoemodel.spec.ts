@@ -1,5 +1,5 @@
 import "mocha";
-import "chai";
+import chai from "chai";
 import {ShoeModel} from "../../src/models/shoe_model";
 
 /*
@@ -36,13 +36,10 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
  */
 
 
-
-const {shoe_model} = require( '../../src/models/shoe_model')
-
 describe ('get all the users shoes', () => {
 
     it('should return all correct shoes', () => {
-        let test_arr = [{"1":300, "3":400,"5":500}]
+        const test_arr = [{"1":300, "3":400,"5":500}]
 
         const SM = new ShoeModel()
         const users_shoes =  SM.getAllShoes(test_arr);
