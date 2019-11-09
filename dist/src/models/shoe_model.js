@@ -16,7 +16,6 @@ var ShoeModel = /** @class */ (function () {
             prop = shoeKeysVal_1[_i];
             keyArr.push(JSON.parse(JSON.stringify(prop)).shoe_id);
         }
-        console.log(keyArr);
         // an array of objects holding indvidual json objects for each of the shoes the user has
         var jsonShoeArr = [];
         var shoes = DbClient.connect()

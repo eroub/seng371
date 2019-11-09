@@ -17,7 +17,6 @@ export class ShoeModel {
         for (prop of shoeKeysVal) {
             keyArr.push(JSON.parse(JSON.stringify(prop)).shoe_id);
         }
-        console.log(keyArr);
 
         // an array of objects holding indvidual json objects for each of the shoes the user has
         const jsonShoeArr: any[] = [];
@@ -45,7 +44,6 @@ export class ShoeModel {
                         }
                     }
                 }
-
                 return jsonShoeArr;
             })
             .catch((err) => {
