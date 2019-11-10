@@ -42,8 +42,16 @@ describe ('get all the users shoes', () => {
         const test_arr = [{"1":300, "3":400,"5":500}]
 
         const SM = new ShoeModel()
-        const users_shoes =  SM.getAllShoes(test_arr);
-        console.log(users_shoes);
-        chai.expect(users_shoes).to.equal('Hello World!');
+        const users_shoes =  new Promise((resolve, reject) => {
+          SM.getAllShoes(test_arr);
+        })
+        .then(value => {
+          console.log('resolved', value);
+          chai.expect(value).to.equal('Hello World!');  
+        })
+        .catch(error => {
+          console.log('rejected', error);
+        });
+        
          });
     })
