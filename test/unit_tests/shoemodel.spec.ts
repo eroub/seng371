@@ -3,7 +3,6 @@ import chai from "chai";
 const chaiAsPromised = require("chai-as-promised");
 import {ShoeModel} from "../../src/models/shoe_model";
 
-
 chai.use(chaiAsPromised);
 /*
 
@@ -37,6 +36,21 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
 
 
  */
+
+ async function testGetAll(SM: any, test_arr: any) {
+  let user_shoes = {}
+  await new Promise((resolve, reject) => {
+    user_shoes = SM.getAllShoes(test_arr);
+     console.log("Object grabbed: " + user_shoes);
+   })        
+   .then(value => {
+     console.log('resolved', value);
+   })
+   .catch(error => {
+     console.log('rejected', error);
+   });
+   return user_shoes;
+ }
 
 
 describe ('get all the users shoes', () => {
