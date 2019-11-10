@@ -1,7 +1,8 @@
 import "mocha";
 import chai from "chai";
+var chaiAsPromised = require("chai-as-promised");
 import {ShoeModel} from "../../src/models/shoe_model";
-
+chai.use(chaiAsPromised);
 /*
 
 [ 1, 2, 3 ]
@@ -35,23 +36,29 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
 
  */
 
+ async function testGetAll(SM: any, test_arr: any) {
+  let user_shoes = {}
+  await new Promise((resolve, reject) => {
+    user_shoes = SM.getAllShoes(test_arr);
+     console.log("Object grabbed: " + user_shoes);
+   })        
+   .then(value => {
+     console.log('resolved', value);
+   })
+   .catch(error => {
+     console.log('rejected', error);
+   });
+   return user_shoes;
+ }
+
 
 describe ('get all the users shoes', () => {
 
-    it('should return all correct shoes', () => {
+    it('should return all correct shoes', async () => {
         const test_arr = [{"1":300, "3":400,"5":500}]
-
         const SM = new ShoeModel()
-        const users_shoes =  new Promise((resolve, reject) => {
-          SM.getAllShoes(test_arr);
-        })
-        .then(value => {
-          console.log('resolved', value);
-          chai.expect(value).to.equal('Hello World!');  
-        })
-        .catch(error => {
-          console.log('rejected', error);
-        });
-        
+
+        // await testGetAll(SM, test_arr).should.eventually.equal('Hello World!');  
+        await testGetAll(SM, test_arr).should.equal('Hello World');
          });
     })
