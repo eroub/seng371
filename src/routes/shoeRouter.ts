@@ -12,25 +12,37 @@ export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
         // log
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
-        // add home page route
+        // users home page showing all the shoes the user owns
         router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getAll(req, res, next);
         });
-        // add getOne route
+        // showing a specific shoe that the user owns
         router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getOne(req, res, next);
         });
-
+        // sorting all the shoes the user owns from low to high
         router.get("/user/:id/shoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().sortPriceLow(req, res, next);
         });
-
+        // sorting the shoes the user owns from high to low
         router.get("/user/:id/shoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().sortPriceHigh(req, res, next);
         });
 
+        // show all shoes from db
         router.get("/user/:id/allShoes", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().allShoe(req, res, next);
+            new ShoeRouter().allShoes(req, res, next);
+        });
+
+        // show all shoes sorted from high to low
+        router.get("/user/:id/allShoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
+            new ShoeRouter().sortPriceHighDb(req, res, next);
+        });
+
+        // show all shoes sorted from low to high
+
+        router.get("/user/:id/allShoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
+            new ShoeRouter().sortPriceLowDb(req, res, next);
         });
 
         router.get("/user/:id/notifications", (req: Request, res: Response, next: NextFunction) => {
@@ -70,13 +82,77 @@ export class ShoeRouter extends BaseRoute {
         res.redirect("/user/" + userId + "/shoes/");
     }
 
-    public async allShoe(req: Request, res: Response, next: NextFunction) {
+    // get all the shoes from the db and render to shoesList view
+    public async allShoes(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
-        const userId = parseInt(req.params[idString], 10);
+
         const shoeIf = new ShoeModel();
-        const allShoes = await shoeIf.get_all();
+
+        const allShoes = await shoeIf.get_all_db();
+
+
+        const userId = parseInt(req.params[idString], 10);
+       // const allShoes = this.getAllDbShoes()
         this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
     }
+
+/*
+ sort low to high all the shoes in db and render in the shoelist view
+ */
+
+    public async sortPriceLowDb(req: Request, res: Response, next: NextFunction) {
+
+        const idString = "id";
+
+        const queryint = parseInt(req.params[idString], 10);
+
+        if (await this.check_local(queryint)) {
+
+            //const allShoes = this.getAllDbShoes()
+
+            const shoeIf = new ShoeModel();
+
+            const allShoes = await shoeIf.get_all_db();
+
+            const sorted_shoes: any = allShoes;
+
+            console.log(sorted_shoes);
+
+            sorted_shoes.sort((a: any, b: any) => a.current_price - b.current_price);
+
+            this.render(req, res, "shoeList", {
+                id: queryint,
+                username: userJson.username,
+                title: "Shoes",
+                data: sorted_shoes
+            });
+        }
+    }
+    public async sortPriceHighDb(req: Request, res: Response, next: NextFunction) {
+
+        const idString = "id";
+
+        const queryint = parseInt(req.params[idString], 10);
+
+        if (await this.check_local(queryint)) {
+
+            const shoeIf = new ShoeModel();
+
+            const allShoes = await shoeIf.get_all_db();
+
+            const sorted_shoes: any = allShoes;
+
+            sorted_shoes.sort((a: any, b: any) => b.current_price - a.current_price);
+
+            this.render(req, res, "shoeList", {
+                id: queryint,
+                username: userJson.username,
+                title: "Shoes",
+                data: sorted_shoes
+            });
+        }
+    }
+
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         console.log(req.body.purchase_price);
@@ -176,28 +252,12 @@ export class ShoeRouter extends BaseRoute {
                 {id: queryint, title: "Shoes", username: userJson.username, data: userShoes});
         } else {
             res.status(404)
-            .send({
-                message: "No user found with the given id.",
-                status: res.status,
-            });
+                .send({
+                    message: "No user found with the given id.",
+                    status: res.status,
+                });
+
         }
-        /* DbClient.connect()
-        .then((db) => {
-            return db!.collection("users").find().toArray();
-        })
-        .then((sneakers:any) => {
-            console.log(sneakers);
-            res.send(sneakers);
-        })
-        .catch((err) => {
-            console.log("err.message");
-        })
-        // res.send(Shoes);
-        /* const shoeArray: any[] = [];
-        Shoes.forEach((element: any) => {
-            shoeArray.push(JSON.parse(JSON.stringify(element)));
-        });
-        console.log(shoeArray); */
     }
 
     /**
@@ -305,6 +365,19 @@ export class ShoeRouter extends BaseRoute {
         } else {
             return;
         }
+    }
+
+    /* returns every shoe in db */
+    private async getAllDbShoes(){
+
+        const shoeIf = new ShoeModel();
+
+        const allShoes = await shoeIf.get_all_db();
+        if(allShoes) {
+            return allShoes;
+
+        }
+        return;
     }
 
 }

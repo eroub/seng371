@@ -42,6 +42,7 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
 describe ('get all the users shoes', () => {
 
     it('should return all correct shoes', () => {
+
         const test_arr = [{"shoe_id":3, "purchase_price":200}];
         const SM = new ShoeModel();
         const original = Promise.resolve(SM.getAllShoes(test_arr));
@@ -51,5 +52,6 @@ describe ('get all the users shoes', () => {
         });
         //chai.expect(Promise.resolve(users_shoes).to.eventually.equal("foo");
         chai.expect(cast).to.equal('Hello World!');
+
          });
     })
