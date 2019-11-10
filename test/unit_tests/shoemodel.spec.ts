@@ -41,17 +41,18 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
 
 describe ('get all the users shoes', () => {
 
-    it('should return all correct shoes', () => {
+    it('should return all correct shoes', async () => {
 
         const test_arr = [{"shoe_id":3, "purchase_price":200}];
         const SM = new ShoeModel();
-        const original = Promise.resolve(SM.getAllShoes(test_arr));
-        const cast = Promise.resolve(original);
+        const original:any = await SM.getAllShoes(test_arr);
+        /*const cast = Promise.resolve(original);
         cast.then(function(value) {
             console.log(value);
-        });
+        });*/
+        console.log(original[0]);
         //chai.expect(Promise.resolve(users_shoes).to.eventually.equal("foo");
-        chai.expect(cast).to.equal('Hello World!');
+        chai.expect(original[0].shoe_id).to.equal(3);
 
          });
     })
