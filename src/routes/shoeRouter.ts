@@ -250,13 +250,13 @@ export class ShoeRouter extends BaseRoute {
                 {id: queryint, title: "Shoes", username: userJson.username, data: userShoes});
         } else {
             res.status(404)
-            .send({
-                message: "No user found with the given id.",
-                status: res.status,
-            });
+                .send({
+                    message: "No user found with the given id.",
+                    status: res.status,
+                });
 
+        }
     }
-}
 
     /**
      * GET one shoe by id

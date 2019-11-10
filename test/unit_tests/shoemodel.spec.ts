@@ -1,7 +1,8 @@
 import "mocha";
 import chai from "chai";
-var chaiAsPromised = require("chai-as-promised");
+const chaiAsPromised = require("chai-as-promised");
 import {ShoeModel} from "../../src/models/shoe_model";
+
 chai.use(chaiAsPromised);
 /*
 
@@ -54,11 +55,17 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
 
 describe ('get all the users shoes', () => {
 
-    it('should return all correct shoes', async () => {
-        const test_arr = [{"1":300, "3":400,"5":500}]
-        const SM = new ShoeModel()
+    it('should return all correct shoes', () => {
 
-        // await testGetAll(SM, test_arr).should.eventually.equal('Hello World!');  
-        await testGetAll(SM, test_arr).should.equal('Hello World');
+        const test_arr = [{"shoe_id":3, "purchase_price":200}];
+        const SM = new ShoeModel();
+        const original = Promise.resolve(SM.getAllShoes(test_arr));
+        const cast = Promise.resolve(original);
+        cast.then(function(value) {
+            console.log(value);
+        });
+        //chai.expect(Promise.resolve(users_shoes).to.eventually.equal("foo");
+        chai.expect(cast).to.equal('Hello World!');
+
          });
     })
