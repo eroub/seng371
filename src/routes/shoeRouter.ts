@@ -88,8 +88,7 @@ export class ShoeRouter extends BaseRoute {
 
         const shoeIf = new ShoeModel();
 
-        const allShoes = await shoeIf.get_all_db();
-
+        const allShoes = await shoeIf.getAllDB();
 
         const userId = parseInt(req.params[idString], 10);
        // const allShoes = this.getAllDbShoes()
@@ -108,23 +107,23 @@ export class ShoeRouter extends BaseRoute {
 
         if (await this.check_local(queryint)) {
 
-            //const allShoes = this.getAllDbShoes()
+            // const allShoes = this.getAllDbShoes()
 
             const shoeIf = new ShoeModel();
 
-            const allShoes = await shoeIf.get_all_db();
+            const allShoes = await shoeIf.getAllDB();
 
-            const sorted_shoes: any = allShoes;
+            const sortedShoes: any = allShoes;
 
-            console.log(sorted_shoes);
+            console.log(sortedShoes);
 
-            sorted_shoes.sort((a: any, b: any) => a.current_price - b.current_price);
+            sortedShoes.sort((a: any, b: any) => a.current_price - b.current_price);
 
             this.render(req, res, "shoeList", {
+                data: sortedShoes,
                 id: queryint,
-                username: userJson.username,
                 title: "Shoes",
-                data: sorted_shoes
+                username: userJson.username,
             });
         }
     }
@@ -138,21 +137,20 @@ export class ShoeRouter extends BaseRoute {
 
             const shoeIf = new ShoeModel();
 
-            const allShoes = await shoeIf.get_all_db();
+            const allShoes = await shoeIf.getAllDB();
 
-            const sorted_shoes: any = allShoes;
+            const sortedShoes: any = allShoes;
 
-            sorted_shoes.sort((a: any, b: any) => b.current_price - a.current_price);
+            sortedShoes.sort((a: any, b: any) => b.current_price - a.current_price);
 
             this.render(req, res, "shoeList", {
+                data: sortedShoes,
                 id: queryint,
-                username: userJson.username,
                 title: "Shoes",
-                data: sorted_shoes
+                username: userJson.username,
             });
         }
     }
-
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         console.log(req.body.purchase_price);
@@ -258,6 +256,7 @@ export class ShoeRouter extends BaseRoute {
             });
 
     }
+}
 
     /**
      * GET one shoe by id
@@ -367,12 +366,12 @@ export class ShoeRouter extends BaseRoute {
     }
 
     /* returns every shoe in db */
-    private async getAllDbShoes(){
+    private async getAllDbShoes() {
 
         const shoeIf = new ShoeModel();
 
-        const allShoes = await shoeIf.get_all_db();
-        if(allShoes) {
+        const allShoes = await shoeIf.getAllDB();
+        if (allShoes) {
             return allShoes;
 
         }
