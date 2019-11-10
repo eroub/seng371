@@ -1,9 +1,9 @@
 extends layout
 
 block content
-    p #[a(href='/user/' + id + '/all_shoes') Add Shoes] #[a(href='/user/' + id + '/notifications') Notifications] #[a(href='/') Back]
+    p #[a(href='/user/' + id + '/allShoes') Add Shoes] #[a(href='/user/' + id + '/notifications') Notifications] #[a(href='/') Back]
     h1 #{username}'s Shoes:
-    p Sort #[a(href='/user/' + id + '/shoes/sort/price_high') High] #[a(href='/user/' + id + '/shoes/sort/price_low') Low]
+    p Sort #[a(href='/user/' + id + '/allShoes/sort/price_high') High] #[a(href='/user/' + id + '/allShoes/sort/price_low') Low]
     for shoe in data
         a(href='/user/' + id + '/shoes/' + shoe.shoe_id) #{shoe.brand} #{shoe.model} #{shoe.colorway}
         p Size: #{shoe.size}

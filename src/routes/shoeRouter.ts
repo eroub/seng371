@@ -12,25 +12,37 @@ export class ShoeRouter extends BaseRoute {
     public static create(router: Router) {
         // log
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
-        // add home page route
+        // users home page showing all the shoes the user owns
         router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getAll(req, res, next);
         });
-        // add getOne route
+        // showing a specific shoe that the user owns
         router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getOne(req, res, next);
         });
-
+        // sorting all the shoes the user owns from low to high
         router.get("/user/:id/shoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().sortPriceLow(req, res, next);
         });
-
+        // sorting the shoes the user owns from high to low
         router.get("/user/:id/shoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().sortPriceHigh(req, res, next);
         });
 
+        // show all shoes from db
         router.get("/user/:id/allShoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().allShoe(req, res, next);
+        });
+
+        // show all shoes sorted from high to low
+        router.get("/user/:id/allShoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
+            new ShoeRouter().sortPriceHigh(req, res, next);
+        });
+
+        // show all shoes sorted from low to high
+
+        router.get("/user/:id/allShoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
+            new ShoeRouter().sortPriceLow(req, res, next);
         });
 
         router.get("/user/:id/notifications", (req: Request, res: Response, next: NextFunction) => {
@@ -72,11 +84,12 @@ export class ShoeRouter extends BaseRoute {
         res.redirect('/user/' + userId + '/shoes/');
     }
 
+    // get all the shoes from the db
     public async allShoe(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
         const shoeIf = new ShoeModel();
-        const allShoes = await shoeIf.get_all();
+        const allShoes = await shoeIf.get_all_db();
         this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
     }
 
@@ -178,23 +191,6 @@ export class ShoeRouter extends BaseRoute {
                 message: "No user found with the given id.",
                 status: res.status,
             });
-        /* DbClient.connect()
-        .then((db) => {
-            return db!.collection("users").find().toArray();
-        })
-        .then((sneakers:any) => {
-            console.log(sneakers);
-            res.send(sneakers);
-        })
-        .catch((err) => {
-            console.log("err.message");
-        })
-        // res.send(Shoes);
-        /* const shoeArray: any[] = [];
-        Shoes.forEach((element: any) => {
-            shoeArray.push(JSON.parse(JSON.stringify(element)));
-        });
-        console.log(shoeArray); */
     }
 
     /**

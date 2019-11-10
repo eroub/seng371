@@ -62,22 +62,33 @@ var ShoeRouter = /** @class */ (function (_super) {
     ShoeRouter.create = function (router) {
         // log
         console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
-        // add home page route
+        // users home page showing all the shoes the user owns
         router.get("/user/:id/shoes", function (req, res, next) {
             new ShoeRouter().getAll(req, res, next);
         });
-        // add getOne route
+        // showing a specific shoe that the user owns
         router.get("/user/:id/shoes/:id2", function (req, res, next) {
             new ShoeRouter().getOne(req, res, next);
         });
+        // sorting all the shoes the user owns from low to high
         router.get("/user/:id/shoes/sort/price_low", function (req, res, next) {
             new ShoeRouter().sortPriceLow(req, res, next);
         });
+        // sorting the shoes the user owns from high to low
         router.get("/user/:id/shoes/sort/price_high", function (req, res, next) {
             new ShoeRouter().sortPriceHigh(req, res, next);
         });
+        // show all shoes from db
         router.get("/user/:id/allShoes", function (req, res, next) {
             new ShoeRouter().allShoe(req, res, next);
+        });
+        // show all shoes sorted from high to low
+        router.get("/user/:id/allShoes/sort/price_high", function (req, res, next) {
+            new ShoeRouter().sortPriceHigh(req, res, next);
+        });
+        // show all shoes sorted from low to high
+        router.get("/user/:id/allShoes/sort/price_low", function (req, res, next) {
+            new ShoeRouter().sortPriceLow(req, res, next);
         });
         router.get("/user/:id/notifications", function (req, res, next) {
             new ShoeRouter().notificationCentre(req, res, next);
@@ -126,6 +137,7 @@ var ShoeRouter = /** @class */ (function (_super) {
             });
         });
     };
+    // get all the shoes from the db
     ShoeRouter.prototype.allShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId, shoeIf, allShoes;
@@ -135,7 +147,7 @@ var ShoeRouter = /** @class */ (function (_super) {
                         idString = "id";
                         userId = parseInt(req.params[idString], 10);
                         shoeIf = new shoe_model_1.ShoeModel();
-                        return [4 /*yield*/, shoeIf.get_all()];
+                        return [4 /*yield*/, shoeIf.get_all_db()];
                     case 1:
                         allShoes = _a.sent();
                         this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });

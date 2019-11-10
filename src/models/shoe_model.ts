@@ -93,7 +93,11 @@ export class ShoeModel {
         return shoes;
     }
 
-    public get_all() {
+    /*
+            Return all the shoes for the view where we need to see all shoes available in db
+     */
+
+    public get_all_db() {
         const shoes = DbClient.connect()
             .then((db) => {
                 return db!.collection("shoes").find().toArray();
