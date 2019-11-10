@@ -80,7 +80,10 @@ var ShoeModel = /** @class */ (function () {
         });
         return shoes;
     };
-    ShoeModel.prototype.get_all = function () {
+    /*
+            Return all the shoes for the view where we need to see all shoes available in db
+     */
+    ShoeModel.prototype.get_all_db = function () {
         var shoes = DbClient.connect()
             .then(function (db) {
             return db.collection("shoes").find().toArray();
