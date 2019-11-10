@@ -23,10 +23,11 @@ export class UserModel {
         return users;
     }
 
-    public add_shoe(userId: any, shoeID:number, purchase:number) {
+    public add_shoe(userId: any, shoeID: number, purchase: number) {
         DbClient.connect()
             .then((db) => {
-                db!.collection("users").update({user_id:userId},{$push:{shoelist: {"shoe_id":shoeID,"purchase_price":purchase}}});
+                db!.collection("users").update({user_id: userId},
+                    {$push: {shoelist: {shoe_id: shoeID, purchase_price: purchase}}});
             })
             .catch((err) => {
                 console.log("err.message");
@@ -36,10 +37,11 @@ export class UserModel {
 
     }
 
-    public remove_shoe(userID: any, shoeID:number) {
+    public remove_shoe(userID: any, shoeID: number) {
         DbClient.connect()
             .then((db) => {
-                db!.collection("users").update({user_id:userID},{$pull:{shoelist: {"shoe_id":shoeID}}});
+                db!.collection("users").update({user_id: userID},
+                    {$pull: {shoelist: {shoe_id: shoeID}}});
             })
             .catch((err) => {
                 console.log("err.message");

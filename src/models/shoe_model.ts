@@ -23,14 +23,10 @@ export class ShoeModel {
 
         const shoes = DbClient.connect()
             .then((db) => {
-
                 // will return all the shoes in db
                 return db!.collection("shoes").find().toArray();
-
             })
-
             .then((sneakers: any) => {
-
                 // loop over all the shoes in db and push into jsonShoeArr only those that are
                 // owned by user
                 let shoe;
