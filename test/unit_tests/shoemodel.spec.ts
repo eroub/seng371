@@ -1,9 +1,9 @@
 import "mocha";
 import chai from "chai";
-const chaiAsPromised = require("chai-as-promised");
+// const chaiAsPromised = require("chai-as-promised");
 import {ShoeModel} from "../../src/models/shoe_model";
 
-chai.use(chaiAsPromised);
+// chai.use(chaiAsPromised);
 /*
 
 [ 1, 2, 3 ]
@@ -43,28 +43,22 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
     user_shoes = SM.getAllShoes(test_arr);
      console.log("Object grabbed: " + user_shoes);
    })        
-   .then(value => {
-     console.log('resolved', value);
-   })
-   .catch(error => {
-     console.log('rejected', error);
-   });
    return user_shoes;
  }
 
 
 describe ('get all the users shoes', () => {
 
-    it('should return all correct shoes', () => {
+    it('should return all correct shoes', async () => {
 
         const test_arr = [{"shoe_id":3, "purchase_price":200}];
         const SM = new ShoeModel();
         const original = Promise.resolve(SM.getAllShoes(test_arr));
         const cast = Promise.resolve(original);
         cast.then(function(value) {
-            console.log(value);
+          console.log(value);
         });
-        //chai.expect(Promise.resolve(users_shoes).to.eventually.equal("foo");
+        console.log(cast)
         chai.expect(cast).to.equal('Hello World!');
 
          });
