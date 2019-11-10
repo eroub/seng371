@@ -80,15 +80,15 @@ var ShoeRouter = /** @class */ (function (_super) {
         });
         // show all shoes from db
         router.get("/user/:id/allShoes", function (req, res, next) {
-            new ShoeRouter().allShoe(req, res, next);
+            new ShoeRouter().allShoes(req, res, next);
         });
         // show all shoes sorted from high to low
         router.get("/user/:id/allShoes/sort/price_high", function (req, res, next) {
-            new ShoeRouter().sortPriceHigh(req, res, next);
+            new ShoeRouter().sortPriceHighDb(req, res, next);
         });
         // show all shoes sorted from low to high
         router.get("/user/:id/allShoes/sort/price_low", function (req, res, next) {
-            new ShoeRouter().sortPriceLow(req, res, next);
+            new ShoeRouter().sortPriceLowDb(req, res, next);
         });
         router.get("/user/:id/notifications", function (req, res, next) {
             new ShoeRouter().notificationCentre(req, res, next);
@@ -137,21 +137,84 @@ var ShoeRouter = /** @class */ (function (_super) {
             });
         });
     };
-    // get all the shoes from the db
-    ShoeRouter.prototype.allShoe = function (req, res, next) {
+    // get all the shoes from the db and render to shoesList view
+    ShoeRouter.prototype.allShoes = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, userId, shoeIf, allShoes;
+            var idString, shoeIf, allShoes, userId;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         idString = "id";
-                        userId = parseInt(req.params[idString], 10);
                         shoeIf = new shoe_model_1.ShoeModel();
                         return [4 /*yield*/, shoeIf.get_all_db()];
                     case 1:
                         allShoes = _a.sent();
+                        userId = parseInt(req.params[idString], 10);
+                        // const allShoes = this.getAllDbShoes()
                         this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });
                         return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /*
+     sort low to high all the shoes in db and render in the shoelist view
+     */
+    ShoeRouter.prototype.sortPriceLowDb = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint, shoeIf, allShoes, sorted_shoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.get_all_db()];
+                    case 2:
+                        allShoes = _a.sent();
+                        sorted_shoes = allShoes;
+                        console.log(sorted_shoes);
+                        sorted_shoes.sort(function (a, b) { return a.current_price - b.current_price; });
+                        this.render(req, res, "shoeList", {
+                            id: queryint,
+                            username: userJson.username,
+                            title: "Shoes",
+                            data: sorted_shoes
+                        });
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.sortPriceHighDb = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint, shoeIf, allShoes, sorted_shoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.get_all_db()];
+                    case 2:
+                        allShoes = _a.sent();
+                        sorted_shoes = allShoes;
+                        sorted_shoes.sort(function (a, b) { return b.current_price - a.current_price; });
+                        this.render(req, res, "shoeList", {
+                            id: queryint,
+                            username: userJson.username,
+                            title: "Shoes",
+                            data: sorted_shoes
+                        });
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -465,6 +528,25 @@ var ShoeRouter = /** @class */ (function (_super) {
                         }
                         else
                             return [2 /*return*/];
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* returns every shoe in db */
+    ShoeRouter.prototype.getAllDbShoes = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var shoeIf, allShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.get_all_db()];
+                    case 1:
+                        allShoes = _a.sent();
+                        if (allShoes) {
+                            return [2 /*return*/, allShoes];
+                        }
                         return [2 /*return*/];
                 }
             });
