@@ -20,10 +20,8 @@ var ShoeModel = /** @class */ (function () {
         var jsonShoeArr = [];
         var shoes = DbClient.connect()
             .then(function (db) {
-            console.log("test 123");
             // will return all the shoes in db
             return db.collection("shoes").find().toArray();
-            console.log("test 456");
         })
             .then(function (sneakers) {
             // loop over all the shoes in db and push into jsonShoeArr only those that are
