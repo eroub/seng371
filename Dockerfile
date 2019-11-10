@@ -32,5 +32,3 @@ RUN npm run build
 CMD ["npm", "start"]
 
 EXPOSE 7000
-
-
