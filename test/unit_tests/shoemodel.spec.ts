@@ -1,9 +1,9 @@
 import "mocha";
 import chai from "chai";
-const chaiAsPromised = require("chai-as-promised");
 import {ShoeModel} from "../../src/models/shoe_model";
 
-chai.use(chaiAsPromised);
+//const app = require('../../src/app');
+
 /*
 
 [ 1, 2, 3 ]
@@ -37,36 +37,55 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
 
  */
 
- async function testGetAll(SM: any, test_arr: any) {
-  let user_shoes = {}
-  await new Promise((resolve, reject) => {
-    user_shoes = SM.getAllShoes(test_arr);
-     console.log("Object grabbed: " + user_shoes);
-   })        
-   .then(value => {
-     console.log('resolved', value);
-   })
-   .catch(error => {
-     console.log('rejected', error);
-   });
-   return user_shoes;
- }
-
-
-describe ('get all the users shoes', () => {
+describe ('#getAllShoes', () => {
 
     it('should return all correct shoes', async () => {
 
         const test_arr = [{"shoe_id":3, "purchase_price":200}];
         const SM = new ShoeModel();
-        const original:any = await SM.getAllShoes(test_arr);
+        const shoes:any = await SM.getAllShoes(test_arr);
         /*const cast = Promise.resolve(original);
         cast.then(function(value) {
             console.log(value);
         });*/
-        console.log(original[0]);
+        console.log(shoes[0]);
         //chai.expect(Promise.resolve(users_shoes).to.eventually.equal("foo");
-        chai.expect(original[0].shoe_id).to.equal(3);
+        chai.expect(shoes[0].shoe_id).to.equal(3);
 
-         });
-    })
+    });
+});
+
+describe ('#getOneShoe', () => {
+
+    it('should return one correct shoes', async () => {
+
+        const SM = new ShoeModel();
+        const shoe:any = await SM.getOneShoe(2);
+        /*const cast = Promise.resolve(original);
+        cast.then(function(value) {
+            console.log(value);
+        });*/
+        console.log(shoe);
+        //chai.expect(Promise.resolve(users_shoes).to.eventually.equal("foo");
+        chai.expect(shoe.shoe_id).to.equal(2);
+
+    });
+});
+
+describe ('#getAllDb', () => {
+
+    it('should return all shoes in the database', async () => {
+
+        const SM = new ShoeModel();
+        const shoes:any = await SM.getAllDB();
+        /*const cast = Promise.resolve(original);
+        cast.then(function(value) {
+            console.log(value);
+        });*/
+        console.log(shoes);
+        //chai.expect(Promise.resolve(users_shoes).to.eventually.equal("foo");
+        chai.expect(shoes.length).to.equal(3);
+
+    });
+});
+
