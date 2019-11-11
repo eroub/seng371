@@ -28,6 +28,7 @@ export class UserModel {
             .then((db) => {
                 db!.collection("users").update({user_id: userId},
                     {$push: {shoelist: {shoe_id: shoeID, purchase_price: purchase}}});
+                console.log("adding shoe");
                 return true;
             })
             .catch((err) => {
