@@ -340,7 +340,7 @@ export class ShoeRouter extends BaseRoute {
 
     private async getUserInfo(queryint: number) {
         const userIf = new UserModel();
-        const userInfo = await userIf.get_all(queryint);
+        const userInfo = await userIf.userInfo(queryint);
         console.log(userInfo);
         if (userInfo.length !== 0) {
             return JSON.parse(JSON.stringify(userInfo[0]));

@@ -146,7 +146,7 @@ var ShoeRouter = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         shoeIf = new shoe_model_1.ShoeModel();
-                        return [4 /*yield*/, shoeIf.get_all_db()];
+                        return [4 /*yield*/, shoeIf.getAllDB()];
                     case 1:
                         allShoes = _a.sent();
                         userId = parseInt(req.params[idString], 10);
@@ -162,7 +162,7 @@ var ShoeRouter = /** @class */ (function (_super) {
      */
     ShoeRouter.prototype.sortPriceLowDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, queryint, shoeIf, allShoes, sorted_shoes;
+            var idString, queryint, shoeIf, allShoes, sortedShoes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -172,17 +172,17 @@ var ShoeRouter = /** @class */ (function (_super) {
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
                         shoeIf = new shoe_model_1.ShoeModel();
-                        return [4 /*yield*/, shoeIf.get_all_db()];
+                        return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         allShoes = _a.sent();
-                        sorted_shoes = allShoes;
-                        console.log(sorted_shoes);
-                        sorted_shoes.sort(function (a, b) { return a.current_price - b.current_price; });
+                        sortedShoes = allShoes;
+                        console.log(sortedShoes);
+                        sortedShoes.sort(function (a, b) { return a.current_price - b.current_price; });
                         this.render(req, res, "shoeList", {
+                            data: sortedShoes,
                             id: queryint,
-                            username: userJson.username,
                             title: "Shoes",
-                            data: sorted_shoes
+                            username: userJson.username,
                         });
                         _a.label = 3;
                     case 3: return [2 /*return*/];
@@ -192,7 +192,7 @@ var ShoeRouter = /** @class */ (function (_super) {
     };
     ShoeRouter.prototype.sortPriceHighDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, queryint, shoeIf, allShoes, sorted_shoes;
+            var idString, queryint, shoeIf, allShoes, sortedShoes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -202,16 +202,16 @@ var ShoeRouter = /** @class */ (function (_super) {
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
                         shoeIf = new shoe_model_1.ShoeModel();
-                        return [4 /*yield*/, shoeIf.get_all_db()];
+                        return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         allShoes = _a.sent();
-                        sorted_shoes = allShoes;
-                        sorted_shoes.sort(function (a, b) { return b.current_price - a.current_price; });
+                        sortedShoes = allShoes;
+                        sortedShoes.sort(function (a, b) { return b.current_price - a.current_price; });
                         this.render(req, res, "shoeList", {
+                            data: sortedShoes,
                             id: queryint,
-                            username: userJson.username,
                             title: "Shoes",
-                            data: sorted_shoes
+                            username: userJson.username,
                         });
                         _a.label = 3;
                     case 3: return [2 /*return*/];
@@ -485,7 +485,7 @@ var ShoeRouter = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         userIf = new user_model_1.UserModel();
-                        return [4 /*yield*/, userIf.get_all(queryint)];
+                        return [4 /*yield*/, userIf.userInfo(queryint)];
                     case 1:
                         userInfo = _a.sent();
                         console.log(userInfo);
@@ -544,7 +544,7 @@ var ShoeRouter = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         shoeIf = new shoe_model_1.ShoeModel();
-                        return [4 /*yield*/, shoeIf.get_all_db()];
+                        return [4 /*yield*/, shoeIf.getAllDB()];
                     case 1:
                         allShoes = _a.sent();
                         if (allShoes) {

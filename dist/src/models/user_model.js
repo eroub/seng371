@@ -4,7 +4,7 @@ var DbClient = require("../DbClient");
 var UserModel = /** @class */ (function () {
     function UserModel() {
     }
-    UserModel.prototype.get_all = function (userId) {
+    UserModel.prototype.userInfo = function (userId) {
         var users = DbClient.connect()
             .then(function (db) {
             return db.collection("users").find({ user_id: userId }).toArray();
@@ -21,23 +21,30 @@ var UserModel = /** @class */ (function () {
         return users;
     };
     UserModel.prototype.add_shoe = function (userId, shoeID, purchase) {
+        var shoe_add = false;
         DbClient.connect()
             .then(function (db) {
+            console.log("shoe_add == true");
+            shoe_add = true;
             db.collection("users").update({ user_id: userId }, { $push: { shoelist: { shoe_id: shoeID, purchase_price: purchase } } });
         })
             .catch(function (err) {
             console.log("err.message");
         });
-        // console.log(users);
+        return shoe_add;
     };
     UserModel.prototype.remove_shoe = function (userID, shoeID) {
+        var shoe_remove = false;
         DbClient.connect()
             .then(function (db) {
+            console.log("shoe_add == true");
+            shoe_remove = true;
             db.collection("users").update({ user_id: userID }, { $pull: { shoelist: { shoe_id: shoeID } } });
         })
             .catch(function (err) {
             console.log("err.message");
         });
+        return shoe_remove;
     };
     return UserModel;
 }());

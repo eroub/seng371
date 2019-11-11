@@ -4,7 +4,7 @@ export class UserModel {
 
     constructor() {}
 
-    public get_all(userId: any) {
+    public userInfo(userId: any) {
         const users = DbClient.connect()
             .then((db) => {
                 return db!.collection("users").find({user_id: userId}).toArray();
@@ -24,27 +24,30 @@ export class UserModel {
     }
 
     public add_shoe(userId: any, shoeID: number, purchase: number) {
-        DbClient.connect()
+        const shoeAdd = DbClient.connect()
             .then((db) => {
                 db!.collection("users").update({user_id: userId},
                     {$push: {shoelist: {shoe_id: shoeID, purchase_price: purchase}}});
+                return true;
             })
             .catch((err) => {
                 console.log("err.message");
+                return false;
             });
-
-        // console.log(users);
-
+        return shoeAdd;
     }
 
     public remove_shoe(userID: any, shoeID: number) {
-        DbClient.connect()
+        const shoeRemove = DbClient.connect()
             .then((db) => {
                 db!.collection("users").update({user_id: userID},
                     {$pull: {shoelist: {shoe_id: shoeID}}});
+                return true;
             })
             .catch((err) => {
                 console.log("err.message");
+                return false;
             });
+        return shoeRemove;
     }
 }

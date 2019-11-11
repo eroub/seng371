@@ -38,9 +38,7 @@ this arr [ { _id: 5dbe1a1dff564fe9fa9bc2f2,
  */
 
 describe ('#getAllShoes', () => {
-
     it('should return all correct shoes', async () => {
-
         const test_arr = [{"shoe_id":3, "purchase_price":200}];
         const SM = new ShoeModel();
         const shoes:any = await SM.getAllShoes(test_arr);
