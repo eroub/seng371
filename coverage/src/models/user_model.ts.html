@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">46.34% </span>
+        <span class="strong">48.78% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>19/41</span>
+        <span class='fraction'>20/41</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52.94% </span>
+        <span class="strong">56.25% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>9/17</span>
+        <span class='fraction'>9/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">56.25% </span>
+        <span class="strong">59.38% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>18/32</span>
+        <span class='fraction'>19/32</span>
       </div>
     </div>
     <p class="quiet">
@@ -99,7 +99,8 @@
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -130,6 +131,21 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -137,22 +153,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import DbClient = require("../DbClient");
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import DbClient = require("../DbClient");
 &nbsp;
 export class UserModel {
 &nbsp;
@@ -177,41 +179,42 @@ export class UserModel {
         return users;
     }
 &nbsp;
-    public <span class="cstat-no" title="statement not covered" >add_shoe(userId: any, shoeID: number, purchase: number) {</span>
+    public add_shoe(userId: any, shoeID: number, purchase: number) {
         const shoeAdd =<span class="cstat-no" title="statement not covered" > DbCli</span>ent.connect()
 <span class="cstat-no" title="statement not covered" >            .then((db) =&gt; {</span>
                 db<span class="fstat-no" title="function not covered" >!.</span>collection("users").update({user_id: userId},
 <span class="cstat-no" title="statement not covered" >                    {$push: {shoelist: {shoe_id: </span>shoeID, purchase_price: purchase}}});
+<span class="cstat-no" title="statement not covered" >                console.log("addi</span>ng shoe");
+<span class="cstat-no" title="statement not covered" >                return true;</span>
+            })
+            .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
+<span class="cstat-no" title="statement not covered" >                con<span class="fstat-no" title="function not covered" >so</span>le.log("err.message");</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >                return false;</span></span>
+            });
+<span class="cstat-no" title="statement not covered" >        return shoeAdd;</span>
+    }
+&nbsp;
+    public <span class="cstat-no" title="statement not covered" >remove_shoe(userID: any, shoeID: number) {</span>
+        const shoeRemove =<span class="cstat-no" title="statement not covered" > DbCli</span>ent.connect()
+<span class="cstat-no" title="statement not covered" >            .then((db) =&gt; {</span>
+                db<span class="fstat-no" title="function not covered" >!.</span>collection("users").update({user_id: userID},
+<span class="cstat-no" title="statement not covered" >                    {$pull: {shoelist: {shoe_id: </span>shoeID}}});
 <span class="cstat-no" title="statement not covered" >                return true;</span>
             })<span class="cstat-no" title="statement not covered" ></span>
             .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
 <span class="cstat-no" title="statement not covered" >                console.log("err.message");</span>
 <span class="cstat-no" title="statement not covered" >                ret<span class="fstat-no" title="function not covered" >ur</span>n false;</span>
             });<span class="cstat-no" title="statement not covered" ></span>
-        return shoeAdd;
+        return shoeRemove;
     }<span class="cstat-no" title="statement not covered" ></span>
-&nbsp;
-    public remove_shoe(userID: any, shoeID: number) {
-<span class="fstat-no" title="function not covered" >        con<span class="cstat-no" title="statement not covered" >s</span>t shoeRemove = DbClient.connect()</span>
-            .then((db) =&gt; <span class="cstat-no" title="statement not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >                db!.collection("users").update({user_id: userID},</span>
-<span class="fstat-no" title="function not covered" ></span>                    {$pull: {shoelist: {shoe_id: shoeID}}});
-<span class="cstat-no" title="statement not covered" >                return true;</span>
-            })<span class="cstat-no" title="statement not covered" ></span>
-            .cat<span class="cstat-no" title="statement not covered" >ch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >                console.log("err.message");</span>
-<span class="cstat-no" title="statement not covered" >                return false;</span>
-            });<span class="fstat-no" title="function not covered" ></span>
-        return s<span class="cstat-no" title="statement not covered" >hoeRemove;</span>
-    }
-}<span class="cstat-no" title="statement not covered" ></span>
-&nbsp;</pre></td></tr>
+}
+<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Nov 11 2019 15:00:20 GMT-0800 (STD)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Nov 11 2019 15:46:00 GMT-0800 (STD)
 </div>
 </div>
 <script src="../../prettify.js"></script>
