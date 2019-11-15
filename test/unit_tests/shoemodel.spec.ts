@@ -1,9 +1,6 @@
 import "mocha";
 import chai from "chai";
 import {ShoeModel} from "../../src/models/shoe_model";
-import { Server } from "../../src/app"
-const request = require('supertest');
-//const app = require('../../src/app');
 
 /*
 
@@ -54,19 +51,6 @@ describe ('Testing shoe_model functionality', () => {
         const SM = new ShoeModel();
         const shoes:any = await SM.getAllDB();
         chai.expect(shoes.length).to.equal(3);
-    });
-});
-
-describe('BookRoute', () => {
-    it ('yeet', async () => {
-        const yeet = new Server();
-        const ora = await request(yeet.getExpressInstance()).get('/user/4/shoes');
-            //.expect('Content-Type', /json/)
-            //.expect('Content-Length', '4')
-            chai.expect(ora.statusCode).to.equal(404);
-            /*.end(function (err: any, res: any) {
-                if (err) throw err;
-            });*/
     });
 });
 

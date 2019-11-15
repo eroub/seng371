@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    a(href='/user/' + id + '/all_shoes') Back
+    h1 #{shoe.brand} #{shoe.model} #{shoe.colorway}
+    p Size: #{shoe.size}
+    form(method='POST' action='/user/' + id + '/add_shoe/' + shoe.shoe_id)
+        div.form-group
+            label(for='name') Purchase Price:
+            input#name.form-control(type='text', placeholder='$',name='purchase_price')
+        button.btn.btn-primary(type='submit') Add Shoe

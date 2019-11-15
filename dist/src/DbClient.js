@@ -51,7 +51,6 @@ var DbClient = /** @class */ (function () {
                     case 1:
                         client = _a.sent();
                         this.db = client.db("stalkx");
-                        console.log("Connected to db");
                         return [2 /*return*/, this.db];
                     case 2:
                         error_1 = _a.sent();

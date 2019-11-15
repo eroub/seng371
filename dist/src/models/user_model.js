@@ -21,30 +21,29 @@ var UserModel = /** @class */ (function () {
         return users;
     };
     UserModel.prototype.add_shoe = function (userId, shoeID, purchase) {
-        var shoe_add = false;
-        DbClient.connect()
+        var shoeAdd = DbClient.connect()
             .then(function (db) {
-            console.log("shoe_add == true");
-            shoe_add = true;
             db.collection("users").update({ user_id: userId }, { $push: { shoelist: { shoe_id: shoeID, purchase_price: purchase } } });
+            console.log("adding shoe");
+            return true;
         })
             .catch(function (err) {
             console.log("err.message");
+            return false;
         });
-        return shoe_add;
+        return shoeAdd;
     };
     UserModel.prototype.remove_shoe = function (userID, shoeID) {
-        var shoe_remove = false;
-        DbClient.connect()
+        var shoeRemove = DbClient.connect()
             .then(function (db) {
-            console.log("shoe_add == true");
-            shoe_remove = true;
             db.collection("users").update({ user_id: userID }, { $pull: { shoelist: { shoe_id: shoeID } } });
+            return true;
         })
             .catch(function (err) {
             console.log("err.message");
+            return false;
         });
-        return shoe_remove;
+        return shoeRemove;
     };
     return UserModel;
 }());

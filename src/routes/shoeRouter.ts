@@ -153,7 +153,7 @@ export class ShoeRouter extends BaseRoute {
     }
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
-        console.log(req.body.purchase_price);
+        console.log("Purchase price is: " + req.body.purchase_price);
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
@@ -167,6 +167,7 @@ export class ShoeRouter extends BaseRoute {
                 if (!price) {
                     price = 0;
                 }
+                console.log("Purchase price is: " + price);
                 await uif.add_shoe(userId, shoeId, price);
                 res.redirect("/user/" + userId + "/shoes/");
             }
@@ -244,10 +245,11 @@ export class ShoeRouter extends BaseRoute {
         console.log(userJson);
         if (userJson) {
             userShoes = await this.getUserShoes(userJson);
+            let netGain:number = await this.getNetGain(userShoes)
             console.log("Here's the user info: " + userJson);
             console.log("Here's the shoes: " + userShoes);
             this.render(req, res, "allShoes",
-                {id: queryint, title: "Shoes", username: userJson.username, data: userShoes});
+                {id: queryint, title: "Shoes", username: userJson.username, data: userShoes, net: netGain});
         } else {
             res.status(404)
                 .send({
@@ -329,7 +331,7 @@ export class ShoeRouter extends BaseRoute {
         let purchase = 0;
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
-                const shoeid: number = userShoes[item].shoeId;
+                const shoeid: number = userShoes[item].shoe_id;
                 if (shoeid === id) {
                     purchase = userShoes[item].purchase_price;
                 }
@@ -363,6 +365,18 @@ export class ShoeRouter extends BaseRoute {
         } else {
             return;
         }
+    }
+
+    private async getNetGain(shoelist:any) {
+        let net:number = 0;
+        for (const item in shoelist) {
+            if (shoelist.hasOwnProperty(item)) {
+                const purchase = await this.getPurchasePrice(userJson.shoelist, shoelist[item].shoe_id);
+                const shoePrice = shoelist[item].current_price;
+                net = net + shoePrice - purchase;
+            }
+        }
+        return net;
     }
 
     /* returns every shoe in db */

@@ -225,7 +225,7 @@ var ShoeRouter = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log(req.body.purchase_price);
+                        console.log("Purchase price is: " + req.body.purchase_price);
                         userIdString = "id";
                         userId = parseInt(req.params[userIdString], 10);
                         shoeIdString = "id2";
@@ -242,6 +242,7 @@ var ShoeRouter = /** @class */ (function (_super) {
                         if (!price) {
                             price = 0;
                         }
+                        console.log("Purchase price is: " + price);
                         return [4 /*yield*/, uif.add_shoe(userId, shoeId, price)];
                     case 3:
                         _a.sent();
@@ -346,7 +347,7 @@ var ShoeRouter = /** @class */ (function (_super) {
      */
     ShoeRouter.prototype.getAll = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, queryint;
+            var idString, queryint, netGain;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -356,22 +357,25 @@ var ShoeRouter = /** @class */ (function (_super) {
                     case 1:
                         userJson = _a.sent();
                         console.log(userJson);
-                        if (!userJson) return [3 /*break*/, 3];
+                        if (!userJson) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.getUserShoes(userJson)];
                     case 2:
                         userShoes = _a.sent();
+                        return [4 /*yield*/, this.getNetGain(userShoes)];
+                    case 3:
+                        netGain = _a.sent();
                         console.log("Here's the user info: " + userJson);
                         console.log("Here's the shoes: " + userShoes);
-                        this.render(req, res, "allShoes", { id: queryint, title: "Shoes", username: userJson.username, data: userShoes });
-                        return [3 /*break*/, 4];
-                    case 3:
+                        this.render(req, res, "allShoes", { id: queryint, title: "Shoes", username: userJson.username, data: userShoes, net: netGain });
+                        return [3 /*break*/, 5];
+                    case 4:
                         res.status(404)
                             .send({
                             message: "No user found with the given id.",
                             status: res.status,
                         });
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        _a.label = 5;
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -470,7 +474,7 @@ var ShoeRouter = /** @class */ (function (_super) {
         var purchase = 0;
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
-                var shoeid = userShoes[item].shoeId;
+                var shoeid = userShoes[item].shoe_id;
                 if (shoeid === id) {
                     purchase = userShoes[item].purchase_price;
                 }
@@ -532,6 +536,36 @@ var ShoeRouter = /** @class */ (function (_super) {
                             return [2 /*return*/];
                         }
                         return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.getNetGain = function (shoelist) {
+        return __awaiter(this, void 0, void 0, function () {
+            var net, _a, _b, _i, item, purchase, shoePrice;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        net = 0;
+                        _a = [];
+                        for (_b in shoelist)
+                            _a.push(_b);
+                        _i = 0;
+                        _c.label = 1;
+                    case 1:
+                        if (!(_i < _a.length)) return [3 /*break*/, 4];
+                        item = _a[_i];
+                        if (!shoelist.hasOwnProperty(item)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.getPurchasePrice(userJson.shoelist, shoelist[item].shoe_id)];
+                    case 2:
+                        purchase = _c.sent();
+                        shoePrice = shoelist[item].current_price;
+                        net = net + shoePrice - purchase;
+                        _c.label = 3;
+                    case 3:
+                        _i++;
+                        return [3 /*break*/, 1];
+                    case 4: return [2 /*return*/, net];
                 }
             });
         });
