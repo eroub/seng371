@@ -2,7 +2,7 @@ import "mocha";
 import chai from "chai";
 import {UserModel} from "../../src/models/user_model";
 
-describe ('Testing user_model functionality:', () => {
+describe ('Testing UserModel Functionality:', () => {
     it('Should return the correct specified user: 1', async () => {
         const UM = new UserModel();
         const uInfo: any = await UM.userInfo(1);

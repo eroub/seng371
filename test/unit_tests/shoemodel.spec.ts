@@ -4,7 +4,7 @@ import {ShoeModel} from "../../src/models/shoe_model";
 import { Server } from "../../src/app"
 const request = require('supertest');
 
-describe ('Testing shoe_model functionality', () => {
+describe ('Testing ShoeModel Functionality:', () => {
     it('should return all correct shoes', async () => {
         const test_arr = [{"shoe_id":3, "purchase_price":200}];
         const SM = new ShoeModel();
