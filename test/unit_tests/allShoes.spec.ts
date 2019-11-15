@@ -21,7 +21,7 @@ describe('  allShoes:', () => {
 
     });
 
-    it( 'should return all the shoes in db', async () => {
+    it( 'should show the all shoes view to a registered user', async () => {
 
         let id = '1';
 
@@ -29,16 +29,9 @@ describe('  allShoes:', () => {
 
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/allShoes');
 
-        // get shoes arr from response
+        chai.expect(response.statusCode).to.equal(200);
 
-        // query db to get all shoes
 
-        console.log(response);
-        const SM = new ShoeModel();
-
-        const shoes:any = await SM.getAllDB();
-
-        chai.expect(shoes.length).to.equal(3);
 
     });
 
