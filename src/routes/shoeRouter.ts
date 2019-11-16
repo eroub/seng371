@@ -98,13 +98,10 @@ export class ShoeRouter extends BaseRoute {
     // get all the shoes from the db and render to shoesList view
     public async allShoes(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
-
         const userId = parseInt(req.params[idString], 10);
-
         if (await this.check_local(userId)) {
             const shoeIf = new ShoeModel();
             const allShoes = await shoeIf.getAllDB();
-            // const allShoes = this.getAllDbShoes()
             this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
         } else {
             res.status(404)
@@ -382,13 +379,15 @@ export class ShoeRouter extends BaseRoute {
 
     /* returns every shoe in db */
     private async getAllDbShoes() {
-
+        let allShoes = null;
         const shoeIf = new ShoeModel();
-
-        const allShoes = await shoeIf.getAllDB();
+        try {
+            allShoes = await shoeIf.getAllDB();
+        } catch {
+            return false;
+        }
         if (allShoes) {
             return allShoes;
-
         }
         return;
     }

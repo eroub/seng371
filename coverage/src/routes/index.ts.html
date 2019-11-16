@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">61.54% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>8/13</span>
+        <span class='fraction'>0/13</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -30,21 +30,21 @@
         <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">40% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/5</span>
+        <span class='fraction'>0/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">54.55% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/11</span>
+        <span class='fraction'>0/11</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line low'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -104,14 +104,14 @@
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -120,11 +120,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,27 +148,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { NextFunction, Request, Response, Router } from "express";
-import { BaseRoute } from "./router";
+<span class="cstat-no" title="statement not covered" >import { BaseRoute } from "./router";</span>
 &nbsp;
 /**
  * / route
  *
  * @class IndexRoute
  */
-export class IndexRoute extends BaseRoute {
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export class <span class="cstat-no" title="statement not covered" >I</span>ndexRoute </span>extends <span class="cstat-no" title="statement not covered" >BaseRoute </span>{</span>
 &nbsp;
     /**
      * Create the routes.
@@ -177,11 +177,11 @@ export class IndexRoute extends BaseRoute {
      * @method create
      * @static
      */
-    public static create(router: Router) {
+<span class="fstat-no" title="function not covered" >    public static <span class="cstat-no" title="statement not covered" >c</span>reate(router: Router) {</span>
         // log
         // console.log("[IndexRoute::create] Creating index route.");
         // add home page route
-        router.get("/", <span class="fstat-no" title="function not covered" >(r</span>eq: Request, res: Response, next: NextFunction) =&gt; {
+<span class="cstat-no" title="statement not covered" >        router.get("/", <span class="fstat-no" title="function not covered" >(r</span>eq: Request, res: Response, next: NextFunction) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >            new IndexRoute().index(req, res, next);</span>
         });
     }
@@ -205,7 +205,7 @@ export class IndexRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-<span class="fstat-no" title="function not covered" >    public i</span>ndex(req: Request, res: Response, next: NextFunction) {
+<span class="fstat-no" title="function not covered" >    public <span class="cstat-no" title="statement not covered" >i</span>ndex(req: Request, res: Response, next: NextFunction) {</span>
         // set custom title
 <span class="cstat-no" title="statement not covered" >        this.title = "StalkX";</span>
         // set message
@@ -216,14 +216,14 @@ export class IndexRoute extends BaseRoute {
         // render template
 <span class="cstat-no" title="statement not covered" >        this.render(req, res, "index", options);</span>
     }
-}
+<span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 16 2019 11:42:11 GMT-0800 (STD)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 16 2019 12:09:20 GMT-0800 (STD)
 </div>
 </div>
 <script src="../../prettify.js"></script>

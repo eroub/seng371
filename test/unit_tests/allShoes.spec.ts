@@ -12,10 +12,10 @@ describe('Testing allShoes Functionality:', () => {
         const response = await request(serve.getExpressInstance()).get('/user/'+xid+'/allShoes');
         // currently we are not handling invalid ids so we expect an internal server error.
         chai.expect(response.statusCode).to.equal(404);
-    });
+    }).timeout(5000);
     it( 'should show shoes view to a registered user', async () => {
         let id = '1';
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/allShoes');
         chai.expect(response.statusCode).to.equal(200);
-    });
+    }).timeout(5000);
 });
