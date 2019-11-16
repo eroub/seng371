@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">57.78% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>26/45</span>
+        <span class='fraction'>30/45</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>2/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">35.71% </span>
+        <span class="strong">57.14% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>5/14</span>
+        <span class='fraction'>8/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52.78% </span>
+        <span class="strong">63.89% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>19/36</span>
+        <span class='fraction'>23/36</span>
       </div>
     </div>
     <p class="quiet">
@@ -172,8 +172,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -192,9 +192,9 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -252,18 +252,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import DbClient = require("../DbClient");
@@ -361,19 +361,19 @@ export class ShoeModel {
             Return all the shoes for the view where we need to see all shoes available in db
      */
 &nbsp;
-<span class="fstat-no" title="function not covered" >    public g</span>etAllDB() {
-        const shoes = <span class="cstat-no" title="statement not covered" >DbClient.connect()</span>
-            .then(<span class="fstat-no" title="function not covered" >(d</span>b) =&gt; {
-<span class="cstat-no" title="statement not covered" >                return db!.collection("shoes").find().toArray();</span>
+    public getAllDB() {
+        const shoes = DbClient.connect()
+            .then((db) =&gt; {
+                return db!.collection("shoes").find().toArray();
             })
-            .then(<span class="fstat-no" title="function not covered" >(s</span>neakers: any) =&gt; {
-<span class="cstat-no" title="statement not covered" >                return sneakers;</span>
+            .then((sneakers: any) =&gt; {
+                return sneakers;
             })
             .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
 <span class="cstat-no" title="statement not covered" >                console.log("err.message");</span>
             });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return shoes;</span>
+        return shoes;
     }
 }
 &nbsp;</pre></td></tr>
@@ -382,7 +382,7 @@ export class ShoeModel {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 15 2019 16:16:14 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 15 2019 16:44:03 GMT-0800 (PST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

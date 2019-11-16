@@ -233,7 +233,7 @@ export class ShoeRouter extends BaseRoute {
             this.render(req, res, "allShoes",
                 {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes});
         } else {
-            res.status(404)
+            res.status(404);
             res.send("invalid user");
         }
 
@@ -250,7 +250,7 @@ export class ShoeRouter extends BaseRoute {
             this.render(req, res, "allShoes",
                 {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes});
         } else {
-            res.status(404)
+            res.status(404);
             res.send("invalid user");
         }
 
@@ -326,7 +326,7 @@ export class ShoeRouter extends BaseRoute {
             } else {
                 return false;
             }
-        } else if (userJson.userId !== userID) {
+        } else if (userJson && (userJson.userId !== userID)) {
             userJson = await this.getUserInfo(userID);
             if (userJson) {
                 userShoes = await this.getUserShoes(userJson);
@@ -368,7 +368,7 @@ export class ShoeRouter extends BaseRoute {
         if (userInfo.length !== 0) {
             return JSON.parse(JSON.stringify(userInfo[0]));
         } else {
-            return;
+            return false;
         }
     }
 
