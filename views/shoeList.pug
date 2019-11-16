@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    a(href='/user/' + id + '/shoes') Back
+    h1 All Shoes:
+    p Sort #[a(href='/user/' + id + '/allShoes/sort/price_high') High] #[a(href='/user/' + id + '/allShoes/sort/price_low') Low]
+
+    for shoe in data
+        h2 #{shoe.brand} #{shoe.model} #{shoe.colorway}
+        p Size: #{shoe.size}
+        p Current market value: $#{shoe.current_price}
+        p Retail Price: #{shoe.retail_price}
+        p #[a(href='/user/' + id + '/add_shoe/' + shoe.shoe_id) Add Shoe]
+        p ----------------------

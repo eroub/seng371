@@ -1,5 +1,6 @@
 import "mocha";
 import chai from "chai";
+import { IndexRoute } from "../../src/routes/index";
 import { ShoeModel } from "../../src/models/shoe_model";
 import { Server } from "../../src/app"
 const request = require('supertest');

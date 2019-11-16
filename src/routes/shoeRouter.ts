@@ -11,7 +11,7 @@ export class ShoeRouter extends BaseRoute {
 
     public static create(router: Router) {
         // log
-        console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
+        // console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
         // users home page showing all the shoes the user owns
         router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getAll(req, res, next);
@@ -69,12 +69,27 @@ export class ShoeRouter extends BaseRoute {
     public async notificationCentre(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        this.render(req, res, "notificationCentre", {id: userId, title: "Shoes"});
+        if (await this.check_local(userId)) {
+            this.render(req, res, "notificationCentre", {id: userId, title: "Shoes"});
+        } else {
+            res.status(404)
+                .send({
+                    message: "No user with associated ID. Check the entered number.",
+                    status: res.status,
+                });
+        }
     }
 
     public async removeShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
+        if (!(await this.check_local(userId))) {
+            res.status(404)
+                .send({
+                    message: "No user with associated ID. Check the entered number.",
+                    status: res.status,
+                });
+        }
         const shoeIdString = "id2";
         const shoeId = parseInt(req.params[shoeIdString], 10);
         const uif = new UserModel();
@@ -153,7 +168,6 @@ export class ShoeRouter extends BaseRoute {
     }
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
-        console.log(req.body.purchase_price);
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
@@ -171,9 +185,12 @@ export class ShoeRouter extends BaseRoute {
                 res.redirect("/user/" + userId + "/shoes/");
             }
         } else {
-            res.send("invalid user");
+            res.status(404)
+            .send({
+                message: "No user with associated ID. Check the entered number.",
+                status: res.status,
+            });
         }
-
     }
 
     public async inputShoe(req: Request, res: Response, next: NextFunction) {
@@ -303,7 +320,7 @@ export class ShoeRouter extends BaseRoute {
             } else {
                 return false;
             }
-        } else if (userJson.userId !== userID) {
+        } else if (userJson && (userJson.user_id !== userID)) {
             userJson = await this.getUserInfo(userID);
             if (userJson) {
                 userShoes = await this.getUserShoes(userJson);
