@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    a(href='/user/' + id + '/all_shoes') Back
+    a(href='/user/' + id + '/allShoes') Back
     h1 #{shoe.brand} #{shoe.model} #{shoe.colorway}
     p Size: #{shoe.size}
     form(method='POST' action='/user/' + id + '/add_shoe/' + shoe.shoe_id)

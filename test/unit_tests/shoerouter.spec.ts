@@ -20,8 +20,9 @@ describe('Testing ShoeRouter Functionality:', () => {
         chai.expect(response.statusCode).to.equal(302);
     });
     it('Fails to add a shoe to non-existent user portfolio (404)', async () => {
-        const response = await request(serve.getExpressInstance()).post('/user/10101/add_shoe/1');
-        chai.expect(response.statusCode).to.equal(404);
+        const yeet = new Server();
+        const ora = await request(yeet.getExpressInstance()).post('/user/55/add_shoe/3');
+        chai.expect(ora.statusCode).to.equal(404);
     });
     it('Successfully removes shoe from portfolio (redirects)', async () => {
         const response = await request(serve.getExpressInstance()).post('/user/1/remove_shoe/1');
