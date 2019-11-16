@@ -19,7 +19,7 @@ describe('  sorting:', () => {
 
     });
 
-    it( ' should  return 404 when for invalid ids ', async () => {
+    it( ' should  return 404 when for invalid ids (users shoes low to high) ', async () => {
 
         let id = 'xy'; //this is an example of an invalid id, a correct id should consist of only digits
 
@@ -45,6 +45,21 @@ describe('  sorting:', () => {
 
     });
 
+
+    it( ' should  return 404 when for invalid ids (users shoes high to low) ', async () => {
+
+        let id = 'xy'; //this is an example of an invalid id, a correct id should consist of only digits
+
+        const serve = new Server();
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/sort/price_high');
+
+        chai.assert(response.status === 404);
+
+    });
+
+
+
     it( 'should sort all the shoes in db from low to high  ', async () => {
 
         let id = '1';
@@ -54,6 +69,19 @@ describe('  sorting:', () => {
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/allShoes/sort/price_low');
 
         chai.assert(response.status === 200);
+
+    });
+
+
+    it( ' should  return 404 when for invalid ids (all shoes low to high) ', async () => {
+
+        let id = 'xy'; //this is an example of an invalid id, a correct id should consist of only digits
+
+        const serve = new Server();
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/allShoes/sort/price_low');
+
+        chai.assert(response.status === 404);
 
     });
 
@@ -68,6 +96,18 @@ describe('  sorting:', () => {
 
         chai.assert(response.status === 200);
 
+
+    });
+
+    it( ' should  return 404 when for invalid ids (all shoes high to low) ', async () => {
+
+        let id = 'xy'; //this is an example of an invalid id, a correct id should consist of only digits
+
+        const serve = new Server();
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/allShoes/sort/price_high');
+
+        chai.assert(response.status === 404);
 
     });
 
