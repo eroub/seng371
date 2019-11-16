@@ -3,13 +3,8 @@ extends layout
 block content
     p #[a(href='/user/' + id + '/allShoes') Add Shoes] #[a(href='/user/' + id + '/notifications') Notifications] #[a(href='/') Back]
     h1 #{username}'s Shoes:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
     p Total Net Gain/Loss: $#{net}
->>>>>>> 881e51c980dba5c5a26f196a1afbef06f2243147
-=======
->>>>>>> origin/Asim_Tests
     p Sort #[a(href='/user/' + id + '/shoes/sort/price_high') High] #[a(href='/user/' + id + '/shoes/sort/price_low') Low]
     for shoe in data
         a(href='/user/' + id + '/shoes/' + shoe.shoe_id) #{shoe.brand} #{shoe.model} #{shoe.colorway}
@@ -18,10 +13,5 @@ block content
         form(method='POST' action='/user/' + id + '/remove_shoe/' + shoe.shoe_id)
             button.btn.btn-primary(type='submit') Remove Shoe
         p ----------------------
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> 881e51c980dba5c5a26f196a1afbef06f2243147
-=======
->>>>>>> origin/Asim_Tests
+
