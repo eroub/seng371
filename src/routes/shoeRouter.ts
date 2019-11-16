@@ -137,6 +137,10 @@ export class ShoeRouter extends BaseRoute {
                 username: userJson.username,
             });
         }
+        else {
+            res.status(404)
+            res.send("invalid user");
+        }
     }
     public async sortPriceHighDb(req: Request, res: Response, next: NextFunction) {
 
@@ -161,6 +165,10 @@ export class ShoeRouter extends BaseRoute {
                 username: userJson.username,
             });
         }
+        else {
+            res.status(404);
+            res.send("invalid user");
+        }
     }
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
@@ -182,7 +190,9 @@ export class ShoeRouter extends BaseRoute {
                 res.redirect("/user/" + userId + "/shoes/");
             }
         } else {
+            res.status(404)
             res.send("invalid user");
+
         }
 
     }
@@ -223,6 +233,7 @@ export class ShoeRouter extends BaseRoute {
             this.render(req, res, "allShoes",
                 {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes});
         } else {
+            res.status(404)
             res.send("invalid user");
         }
 
@@ -239,6 +250,7 @@ export class ShoeRouter extends BaseRoute {
             this.render(req, res, "allShoes",
                 {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes});
         } else {
+            res.status(404)
             res.send("invalid user");
         }
 

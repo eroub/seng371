@@ -7,36 +7,41 @@ const request = require('supertest');
 
 describe('  sorting:', () => {
 
-    it( ' should sort the users shoes from low to high ', async () => {
+    it( ' should  show a user their hoes from low to high ', async () => {
 
-        let xid = '100'; //this is an example of an invalid id, a correct id should consist of only digits
+        let id = '1'; //this is an example of an invalid id, a correct id should consist of only digits
 
         const serve = new Server();
 
-        const response = await request(serve.getExpressInstance()).get('/user/'+xid+'/allShoes');
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/sort/price_low');
 
-        // currently we are not handling invalid ids so we expect an internal server error.
-        chai.assert(response.status === 500);
+        chai.assert(response.status === 200);
 
     });
 
-    it( 'should sort the users shoes from high to low', async () => {
+    it( ' should  return 404 when for invalid ids ', async () => {
 
-        let id = '1';
+        let id = 'xy'; //this is an example of an invalid id, a correct id should consist of only digits
 
         const serve = new Server();
 
-        const response = await request(serve.getExpressInstance()).get('/user/3/allShoes');
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/sort/price_low');
 
-        // get shoes arr from response
+        chai.assert(response.status === 404);
 
-        // query db to get all shoes
+    });
 
-        const SM = new ShoeModel();
 
-        const shoes:any = await SM.getAllDB();
+    it( 'should show a user their hoes from high to low', async () => {
 
-        chai.expect(shoes.length).to.equal(3);
+        let id = '1'; //this is an example of an invalid id, a correct id should consist of only digits
+
+        const serve = new Server();
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/sort/price_high');
+
+        chai.assert(response.status === 200);
+
 
     });
 
@@ -46,17 +51,9 @@ describe('  sorting:', () => {
 
         const serve = new Server();
 
-        const response = await request(serve.getExpressInstance()).get('/user/3/allShoes');
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/allShoes/sort/price_low');
 
-        // get shoes arr from response
-
-        // query db to get all shoes
-
-        const SM = new ShoeModel();
-
-        const shoes:any = await SM.getAllDB();
-
-        chai.expect(shoes.length).to.equal(3);
+        chai.assert(response.status === 200);
 
     });
 
@@ -67,17 +64,10 @@ describe('  sorting:', () => {
 
         const serve = new Server();
 
-        const response = await request(serve.getExpressInstance()).get('/user/3/allShoes');
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/allShoes/sort/price_high');
 
-        // get shoes arr from response
+        chai.assert(response.status === 200);
 
-        // query db to get all shoes
-
-        const SM = new ShoeModel();
-
-        const shoes:any = await SM.getAllDB();
-
-        chai.expect(shoes.length).to.equal(3);
 
     });
 

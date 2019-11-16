@@ -5,7 +5,7 @@ echo "**** TESTING SUITE ****"
 echo "***********************" 
 
 echo "Running through unit tests via mocha ... "
-nyc --reporter=html --reporter=text  mocha --exit **/allShoes.spec.ts
+nyc --reporter=html --reporter=text  mocha --exit **/sorting.spec.ts
 # ts-mocha --exit -p ../tsconfig.json **/*.spec.ts
 
 echo "Running through static analysis via TSLint ... "
