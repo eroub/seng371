@@ -207,15 +207,12 @@ export class ShoeRouter extends BaseRoute {
             }
         } else {
             res.status(404)
-<<<<<<< HEAD
             .send({
                 message: "No user with associated ID. Check the entered number.",
                 status: res.status,
             });
-=======
             res.send("invalid user");
 
->>>>>>> origin/Asim_Tests
         }
     }
 
@@ -350,11 +347,8 @@ export class ShoeRouter extends BaseRoute {
             } else {
                 return false;
             }
-<<<<<<< HEAD
         } else if (userJson && (userJson.user_id !== userID)) {
-=======
         } else if (userJson && (userJson.userId !== userID)) {
->>>>>>> origin/Asim_Tests
             userJson = await this.getUserInfo(userID);
             if (userJson) {
                 userShoes = await this.getUserShoes(userJson);
