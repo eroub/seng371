@@ -1,0 +1,9 @@
+## Team AES Milestone 3.5
+### Functionality
+For this build, there is multi user support (currently there are 3 users in the system). Each user has their own shoe list, which they are able to add/remove shoes from. Each user can also sort their shoe list by high/low current price, and view their overall net gain/loss at the top of their list. Clicking on a shoe in the users overview page allows the user to view the net gain/loss for that particular shoe, as well as some additional info. The users can also view all the shoes in the database, and sort this list by high/low current price. Clicking on a shoe in the allShoes view displays some more info on the specific shoe, and allows the user to input a purchase price and add the shoe to their portfolio (Note: if they already have the shoe in their portfolio then the shoe will not add). There is also a link to the Notification Centre on the users home page which leads to a placeholder Notification Centre.
+
+### User Stories
+The 6 main user stories in this build are viewing all of the user's shoes, sorting the user's shoes, viewing all the shoes in the database, adding/removing shoes, viewing the particular net gain/loss of a particular shoe, and viewing the net gain/loss over all of the user's shoes.
+
+### Design Decisions/Challenges
+Connection to the database was added with asyncronous calls. Sorting the user shoes by connection to the database was leading to performance issues, so local variables were instantiated in the shoeRouter class which keep a local copy of the users info, shoe list, and net gain/loss for quick access. These variables are updated whenever the user goes to their overview page. User and Shoe models were added for interfacing with their respective tables in the database. Private functions were added to shoeRouter.ts to handle internal functions such as checking whether or not a user has a particular shoe.

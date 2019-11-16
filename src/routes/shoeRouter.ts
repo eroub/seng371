@@ -11,8 +11,6 @@ let netGain: number;
 export class ShoeRouter extends BaseRoute {
 
     public static create(router: Router) {
-        // log
-        // console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
         // users home page showing all the shoes the user owns
         router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().getAll(req, res, next);
@@ -101,13 +99,20 @@ export class ShoeRouter extends BaseRoute {
     public async allShoes(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
 
-        const shoeIf = new ShoeModel();
-
-        const allShoes = await shoeIf.getAllDB();
-
         const userId = parseInt(req.params[idString], 10);
-       // const allShoes = this.getAllDbShoes()
-        this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
+
+        if (await this.check_local(userId)) {
+            const shoeIf = new ShoeModel();
+            const allShoes = await shoeIf.getAllDB();
+            // const allShoes = this.getAllDbShoes()
+            this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
+        } else {
+            res.status(404)
+                .send({
+                    message: "No user found with the given user id.",
+                    status: res.status,
+                });
+        }
     }
 
 /*
@@ -115,60 +120,46 @@ export class ShoeRouter extends BaseRoute {
  */
 
     public async sortPriceLowDb(req: Request, res: Response, next: NextFunction) {
-
         const idString = "id";
-
         const queryint = parseInt(req.params[idString], 10);
-
         if (await this.check_local(queryint)) {
-
             // const allShoes = this.getAllDbShoes()
-
             const shoeIf = new ShoeModel();
-
             const allShoes = await shoeIf.getAllDB();
-
             const sortedShoes: any = allShoes;
-
-            console.log(sortedShoes);
-
             sortedShoes.sort((a: any, b: any) => a.current_price - b.current_price);
-
             this.render(req, res, "shoeList", {
                 data: sortedShoes,
                 id: queryint,
                 title: "Shoes",
                 username: userJson.username,
             });
+        } else {
+            res.status(404);
+            res.send("invalid user");
         }
     }
     public async sortPriceHighDb(req: Request, res: Response, next: NextFunction) {
-
         const idString = "id";
-
         const queryint = parseInt(req.params[idString], 10);
-
         if (await this.check_local(queryint)) {
-
             const shoeIf = new ShoeModel();
-
             const allShoes = await shoeIf.getAllDB();
-
             const sortedShoes: any = allShoes;
-
             sortedShoes.sort((a: any, b: any) => b.current_price - a.current_price);
-
             this.render(req, res, "shoeList", {
                 data: sortedShoes,
                 id: queryint,
                 title: "Shoes",
                 username: userJson.username,
             });
+        } else {
+            res.status(404);
+            res.send("invalid user");
         }
     }
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
-        // console.log("Purchase price is: " + req.body.purchase_price);
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
@@ -182,7 +173,6 @@ export class ShoeRouter extends BaseRoute {
                 if (!price) {
                     price = 0;
                 }
-                console.log("Purchase price is: " + price);
                 await uif.add_shoe(userId, shoeId, price);
                 res.redirect("/user/" + userId + "/shoes/");
             }
@@ -192,6 +182,8 @@ export class ShoeRouter extends BaseRoute {
                 message: "No user with associated ID. Check the entered number.",
                 status: res.status,
             });
+            res.send("invalid user");
+
         }
     }
 
@@ -223,14 +215,12 @@ export class ShoeRouter extends BaseRoute {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
-            console.log(userShoes);
             const sortedShoes: any = userShoes;
-            console.log(sortedShoes);
             sortedShoes.sort((a: any, b: any) => a.current_price - b.current_price);
-            console.log(sortedShoes);
             this.render(req, res, "allShoes",
                 {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain});
         } else {
+            res.status(404);
             res.send("invalid user");
         }
 
@@ -240,13 +230,12 @@ export class ShoeRouter extends BaseRoute {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
-            console.log(userShoes);
             const sortedShoes: any = userShoes;
-            console.log(sortedShoes);
             sortedShoes.sort((a: any, b: any) => b.current_price - a.current_price);
             this.render(req, res, "allShoes",
                 {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain});
         } else {
+            res.status(404);
             res.send("invalid user");
         }
 
@@ -258,14 +247,10 @@ export class ShoeRouter extends BaseRoute {
     public async getAll(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-
         userJson = await this.getUserInfo(queryint);
-        console.log(userJson);
         if (userJson) {
             userShoes = await this.getUserShoes(userJson);
             netGain = await this.getNetGain(userShoes);
-            console.log("Here's the user info: " + userJson);
-            console.log("Here's the shoes: " + userShoes);
             this.render(req, res, "allShoes",
                 {id: queryint, title: "Shoes", username: userJson.username, data: userShoes, net: netGain});
         } else {
@@ -274,7 +259,6 @@ export class ShoeRouter extends BaseRoute {
                     message: "No user found with the given id.",
                     status: res.status,
                 });
-
         }
     }
 
@@ -289,18 +273,10 @@ export class ShoeRouter extends BaseRoute {
         const shoeId = parseInt(req.params[shoeIdString], 10);
         if (await this.check_local(userId)) {
             const purchase = this.getPurchasePrice(userJson.shoelist, shoeId);
-            console.log(purchase);
-            console.log(shoeId, userId);
             const shoe = await this.getShoe(shoeId);
             if (shoe && this.has_shoe(userShoes, shoeId)) {
                 const diff = shoe.current_price - purchase;
                 this.render(req, res, "oneShoe", {id: userId, diff, purchase, shoe});
-                /* res.status(200)
-                    .send({
-                        message: 'Success',
-                        status: res.status,
-                        shoe
-                    }); */
             } else {
                 res.status(404)
                     .send({
@@ -309,30 +285,29 @@ export class ShoeRouter extends BaseRoute {
                     });
             }
         } else {
-            res.status(404).send("oof");
+            res.status(404)
+                .send({
+                    message: "No user found with the given id.",
+                    status: res.status,
+                });
         }
 
     }
 
     private async check_local(userID: number) {
+        userJson = await this.getUserInfo(userID);
+        if (!userJson) {
+            return false;
+        }
+
         if (!(userJson || userShoes)) {
-            userJson = await this.getUserInfo(userID);
-            if (userJson) {
-                userShoes = await this.getUserShoes(userJson);
-                netGain = await this.getNetGain(userShoes);
-                return true;
-            } else {
-                return false;
-            }
-        } else if (userJson && (userJson.user_id !== userID)) {
-            userJson = await this.getUserInfo(userID);
-            if (userJson) {
-                userShoes = await this.getUserShoes(userJson);
-                netGain = await this.getNetGain(userShoes);
-                return true;
-            } else {
-                return false;
-            }
+            userShoes = await this.getUserShoes(userJson);
+            netGain = await this.getNetGain(userShoes);
+            return true;
+        } else if (userJson.user_id !== userID) {
+            userShoes = await this.getUserShoes(userJson);
+            netGain = await this.getNetGain(userShoes);
+            return true;
         }
         return true;
     }
@@ -364,12 +339,16 @@ export class ShoeRouter extends BaseRoute {
 
     private async getUserInfo(queryint: number) {
         const userIf = new UserModel();
-        const userInfo = await userIf.userInfo(queryint);
-        console.log(userInfo);
+        let userInfo = null;
+        try {
+            userInfo = await userIf.userInfo(queryint);
+        } catch {
+            return false;
+        }
         if (userInfo.length !== 0) {
             return JSON.parse(JSON.stringify(userInfo[0]));
         } else {
-            return;
+            return false;
         }
     }
 

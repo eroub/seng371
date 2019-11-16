@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">56.52% </span>
+        <span class="strong">61.54% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/23</span>
+        <span class='fraction'>8/13</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/4</span>
+        <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">40% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>5/8</span>
+        <span class='fraction'>2/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">57.89% </span>
+        <span class="strong">54.55% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>11/19</span>
+        <span class='fraction'>6/11</span>
       </div>
     </div>
     <p class="quiet">
@@ -122,22 +122,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,18 +149,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { NextFunction, Request, Response, Router } from "express";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { NextFunction, Request, Response, Router } from "express";
 import { BaseRoute } from "./router";
 &nbsp;
 /**
@@ -177,13 +177,13 @@ export class IndexRoute extends BaseRoute {
      * @method create
      * @static
      */
-    public static <span class="cstat-no" title="statement not covered" >create(router: Router) {</span>
+    public static create(router: Router) {
         // log
-<span class="cstat-no" title="statement not covered" >        // console.log("[IndexRoute::create] Creating index route."</span>);
+        // console.log("[IndexRoute::create] Creating index route.");
         // add home page route
-        router.get("/", (req: Request, res: Response, next: NextFunction) =&gt; {
-<span class="cstat-no" title="statement not covered" >            new IndexRou<span class="fstat-no" title="function not covered" >te</span>().index(req, res, next);</span>
-        });<span class="cstat-no" title="statement not covered" ></span>
+        router.get("/", <span class="fstat-no" title="function not covered" >(r</span>eq: Request, res: Response, next: NextFunction) =&gt; {
+<span class="cstat-no" title="statement not covered" >            new IndexRoute().index(req, res, next);</span>
+        });
     }
 &nbsp;
     /**
@@ -192,9 +192,9 @@ export class IndexRoute extends BaseRoute {
      * @class IndexRoute
      * @constructor
      */
-    constructor() {
-<span class="fstat-no" title="function not covered" >        super();</span>
-    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="fstat-no" title="function not covered" >    constructor() {</span>
+<span class="cstat-no" title="statement not covered" >        super();</span>
+    }
 &nbsp;
     /**
      * The home page route.
@@ -205,25 +205,25 @@ export class IndexRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public index(req: Request, res: Response, next: NextFunction) {
-<span class="fstat-no" title="function not covered" >        // <span class="cstat-no" title="statement not covered" >s</span>et custom title</span>
-        this.title = "StalkX";
-<span class="cstat-no" title="statement not covered" >        // set message</span>
-        const options: object = {
-            message: "Welcome!",<span class="cstat-no" title="statement not covered" ></span>
+<span class="fstat-no" title="function not covered" >    public i</span>ndex(req: Request, res: Response, next: NextFunction) {
+        // set custom title
+<span class="cstat-no" title="statement not covered" >        this.title = "StalkX";</span>
+        // set message
+        const options: object = <span class="cstat-no" title="statement not covered" >{</span>
+            message: "Welcome!",
         };
 &nbsp;
         // render template
-        this.render(req, res, "index", options);
-    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        this.render(req, res, "index", options);</span>
+    }
 }
-<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 15 2019 17:12:01 GMT-0800 (STD)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 16 2019 11:42:11 GMT-0800 (STD)
 </div>
 </div>
 <script src="../../prettify.js"></script>
