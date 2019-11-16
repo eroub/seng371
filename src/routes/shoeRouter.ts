@@ -101,13 +101,24 @@ export class ShoeRouter extends BaseRoute {
     public async allShoes(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
 
-        const shoeIf = new ShoeModel();
-
-        const allShoes = await shoeIf.getAllDB();
-
         const userId = parseInt(req.params[idString], 10);
-       // const allShoes = this.getAllDbShoes()
+
+        if (await this.check_local(userId)) {
+
+            const shoeIf = new ShoeModel();
+
+            const allShoes = await shoeIf.getAllDB();
+
+            // const allShoes = this.getAllDbShoes()
         this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
+    }
+        else {
+            res.status(404)
+                .send({
+                    message: "No user found with the given user id.",
+                    status: res.status,
+                });
+        }
     }
 
 /*
@@ -141,6 +152,10 @@ export class ShoeRouter extends BaseRoute {
                 username: userJson.username,
             });
         }
+        else {
+            res.status(404)
+            res.send("invalid user");
+        }
     }
     public async sortPriceHighDb(req: Request, res: Response, next: NextFunction) {
 
@@ -165,6 +180,10 @@ export class ShoeRouter extends BaseRoute {
                 username: userJson.username,
             });
         }
+        else {
+            res.status(404);
+            res.send("invalid user");
+        }
     }
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
@@ -188,10 +207,15 @@ export class ShoeRouter extends BaseRoute {
             }
         } else {
             res.status(404)
+<<<<<<< HEAD
             .send({
                 message: "No user with associated ID. Check the entered number.",
                 status: res.status,
             });
+=======
+            res.send("invalid user");
+
+>>>>>>> origin/Asim_Tests
         }
     }
 
@@ -231,6 +255,7 @@ export class ShoeRouter extends BaseRoute {
             this.render(req, res, "allShoes",
                 {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain});
         } else {
+            res.status(404);
             res.send("invalid user");
         }
 
@@ -247,6 +272,7 @@ export class ShoeRouter extends BaseRoute {
             this.render(req, res, "allShoes",
                 {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain});
         } else {
+            res.status(404);
             res.send("invalid user");
         }
 
@@ -324,7 +350,11 @@ export class ShoeRouter extends BaseRoute {
             } else {
                 return false;
             }
+<<<<<<< HEAD
         } else if (userJson && (userJson.user_id !== userID)) {
+=======
+        } else if (userJson && (userJson.userId !== userID)) {
+>>>>>>> origin/Asim_Tests
             userJson = await this.getUserInfo(userID);
             if (userJson) {
                 userShoes = await this.getUserShoes(userJson);
@@ -369,7 +399,7 @@ export class ShoeRouter extends BaseRoute {
         if (userInfo.length !== 0) {
             return JSON.parse(JSON.stringify(userInfo[0]));
         } else {
-            return;
+            return false;
         }
     }
 
