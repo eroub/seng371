@@ -1,5 +1,5 @@
 import "mocha";
-import chai from "chai";
+ let chai  =require("chai");
 import {UserModel} from "../../src/models/user_model";
 
 describe ('Testing UserModel Functionality:', () => {
