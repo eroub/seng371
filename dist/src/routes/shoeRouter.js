@@ -13,11 +13,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -62,7 +61,7 @@ var ShoeRouter = /** @class */ (function (_super) {
     }
     ShoeRouter.create = function (router) {
         // log
-        console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
+        // console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
         // users home page showing all the shoes the user owns
         router.get("/user/:id/shoes", function (req, res, next) {
             new ShoeRouter().getAll(req, res, next);
@@ -120,8 +119,13 @@ var ShoeRouter = /** @class */ (function (_super) {
                         if (_a.sent()) {
                             this.render(req, res, "notificationCentre", { id: userId, title: "Shoes" });
                         }
-                        else
-                            res.status(404).send("No user with given ID");
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
                         return [2 /*return*/];
                 }
             });
@@ -135,11 +139,20 @@ var ShoeRouter = /** @class */ (function (_super) {
                     case 0:
                         userIdString = "id";
                         userId = parseInt(req.params[userIdString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (!(_a.sent())) {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
                         shoeIdString = "id2";
                         shoeId = parseInt(req.params[shoeIdString], 10);
                         uif = new user_model_1.UserModel();
                         return [4 /*yield*/, uif.remove_shoe(userId, shoeId)];
-                    case 1:
+                    case 2:
                         _a.sent();
                         res.redirect("/user/" + userId + "/shoes/");
                         return [2 /*return*/];
@@ -150,19 +163,30 @@ var ShoeRouter = /** @class */ (function (_super) {
     // get all the shoes from the db and render to shoesList view
     ShoeRouter.prototype.allShoes = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, shoeIf, allShoes, userId;
+            var idString, userId, shoeIf, allShoes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
                         shoeIf = new shoe_model_1.ShoeModel();
                         return [4 /*yield*/, shoeIf.getAllDB()];
-                    case 1:
+                    case 2:
                         allShoes = _a.sent();
-                        userId = parseInt(req.params[idString], 10);
                         // const allShoes = this.getAllDbShoes()
                         this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });
-                        return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        res.status(404)
+                            .send({
+                            message: "No user found with the given user id.",
+                            status: res.status,
+                        });
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -194,8 +218,12 @@ var ShoeRouter = /** @class */ (function (_super) {
                             title: "Shoes",
                             username: userJson.username,
                         });
-                        _a.label = 3;
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        res.status(404);
+                        res.send("invalid user");
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -223,8 +251,12 @@ var ShoeRouter = /** @class */ (function (_super) {
                             title: "Shoes",
                             username: userJson.username,
                         });
-                        _a.label = 3;
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        res.status(404);
+                        res.send("invalid user");
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -235,7 +267,6 @@ var ShoeRouter = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("Purchase price is: " + req.body.purchase_price);
                         userIdString = "id";
                         userId = parseInt(req.params[userIdString], 10);
                         shoeIdString = "id2";
@@ -260,7 +291,12 @@ var ShoeRouter = /** @class */ (function (_super) {
                         _a.label = 4;
                     case 4: return [3 /*break*/, 6];
                     case 5:
-                        res.status(404).send("invalid user");
+                        res.status(404)
+                            .send({
+                            message: "No user with associated ID. Check the entered number.",
+                            status: res.status,
+                        });
+                        res.send("invalid user");
                         _a.label = 6;
                     case 6: return [2 /*return*/];
                 }
@@ -320,6 +356,7 @@ var ShoeRouter = /** @class */ (function (_super) {
                             this.render(req, res, "allShoes", { id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain });
                         }
                         else {
+                            res.status(404);
                             res.send("invalid user");
                         }
                         return [2 /*return*/];
@@ -345,6 +382,7 @@ var ShoeRouter = /** @class */ (function (_super) {
                             this.render(req, res, "allShoes", { id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain });
                         }
                         else {
+                            res.status(404);
                             res.send("invalid user");
                         }
                         return [2 /*return*/];
@@ -444,7 +482,6 @@ var ShoeRouter = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         if (!!(userJson || userShoes)) return [3 /*break*/, 6];
-                        console.log("locals not set");
                         return [4 /*yield*/, this.getUserInfo(userID)];
                     case 1:
                         userJson = _a.sent();
@@ -457,22 +494,25 @@ var ShoeRouter = /** @class */ (function (_super) {
                         netGain = _a.sent();
                         return [2 /*return*/, true];
                     case 4: return [2 /*return*/, false];
-                    case 5: return [3 /*break*/, 11];
+                    case 5: return [3 /*break*/, 12];
                     case 6:
-                        if (!(userJson.userId !== userID)) return [3 /*break*/, 11];
-                        return [4 /*yield*/, this.getUserInfo(userID)];
+                        if (!(userJson && (userJson.user_id !== userID))) return [3 /*break*/, 7];
+                        return [3 /*break*/, 12];
                     case 7:
-                        userJson = _a.sent();
-                        if (!userJson) return [3 /*break*/, 10];
-                        return [4 /*yield*/, this.getUserShoes(userJson)];
+                        if (!(userJson && (userJson.userId !== userID))) return [3 /*break*/, 12];
+                        return [4 /*yield*/, this.getUserInfo(userID)];
                     case 8:
+                        userJson = _a.sent();
+                        if (!userJson) return [3 /*break*/, 11];
+                        return [4 /*yield*/, this.getUserShoes(userJson)];
+                    case 9:
                         userShoes = _a.sent();
                         return [4 /*yield*/, this.getNetGain(userShoes)];
-                    case 9:
+                    case 10:
                         netGain = _a.sent();
                         return [2 /*return*/, true];
-                    case 10: return [2 /*return*/, false];
-                    case 11: return [2 /*return*/, true];
+                    case 11: return [2 /*return*/, false];
+                    case 12: return [2 /*return*/, true];
                 }
             });
         });
@@ -515,7 +555,7 @@ var ShoeRouter = /** @class */ (function (_super) {
                             return [2 /*return*/, JSON.parse(JSON.stringify(userInfo[0]))];
                         }
                         else {
-                            return [2 /*return*/];
+                            return [2 /*return*/, false];
                         }
                         return [2 /*return*/];
                 }
