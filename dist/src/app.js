@@ -42,6 +42,9 @@ var Server = /** @class */ (function () {
     Server.bootstrap = function () {
         return new Server();
     };
+    Server.prototype.getExpressInstance = function () {
+        return this.app;
+    };
     /**
      * Configure application
      *
@@ -89,5 +92,6 @@ var Server = /** @class */ (function () {
     };
     return Server;
 }());
+exports.Server = Server;
 exports.default = Server;
 //# sourceMappingURL=app.js.map

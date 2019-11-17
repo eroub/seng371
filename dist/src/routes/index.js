@@ -39,7 +39,7 @@ var IndexRoute = /** @class */ (function (_super) {
      */
     IndexRoute.create = function (router) {
         // log
-        console.log("[IndexRoute::create] Creating index route.");
+        // console.log("[IndexRoute::create] Creating index route.");
         // add home page route
         router.get("/", function (req, res, next) {
             new IndexRoute().index(req, res, next);
@@ -57,7 +57,6 @@ var IndexRoute = /** @class */ (function (_super) {
     IndexRoute.prototype.index = function (req, res, next) {
         // set custom title
         this.title = "StalkX";
-        console.log("hello");
         // set message
         var options = {
             message: "Welcome!",

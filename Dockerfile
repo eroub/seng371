@@ -10,7 +10,6 @@ ENV NODE_CONFIG_ENV dev
 
 # Update Container
 RUN apk update
-RUN npm install pm2 -g
 RUN apk add --no-cache bash
 
 # Create Directory for the Container
@@ -26,11 +25,9 @@ RUN npm install
 COPY . ./
 
 # Start the app
-Run npm run build
+RUN npm run build
 
 # Start
 CMD ["npm", "start"]
 
 EXPOSE 7000
-
-

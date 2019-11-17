@@ -49,11 +49,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var shoe_model_1 = require("../models/shoe_model");
 var user_model_1 = require("../models/user_model");
 var router_1 = require("./router");
-var shoe_model_1 = require("../models/shoe_model");
-var user_json;
-var user_shoes;
+var userJson;
+var userShoes;
+var netGain;
 var ShoeRouter = /** @class */ (function (_super) {
     __extends(ShoeRouter, _super);
     function ShoeRouter() {
@@ -61,26 +62,46 @@ var ShoeRouter = /** @class */ (function (_super) {
     }
     ShoeRouter.create = function (router) {
         // log
-        console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
-        // add home page route
+        // console.log("[ShoeRoute::create] Creating ShoeRoutes route.");
+        // users home page showing all the shoes the user owns
         router.get("/user/:id/shoes", function (req, res, next) {
             new ShoeRouter().getAll(req, res, next);
         });
-        // add getOne route
+        // showing a specific shoe that the user owns
         router.get("/user/:id/shoes/:id2", function (req, res, next) {
             new ShoeRouter().getOne(req, res, next);
         });
+        // sorting all the shoes the user owns from low to high
         router.get("/user/:id/shoes/sort/price_low", function (req, res, next) {
             new ShoeRouter().sortPriceLow(req, res, next);
         });
+        // sorting the shoes the user owns from high to low
         router.get("/user/:id/shoes/sort/price_high", function (req, res, next) {
             new ShoeRouter().sortPriceHigh(req, res, next);
         });
-        router.get("/user/:id/add_shoes", function (req, res, next) {
-            new ShoeRouter().addShoe(req, res, next);
+        // show all shoes from db
+        router.get("/user/:id/allShoes", function (req, res, next) {
+            new ShoeRouter().allShoes(req, res, next);
+        });
+        // show all shoes sorted from high to low
+        router.get("/user/:id/allShoes/sort/price_high", function (req, res, next) {
+            new ShoeRouter().sortPriceHighDb(req, res, next);
+        });
+        // show all shoes sorted from low to high
+        router.get("/user/:id/allShoes/sort/price_low", function (req, res, next) {
+            new ShoeRouter().sortPriceLowDb(req, res, next);
         });
         router.get("/user/:id/notifications", function (req, res, next) {
             new ShoeRouter().notificationCentre(req, res, next);
+        });
+        router.get("/user/:id/add_shoe/:id2", function (req, res, next) {
+            new ShoeRouter().inputShoe(req, res, next);
+        });
+        router.post("/user/:id/add_shoe/:id2", function (req, res, next) {
+            new ShoeRouter().addShoe(req, res, next);
+        });
+        router.post("/user/:id/remove_shoe/:id2", function (req, res, next) {
+            new ShoeRouter().removeShoe(req, res, next);
         });
     };
     // constructor() {
@@ -88,126 +109,216 @@ var ShoeRouter = /** @class */ (function (_super) {
     // }
     ShoeRouter.prototype.notificationCentre = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, user_id;
+            var idString, userId;
             return __generator(this, function (_a) {
-                idString = "id";
-                user_id = parseInt(req.params[idString], 10);
-                this.render(req, res, "notificationCentre", { id: user_id, title: "Shoes" });
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (_a.sent()) {
+                            this.render(req, res, "notificationCentre", { id: userId, title: "Shoes" });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.removeShoe = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userIdString, userId, shoeIdString, shoeId, uif;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userIdString = "id";
+                        userId = parseInt(req.params[userIdString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (!(_a.sent())) {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        shoeIdString = "id2";
+                        shoeId = parseInt(req.params[shoeIdString], 10);
+                        uif = new user_model_1.UserModel();
+                        return [4 /*yield*/, uif.remove_shoe(userId, shoeId)];
+                    case 2:
+                        _a.sent();
+                        res.redirect("/user/" + userId + "/shoes/");
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // get all the shoes from the db and render to shoesList view
+    ShoeRouter.prototype.allShoes = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, userId, shoeIf, allShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.getAllDB()];
+                    case 2:
+                        allShoes = _a.sent();
+                        // const allShoes = this.getAllDbShoes()
+                        this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });
+                        return [3 /*break*/, 4];
+                    case 3:
+                        res.status(404)
+                            .send({
+                            message: "No user found with the given user id.",
+                            status: res.status,
+                        });
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /*
+     sort low to high all the shoes in db and render in the shoelist view
+     */
+    ShoeRouter.prototype.sortPriceLowDb = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint, shoeIf, allShoes, sortedShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.getAllDB()];
+                    case 2:
+                        allShoes = _a.sent();
+                        sortedShoes = allShoes;
+                        console.log(sortedShoes);
+                        sortedShoes.sort(function (a, b) { return a.current_price - b.current_price; });
+                        this.render(req, res, "shoeList", {
+                            data: sortedShoes,
+                            id: queryint,
+                            title: "Shoes",
+                            username: userJson.username,
+                        });
+                        return [3 /*break*/, 4];
+                    case 3:
+                        res.status(404);
+                        res.send("invalid user");
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.sortPriceHighDb = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint, shoeIf, allShoes, sortedShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.getAllDB()];
+                    case 2:
+                        allShoes = _a.sent();
+                        sortedShoes = allShoes;
+                        sortedShoes.sort(function (a, b) { return b.current_price - a.current_price; });
+                        this.render(req, res, "shoeList", {
+                            data: sortedShoes,
+                            id: queryint,
+                            title: "Shoes",
+                            username: userJson.username,
+                        });
+                        return [3 /*break*/, 4];
+                    case 3:
+                        res.status(404);
+                        res.send("invalid user");
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
             });
         });
     };
     ShoeRouter.prototype.addShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, user_id, shoe_if, all_shoes;
+            var userIdString, userId, shoeIdString, shoeId, uif, price;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        idString = "id";
-                        user_id = parseInt(req.params[idString], 10);
-                        shoe_if = new shoe_model_1.shoe_model();
-                        return [4 /*yield*/, shoe_if.get_all()];
+                        userIdString = "id";
+                        userId = parseInt(req.params[userIdString], 10);
+                        shoeIdString = "id2";
+                        shoeId = parseInt(req.params[shoeIdString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
                     case 1:
-                        all_shoes = _a.sent();
-                        this.render(req, res, "addShoes", { id: user_id, title: "Shoes", data: all_shoes });
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ShoeRouter.prototype.sortPriceLow = function (req, res, next) {
-        return __awaiter(this, void 0, void 0, function () {
-            var idString, queryint, sorted_shoes;
-            return __generator(this, function (_a) {
-                idString = "id";
-                queryint = parseInt(req.params[idString], 10);
-                console.log(user_shoes);
-                sorted_shoes = user_shoes;
-                console.log(sorted_shoes);
-                sorted_shoes.sort(function (a, b) { return a.current_price - b.current_price; });
-                if (sorted_shoes.length != 0) {
-                    console.log(sorted_shoes);
-                    this.render(req, res, "allShoes", { id: queryint, username: user_json.username, title: "Shoes", data: sorted_shoes });
-                }
-                else
-                    res.send("this user has no shoes");
-                return [2 /*return*/];
-            });
-        });
-    };
-    ShoeRouter.prototype.sortPriceHigh = function (req, res, next) {
-        return __awaiter(this, void 0, void 0, function () {
-            var idString, queryint, sorted_shoes;
-            return __generator(this, function (_a) {
-                idString = "id";
-                queryint = parseInt(req.params[idString], 10);
-                console.log(user_shoes);
-                sorted_shoes = user_shoes;
-                console.log(sorted_shoes);
-                sorted_shoes.sort(function (a, b) { return b.current_price - a.current_price; });
-                if (sorted_shoes.length != 0) {
-                    console.log(sorted_shoes);
-                    this.render(req, res, "allShoes", { id: queryint, username: user_json.username, title: "Shoes", data: sorted_shoes });
-                }
-                else
-                    res.send("this user has no shoes");
-                return [2 /*return*/];
-            });
-        });
-    };
-    /**
-     * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
-     */
-    ShoeRouter.prototype.getAll = function (req, res, next) {
-        return __awaiter(this, void 0, void 0, function () {
-            var idString, queryint;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log("in ther other one");
-                        idString = "id";
-                        queryint = parseInt(req.params[idString], 10);
-                        return [4 /*yield*/, this.get_user_info(queryint)];
-                    case 1:
-                        user_json = _a.sent();
-                        return [4 /*yield*/, this.get_user_shoes(user_json)];
+                        if (!_a.sent()) return [3 /*break*/, 5];
+                        if (!this.has_shoe(userShoes, shoeId)) return [3 /*break*/, 2];
+                        res.redirect("/user/" + userId + "/allShoes/");
+                        return [3 /*break*/, 4];
                     case 2:
-                        user_shoes = _a.sent();
-                        console.log("Here's the user info lol: " + user_json);
-                        console.log("Here's the shoes lol: " + user_shoes);
-                        if (user_shoes) {
-                            this.render(req, res, "allShoes", { id: queryint, title: "Shoes", username: user_json.username, data: user_shoes });
+                        uif = new user_model_1.UserModel();
+                        price = req.body.purchase_price;
+                        if (!price) {
+                            price = 0;
                         }
-                        else
-                            res.send("404 not found lol");
-                        return [2 /*return*/];
+                        console.log("Purchase price is: " + price);
+                        return [4 /*yield*/, uif.add_shoe(userId, shoeId, price)];
+                    case 3:
+                        _a.sent();
+                        res.redirect("/user/" + userId + "/shoes/");
+                        _a.label = 4;
+                    case 4: return [3 /*break*/, 6];
+                    case 5:
+                        res.status(404)
+                            .send({
+                            message: "No user with associated ID. Check the entered number.",
+                            status: res.status,
+                        });
+                        res.send("invalid user");
+                        _a.label = 6;
+                    case 6: return [2 /*return*/];
                 }
             });
         });
     };
-    /**
-     * GET one shoe by id
-     */
-    ShoeRouter.prototype.getOne = function (req, res, next) {
+    ShoeRouter.prototype.inputShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var shoe_if, user_id_string, user_id, shoe_id_string, shoe_id, purchase, shoe, diff;
+            var userIdString, userId, shoeIdString, shoeId, shoe;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        shoe_if = new shoe_model_1.shoe_model();
-                        user_id_string = "id";
-                        user_id = parseInt(req.params[user_id_string], 10);
-                        shoe_id_string = "id2";
-                        shoe_id = parseInt(req.params[shoe_id_string], 10);
-                        purchase = this.get_purchase_price(user_json.shoelist, shoe_id);
-                        console.log(purchase);
-                        console.log(shoe_id, user_id);
-                        return [4 /*yield*/, shoe_if.get_one_shoe(shoe_id)];
+                        userIdString = "id";
+                        userId = parseInt(req.params[userIdString], 10);
+                        shoeIdString = "id2";
+                        shoeId = parseInt(req.params[shoeIdString], 10);
+                        return [4 /*yield*/, this.getShoe(shoeId)];
                     case 1:
                         shoe = _a.sent();
                         if (shoe) {
-                            diff = shoe.current_price - purchase;
-                            this.render(req, res, "oneShoe", { id: user_json.user_id, diff: diff, purchase: purchase, shoe: shoe });
+                            this.render(req, res, "addShoe", { id: userId, shoe: shoe });
                             /* res.status(200)
                                 .send({
                                     message: 'Success',
@@ -227,45 +338,312 @@ var ShoeRouter = /** @class */ (function (_super) {
             });
         });
     };
-    ShoeRouter.prototype.get_purchase_price = function (user_shoes, id) {
+    ShoeRouter.prototype.sortPriceLow = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint, sortedShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (_a.sent()) {
+                            console.log(userShoes);
+                            sortedShoes = userShoes;
+                            console.log(sortedShoes);
+                            sortedShoes.sort(function (a, b) { return a.current_price - b.current_price; });
+                            console.log(sortedShoes);
+                            this.render(req, res, "allShoes", { id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain });
+                        }
+                        else {
+                            res.status(404);
+                            res.send("invalid user");
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.sortPriceHigh = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint, sortedShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (_a.sent()) {
+                            console.log(userShoes);
+                            sortedShoes = userShoes;
+                            console.log(sortedShoes);
+                            sortedShoes.sort(function (a, b) { return b.current_price - a.current_price; });
+                            this.render(req, res, "allShoes", { id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain });
+                        }
+                        else {
+                            res.status(404);
+                            res.send("invalid user");
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
+     */
+    ShoeRouter.prototype.getAll = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.getUserInfo(queryint)];
+                    case 1:
+                        userJson = _a.sent();
+                        console.log(userJson);
+                        if (!userJson) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.getUserShoes(userJson)];
+                    case 2:
+                        userShoes = _a.sent();
+                        return [4 /*yield*/, this.getNetGain(userShoes)];
+                    case 3:
+                        netGain = _a.sent();
+                        console.log("Here's the user info: " + userJson);
+                        console.log("Here's the shoes: " + userShoes);
+                        this.render(req, res, "allShoes", { id: queryint, title: "Shoes", username: userJson.username, data: userShoes, net: netGain });
+                        return [3 /*break*/, 5];
+                    case 4:
+                        res.status(404)
+                            .send({
+                            message: "No user found with the given id.",
+                            status: res.status,
+                        });
+                        _a.label = 5;
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * GET one shoe by id
+     */
+    ShoeRouter.prototype.getOne = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userIdString, userId, shoeIdString, shoeId, purchase, shoe, diff;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userIdString = "id";
+                        userId = parseInt(req.params[userIdString], 10);
+                        shoeIdString = "id2";
+                        shoeId = parseInt(req.params[shoeIdString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
+                        purchase = this.getPurchasePrice(userJson.shoelist, shoeId);
+                        console.log(purchase);
+                        console.log(shoeId, userId);
+                        return [4 /*yield*/, this.getShoe(shoeId)];
+                    case 2:
+                        shoe = _a.sent();
+                        if (shoe && this.has_shoe(userShoes, shoeId)) {
+                            diff = shoe.current_price - purchase;
+                            this.render(req, res, "oneShoe", { id: userId, diff: diff, purchase: purchase, shoe: shoe });
+                            /* res.status(200)
+                                .send({
+                                    message: 'Success',
+                                    status: res.status,
+                                    shoe
+                                }); */
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No shoe found with the given id.",
+                                status: res.status,
+                            });
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        res.status(404).send("oof");
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.check_local = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!(userJson || userShoes)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, this.getUserInfo(userID)];
+                    case 1:
+                        userJson = _a.sent();
+                        if (!userJson) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.getUserShoes(userJson)];
+                    case 2:
+                        userShoes = _a.sent();
+                        return [4 /*yield*/, this.getNetGain(userShoes)];
+                    case 3:
+                        netGain = _a.sent();
+                        return [2 /*return*/, true];
+                    case 4: return [2 /*return*/, false];
+                    case 5: return [3 /*break*/, 12];
+                    case 6:
+                        if (!(userJson && (userJson.user_id !== userID))) return [3 /*break*/, 7];
+                        return [3 /*break*/, 12];
+                    case 7:
+                        if (!(userJson && (userJson.userId !== userID))) return [3 /*break*/, 12];
+                        return [4 /*yield*/, this.getUserInfo(userID)];
+                    case 8:
+                        userJson = _a.sent();
+                        if (!userJson) return [3 /*break*/, 11];
+                        return [4 /*yield*/, this.getUserShoes(userJson)];
+                    case 9:
+                        userShoes = _a.sent();
+                        return [4 /*yield*/, this.getNetGain(userShoes)];
+                    case 10:
+                        netGain = _a.sent();
+                        return [2 /*return*/, true];
+                    case 11: return [2 /*return*/, false];
+                    case 12: return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.has_shoe = function (userShoes, shoeID) {
+        for (var item in userShoes) {
+            if (userShoes.hasOwnProperty(item)) {
+                var shoeid = userShoes[item].shoe_id;
+                if (shoeid === shoeID) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+    ShoeRouter.prototype.getPurchasePrice = function (userShoes, id) {
         var purchase = 0;
-        for (var item in user_shoes) {
-            if (user_shoes.hasOwnProperty(item)) {
-                var shoeid = user_shoes[item].shoe_id;
+        for (var item in userShoes) {
+            if (userShoes.hasOwnProperty(item)) {
+                var shoeid = userShoes[item].shoe_id;
                 if (shoeid === id) {
-                    purchase = user_shoes[item].purchase_price;
+                    purchase = userShoes[item].purchase_price;
                 }
             }
         }
         return purchase;
     };
-    ShoeRouter.prototype.get_user_info = function (queryint) {
+    ShoeRouter.prototype.getUserInfo = function (queryint) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_if, user_info, user_json;
+            var userIf, userInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        user_if = new user_model_1.user_model();
-                        return [4 /*yield*/, user_if.get_all(queryint)];
+                        userIf = new user_model_1.UserModel();
+                        return [4 /*yield*/, userIf.userInfo(queryint)];
                     case 1:
-                        user_info = _a.sent();
-                        user_json = JSON.parse(JSON.stringify(user_info[0]));
-                        return [2 /*return*/, user_json];
+                        userInfo = _a.sent();
+                        console.log(userInfo);
+                        if (userInfo.length !== 0) {
+                            return [2 /*return*/, JSON.parse(JSON.stringify(userInfo[0]))];
+                        }
+                        else {
+                            return [2 /*return*/, false];
+                        }
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    ShoeRouter.prototype.get_user_shoes = function (user_json) {
+    ShoeRouter.prototype.getUserShoes = function (userJson) {
         return __awaiter(this, void 0, void 0, function () {
-            var shoe_if, user_shoes;
+            var shoeIf, uShoes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        shoe_if = new shoe_model_1.shoe_model();
-                        return [4 /*yield*/, shoe_if.get_all_shoes(user_json.shoelist)];
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.getAllShoes(userJson.shoelist)];
                     case 1:
-                        user_shoes = _a.sent();
-                        return [2 /*return*/, user_shoes];
+                        uShoes = _a.sent();
+                        return [2 /*return*/, uShoes];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.getShoe = function (shoeId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var shoeIf, shoe;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.getOneShoe(shoeId)];
+                    case 1:
+                        shoe = _a.sent();
+                        if (shoe) {
+                            return [2 /*return*/, shoe];
+                        }
+                        else {
+                            return [2 /*return*/];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShoeRouter.prototype.getNetGain = function (shoelist) {
+        return __awaiter(this, void 0, void 0, function () {
+            var net, _a, _b, _i, item, purchase, shoePrice;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        net = 0;
+                        _a = [];
+                        for (_b in shoelist)
+                            _a.push(_b);
+                        _i = 0;
+                        _c.label = 1;
+                    case 1:
+                        if (!(_i < _a.length)) return [3 /*break*/, 4];
+                        item = _a[_i];
+                        if (!shoelist.hasOwnProperty(item)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.getPurchasePrice(userJson.shoelist, shoelist[item].shoe_id)];
+                    case 2:
+                        purchase = _c.sent();
+                        shoePrice = shoelist[item].current_price;
+                        net = net + shoePrice - purchase;
+                        _c.label = 3;
+                    case 3:
+                        _i++;
+                        return [3 /*break*/, 1];
+                    case 4: return [2 /*return*/, net];
+                }
+            });
+        });
+    };
+    /* returns every shoe in db */
+    ShoeRouter.prototype.getAllDbShoes = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var shoeIf, allShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.getAllDB()];
+                    case 1:
+                        allShoes = _a.sent();
+                        if (allShoes) {
+                            return [2 /*return*/, allShoes];
+                        }
+                        return [2 /*return*/];
                 }
             });
         });

@@ -45,6 +45,10 @@ export default class Server {
         this.routes();
     }
 
+    public getExpressInstance(): express.Application {
+        return this.app;
+    }
+
     /**
      * Configure application
      *
@@ -103,3 +107,5 @@ export default class Server {
     }
 
 }
+
+export { Server };
