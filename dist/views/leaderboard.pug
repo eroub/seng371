@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    a(href='/user/' + id + '/shoes') Back
+    h1 Leaderboard:
+    for user, index in leaderboard
+        if user.user_id == id
+            p
+            strong #{index+1}: #{user.username}
+        else
+            p #{index+1}: #{user.username}
+        p Net Gain/Loss: $#{user.net}
+        p Avg Net Gain/Loss: $#{user.avg_net}
+        p Number of Shoes: #{user.num}
+        p -----------------
+
+

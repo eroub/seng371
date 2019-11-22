@@ -6,6 +6,8 @@ import logger from "morgan";
 import path from "path";
 import { IndexRoute } from "./routes/index";
 import { ShoeRouter } from "./routes/shoeRouter";
+import {NotificationRouter} from "./routes/notificationRouter";
+import {LeaderboardRouter} from "./routes/leaderboardRouter";
 
 /**
  * The server.
@@ -100,6 +102,8 @@ export default class Server {
 
         IndexRoute.create(router);
         ShoeRouter.create(router);
+        NotificationRouter.create(router);
+        LeaderboardRouter.create(router);
 
         // use router middleware
         this.app.use(router);

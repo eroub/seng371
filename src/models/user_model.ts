@@ -1,4 +1,5 @@
 import DbClient = require("../DbClient");
+const ObjectID = require("mongodb").ObjectID;
 
 export class UserModel {
 
@@ -26,8 +27,7 @@ export class UserModel {
     public add_shoe(userId: any, shoeID: number, purchase: number) {
         const shoeAdd = DbClient.connect()
             .then((db) => {
-                db!.collection("users").update({user_id: userId},
-                    {$push: {shoelist: {shoe_id: shoeID, purchase_price: purchase}}});
+                db!.collection("user_shoes").insertOne({user_id:userId,shoe_id:shoeID,purchase_price:purchase});
                 console.log("adding shoe");
                 return true;
             })
@@ -38,11 +38,10 @@ export class UserModel {
         return shoeAdd;
     }
 
-    public remove_shoe(userID: any, shoeID: number) {
+    public remove_shoe(id: any) {
         const shoeRemove = DbClient.connect()
             .then((db) => {
-                db!.collection("users").update({user_id: userID},
-                    {$pull: {shoelist: {shoe_id: shoeID}}});
+                db!.collection("user_shoes").deleteOne({_id: ObjectID(id)});
                 return true;
             })
             .catch((err) => {
@@ -50,5 +49,73 @@ export class UserModel {
                 return false;
             });
         return shoeRemove;
+    }
+
+    public isUser(userID: any) {
+        const result = DbClient.connect()
+            .then((db) => {
+                return db!.collection("users").find({user_id: userID}).toArray();
+            })
+            .then((value: any) => {
+                if (value.length == 0) {
+                    return false;
+                }
+                else return true
+            })
+            .catch((err) => {
+                console.log("err.message");
+            });
+        return result;
+    }
+
+    public get_keys(userID: any) {
+        const user_keys = DbClient.connect()
+            .then((db) => {
+                return db!.collection("user_shoes").find({user_id: userID}).toArray();
+            })
+            .then((sneakers: any) => {
+                // console.log(sneakers);
+                console.log(sneakers);
+                return sneakers;
+                // res.send(sneakers);
+            })
+            .catch((err) => {
+                console.log("err.message");
+            });
+        return user_keys;
+    }
+
+    public get_users() {
+        const users = DbClient.connect()
+            .then((db) => {
+                return db!.collection("users").find().toArray();
+            })
+            .then((sneakers: any) => {
+                // console.log(sneakers);
+                //console.log(sneakers);
+                return sneakers;
+                // res.send(sneakers);
+            })
+            .catch((err) => {
+                console.log("err.message");
+            });
+        return users;
+    }
+
+    public get_all_keys() {
+        const user_keys = DbClient.connect()
+            .then((db) => {
+                return db!.collection("user_shoes").find().toArray();
+            })
+            .then((sneakers: any) => {
+                // console.log(sneakers);
+                console.log(sneakers);
+                return sneakers;
+                // res.send(sneakers);
+            })
+            .catch((err) => {
+                console.log("err.message");
+            });
+        return user_keys;
     }
 }

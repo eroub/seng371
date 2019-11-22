@@ -5,8 +5,12 @@ import { UserModel } from "../models/user_model";
 import { BaseRoute } from "./router";
 
 let userJson: any;
-let userShoes: any;
-let netGain: number;
+let userKeys: any;
+let userShoes: any[] = [];
+let netGain: number = 0;
+let sunkCost: number = 0;
+let totalRevenue: number = 0;
+let Shoes: any;
 
 export class ShoeRouter extends BaseRoute {
 
@@ -44,9 +48,9 @@ export class ShoeRouter extends BaseRoute {
             new ShoeRouter().sortPriceLowDb(req, res, next);
         });
 
-        router.get("/user/:id/notifications", (req: Request, res: Response, next: NextFunction) => {
+        /*router.get("/user/:id/notifications", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().notificationCentre(req, res, next);
-        });
+        });*/
 
         router.get("/user/:id/add_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().inputShoe(req, res, next);
@@ -65,7 +69,7 @@ export class ShoeRouter extends BaseRoute {
         // not much here yet
     // }
 
-    public async notificationCentre(req: Request, res: Response, next: NextFunction) {
+    /*public async notificationCentre(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
         if (await this.check_local(userId)) {
@@ -76,7 +80,7 @@ export class ShoeRouter extends BaseRoute {
                 message: "No user with associated ID. Check the entered number.",
                 status: res.status,
             });        }
-    }
+    }*/
 
     public async removeShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
@@ -88,10 +92,10 @@ export class ShoeRouter extends BaseRoute {
                     status: res.status,
                 });
         }
-        const shoeIdString = "id2";
-        const shoeId = parseInt(req.params[shoeIdString], 10);
+        const idString = "id2";
+        const docID = req.params[idString];
         const uif = new UserModel();
-        await uif.remove_shoe(userId, shoeId);
+        await uif.remove_shoe(docID);
         res.redirect("/user/" + userId + "/shoes/");
     }
 
@@ -162,17 +166,13 @@ export class ShoeRouter extends BaseRoute {
         const shoeIdString = "id2";
         const shoeId = parseInt(req.params[shoeIdString], 10);
         if (await this.check_local(userId)) {
-            if (this.has_shoe(userShoes, shoeId)) {
-                res.redirect("/user/" + userId + "/allShoes/");
-            } else {
-                const uif = new UserModel();
-                let price = req.body.purchase_price;
-                if (!price) {
-                    price = 0;
-                }
-                await uif.add_shoe(userId, shoeId, price);
-                res.redirect("/user/" + userId + "/shoes/");
+            const uif = new UserModel();
+            let price = req.body.purchase_price;
+            if (!price) {
+                price = 0;
             }
+            await uif.add_shoe(userId, shoeId, price);
+            res.redirect("/user/" + userId + "/shoes/");
         } else {
             res.status(404)
             .send({
@@ -215,7 +215,8 @@ export class ShoeRouter extends BaseRoute {
             const sortedShoes: any = userShoes;
             sortedShoes.sort((a: any, b: any) => a.current_price - b.current_price);
             this.render(req, res, "allShoes",
-                {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain});
+                {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain,
+                total: totalRevenue, sunk: sunkCost});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -230,7 +231,8 @@ export class ShoeRouter extends BaseRoute {
             const sortedShoes: any = userShoes;
             sortedShoes.sort((a: any, b: any) => b.current_price - a.current_price);
             this.render(req, res, "allShoes",
-                {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain});
+                {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain,
+                total: totalRevenue, sunk: sunkCost});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -244,12 +246,20 @@ export class ShoeRouter extends BaseRoute {
     public async getAll(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
+        userShoes = [];
+        netGain = 0;
+        sunkCost = 0;
+        totalRevenue = 0;
         userJson = await this.getUserInfo(queryint);
         if (userJson) {
-            userShoes = await this.getUserShoes(userJson);
-            netGain = await this.getNetGain(userShoes);
+            userKeys = await this.getUserKeys(queryint);
+            await this.setUserShoes(userKeys);
+            await this.setNet(userShoes);
+            console.log(userShoes);
+            console.log(netGain);
             this.render(req, res, "allShoes",
-                {id: queryint, title: "Shoes", username: userJson.username, data: userShoes, net: netGain});
+                {id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
+                    net: netGain, sunk: sunkCost, total:totalRevenue, keys: userKeys});
         } else {
             res.status(404)
                 .send({
@@ -267,13 +277,12 @@ export class ShoeRouter extends BaseRoute {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
-        const shoeId = parseInt(req.params[shoeIdString], 10);
+        const shoeId = req.params[shoeIdString];
         if (await this.check_local(userId)) {
-            const purchase = this.getPurchasePrice(userJson.shoelist, shoeId);
-            const shoe = await this.getShoe(shoeId);
-            if (shoe && this.has_shoe(userShoes, shoeId)) {
-                const diff = shoe.current_price - purchase;
-                this.render(req, res, "oneShoe", {id: userId, diff, purchase, shoe});
+            const shoe = this.findShoe(shoeId);
+            if (shoe) {
+                const diff = shoe.current_price - shoe.purchase_price;
+                this.render(req, res, "oneShoe", {id: userId, diff, purchase:shoe.purchase_price, shoe});
             } else {
                 res.status(404)
                     .send({
@@ -291,22 +300,75 @@ export class ShoeRouter extends BaseRoute {
 
     }
 
+    private getShoeInfo(shoeID:number) {
+        for (const item in Shoes) {
+            if (Shoes.hasOwnProperty(item)) {
+                const shoe = Shoes[item];
+                if (shoe.shoe_id === shoeID) return shoe;
+            }
+        }
+    }
+
+    private findShoe(shoeID: any) {
+        console.log(shoeID);
+        for (const item in userShoes) {
+            if (userShoes.hasOwnProperty(item)) {
+                const shoe = userShoes[item];
+                if (shoe._id == shoeID) return shoe;
+            }
+        }
+    }
+
     private async check_local(userID: number) {
-        userJson = await this.getUserInfo(userID);
-        if (!userJson) {
-            return false;
+        if (!(userJson && userShoes)) {
+            userJson = await this.getUserInfo(userID);
+            if (!userJson) {
+                return false;
+            }
+            console.log("setting shoes");
+            userKeys = await this.getUserKeys(userID);
+            await this.setUserShoes(userKeys);
+            await this.setNet(userShoes);
+            return true;
+        }
+        else if (userJson.user_id != userID) {
+            userJson = await this.getUserInfo(userID);
+            if (!userJson) {
+                return false;
+            }
+            userShoes = [];
+            netGain = 0;
+            sunkCost = 0;
+            totalRevenue = 0;
+            userKeys = await this.getUserKeys(userID);
+            await this.setUserShoes(userKeys);
+            await this.setNet(userShoes);
+            return true;
         }
 
-        if (!(userJson || userShoes)) {
-            userShoes = await this.getUserShoes(userJson);
-            netGain = await this.getNetGain(userShoes);
-            return true;
-        } else if (userJson.user_id !== userID) {
-            userShoes = await this.getUserShoes(userJson);
-            netGain = await this.getNetGain(userShoes);
-            return true;
-        }
         return true;
+    }
+
+    private async setUserShoes(userKeys: any) {
+        Shoes = await this.getAllDbShoes();
+        for (const item in userKeys) {
+            if (userKeys.hasOwnProperty(item)) {
+                const key = userKeys[item];
+                const shoe = this.getShoeInfo(key.shoe_id);
+                key["name"] = shoe.brand + ' ' + shoe.model + ' ' + shoe.colorway;
+                key["size"] = shoe.size;
+                key["current_price"] = shoe.current_price;
+                key["retail_price"] = shoe.retail_price;
+                userShoes.push(key);
+            }
+        }
+    }
+
+    private async getUserKeys(userID: any) {
+        const user_if = new UserModel();
+        const userKeys:any = await user_if.get_keys(userID);
+        console.log(userKeys);
+        return userKeys;
     }
 
     private has_shoe(userShoes: any, shoeID: number) {
@@ -321,13 +383,13 @@ export class ShoeRouter extends BaseRoute {
         return false;
     }
 
-    private getPurchasePrice(userShoes: any, id: number) {
+    private getPurchasePrice(id: number) {
         let purchase = 0;
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
-                const shoeid: number = userShoes[item].shoe_id;
+                const shoeid: number = userKeys[item].shoe_id;
                 if (shoeid === id) {
-                    purchase = userShoes[item].purchase_price;
+                    purchase = userKeys[item].purchase_price;
                 }
             }
         }
@@ -343,15 +405,15 @@ export class ShoeRouter extends BaseRoute {
             return false;
         }
         if (userInfo.length !== 0) {
-            return JSON.parse(JSON.stringify(userInfo[0]));
+            return userInfo[0];
         } else {
             return false;
         }
     }
 
-    private async getUserShoes(userJson: any) {
+    private async getUserShoes(userKeys: any) {
         const shoeIf = new ShoeModel();
-        const uShoes = await shoeIf.getAllShoes(userJson.shoelist);
+        const uShoes = await shoeIf.getAllShoes(userKeys);
         return uShoes;
     }
 
@@ -365,16 +427,15 @@ export class ShoeRouter extends BaseRoute {
         }
     }
 
-    private async getNetGain(shoelist: any) {
-        let net: number = 0;
+    private async setNet(shoelist: any) {
         for (const item in shoelist) {
             if (shoelist.hasOwnProperty(item)) {
-                const purchase = await this.getPurchasePrice(userJson.shoelist, shoelist[item].shoe_id);
-                const shoePrice = shoelist[item].current_price;
-                net = net + shoePrice - purchase;
+                const shoe = shoelist[item];
+                netGain = netGain + shoe.current_price - shoe.purchase_price;
+                sunkCost = sunkCost + parseInt(shoe.purchase_price);
+                totalRevenue = totalRevenue + shoe.current_price;
             }
         }
-        return net;
     }
 
     /* returns every shoe in db */

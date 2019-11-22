@@ -2,7 +2,7 @@ extends layout
 
 block content
     a(href='/user/' + id + '/shoes') Back
-    h1 #{shoe.brand} #{shoe.model} #{shoe.colorway}
+    h1 #{shoe.name}
     p Current Price: $#{shoe.current_price}
     p Purchase Price: $#{purchase}
     p Difference: $#{diff}
