@@ -49,9 +49,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Helpers = require("../helperFunctions");
 var customerModel_1 = require("../models/customerModel");
 var router_1 = require("../routes/router");
-var Helpers = require("../helperFunctions");
 var userJson;
 var userShoes = [];
 var userKeys;
@@ -97,13 +97,13 @@ var CustomerController = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         queryint = parseInt(req.params[idString], 10);
-                        return [4 /*yield*/, Helpers.check_local(queryint)];
+                        return [4 /*yield*/, this.check_local(queryint)];
                     case 1:
                         if (_a.sent()) {
                             sortedShoes = userShoes;
                             sortedShoes.sort(function (a, b) { return a.current_price - b.current_price; });
-                            this.render(req, res, "allShoes", { id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain,
-                                total: totalRevenue, sunk: sunkCost });
+                            this.render(req, res, "allShoes", { data: sortedShoes, id: queryint, net: netGain, sunk: sunkCost,
+                                title: "Shoes", total: totalRevenue, username: userJson.username });
                         }
                         else {
                             res.status(404);
@@ -122,13 +122,13 @@ var CustomerController = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         queryint = parseInt(req.params[idString], 10);
-                        return [4 /*yield*/, Helpers.check_local(queryint)];
+                        return [4 /*yield*/, this.check_local(queryint)];
                     case 1:
                         if (_a.sent()) {
                             sortedShoes = userShoes;
                             sortedShoes.sort(function (a, b) { return b.current_price - a.current_price; });
-                            this.render(req, res, "allShoes", { id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain,
-                                total: totalRevenue, sunk: sunkCost });
+                            this.render(req, res, "allShoes", { data: sortedShoes, id: queryint, net: netGain, sunk: sunkCost,
+                                title: "Shoes", total: totalRevenue, username: userJson.username });
                         }
                         else {
                             res.status(404);
@@ -149,7 +149,7 @@ var CustomerController = /** @class */ (function (_super) {
                         userId = parseInt(req.params[userIdString], 10);
                         shoeIdString = "id2";
                         shoeId = parseInt(req.params[shoeIdString], 10);
-                        return [4 /*yield*/, Helpers.check_local(userId)];
+                        return [4 /*yield*/, this.check_local(userId)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
                         uif = new customerModel_1.CustomerModel();
@@ -183,7 +183,7 @@ var CustomerController = /** @class */ (function (_super) {
                     case 0:
                         userIdString = "id";
                         userId = parseInt(req.params[userIdString], 10);
-                        return [4 /*yield*/, Helpers.check_local(userId)];
+                        return [4 /*yield*/, this.check_local(userId)];
                     case 1:
                         if (!(_a.sent())) {
                             res.status(404)
@@ -230,11 +230,11 @@ var CustomerController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.setUserShoes(userKeys)];
                     case 3:
                         userShoes = _b.sent();
-                        return [4 /*yield*/, Helpers.setNet(userShoes)];
+                        return [4 /*yield*/, this.setNet(userShoes)];
                     case 4:
                         _a = _b.sent(), netGain = _a[0], sunkCost = _a[1], totalRevenue = _a[2];
-                        this.render(req, res, "allShoes", { id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
-                            net: netGain, sunk: sunkCost, total: totalRevenue, keys: userKeys });
+                        this.render(req, res, "allShoes", { data: userShoes, id: queryint, keys: userKeys, net: netGain, sunk: sunkCost,
+                            title: "Shoes", total: totalRevenue, username: userJson.username });
                         return [3 /*break*/, 6];
                     case 5:
                         res.status(404)
@@ -258,10 +258,10 @@ var CustomerController = /** @class */ (function (_super) {
                         userId = parseInt(req.params[userIdString], 10);
                         shoeIdString = "id2";
                         shoeId = req.params[shoeIdString];
-                        return [4 /*yield*/, Helpers.check_local(userId)];
+                        return [4 /*yield*/, this.check_local(userId)];
                     case 1:
                         if (_a.sent()) {
-                            shoe = Helpers.findShoe(shoeId);
+                            shoe = Helpers.findShoe(shoeId, userShoes);
                             if (shoe) {
                                 diff = shoe.current_price - shoe.purchase_price;
                                 this.render(req, res, "oneShoe", { id: userId, diff: diff, purchase: shoe.purchase_price, shoe: shoe });
@@ -283,6 +283,72 @@ var CustomerController = /** @class */ (function (_super) {
                         }
                         return [2 /*return*/];
                 }
+            });
+        });
+    };
+    CustomerController.prototype.check_local = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!(userJson && userShoes)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, Helpers.getUserInfo(userID)];
+                    case 1:
+                        userJson = _a.sent();
+                        if (!userJson) {
+                            return [2 /*return*/, false];
+                        }
+                        console.log("setting shoes");
+                        return [4 /*yield*/, Helpers.getUserKeys(userID)];
+                    case 2:
+                        userKeys = _a.sent();
+                        return [4 /*yield*/, Helpers.setUserShoes(userKeys)];
+                    case 3:
+                        _a.sent();
+                        return [4 /*yield*/, this.setNet(userShoes)];
+                    case 4:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                    case 5:
+                        if (!(userJson.user_id !== userID)) return [3 /*break*/, 10];
+                        return [4 /*yield*/, Helpers.getUserInfo(userID)];
+                    case 6:
+                        userJson = _a.sent();
+                        if (!userJson) {
+                            return [2 /*return*/, false];
+                        }
+                        userShoes = [];
+                        netGain = 0;
+                        sunkCost = 0;
+                        totalRevenue = 0;
+                        return [4 /*yield*/, Helpers.getUserKeys(userID)];
+                    case 7:
+                        userKeys = _a.sent();
+                        return [4 /*yield*/, Helpers.setUserShoes(userKeys)];
+                    case 8:
+                        _a.sent();
+                        return [4 /*yield*/, this.setNet(userShoes)];
+                    case 9:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                    case 10: return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    CustomerController.prototype.setNet = function (shoelist) {
+        return __awaiter(this, void 0, void 0, function () {
+            var item, shoe;
+            return __generator(this, function (_a) {
+                for (item in shoelist) {
+                    if (shoelist.hasOwnProperty(item)) {
+                        shoe = shoelist[item];
+                        netGain = netGain + shoe.current_price - shoe.purchase_price;
+                        sunkCost = sunkCost + parseInt(shoe.purchase_price, 10);
+                        totalRevenue = totalRevenue + shoe.current_price;
+                    }
+                }
+                return [2 /*return*/, [netGain, sunkCost, totalRevenue]];
             });
         });
     };

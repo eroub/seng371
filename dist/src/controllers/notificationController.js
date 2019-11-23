@@ -49,9 +49,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var productModel_1 = require("../models/productModel");
-var notificationModel_1 = require("../models/notificationModel");
 var customerModel_1 = require("../models/customerModel");
+var notificationModel_1 = require("../models/notificationModel");
+var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
 var userNotifications;
 var Shoes;
@@ -85,19 +85,19 @@ var NotificationController = /** @class */ (function (_super) {
     // }
     NotificationController.prototype.notificationCentre = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, userId, shoe_if, notif_if, notifArray, _a, _b, _i, item, notification, shoe;
+            var idString, userId, shoeIf, notifIf, notifArray, _a, _b, _i, item, notification, shoe;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         idString = "id";
                         userId = parseInt(req.params[idString], 10);
-                        shoe_if = new productModel_1.ProductModel();
-                        notif_if = new notificationModel_1.NotificationModel();
+                        shoeIf = new productModel_1.ProductModel();
+                        notifIf = new notificationModel_1.NotificationModel();
                         notifArray = [];
                         return [4 /*yield*/, this.isUser(userId)];
                     case 1:
                         if (!_c.sent()) return [3 /*break*/, 11];
-                        return [4 /*yield*/, shoe_if.getAllDB()];
+                        return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         Shoes = _c.sent();
                         return [4 /*yield*/, this.getUserNotifications(userId)];
@@ -114,20 +114,20 @@ var NotificationController = /** @class */ (function (_super) {
                         if (!userNotifications.hasOwnProperty(item)) return [3 /*break*/, 9];
                         notification = userNotifications[item];
                         shoe = this.getShoe(notification.shoe_id);
-                        notification["shoename"] = shoe.brand + ' ' + shoe.model + ' ' + shoe.colorway;
+                        notification["shoename"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
                         notification["current_price"] = shoe.current_price;
                         notification["size"] = shoe.size;
                         if (!!notification.fulfilled) return [3 /*break*/, 8];
-                        if (!((notification.type == "Below") && (notification.threshold > shoe.current_price))) return [3 /*break*/, 6];
-                        return [4 /*yield*/, notif_if.fulfill(notification._id)];
+                        if (!((notification.type === "Below") && (notification.threshold > shoe.current_price))) return [3 /*break*/, 6];
+                        return [4 /*yield*/, notifIf.fulfill(notification._id)];
                     case 5:
                         _c.sent();
                         notification.fulfilled = true;
                         _c.label = 6;
                     case 6:
-                        if (!((notification.type == "Above") && (notification.threshold < shoe.current_price))) return [3 /*break*/, 8];
+                        if (!((notification.type === "Above") && (notification.threshold < shoe.current_price))) return [3 /*break*/, 8];
                         console.log(notification._id);
-                        return [4 /*yield*/, notif_if.fulfill(notification._id)];
+                        return [4 /*yield*/, notifIf.fulfill(notification._id)];
                     case 7:
                         _c.sent();
                         notification.fulfilled = true;
@@ -161,8 +161,8 @@ var NotificationController = /** @class */ (function (_super) {
                     case 0:
                         uString = "id";
                         sString = "id2";
-                        userID = parseInt(req.params[uString]);
-                        shoeID = parseInt(req.params[sString]);
+                        userID = parseInt(req.params[uString], 10);
+                        shoeID = parseInt(req.params[sString], 10);
                         nIF = new notificationModel_1.NotificationModel();
                         threshold = req.body.threshold;
                         if (!threshold) {
@@ -171,7 +171,7 @@ var NotificationController = /** @class */ (function (_super) {
                         return [4 /*yield*/, nIF.addNotification(userID, shoeID, threshold, req.body.type)];
                     case 1:
                         _a.sent();
-                        res.redirect('/user/' + userID + '/allShoes');
+                        res.redirect("/user/" + userID + "/allShoes");
                         return [2 /*return*/];
                 }
             });
@@ -185,13 +185,13 @@ var NotificationController = /** @class */ (function (_super) {
                     case 0:
                         uString = "id";
                         idString = "id2";
-                        userID = parseInt(req.params[uString]);
+                        userID = parseInt(req.params[uString], 10);
                         notifID = req.params[idString];
                         nIF = new notificationModel_1.NotificationModel();
                         return [4 /*yield*/, nIF.remove_notif(notifID)];
                     case 1:
                         _a.sent();
-                        res.redirect('/user/' + userID + '/notifications');
+                        res.redirect("/user/" + userID + "/notifications");
                         return [2 /*return*/];
                 }
             });
@@ -205,7 +205,7 @@ var NotificationController = /** @class */ (function (_super) {
                     case 0:
                         uString = "id";
                         idString = "id2";
-                        userID = parseInt(req.params[uString]);
+                        userID = parseInt(req.params[uString], 10);
                         notifID = req.params[idString];
                         nIF = new notificationModel_1.NotificationModel();
                         if (!req.body.threshold) {
@@ -214,23 +214,8 @@ var NotificationController = /** @class */ (function (_super) {
                         return [4 /*yield*/, nIF.edit_notif(notifID, req.body.threshold, req.body.type)];
                     case 1:
                         _a.sent();
-                        res.redirect('/user/' + userID + '/notifications');
+                        res.redirect("/user/" + userID + "/notifications");
                         return [2 /*return*/];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.getUserNotifications = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            var notif_if;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        notif_if = new notificationModel_1.NotificationModel();
-                        return [4 /*yield*/, notif_if.getUserNotifications(userID)];
-                    case 1:
-                        userNotifications = _a.sent();
-                        return [2 /*return*/, userNotifications];
                 }
             });
         });
@@ -296,12 +281,28 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    NotificationController.prototype.getUserNotifications = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var notifIf;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        notifIf = new notificationModel_1.NotificationModel();
+                        return [4 /*yield*/, notifIf.getUserNotifications(userID)];
+                    case 1:
+                        userNotifications = _a.sent();
+                        return [2 /*return*/, userNotifications];
+                }
+            });
+        });
+    };
     NotificationController.prototype.getShoe = function (shoeID) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 var shoe = Shoes[item];
-                if (shoe.shoe_id === shoeID)
+                if (shoe.shoe_id === shoeID) {
                     return shoe;
+                }
             }
         }
     };

@@ -49,16 +49,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Helpers = require("../helperFunctions");
 var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
-var Helpers = require("../helperFunctions");
 var ProductController = /** @class */ (function (_super) {
     __extends(ProductController, _super);
     function ProductController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    // show all shoes from db
     ProductController.create = function (router) {
+        // show all shoes
         router.get("/user/:id/allShoes", function (req, res, next) {
             new ProductController().allShoes(req, res, next);
         });
@@ -70,6 +70,7 @@ var ProductController = /** @class */ (function (_super) {
         router.get("/user/:id/allShoes/sort/price_low", function (req, res, next) {
             new ProductController().sortPriceLowDb(req, res, next);
         });
+        // Add shoe (id2) to user (id) portfolio, redirect to price input
         router.get("/user/:id/add_shoe/:id2", function (req, res, next) {
             new ProductController().inputShoe(req, res, next);
         });

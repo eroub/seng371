@@ -1,5 +1,7 @@
+import mongodb = require("mongodb");
 import DbClient = require("../DbClient");
-const ObjectID = require("mongodb").ObjectID;
+
+const ObjectID: any = mongodb.ObjectID;
 
 export class CustomerModel {
 

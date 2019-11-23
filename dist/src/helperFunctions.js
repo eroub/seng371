@@ -37,78 +37,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var customerModel_1 = require("./models/customerModel");
 var productModel_1 = require("./models/productModel");
-var userJson;
-var userKeys;
-var userShoes = [];
-var netGain = 0;
-var sunkCost = 0;
-var totalRevenue = 0;
-var Shoes;
 var Helpers = /** @class */ (function () {
     function Helpers() {
     }
-    Helpers.prototype.check_local = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!!(userJson && userShoes)) return [3 /*break*/, 5];
-                        return [4 /*yield*/, this.getUserInfo(userID)];
-                    case 1:
-                        userJson = _a.sent();
-                        if (!userJson) {
-                            return [2 /*return*/, false];
-                        }
-                        console.log("setting shoes");
-                        return [4 /*yield*/, this.getUserKeys(userID)];
-                    case 2:
-                        userKeys = _a.sent();
-                        return [4 /*yield*/, this.setUserShoes(userKeys)];
-                    case 3:
-                        _a.sent();
-                        return [4 /*yield*/, this.setNet(userShoes)];
-                    case 4:
-                        _a.sent();
-                        return [2 /*return*/, true];
-                    case 5:
-                        if (!(userJson.user_id !== userID)) return [3 /*break*/, 10];
-                        return [4 /*yield*/, this.getUserInfo(userID)];
-                    case 6:
-                        userJson = _a.sent();
-                        if (!userJson) {
-                            return [2 /*return*/, false];
-                        }
-                        userShoes = [];
-                        netGain = 0;
-                        sunkCost = 0;
-                        totalRevenue = 0;
-                        return [4 /*yield*/, this.getUserKeys(userID)];
-                    case 7:
-                        userKeys = _a.sent();
-                        return [4 /*yield*/, this.setUserShoes(userKeys)];
-                    case 8:
-                        _a.sent();
-                        return [4 /*yield*/, this.setNet(userShoes)];
-                    case 9:
-                        _a.sent();
-                        return [2 /*return*/, true];
-                    case 10: return [2 /*return*/, true];
-                }
-            });
-        });
-    };
     Helpers.prototype.setUserShoes = function (userKeys) {
         return __awaiter(this, void 0, void 0, function () {
-            var item, key, shoe;
+            var Shoes, userShoes, item, key, shoe;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.getAllDbShoes()];
                     case 1:
                         Shoes = _a.sent();
+                        userShoes = [];
                         for (item in userKeys) {
                             if (userKeys.hasOwnProperty(item)) {
                                 key = userKeys[item];
-                                shoe = this.getShoeInfo(key.shoe_id);
+                                shoe = this.getShoeInfo(key.shoe_id, Shoes);
                                 key["name"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
                                 key["size"] = shoe.size;
                                 key["current_price"] = shoe.current_price;
@@ -151,23 +95,7 @@ var Helpers = /** @class */ (function () {
             });
         });
     };
-    Helpers.prototype.setNet = function (shoelist) {
-        return __awaiter(this, void 0, void 0, function () {
-            var item, shoe;
-            return __generator(this, function (_a) {
-                for (item in shoelist) {
-                    if (shoelist.hasOwnProperty(item)) {
-                        shoe = shoelist[item];
-                        netGain = netGain + shoe.current_price - shoe.purchase_price;
-                        sunkCost = sunkCost + parseInt(shoe.purchase_price, 10);
-                        totalRevenue = totalRevenue + shoe.current_price;
-                    }
-                }
-                return [2 /*return*/, [netGain, sunkCost, totalRevenue]];
-            });
-        });
-    };
-    Helpers.prototype.getShoeInfo = function (shoeID) {
+    Helpers.prototype.getShoeInfo = function (shoeID, Shoes) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 var shoe = Shoes[item];
@@ -234,7 +162,7 @@ var Helpers = /** @class */ (function () {
             });
         });
     };
-    Helpers.prototype.findShoe = function (shoeID) {
+    Helpers.prototype.findShoe = function (shoeID, userShoes) {
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];

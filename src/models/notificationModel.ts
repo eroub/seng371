@@ -1,5 +1,7 @@
+import mongodb = require("mongodb");
 import DbClient = require("../DbClient");
-const ObjectID = require("mongodb").ObjectID;
+
+const ObjectID: any = mongodb.ObjectID;
 
 export class NotificationModel {
 
@@ -11,16 +13,12 @@ export class NotificationModel {
                 return db!.collection("notifications").find({user_id: userId}).toArray();
             })
             .then((notif: any) => {
-                // console.log(sneakers);
                 return notif;
                 // res.send(sneakers);
             })
             .catch((err) => {
                 console.log("err.message");
             });
-
-        // console.log(users);
-
         return notifications;
     }
 
@@ -34,17 +32,14 @@ export class NotificationModel {
                 console.log("err.message");
                 return false;
             });
-
-        // console.log(users);
-
         return result;
     }
 
     public addNotification(userId: number, shoeId: number, threshold: any, type: any) {
         const nAdd = DbClient.connect()
             .then((db) => {
-                db!.collection("notifications").insertOne({user_id: userId,
-                    shoe_id: shoeId, threshold, type, fulfilled: false});
+                db!.collection("notifications").insertOne({fulfilled: false,
+                    shoe_id: shoeId, threshold, type , user_id: userId});
                 return true;
             })
             .catch((err) => {
@@ -73,7 +68,6 @@ export class NotificationModel {
                 return db!.collection("notifications").find({_id: ObjectID(id)}).toArray();
             })
             .then((notif: any) => {
-                // console.log(sneakers);
                 return notif;
                 // res.send(sneakers);
             })

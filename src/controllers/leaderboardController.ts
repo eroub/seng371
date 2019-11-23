@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { BaseRoute } from "../routes/router";
+import Helpers = require("../helperFunctions");
 import { CustomerModel } from "../models/customerModel";
 import { NotificationModel } from "../models/notificationModel";
 import { ProductModel } from "../models/productModel";
+import { BaseRoute } from "../routes/router";
 
 let leaderboard: any[] = [];
 let Shoes: any;
@@ -20,7 +21,7 @@ export class LeaderboardController extends BaseRoute {
     public async leaderboard(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        if (await this.isUser(userId)) {
+        if (await Helpers.isUser(userId)) {
             await this.createBoard();
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
@@ -83,23 +84,25 @@ export class LeaderboardController extends BaseRoute {
         Shoes = await shoeIF.getAllDB();
     }
 
-    private getShoe(shoeID:number) {
+    private getShoe(shoeID: number) {
         for (const item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 const shoe = Shoes[item];
-                if (shoe.shoe_id === shoeID) return shoe;
+                if (shoe.shoe_id === shoeID) {
+                    return shoe;
+                }
             }
         }
     }
 
     private getUserShoes(userID: any) {
-        let userShoes: any[] = [];
+        const userShoes: any[] = [];
         for (const item in allUserShoes) {
             if (allUserShoes.hasOwnProperty(item)) {
                 if (allUserShoes[item].user_id === userID) {
                     const shoe = allUserShoes[item];
-                    const shoe_info = this.getShoe(allUserShoes[item].shoe_id);
-                    shoe["current_price"] = shoe_info.current_price;
+                    const shoeInfo = this.getShoe(allUserShoes[item].shoe_id);
+                    shoe["current_price"] = shoeInfo.current_price;
                     userShoes.push(shoe);
                 }
             }
@@ -107,8 +110,4 @@ export class LeaderboardController extends BaseRoute {
         return userShoes;
     }
 
-    private async isUser(userID: any) {
-        const userIF = new CustomerModel();
-        return await userIF.isUser(userID);
-    }
 }

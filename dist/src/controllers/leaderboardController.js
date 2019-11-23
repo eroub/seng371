@@ -49,8 +49,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var productModel_1 = require("../models/productModel");
+var Helpers = require("../helperFunctions");
 var customerModel_1 = require("../models/customerModel");
+var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
 var leaderboard = [];
 var Shoes;
@@ -74,7 +75,7 @@ var LeaderboardController = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         userId = parseInt(req.params[idString], 10);
-                        return [4 /*yield*/, this.isUser(userId)];
+                        return [4 /*yield*/, Helpers.isUser(userId)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.createBoard()];
@@ -96,7 +97,7 @@ var LeaderboardController = /** @class */ (function (_super) {
     };
     LeaderboardController.prototype.createBoard = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var item, ranking, userShoes, net, sunk, revenue, shoe, avg_net;
+            var item, ranking, userShoes, net, sunk, revenue, shoe, avgNet;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -119,18 +120,19 @@ var LeaderboardController = /** @class */ (function (_super) {
                                         revenue = revenue + userShoes[shoe].current_price;
                                     }
                                 }
-                                avg_net = void 0;
+                                avgNet = void 0;
                                 if (userShoes.length === 0) {
-                                    avg_net = 0;
+                                    avgNet = 0;
                                 }
-                                else
-                                    avg_net = net / userShoes.length;
-                                ranking["net"] = net;
-                                ranking["sunk"] = sunk;
-                                ranking["revenue"] = revenue;
-                                ranking["avg_net"] = avg_net;
-                                ranking["num"] = userShoes.length;
-                                leaderboard.push(ranking);
+                                else {
+                                    avgNet = net / userShoes.length;
+                                    ranking["net"] = net;
+                                    ranking["sunk"] = sunk;
+                                    ranking["revenue"] = revenue;
+                                    ranking["avg_net"] = avgNet;
+                                    ranking["num"] = userShoes.length;
+                                    leaderboard.push(ranking);
+                                }
                             }
                         }
                         leaderboard.sort(function (a, b) { return b.net - a.net; });
@@ -191,8 +193,9 @@ var LeaderboardController = /** @class */ (function (_super) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 var shoe = Shoes[item];
-                if (shoe.shoe_id === shoeID)
+                if (shoe.shoe_id === shoeID) {
                     return shoe;
+                }
             }
         }
     };
@@ -202,26 +205,13 @@ var LeaderboardController = /** @class */ (function (_super) {
             if (allUserShoes.hasOwnProperty(item)) {
                 if (allUserShoes[item].user_id === userID) {
                     var shoe = allUserShoes[item];
-                    var shoe_info = this.getShoe(allUserShoes[item].shoe_id);
-                    shoe["current_price"] = shoe_info.current_price;
+                    var shoeInfo = this.getShoe(allUserShoes[item].shoe_id);
+                    shoe["current_price"] = shoeInfo.current_price;
                     userShoes.push(shoe);
                 }
             }
         }
         return userShoes;
-    };
-    LeaderboardController.prototype.isUser = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            var userIF;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        userIF = new customerModel_1.CustomerModel();
-                        return [4 /*yield*/, userIF.isUser(userID)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
     };
     return LeaderboardController;
 }(router_1.BaseRoute));

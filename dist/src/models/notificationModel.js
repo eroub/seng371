@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var DbClient = require("../DbClient");
-var ObjectID = require("mongodb").ObjectID;
+var mongodb = require("mongodb");
+var ObjectID = mongodb.ObjectID;
 var NotificationModel = /** @class */ (function () {
     function NotificationModel() {
     }
@@ -11,14 +12,12 @@ var NotificationModel = /** @class */ (function () {
             return db.collection("notifications").find({ user_id: userId }).toArray();
         })
             .then(function (notif) {
-            // console.log(sneakers);
             return notif;
             // res.send(sneakers);
         })
             .catch(function (err) {
             console.log("err.message");
         });
-        // console.log(users);
         return notifications;
     };
     NotificationModel.prototype.fulfill = function (Id) {
@@ -31,14 +30,13 @@ var NotificationModel = /** @class */ (function () {
             console.log("err.message");
             return false;
         });
-        // console.log(users);
         return result;
     };
     NotificationModel.prototype.addNotification = function (userId, shoeId, threshold, type) {
         var nAdd = DbClient.connect()
             .then(function (db) {
-            db.collection("notifications").insertOne({ user_id: userId,
-                shoe_id: shoeId, threshold: threshold, type: type, fulfilled: false });
+            db.collection("notifications").insertOne({ fulfilled: false,
+                shoe_id: shoeId, threshold: threshold, type: type, user_id: userId });
             return true;
         })
             .catch(function (err) {
@@ -65,7 +63,6 @@ var NotificationModel = /** @class */ (function () {
             return db.collection("notifications").find({ _id: ObjectID(id) }).toArray();
         })
             .then(function (notif) {
-            // console.log(sneakers);
             return notif;
             // res.send(sneakers);
         })

@@ -1,51 +1,15 @@
 import { CustomerModel } from "./models/customerModel";
 import { ProductModel } from "./models/productModel";
 
-let userJson: any;
-let userKeys: any;
-let userShoes: any[] = [];
-let netGain: number = 0;
-let sunkCost: number = 0;
-let totalRevenue: number = 0;
-let Shoes: any;
-
 class Helpers {
 
-    public async check_local(userID: number) {
-        if (!(userJson && userShoes)) {
-            userJson = await this.getUserInfo(userID);
-            if (!userJson) {
-                return false;
-            }
-            console.log("setting shoes");
-            userKeys = await this.getUserKeys(userID);
-            await this.setUserShoes(userKeys);
-            await this.setNet(userShoes);
-            return true;
-        } else if (userJson.user_id !== userID) {
-            userJson = await this.getUserInfo(userID);
-            if (!userJson) {
-                return false;
-            }
-            userShoes = [];
-            netGain = 0;
-            sunkCost = 0;
-            totalRevenue = 0;
-            userKeys = await this.getUserKeys(userID);
-            await this.setUserShoes(userKeys);
-            await this.setNet(userShoes);
-            return true;
-        }
-
-        return true;
-    }
-
     public async setUserShoes(userKeys: any) {
-        Shoes = await this.getAllDbShoes();
+        const Shoes = await this.getAllDbShoes();
+        const userShoes: any[] = [];
         for (const item in userKeys) {
             if (userKeys.hasOwnProperty(item)) {
                 const key = userKeys[item];
-                const shoe = this.getShoeInfo(key.shoe_id);
+                const shoe = this.getShoeInfo(key.shoe_id, Shoes);
                 key["name"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
                 key["size"] = shoe.size;
                 key["current_price"] = shoe.current_price;
@@ -71,19 +35,7 @@ class Helpers {
         }
     }
 
-    public async setNet(shoelist: any) {
-        for (const item in shoelist) {
-            if (shoelist.hasOwnProperty(item)) {
-                const shoe = shoelist[item];
-                netGain = netGain + shoe.current_price - shoe.purchase_price;
-                sunkCost = sunkCost + parseInt(shoe.purchase_price, 10);
-                totalRevenue = totalRevenue + shoe.current_price;
-            }
-        }
-        return [netGain, sunkCost, totalRevenue];
-    }
-
-    public getShoeInfo(shoeID: number) {
+    public getShoeInfo(shoeID: number, Shoes: any) {
         for (const item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 const shoe = Shoes[item];
@@ -121,7 +73,7 @@ class Helpers {
         return;
     }
 
-    public findShoe(shoeID: any) {
+    public findShoe(shoeID: any, userShoes: any) {
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 const shoe = userShoes[item];
@@ -131,6 +83,7 @@ class Helpers {
             }
         }
     }
+
     public async getUsers() {
         const userArr = await new CustomerModel().get_users();
         return userArr;

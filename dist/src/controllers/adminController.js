@@ -49,15 +49,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Helpers = require("../helperFunctions");
 var router_1 = require("../routes/router");
-var helpers = require("../helperFunctions");
 var AdminController = /** @class */ (function (_super) {
     __extends(AdminController, _super);
     function AdminController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     AdminController.create = function (router) {
-        router.get('/admin', function (req, res, next) {
+        router.get("/admin", function (req, res, next) {
             new AdminController().showAllUsers(req, res, next);
         });
     };
@@ -66,16 +66,16 @@ var AdminController = /** @class */ (function (_super) {
      */
     AdminController.prototype.showAllUsers = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_Arr;
+            var userArr;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        user_Arr = [];
-                        return [4 /*yield*/, helpers.getUsers()];
+                        userArr = [];
+                        return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
-                        user_Arr = _a.sent();
-                        console.log(user_Arr);
-                        this.render(req, res, "admin", { users: user_Arr, title: "All users" });
+                        userArr = _a.sent();
+                        console.log(userArr);
+                        this.render(req, res, "admin", { users: userArr, title: "All users" });
                         return [2 /*return*/];
                 }
             });

@@ -1,14 +1,12 @@
 import { NextFunction, Request, Response, Router} from "express";
+import Helpers = require("../helperFunctions");
 import { ProductModel } from "../models/productModel";
 import { BaseRoute } from "../routes/router";
-import Helpers = require("../helperFunctions");
-
 
 export class ProductController extends BaseRoute {
 
-// show all shoes from db
     public static create(router: Router) {
-
+        // show all shoes
         router.get("/user/:id/allShoes", (req: Request, res: Response, next: NextFunction) => {
             new ProductController().allShoes(req, res, next);
         });
@@ -20,13 +18,11 @@ export class ProductController extends BaseRoute {
         router.get("/user/:id/allShoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
             new ProductController().sortPriceLowDb(req, res, next);
         });
-
-            router.get("/user/:id/add_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
-                new ProductController().inputShoe(req, res, next);
-            });
-
+        // Add shoe (id2) to user (id) portfolio, redirect to price input
+        router.get("/user/:id/add_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
+            new ProductController().inputShoe(req, res, next);
+        });
     }
-
 
     public async inputShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
@@ -102,5 +98,3 @@ export class ProductController extends BaseRoute {
     }
 
 }
-
-

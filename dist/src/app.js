@@ -11,10 +11,10 @@ var morgan_1 = __importDefault(require("morgan"));
 var path_1 = __importDefault(require("path"));
 var adminController_1 = require("./controllers/adminController");
 var customerController_1 = require("./controllers/customerController");
-var index_1 = require("./routes/index");
 var leaderboardController_1 = require("./controllers/leaderboardController");
 var notificationController_1 = require("./controllers/notificationController");
 var productController_1 = require("./controllers/productController");
+var index_1 = require("./routes/index");
 /**
  * The server.
  *

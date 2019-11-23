@@ -6,10 +6,10 @@ import logger from "morgan";
 import path from "path";
 import { AdminController } from "./controllers/adminController";
 import { CustomerController } from "./controllers/customerController";
-import { IndexRoute } from "./routes/index";
 import { LeaderboardController } from "./controllers/leaderboardController";
 import { NotificationController } from "./controllers/notificationController";
 import { ProductController } from "./controllers/productController";
+import { IndexRoute } from "./routes/index";
 
 /**
  * The server.

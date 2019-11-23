@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { ProductModel } from "../models/productModel";
-import { NotificationModel } from "../models/notificationModel";
 import { CustomerModel } from "../models/customerModel";
+import { NotificationModel } from "../models/notificationModel";
+import { ProductModel } from "../models/productModel";
 import { BaseRoute } from "../routes/router";
 
 let userNotifications: any;
@@ -33,8 +33,6 @@ export class NotificationController extends BaseRoute {
         router.post("/user/:id/edit_notification/:id2", (req: Request, res: Response, next: NextFunction) => {
             new NotificationController().editNotification(req, res, next);
         });
-
-
     }
 
     // constructor() {
@@ -44,34 +42,35 @@ export class NotificationController extends BaseRoute {
     public async notificationCentre(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        const shoe_if = new ProductModel();
-        const notif_if = new NotificationModel();
-        let notifArray: any[] = [];
+        const shoeIf = new ProductModel();
+        const notifIf = new NotificationModel();
+        const notifArray: any[] = [];
         if (await this.isUser(userId)) {
-            Shoes = await shoe_if.getAllDB();
+            Shoes = await shoeIf.getAllDB();
             await this.getUserNotifications(userId);
             for (const item in userNotifications) {
                 if (userNotifications.hasOwnProperty(item)) {
                     const notification = userNotifications[item];
                     const shoe = this.getShoe(notification.shoe_id);
-                    notification["shoename"] = shoe.brand + ' ' + shoe.model + ' ' + shoe.colorway;
+                    notification["shoename"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
                     notification["current_price"] = shoe.current_price;
                     notification["size"] = shoe.size;
                     if (!notification.fulfilled) {
-                        if ((notification.type == "Below") && (notification.threshold > shoe.current_price)) {
-                            await notif_if.fulfill(notification._id);
+                        if ((notification.type === "Below") && (notification.threshold > shoe.current_price)) {
+                            await notifIf.fulfill(notification._id);
                             notification.fulfilled = true;
                         }
-                        if ((notification.type == "Above") && (notification.threshold < shoe.current_price)) {
+                        if ((notification.type === "Above") && (notification.threshold < shoe.current_price)) {
                             console.log(notification._id);
-                            await notif_if.fulfill(notification._id);
+                            await notifIf.fulfill(notification._id);
                             notification.fulfilled = true;
                         }
                     }
                     notifArray.push(notification);
                 }
             }
-            this.render(req, res, "notificationCentre", {id: userId, title: "Notifications", notifications:notifArray});
+            this.render(req, res, "notificationCentre",
+                {id: userId, title: "Notifications", notifications: notifArray});
         } else {
             res.status(404)
             .send({
@@ -83,45 +82,38 @@ export class NotificationController extends BaseRoute {
     public async addNotification(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const sString = "id2";
-        const userID = parseInt(req.params[uString]);
-        const shoeID = parseInt(req.params[sString]);
+        const userID = parseInt(req.params[uString], 10);
+        const shoeID = parseInt(req.params[sString], 10);
         const nIF = new NotificationModel();
         let threshold = req.body.threshold;
         if (!threshold) {
             threshold = 0;
         }
         await nIF.addNotification(userID, shoeID, threshold, req.body.type);
-        res.redirect('/user/' + userID + '/allShoes');
+        res.redirect("/user/" + userID + "/allShoes");
     }
 
     public async removeNotification(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const idString = "id2";
-        const userID = parseInt(req.params[uString]);
+        const userID = parseInt(req.params[uString], 10);
         const notifID = req.params[idString];
         const nIF = new NotificationModel();
         await nIF.remove_notif(notifID);
-        res.redirect('/user/' + userID + '/notifications');
+        res.redirect("/user/" + userID + "/notifications");
     }
 
     public async editNotification(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const idString = "id2";
-        const userID = parseInt(req.params[uString]);
+        const userID = parseInt(req.params[uString], 10);
         const notifID = req.params[idString];
         const nIF = new NotificationModel();
         if (!req.body.threshold) {
             req.body.threshold = 0;
         }
         await nIF.edit_notif(notifID, req.body.threshold, req.body.type);
-        res.redirect('/user/' + userID + '/notifications');
-    }
-
-    private async getUserNotifications(userID:number) {
-        const notif_if = new NotificationModel();
-        userNotifications = await notif_if.getUserNotifications(userID);
-
-        return userNotifications;
+        res.redirect("/user/" + userID + "/notifications");
     }
 
     public async inputNotification(req: Request, res: Response, next: NextFunction) {
@@ -155,14 +147,23 @@ export class NotificationController extends BaseRoute {
         const notIdString = "id2";
         const notId = req.params[notIdString];
         const notification = await this.getNotif(notId);
-        this.render(req, res, "editNotification", {id: userId, title: "Notification", notification:notification});
+        this.render(req, res, "editNotification", {id: userId, title: "Notification", notification});
     }
 
-    private getShoe(shoeID:number) {
+    private async getUserNotifications(userID: number) {
+        const notifIf = new NotificationModel();
+        userNotifications = await notifIf.getUserNotifications(userID);
+
+        return userNotifications;
+    }
+
+    private getShoe(shoeID: number) {
         for (const item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 const shoe = Shoes[item];
-                if (shoe.shoe_id === shoeID) return shoe;
+                if (shoe.shoe_id === shoeID) {
+                    return shoe;
+                }
             }
         }
     }

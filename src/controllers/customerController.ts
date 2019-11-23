@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router} from "express";
+import Helpers = require("../helperFunctions");
 import { CustomerModel } from "../models/customerModel";
 import { BaseRoute } from "../routes/router";
-import Helpers = require("../helperFunctions");
 
 let userJson: any;
 let userShoes: any[] = [];
@@ -42,12 +42,12 @@ export class CustomerController extends BaseRoute {
     public async sortPriceLow(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        if (await Helpers.check_local(queryint)) {
+        if (await this.check_local(queryint)) {
             const sortedShoes: any = userShoes;
             sortedShoes.sort((a: any, b: any) => a.current_price - b.current_price);
             this.render(req, res, "allShoes",
-                {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain,
-                total: totalRevenue, sunk: sunkCost});
+                {data: sortedShoes, id: queryint, net: netGain, sunk: sunkCost,
+                    title: "Shoes", total: totalRevenue, username: userJson.username});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -58,12 +58,12 @@ export class CustomerController extends BaseRoute {
     public async sortPriceHigh(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        if (await Helpers.check_local(queryint)) {
+        if (await this.check_local(queryint)) {
             const sortedShoes: any = userShoes;
             sortedShoes.sort((a: any, b: any) => b.current_price - a.current_price);
             this.render(req, res, "allShoes",
-                {id: queryint, username: userJson.username, title: "Shoes", data: sortedShoes, net: netGain,
-                total: totalRevenue, sunk: sunkCost});
+                {data: sortedShoes, id: queryint, net: netGain, sunk: sunkCost,
+                    title: "Shoes", total: totalRevenue, username: userJson.username});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -76,7 +76,7 @@ export class CustomerController extends BaseRoute {
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
         const shoeId = parseInt(req.params[shoeIdString], 10);
-        if (await Helpers.check_local(userId)) {
+        if (await this.check_local(userId)) {
             const uif = new CustomerModel();
             let price = req.body.purchase_price;
             if (!price) {
@@ -98,7 +98,7 @@ export class CustomerController extends BaseRoute {
     public async removeShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
-        if (!(await Helpers.check_local(userId))) {
+        if (!(await this.check_local(userId))) {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
@@ -126,10 +126,10 @@ export class CustomerController extends BaseRoute {
         if (userJson) {
             userKeys = await Helpers.getUserKeys(queryint);
             userShoes = await Helpers.setUserShoes(userKeys);
-            [netGain, sunkCost, totalRevenue] = await Helpers.setNet(userShoes);
+            [netGain, sunkCost, totalRevenue] = await this.setNet(userShoes);
             this.render(req, res, "allShoes",
-                {id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
-                    net: netGain, sunk: sunkCost, total: totalRevenue, keys: userKeys});
+                {data: userShoes, id: queryint, keys: userKeys, net: netGain, sunk: sunkCost,
+                    title: "Shoes", total: totalRevenue, username: userJson.username});
         } else {
             res.status(404)
                 .send({
@@ -144,8 +144,8 @@ export class CustomerController extends BaseRoute {
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
         const shoeId = req.params[shoeIdString];
-        if (await Helpers.check_local(userId)) {
-            const shoe = Helpers.findShoe(shoeId);
+        if (await this.check_local(userId)) {
+            const shoe = Helpers.findShoe(shoeId, userShoes);
             if (shoe) {
                 const diff = shoe.current_price - shoe.purchase_price;
                 this.render(req, res, "oneShoe", {id: userId, diff, purchase: shoe.purchase_price, shoe});
@@ -164,6 +164,47 @@ export class CustomerController extends BaseRoute {
                 });
         }
 
+    }
+
+    private async check_local(userID: number) {
+        if (!(userJson && userShoes)) {
+            userJson = await Helpers.getUserInfo(userID);
+            if (!userJson) {
+                return false;
+            }
+            console.log("setting shoes");
+            userKeys = await Helpers.getUserKeys(userID);
+            await Helpers.setUserShoes(userKeys);
+            await this.setNet(userShoes);
+            return true;
+        } else if (userJson.user_id !== userID) {
+            userJson = await Helpers.getUserInfo(userID);
+            if (!userJson) {
+                return false;
+            }
+            userShoes = [];
+            netGain = 0;
+            sunkCost = 0;
+            totalRevenue = 0;
+            userKeys = await Helpers.getUserKeys(userID);
+            await Helpers.setUserShoes(userKeys);
+            await this.setNet(userShoes);
+            return true;
+        }
+
+        return true;
+    }
+
+    private async setNet(shoelist: any) {
+        for (const item in shoelist) {
+            if (shoelist.hasOwnProperty(item)) {
+                const shoe = shoelist[item];
+                netGain = netGain + shoe.current_price - shoe.purchase_price;
+                sunkCost = sunkCost + parseInt(shoe.purchase_price, 10);
+                totalRevenue = totalRevenue + shoe.current_price;
+            }
+        }
+        return [netGain, sunkCost, totalRevenue];
     }
 
 }
