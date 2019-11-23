@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { ShoeModel } from "../models/shoe_model";
-import { NotificationModel } from "../models/notification_model";
-import { UserModel } from "../models/user_model";
-import { BaseRoute } from "./router";
+import { ProductModel } from "../models/productModel";
+import { NotificationModel } from "../models/notificationModel";
+import { CustomerModel } from "../models/customerModel";
+import { BaseRoute } from "../routes/router";
 
 let userNotifications: any;
 let Shoes: any;
@@ -65,7 +65,7 @@ export class NotificationController extends BaseRoute {
         if (!threshold) {
             threshold = 0;
         }
-        await nIF.add_notif(userID, shoeID, threshold, req.body.type);
+        await nIF.addNotification(userID, shoeID, threshold, req.body.type);
         res.redirect('/user/' + userID + '/allShoes');
     }
 
@@ -159,7 +159,7 @@ export class NotificationController extends BaseRoute {
     }
 
     private async setShoes() {
-        const shoe_if = new ShoeModel();
+        const shoe_if = new ProductModel();
         Shoes = await shoe_if.getAllDB();
     }
 
@@ -168,7 +168,7 @@ export class NotificationController extends BaseRoute {
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
         const shoeId = parseInt(req.params[shoeIdString], 10);
-        const shoeIF = new ShoeModel();
+        const shoeIF = new ProductModel();
         const shoe = await shoeIF.getOneShoe(shoeId);
         if (shoe && await this.isUser(userId)) {
             this.render(req, res, "addNotification", {id: userId, shoe});
@@ -213,7 +213,7 @@ export class NotificationController extends BaseRoute {
     }
 
     private async isUser(userID: any) {
-        const userIF = new UserModel();
+        const userIF = new CustomerModel();
         return await userIF.isUser(userID);
     }
 }

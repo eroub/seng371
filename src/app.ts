@@ -4,12 +4,12 @@ import errorHandler from "errorhandler";
 import express from "express";
 import logger from "morgan";
 import path from "path";
+import { AdminController } from "./controllers/adminController";
+import { CustomerController } from "./controllers/customerController";
 import { IndexRoute } from "./routes/index";
-import { NotificationController } from "./routes/notificationController";
-import { LeaderboardController } from "./routes/leaderboardController";
-import { CustomerController } from "./routes/customerController";
-import { AdminController } from "./routes/adminController";
-import { ProductController } from "./routes/productController";
+import { LeaderboardController } from "./controllers/leaderboardController";
+import { NotificationController } from "./controllers/notificationController";
+import { ProductController } from "./controllers/productController";
 
 /**
  * The server.

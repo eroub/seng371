@@ -512,7 +512,7 @@ var NotificationRouter = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         userId = parseInt(req.params[idString], 10);
-                        shoe_if = new shoe_model_1.ShoeModel();
+                        shoe_if = new shoe_model_1.ProductModel();
                         notif_if = new notification_model_1.NotificationModel();
                         notifArray = [];
                         return [4 /*yield*/, this.isUser(userId)];
@@ -666,7 +666,7 @@ var NotificationRouter = /** @class */ (function (_super) {
                         userId = parseInt(req.params[userIdString], 10);
                         shoeIdString = "id2";
                         shoeId = parseInt(req.params[shoeIdString], 10);
-                        shoeIF = new shoe_model_1.ShoeModel();
+                        shoeIF = new shoe_model_1.ProductModel();
                         return [4 /*yield*/, shoeIF.getOneShoe(shoeId)];
                     case 1:
                         shoe = _b.sent();

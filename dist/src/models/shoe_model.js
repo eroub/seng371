@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var DbClient = require("../DbClient");
-var ShoeModel = /** @class */ (function () {
-    function ShoeModel() {
+var ProductModel = /** @class */ (function () {
+    function ProductModel() {
     }
     /*
         input type: key value arr, example :  [{"1":300}, {"3":400},{"5":500}]
         returns an array of shoe objects ex: [ {shoe_1 ...}, {shoe_2 ...}, {shoe_3}...]
      */
-    ShoeModel.prototype.getAllShoes = function (shoeKeysVal) {
+    ProductModel.prototype.getAllShoes = function (shoeKeysVal) {
         var keyArr = [];
         // get the keys from the input, keys_arr should be equal to [1,3,5] from the example above
         var prop;
@@ -50,7 +50,7 @@ var ShoeModel = /** @class */ (function () {
      Input type: integer that refers to the shoe_id. ex: 3
      Output type: a json shoe obejct ex: {shoe_id:3 ... }
      */
-    ShoeModel.prototype.getOneShoe = function (shoeID) {
+    ProductModel.prototype.getOneShoe = function (shoeID) {
         console.log(shoeID);
         // an array of objects holding indvidual json objects for each of the shoes the user has
         var jsonShoeArr = [];
@@ -81,7 +81,7 @@ var ShoeModel = /** @class */ (function () {
     /*
             Return all the shoes for the view where we need to see all shoes available in db
      */
-    ShoeModel.prototype.getAllDB = function () {
+    ProductModel.prototype.getAllDB = function () {
         var shoes = DbClient.connect()
             .then(function (db) {
             return db.collection("shoes").find().toArray();
@@ -94,7 +94,7 @@ var ShoeModel = /** @class */ (function () {
         });
         return shoes;
     };
-    return ShoeModel;
+    return ProductModel;
 }());
-exports.ShoeModel = ShoeModel;
+exports.ProductModel = ProductModel;
 //# sourceMappingURL=shoe_model.js.map

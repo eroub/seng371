@@ -547,7 +547,7 @@ var LeaderboardRouter = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        shoeIF = new shoe_model_1.ShoeModel();
+                        shoeIF = new shoe_model_1.ProductModel();
                         return [4 /*yield*/, shoeIF.getAllDB()];
                     case 1:
                         Shoes = _a.sent();

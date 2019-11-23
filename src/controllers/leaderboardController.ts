@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { ShoeModel } from "../models/shoe_model";
-import { NotificationModel } from "../models/notification_model";
-import { UserModel } from "../models/user_model";
-import { BaseRoute } from "./router";
+import { BaseRoute } from "../routes/router";
+import { CustomerModel } from "../models/customerModel";
+import { NotificationModel } from "../models/notificationModel";
+import { ProductModel } from "../models/productModel";
 
 let leaderboard: any[] = [];
 let Shoes: any;
@@ -34,7 +34,6 @@ export class LeaderboardController extends BaseRoute {
         });
 
     }
-
 
     public async leaderboard(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -130,27 +129,7 @@ export class LeaderboardController extends BaseRoute {
                     //console.log(ranking);
                     const userShoes: any = this.getUserShoes(users[item].user_id);
                     console.log(userShoes);
-                    let net: number = 0;
-                    let sunk: number = 0;
-                    let revenue: number = 0;
-                    for (const shoe in userShoes) {
-                        if (userShoes.hasOwnProperty(shoe)) {
-                            net = net + userShoes[shoe].current_price - userShoes[shoe].purchase_price;
-                            sunk = sunk + userShoes[shoe].purchase_price;
-                            revenue = revenue + userShoes[shoe].current_price;
-                        }
-                    }
-                    let avg_net: number;
-                    if (userShoes.length === 0) {
-                        avg_net = 0;
-                    }
-                    else avg_net = net/userShoes.length;
-                    ranking["net"] = net;
-                    ranking["sunk"] = sunk;
-                    ranking["revenue"] = revenue;
-                    ranking["avg_net"] = avg_net;
-                    ranking["num"] = userShoes.length;
-                    leaderboard.push(ranking);
+                    this.buildRanking(userShoes, ranking);
                 }
             }
             leaderboard.sort((a: any, b: any) => b.net - a.net);
@@ -159,19 +138,42 @@ export class LeaderboardController extends BaseRoute {
         else return false;
     }
 
+    private buildRanking(userShoes: any, ranking: any) {
+        let net: number = 0;
+        let sunk: number = 0;
+        let revenue: number = 0;
+        for (const shoe in userShoes) {
+            if (userShoes.hasOwnProperty(shoe)) {
+                net = net + userShoes[shoe].current_price - userShoes[shoe].purchase_price;
+                sunk = sunk + userShoes[shoe].purchase_price;
+                revenue = revenue + userShoes[shoe].current_price;
+            }
+        }
+        let avg_net: number;
+        if (userShoes.length === 0) {
+            avg_net = 0;
+        } else avg_net = net / userShoes.length;
+        ranking["net"] = net;
+        ranking["sunk"] = sunk;
+        ranking["revenue"] = revenue;
+        ranking["avg_net"] = avg_net;
+        ranking["num"] = userShoes.length;
+        leaderboard.push(ranking);
+    }
+
     private async setLocals() {
         await this.setUsers();
         await this.setShoes();
     }
 
     private async setUsers() {
-        const uif = new UserModel();
+        const uif = new CustomerModel();
         users = await uif.get_users();
         allUserShoes = await uif.get_all_keys();
     }
 
     private async setShoes() {
-        const shoeIF = new ShoeModel();
+        const shoeIF = new ProductModel();
         Shoes = await shoeIF.getAllDB();
     }
 
@@ -200,7 +202,7 @@ export class LeaderboardController extends BaseRoute {
     }
 
     private async isUser(userID: any) {
-        const userIF = new UserModel();
+        const userIF = new CustomerModel();
         return await userIF.isUser(userID);
     }
 }

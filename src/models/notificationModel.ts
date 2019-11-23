@@ -27,7 +27,7 @@ export class NotificationModel {
     public fulfill(Id: any) {
         const result = DbClient.connect()
             .then((db) => {
-                db!.collection("notifications").updateOne({_id: ObjectID(Id)},{$set:{fulfilled:true}});
+                db!.collection("notifications").updateOne({_id: ObjectID(Id)}, {$set: {fulfilled: true}});
                 return true;
             })
             .catch((err) => {
@@ -40,11 +40,11 @@ export class NotificationModel {
         return result;
     }
 
-    public add_notif(user_id: number, shoe_id: number, threshold: any, type: any) {
+    public addNotification(userId: number, shoeId: number, threshold: any, type: any) {
         const nAdd = DbClient.connect()
             .then((db) => {
-                db!.collection("notifications").insertOne({user_id: user_id,
-                    shoe_id: shoe_id, threshold: threshold, type: type, fulfilled: false});
+                db!.collection("notifications").insertOne({user_id: userId,
+                    shoe_id: shoeId, threshold, type, fulfilled: false});
                 return true;
             })
             .catch((err) => {
@@ -83,11 +83,11 @@ export class NotificationModel {
         return notification;
     }
 
-    public edit_notif(id: any, threshold:any, type: any) {
+    public edit_notif(id: any, threshold: any, type: any) {
         const result = DbClient.connect()
             .then((db) => {
                 db!.collection("notifications").updateOne({_id: ObjectID(id)},
-                    {$set:{threshold:threshold, type:type, fulfilled:false}});
+                    {$set: {threshold, type, fulfilled: false}});
                 return true;
             })
             .catch((err) => {

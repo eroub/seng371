@@ -1,5 +1,5 @@
-import { UserModel } from "./models/user_model"
-import { ShoeModel } from "./models/shoe_model";
+import { CustomerModel } from "./models/customerModel";
+import { ProductModel } from "./models/productModel";
 
 let userJson: any;
 let userKeys: any;
@@ -9,7 +9,7 @@ let sunkCost: number = 0;
 let totalRevenue: number = 0;
 let Shoes: any;
 
-class helpers {
+class Helpers {
 
     public async check_local(userID: number) {
         if (!(userJson && userShoes)) {
@@ -22,7 +22,7 @@ class helpers {
             await this.setUserShoes(userKeys);
             await this.setNet(userShoes);
             return true;
-        } else if (userJson.user_id != userID) {
+        } else if (userJson.user_id !== userID) {
             userJson = await this.getUserInfo(userID);
             if (!userJson) {
                 return false;
@@ -38,7 +38,7 @@ class helpers {
         }
 
         return true;
-    };
+    }
 
     public async setUserShoes(userKeys: any) {
         Shoes = await this.getAllDbShoes();
@@ -46,7 +46,7 @@ class helpers {
             if (userKeys.hasOwnProperty(item)) {
                 const key = userKeys[item];
                 const shoe = this.getShoeInfo(key.shoe_id);
-                key["name"] = shoe.brand + ' ' + shoe.model + ' ' + shoe.colorway;
+                key["name"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
                 key["size"] = shoe.size;
                 key["current_price"] = shoe.current_price;
                 key["retail_price"] = shoe.retail_price;
@@ -57,7 +57,7 @@ class helpers {
     }
 
     public async getUserInfo(queryint: number) {
-        const userIf = new UserModel();
+        const userIf = new CustomerModel();
         let userInfo = null;
         try {
             userInfo = await userIf.userInfo(queryint);
@@ -76,38 +76,40 @@ class helpers {
             if (shoelist.hasOwnProperty(item)) {
                 const shoe = shoelist[item];
                 netGain = netGain + shoe.current_price - shoe.purchase_price;
-                sunkCost = sunkCost + parseInt(shoe.purchase_price);
+                sunkCost = sunkCost + parseInt(shoe.purchase_price, 10);
                 totalRevenue = totalRevenue + shoe.current_price;
             }
         }
-        return [netGain,sunkCost,totalRevenue];
+        return [netGain, sunkCost, totalRevenue];
     }
 
-    public getShoeInfo(shoeID:number) {
+    public getShoeInfo(shoeID: number) {
         for (const item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 const shoe = Shoes[item];
-                if (shoe.shoe_id === shoeID) return shoe;
+                if (shoe.shoe_id === shoeID) {
+                    return shoe;
+                }
             }
         }
     }
 
     public async getUserKeys(userID: any) {
-        const user_if = new UserModel();
-        const userKeys:any = await user_if.get_keys(userID);
+        const userIf = new CustomerModel();
+        const userKeys: any = await userIf.getKeys(userID);
         console.log(userKeys);
         return userKeys;
     }
-    
+
     public async isUser(userID: any) {
-        const userIF = new UserModel();
+        const userIF = new CustomerModel();
         return await userIF.isUser(userID);
     }
 
     /* returns every shoe in db */
     public async getAllDbShoes() {
         let allShoes = null;
-        const shoeIf = new ShoeModel();
+        const shoeIf = new ProductModel();
         try {
             allShoes = await shoeIf.getAllDB();
         } catch {
@@ -119,22 +121,23 @@ class helpers {
         return;
     }
 
-
     public findShoe(shoeID: any) {
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 const shoe = userShoes[item];
-                if (shoe._id == shoeID) return shoe;
+                if (shoe._id === shoeID) {
+                    return shoe;
+                }
             }
         }
     }
     public async getUsers() {
-        const user_arr = await new UserModel().get_users();
-        return user_arr;
+        const userArr = await new CustomerModel().get_users();
+        return userArr;
     }
 
     public async getShoe(shoeId: number) {
-        const shoeIf = new ShoeModel();
+        const shoeIf = new ProductModel();
         const shoe = await shoeIf.getOneShoe(shoeId);
         if (shoe) {
             return shoe;
@@ -143,13 +146,12 @@ class helpers {
         }
     }
 
-
     public async getUserShoes(userKeys: any) {
-        const shoeIf = new ShoeModel();
+        const shoeIf = new ProductModel();
         const uShoes = await shoeIf.getAllShoes(userKeys);
         return uShoes;
     }
 
 }
 
-export = new helpers();
+export = new Helpers();
