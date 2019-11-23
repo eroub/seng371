@@ -8,31 +8,31 @@ let userNotifications: any;
 let Shoes: any;
 let id:number;
 
-export class NotificationRouter extends BaseRoute {
+export class NotificationController extends BaseRoute {
 
     public static create(router: Router) {
         router.get("/user/:id/notifications", (req: Request, res: Response, next: NextFunction) => {
-            new NotificationRouter().notificationCentre(req, res, next);
+            new NotificationController().notificationCentre(req, res, next);
         });
 
         router.get("/user/:id/add_notification/:id2", (req: Request, res: Response, next: NextFunction) => {
-            new NotificationRouter().inputNotification(req, res, next);
+            new NotificationController().inputNotification(req, res, next);
         });
 
         router.get("/user/:id/edit_notification/:id2", (req: Request, res: Response, next: NextFunction) => {
-            new NotificationRouter().editNotificationForm(req, res, next);
+            new NotificationController().editNotificationForm(req, res, next);
         });
 
         router.post("/user/:id/add_notification/:id2", (req: Request, res: Response, next: NextFunction) => {
-            new NotificationRouter().addNotification(req, res, next);
+            new NotificationController().addNotification(req, res, next);
         });
 
         router.post("/user/:id/remove_notification/:id2", (req: Request, res: Response, next: NextFunction) => {
-            new NotificationRouter().removeNotification(req, res, next);
+            new NotificationController().removeNotification(req, res, next);
         });
 
         router.post("/user/:id/edit_notification/:id2", (req: Request, res: Response, next: NextFunction) => {
-            new NotificationRouter().editNotification(req, res, next);
+            new NotificationController().editNotification(req, res, next);
         });
 
 

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    p #[a(href='/') Back]&nbsp #[a(href='/user/' + id + '/allShoes') Add Shoes]&nbsp #[a(href='/user/' + id + '/notifications') Notifications]&nbsp #[a(href='/user/' + id + '/leaderboard') Leaderboard]
+    h1 All users :
+    for user in users
+
+        p User ID: #{user.user_id} Username: #{user.username}
+
+
+        //Each user has buttons for editing router.get(‘/admin/edit_user/:id’)
+
+        form(method='post' action='/admin/' + '/edit_user/'+user.user_id )
+            p Notification Type:
+            div.form-group
+                p
+                input#above.form-control(type='radio', name='type', value='Delete' )
+                label Above
+                div.form-group
+                input#below.form-control(type='radio', name='type', value='Edit')
+                label Below
+            p
+            button.btn.btn-primary(type='submit') Add Notification

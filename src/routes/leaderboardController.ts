@@ -10,34 +10,31 @@ let users: any;
 let allUserShoes: any;
 let id:any;
 
-export class LeaderboardRouter extends BaseRoute {
+export class LeaderboardController extends BaseRoute {
 
     public static create(router: Router) {
         router.get("/user/:id/leaderboard", (req: Request, res: Response, next: NextFunction) => {
-            new LeaderboardRouter().leaderboard(req, res, next);
+            new LeaderboardController().leaderboard(req, res, next);
         });
 
         router.get("/user/:id/leaderboard/avgNetHigh", (req: Request, res: Response, next: NextFunction) => {
-            new LeaderboardRouter().avgNetHigh(req, res, next);
+            new LeaderboardController().avgNetHigh(req, res, next);
         });
 
         router.get("/user/:id/leaderboard/avgNetLow", (req: Request, res: Response, next: NextFunction) => {
-            new LeaderboardRouter().avgNetLow(req, res, next);
+            new LeaderboardController().avgNetLow(req, res, next);
         });
 
         router.get("/user/:id/leaderboard/netHigh", (req: Request, res: Response, next: NextFunction) => {
-            new LeaderboardRouter().netHigh(req, res, next);
+            new LeaderboardController().netHigh(req, res, next);
         });
 
         router.get("/user/:id/leaderboard/netLow", (req: Request, res: Response, next: NextFunction) => {
-            new LeaderboardRouter().netLow(req, res, next);
+            new LeaderboardController().netLow(req, res, next);
         });
 
     }
 
-    // constructor() {
-        // not much here yet
-    // }
 
     public async leaderboard(req: Request, res: Response, next: NextFunction) {
         const idString = "id";

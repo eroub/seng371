@@ -5,9 +5,11 @@ import express from "express";
 import logger from "morgan";
 import path from "path";
 import { IndexRoute } from "./routes/index";
-import { ShoeRouter } from "./routes/shoeRouter";
-import {NotificationRouter} from "./routes/notificationRouter";
-import {LeaderboardRouter} from "./routes/leaderboardRouter";
+import { NotificationController } from "./routes/notificationController";
+import { LeaderboardController } from "./routes/leaderboardController";
+import { CustomerController } from "./routes/customerController";
+import { AdminController } from "./routes/adminController";
+import { ProductController } from "./routes/productController";
 
 /**
  * The server.
@@ -100,11 +102,13 @@ export default class Server {
         let router: express.Router;
         router = express.Router();
 
+        // Create routes for all controllers
         IndexRoute.create(router);
-        ShoeRouter.create(router);
-        NotificationRouter.create(router);
-        LeaderboardRouter.create(router);
-
+        NotificationController.create(router);
+        LeaderboardController.create(router);
+        CustomerController.create(router);
+        AdminController.create(router);
+        ProductController.create(router);
         // use router middleware
         this.app.use(router);
 
