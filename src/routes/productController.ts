@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response, Router} from "express";
-import DbClient = require("../DbClient");
 import { ShoeModel } from "../models/shoe_model";
-import { UserModel } from "../models/user_model";
 import { BaseRoute } from "./router";
+import helpers = require("../helperFunctions");
 
 
 export class productController extends BaseRoute {
@@ -10,18 +9,14 @@ export class productController extends BaseRoute {
 // show all shoes from db
     public static create(router: Router) {
 
-
         router.get("/user/:id/allShoes", (req: Request, res: Response, next: NextFunction) => {
             new productController().allShoes(req, res, next);
         });
-
-// show all shoes sorted from high to low
+        // show all shoes sorted from high to low
         router.get("/user/:id/allShoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
             new productController().sortPriceHighDb(req, res, next);
         });
-
-// show all shoes sorted from low to high
-
+        // show all shoes sorted from low to high
         router.get("/user/:id/allShoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
             new productController().sortPriceLowDb(req, res, next);
         });
@@ -33,7 +28,7 @@ export class productController extends BaseRoute {
     public async allShoes(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        if (await this.isUser(userId)) {
+        if (await helpers.isUser(userId)) {
             const shoeIf = new ShoeModel();
             const allShoes = await shoeIf.getAllDB();
             this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
@@ -50,7 +45,7 @@ export class productController extends BaseRoute {
     public async sortPriceLowDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        if (await this.isUser(queryint)) {
+        if (await helpers.isUser(queryint)) {
             const shoeIf = new ShoeModel();
             const allShoes = await shoeIf.getAllDB();
             const sortedShoes: any = allShoes;
@@ -69,7 +64,7 @@ export class productController extends BaseRoute {
     public async sortPriceHighDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        if (await this.isUser(queryint)) {
+        if (await helpers.isUser(queryint)) {
             const shoeIf = new ShoeModel();
             const allShoes = await shoeIf.getAllDB();
             const sortedShoes: any = allShoes;
@@ -84,12 +79,6 @@ export class productController extends BaseRoute {
             res.send("invalid user");
         }
     }
-
-    private async isUser(userID: any) {
-        const userIF = new UserModel();
-        return await userIF.isUser(userID);
-    }
-
 
 }
 

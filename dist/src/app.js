@@ -13,8 +13,9 @@ var index_1 = require("./routes/index");
 var shoeRouter_1 = require("./routes/shoeRouter");
 var notificationRouter_1 = require("./routes/notificationRouter");
 var leaderboardRouter_1 = require("./routes/leaderboardRouter");
+var customerRouter_1 = require("./routes/customerRouter");
 var adminRouter_1 = require("./routes/adminRouter");
-var product_model_controller_1 = require("./routes/product_model_controller");
+var productController_1 = require("./routes/productController");
 /**
  * The server.
  *
@@ -93,8 +94,9 @@ var Server = /** @class */ (function () {
         shoeRouter_1.ShoeRouter.create(router);
         notificationRouter_1.NotificationRouter.create(router);
         leaderboardRouter_1.LeaderboardRouter.create(router);
+        customerRouter_1.CustomerRouter.create(router);
         adminRouter_1.adminRouter.create(router);
-        product_model_controller_1.product_controller.create(router);
+        productController_1.productController.create(router);
         // use router middleware
         this.app.use(router);
     };
