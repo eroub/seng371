@@ -128,6 +128,27 @@ class helpers {
             }
         }
     }
+    public async getUsers() {
+        const user_arr = await new UserModel().get_users();
+        return user_arr;
+    }
+
+    public async getShoe(shoeId: number) {
+        const shoeIf = new ShoeModel();
+        const shoe = await shoeIf.getOneShoe(shoeId);
+        if (shoe) {
+            return shoe;
+        } else {
+            return;
+        }
+    }
+
+
+    public async getUserShoes(userKeys: any) {
+        const shoeIf = new ShoeModel();
+        const uShoes = await shoeIf.getAllShoes(userKeys);
+        return uShoes;
+    }
 
 }
 

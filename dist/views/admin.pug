@@ -7,5 +7,17 @@ block content
 
         p User ID: #{user.user_id} Username: #{user.username}
 
-        //Each user has buttons for editing
 
+        //Each user has buttons for editing router.get(‘/admin/edit_user/:id’)
+
+        form(method='post' action='/admin/' + '/edit_user/'+user.user_id )
+            p Notification Type:
+            div.form-group
+                p
+                input#above.form-control(type='radio', name='type', value='Delete' checked)
+                label Above
+                div.form-group
+                input#below.form-control(type='radio', name='type', value='Edit')
+                label Below
+            p
+            button.btn.btn-primary(type='submit') Add Notification

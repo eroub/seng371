@@ -21,6 +21,29 @@ export class ProductController extends BaseRoute {
             new ProductController().sortPriceLowDb(req, res, next);
         });
 
+            router.get("/user/:id/add_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
+                new ProductController().inputShoe(req, res, next);
+            });
+
+    }
+
+
+    public async inputShoe(req: Request, res: Response, next: NextFunction) {
+        const userIdString = "id";
+        const userId = parseInt(req.params[userIdString], 10);
+        const shoeIdString = "id2";
+        const shoeId = parseInt(req.params[shoeIdString], 10);
+        const shoe = await helpers.getShoe(shoeId);
+        if (shoe) {
+            this.render(req, res, "addShoe", {id: userId, shoe});
+        } else {
+            res.status(404)
+                .send({
+                    message: "No shoe found with the given id.",
+                    status: res.status,
+                });
+        }
+
     }
 
     // get all the shoes from the db and render to shoesList view
