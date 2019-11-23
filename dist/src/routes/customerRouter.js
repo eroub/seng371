@@ -204,8 +204,9 @@ var CustomerRouter = /** @class */ (function (_super) {
     CustomerRouter.prototype.getAll = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         idString = "id";
                         queryint = parseInt(req.params[idString], 10);
@@ -215,17 +216,17 @@ var CustomerRouter = /** @class */ (function (_super) {
                         totalRevenue = 0;
                         return [4 /*yield*/, helpers.getUserInfo(queryint)];
                     case 1:
-                        userJson = _a.sent();
+                        userJson = _b.sent();
                         if (!userJson) return [3 /*break*/, 5];
                         return [4 /*yield*/, helpers.getUserKeys(queryint)];
                     case 2:
-                        userKeys = _a.sent();
+                        userKeys = _b.sent();
                         return [4 /*yield*/, helpers.setUserShoes(userKeys)];
                     case 3:
-                        _a.sent();
+                        userShoes = _b.sent();
                         return [4 /*yield*/, helpers.setNet(userShoes)];
                     case 4:
-                        _a.sent();
+                        _a = _b.sent(), netGain = _a[0], sunkCost = _a[1], totalRevenue = _a[2];
                         console.log(userShoes);
                         console.log(netGain);
                         this.render(req, res, "allShoes", { id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
@@ -237,7 +238,7 @@ var CustomerRouter = /** @class */ (function (_super) {
                             message: "No user found with the given id.",
                             status: res.status,
                         });
-                        _a.label = 6;
+                        _b.label = 6;
                     case 6: return [2 /*return*/];
                 }
             });

@@ -117,7 +117,7 @@ var helpers = /** @class */ (function () {
                                 userShoes.push(key);
                             }
                         }
-                        return [2 /*return*/];
+                        return [2 /*return*/, userShoes];
                 }
             });
         });
@@ -164,7 +164,7 @@ var helpers = /** @class */ (function () {
                         totalRevenue = totalRevenue + shoe.current_price;
                     }
                 }
-                return [2 /*return*/];
+                return [2 /*return*/, [netGain, sunkCost, totalRevenue]];
             });
         });
     };

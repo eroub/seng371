@@ -54,6 +54,7 @@ class helpers {
                 userShoes.push(key);
             }
         }
+        return userShoes;
     }
 
     public async getUserInfo(queryint: number) {
@@ -80,6 +81,7 @@ class helpers {
                 totalRevenue = totalRevenue + shoe.current_price;
             }
         }
+        return [netGain,sunkCost,totalRevenue];
     }
 
     public getShoeInfo(shoeID:number) {

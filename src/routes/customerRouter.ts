@@ -122,10 +122,9 @@ export class CustomerRouter extends BaseRoute {
         userJson = await helpers.getUserInfo(queryint);
         if (userJson) {
             userKeys = await helpers.getUserKeys(queryint);
-            await helpers.setUserShoes(userKeys);
-            await helpers.setNet(userShoes);
-            console.log(userShoes);
-            console.log(netGain);
+           userShoes = await helpers.setUserShoes(userKeys);
+            [netGain,sunkCost,totalRevenue]= await helpers.setNet(userShoes);
+
             this.render(req, res, "allShoes",
                 {id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
                     net: netGain, sunk: sunkCost, total:totalRevenue, keys: userKeys});
