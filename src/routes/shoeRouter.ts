@@ -48,9 +48,6 @@ export class ShoeRouter extends BaseRoute {
             new ShoeRouter().sortPriceLowDb(req, res, next);
         });
 
-        /*router.get("/user/:id/notifications", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().notificationCentre(req, res, next);
-        });*/
 
         router.get("/user/:id/add_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().inputShoe(req, res, next);
@@ -65,22 +62,7 @@ export class ShoeRouter extends BaseRoute {
         });
     }
 
-    // constructor() {
-        // not much here yet
-    // }
 
-    /*public async notificationCentre(req: Request, res: Response, next: NextFunction) {
-        const idString = "id";
-        const userId = parseInt(req.params[idString], 10);
-        if (await this.check_local(userId)) {
-            this.render(req, res, "notificationCentre", {id: userId, title: "Shoes"});
-        } else {
-            res.status(404)
-            .send({
-                message: "No user with associated ID. Check the entered number.",
-                status: res.status,
-            });        }
-    }*/
 
     public async removeShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
@@ -192,12 +174,7 @@ export class ShoeRouter extends BaseRoute {
         const shoe = await this.getShoe(shoeId);
         if (shoe) {
             this.render(req, res, "addShoe", {id: userId, shoe});
-            /* res.status(200)
-                .send({
-                    message: 'Success',
-                    status: res.status,
-                    shoe
-                }); */
+
         } else {
             res.status(404)
                 .send({
