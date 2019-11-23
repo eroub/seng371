@@ -36,15 +36,6 @@ export class ShoeRouter extends BaseRoute {
     }
 
 
-    private findShoe(shoeID: any) {
-        console.log(shoeID);
-        for (const item in userShoes) {
-            if (userShoes.hasOwnProperty(item)) {
-                const shoe = userShoes[item];
-                if (shoe._id == shoeID) return shoe;
-            }
-        }
-    }
 
     private has_shoe(userShoes: any, shoeID: number) {
         for (const item in userShoes) {
