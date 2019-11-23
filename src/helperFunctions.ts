@@ -22,8 +22,7 @@ class helpers {
             await this.setUserShoes(userKeys);
             await this.setNet(userShoes);
             return true;
-        }
-        else if (userJson.user_id != userID) {
+        } else if (userJson.user_id != userID) {
             userJson = await this.getUserInfo(userID);
             if (!userJson) {
                 return false;
@@ -103,7 +102,6 @@ class helpers {
         return await userIF.isUser(userID);
     }
 
-
     /* returns every shoe in db */
     public async getAllDbShoes() {
         let allShoes = null;
@@ -119,6 +117,15 @@ class helpers {
         return;
     }
 
-}
+    public findShoe(shoeID: any) {
+        console.log(shoeID);
+        for (const item in userShoes) {
+            if (userShoes.hasOwnProperty(item)) {
+                const shoe = userShoes[item];
+                if (shoe._id == shoeID) return shoe;
+            }
+        }
+    }
 
+}
 export = new helpers();

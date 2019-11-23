@@ -9,11 +9,11 @@ let Shoes: any;
 let users: any;
 let allUserShoes: any;
 
-export class LeaderboardRouter extends BaseRoute {
+export class LeaderboardController extends BaseRoute {
 
     public static create(router: Router) {
         router.get("/user/:id/leaderboard", (req: Request, res: Response, next: NextFunction) => {
-            new LeaderboardRouter().leaderboard(req, res, next);
+            new LeaderboardController().leaderboard(req, res, next);
         });
 
 

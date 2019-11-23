@@ -4,25 +4,24 @@ import { BaseRoute } from "./router";
 import helpers = require("../helperFunctions");
 
 
-export class productController extends BaseRoute {
+export class ProductController extends BaseRoute {
 
 // show all shoes from db
     public static create(router: Router) {
 
         router.get("/user/:id/allShoes", (req: Request, res: Response, next: NextFunction) => {
-            new productController().allShoes(req, res, next);
+            new ProductController().allShoes(req, res, next);
         });
         // show all shoes sorted from high to low
         router.get("/user/:id/allShoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
-            new productController().sortPriceHighDb(req, res, next);
+            new ProductController().sortPriceHighDb(req, res, next);
         });
         // show all shoes sorted from low to high
         router.get("/user/:id/allShoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
-            new productController().sortPriceLowDb(req, res, next);
+            new ProductController().sortPriceLowDb(req, res, next);
         });
 
     }
-
 
     // get all the shoes from the db and render to shoesList view
     public async allShoes(req: Request, res: Response, next: NextFunction) {
@@ -40,7 +39,6 @@ export class productController extends BaseRoute {
                 });
         }
     }
-
 
     public async sortPriceLowDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";

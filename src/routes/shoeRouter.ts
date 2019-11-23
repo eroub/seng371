@@ -10,10 +10,6 @@ let userShoes: any[] = [];
 export class ShoeRouter extends BaseRoute {
 
     public static create(router: Router) {
-        // showing a specific shoe that the user owns
-        router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().getOne(req, res, next);
-        });
         router.get("/user/:id/add_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().inputShoe(req, res, next);
         });
@@ -36,47 +32,6 @@ export class ShoeRouter extends BaseRoute {
                 });
         }
 
-    }
-
-    /**
-     * GET one shoe by id
-     */
-
-    public async getOne(req: Request, res: Response, next: NextFunction) {
-        const userIdString = "id";
-        const userId = parseInt(req.params[userIdString], 10);
-        const shoeIdString = "id2";
-        const shoeId = req.params[shoeIdString];
-        if (await helpers.check_local(userId)) {
-            const shoe = this.findShoe(shoeId);
-            if (shoe) {
-                const diff = shoe.current_price - shoe.purchase_price;
-                this.render(req, res, "oneShoe", {id: userId, diff, purchase:shoe.purchase_price, shoe});
-            } else {
-                res.status(404)
-                    .send({
-                        message: "No shoe found with the given id.",
-                        status: res.status,
-                    });
-            }
-        } else {
-            res.status(404)
-                .send({
-                    message: "No user found with the given id.",
-                    status: res.status,
-                });
-        }
-
-    }
-
-    private findShoe(shoeID: any) {
-        console.log(shoeID);
-        for (const item in userShoes) {
-            if (userShoes.hasOwnProperty(item)) {
-                const shoe = userShoes[item];
-                if (shoe._id == shoeID) return shoe;
-            }
-        }
     }
 
     private has_shoe(userShoes: any, shoeID: number) {

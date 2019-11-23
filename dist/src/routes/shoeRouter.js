@@ -51,7 +51,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var shoe_model_1 = require("../models/shoe_model");
 var router_1 = require("./router");
-var helpers = require("../helperFunctions");
 var userJson;
 var userKeys;
 var userShoes = [];
@@ -61,10 +60,6 @@ var ShoeRouter = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     ShoeRouter.create = function (router) {
-        // showing a specific shoe that the user owns
-        router.get("/user/:id/shoes/:id2", function (req, res, next) {
-            new ShoeRouter().getOne(req, res, next);
-        });
         router.get("/user/:id/add_shoe/:id2", function (req, res, next) {
             new ShoeRouter().inputShoe(req, res, next);
         });
@@ -96,57 +91,6 @@ var ShoeRouter = /** @class */ (function (_super) {
                 }
             });
         });
-    };
-    /**
-     * GET one shoe by id
-     */
-    ShoeRouter.prototype.getOne = function (req, res, next) {
-        return __awaiter(this, void 0, void 0, function () {
-            var userIdString, userId, shoeIdString, shoeId, shoe, diff;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        userIdString = "id";
-                        userId = parseInt(req.params[userIdString], 10);
-                        shoeIdString = "id2";
-                        shoeId = req.params[shoeIdString];
-                        return [4 /*yield*/, helpers.check_local(userId)];
-                    case 1:
-                        if (_a.sent()) {
-                            shoe = this.findShoe(shoeId);
-                            if (shoe) {
-                                diff = shoe.current_price - shoe.purchase_price;
-                                this.render(req, res, "oneShoe", { id: userId, diff: diff, purchase: shoe.purchase_price, shoe: shoe });
-                            }
-                            else {
-                                res.status(404)
-                                    .send({
-                                    message: "No shoe found with the given id.",
-                                    status: res.status,
-                                });
-                            }
-                        }
-                        else {
-                            res.status(404)
-                                .send({
-                                message: "No user found with the given id.",
-                                status: res.status,
-                            });
-                        }
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ShoeRouter.prototype.findShoe = function (shoeID) {
-        console.log(shoeID);
-        for (var item in userShoes) {
-            if (userShoes.hasOwnProperty(item)) {
-                var shoe = userShoes[item];
-                if (shoe._id == shoeID)
-                    return shoe;
-            }
-        }
     };
     ShoeRouter.prototype.has_shoe = function (userShoes, shoeID) {
         for (var item in userShoes) {
