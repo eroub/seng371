@@ -59,27 +59,27 @@ var netGain = 0;
 var sunkCost = 0;
 var totalRevenue = 0;
 var Shoes;
-var ShoeRouter = /** @class */ (function (_super) {
-    __extends(ShoeRouter, _super);
-    function ShoeRouter() {
+var product_controller = /** @class */ (function (_super) {
+    __extends(product_controller, _super);
+    function product_controller() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     // show all shoes from db
-    ShoeRouter.create = function (router) {
+    product_controller.create = function (router) {
         router.get("/user/:id/allShoes", function (req, res, next) {
-            new ShoeRouter().allShoes(req, res, next);
+            new product_controller().allShoes(req, res, next);
         });
         // show all shoes sorted from high to low
         router.get("/user/:id/allShoes/sort/price_high", function (req, res, next) {
-            new ShoeRouter().sortPriceHighDb(req, res, next);
+            new product_controller().sortPriceHighDb(req, res, next);
         });
         // show all shoes sorted from low to high
         router.get("/user/:id/allShoes/sort/price_low", function (req, res, next) {
-            new ShoeRouter().sortPriceLowDb(req, res, next);
+            new product_controller().sortPriceLowDb(req, res, next);
         });
     };
     // get all the shoes from the db and render to shoesList view
-    ShoeRouter.prototype.allShoes = function (req, res, next) {
+    product_controller.prototype.allShoes = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId, shoeIf, allShoes;
             return __generator(this, function (_a) {
@@ -108,7 +108,7 @@ var ShoeRouter = /** @class */ (function (_super) {
             });
         });
     };
-    ShoeRouter.prototype.sortPriceLowDb = function (req, res, next) {
+    product_controller.prototype.sortPriceLowDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, shoeIf, allShoes, sortedShoes;
             return __generator(this, function (_a) {
@@ -129,7 +129,6 @@ var ShoeRouter = /** @class */ (function (_super) {
                             data: sortedShoes,
                             id: queryint,
                             title: "Shoes",
-                            username: userJson.username,
                         });
                         return [3 /*break*/, 4];
                     case 3:
@@ -141,7 +140,7 @@ var ShoeRouter = /** @class */ (function (_super) {
             });
         });
     };
-    ShoeRouter.prototype.sortPriceHighDb = function (req, res, next) {
+    product_controller.prototype.sortPriceHighDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, shoeIf, allShoes, sortedShoes;
             return __generator(this, function (_a) {
@@ -162,7 +161,6 @@ var ShoeRouter = /** @class */ (function (_super) {
                             data: sortedShoes,
                             id: queryint,
                             title: "Shoes",
-                            username: userJson.username,
                         });
                         return [3 /*break*/, 4];
                     case 3:
@@ -174,7 +172,7 @@ var ShoeRouter = /** @class */ (function (_super) {
             });
         });
     };
-    ShoeRouter.prototype.isUser = function (userID) {
+    product_controller.prototype.isUser = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var userIF;
             return __generator(this, function (_a) {
@@ -187,7 +185,7 @@ var ShoeRouter = /** @class */ (function (_super) {
             });
         });
     };
-    return ShoeRouter;
+    return product_controller;
 }(router_1.BaseRoute));
-exports.ShoeRouter = ShoeRouter;
+exports.product_controller = product_controller;
 //# sourceMappingURL=product_model_controller.js.map

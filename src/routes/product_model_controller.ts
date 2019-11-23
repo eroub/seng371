@@ -4,39 +4,29 @@ import { ShoeModel } from "../models/shoe_model";
 import { UserModel } from "../models/user_model";
 import { BaseRoute } from "./router";
 
-let userJson: any;
-let userKeys: any;
-let userShoes: any[] = [];
-let netGain: number = 0;
-let sunkCost: number = 0;
-let totalRevenue: number = 0;
-let Shoes: any;
 
-
-
-export class ShoeRouter extends BaseRoute {
+export class product_controller extends BaseRoute {
 
 // show all shoes from db
     public static create(router: Router) {
 
 
         router.get("/user/:id/allShoes", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().allShoes(req, res, next);
+            new product_controller().allShoes(req, res, next);
         });
 
 // show all shoes sorted from high to low
         router.get("/user/:id/allShoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().sortPriceHighDb(req, res, next);
+            new product_controller().sortPriceHighDb(req, res, next);
         });
 
 // show all shoes sorted from low to high
 
         router.get("/user/:id/allShoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().sortPriceLowDb(req, res, next);
+            new product_controller().sortPriceLowDb(req, res, next);
         });
 
     }
-
 
 
     // get all the shoes from the db and render to shoesList view
@@ -57,12 +47,10 @@ export class ShoeRouter extends BaseRoute {
     }
 
 
-
     public async sortPriceLowDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
         if (await this.isUser(queryint)) {
-            // const allShoes = this.getAllDbShoes()
             const shoeIf = new ShoeModel();
             const allShoes = await shoeIf.getAllDB();
             const sortedShoes: any = allShoes;
@@ -71,7 +59,6 @@ export class ShoeRouter extends BaseRoute {
                 data: sortedShoes,
                 id: queryint,
                 title: "Shoes",
-                username: userJson.username,
             });
         } else {
             res.status(404);
@@ -91,7 +78,6 @@ export class ShoeRouter extends BaseRoute {
                 data: sortedShoes,
                 id: queryint,
                 title: "Shoes",
-                username: userJson.username,
             });
         } else {
             res.status(404);
@@ -99,16 +85,12 @@ export class ShoeRouter extends BaseRoute {
         }
     }
 
-
-
-
     private async isUser(userID: any) {
         const userIF = new UserModel();
         return await userIF.isUser(userID);
     }
+
+
 }
-
-
-
 
 

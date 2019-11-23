@@ -32,21 +32,6 @@ export class ShoeRouter extends BaseRoute {
             new ShoeRouter().sortPriceHigh(req, res, next);
         });
 
-        // show all shoes from db
-        router.get("/user/:id/allShoes", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().allShoes(req, res, next);
-        });
-
-        // show all shoes sorted from high to low
-        router.get("/user/:id/allShoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().sortPriceHighDb(req, res, next);
-        });
-
-        // show all shoes sorted from low to high
-
-        router.get("/user/:id/allShoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().sortPriceLowDb(req, res, next);
-        });
 
 
         router.get("/user/:id/add_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
@@ -81,66 +66,8 @@ export class ShoeRouter extends BaseRoute {
         res.redirect("/user/" + userId + "/shoes/");
     }
 
-    // get all the shoes from the db and render to shoesList view
-    public async allShoes(req: Request, res: Response, next: NextFunction) {
-        const idString = "id";
-        const userId = parseInt(req.params[idString], 10);
-        if (await this.check_local(userId)) {
-            const shoeIf = new ShoeModel();
-            const allShoes = await shoeIf.getAllDB();
-            this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
-        } else {
-            res.status(404)
-                .send({
-                    message: "No user found with the given user id.",
-                    status: res.status,
-                });
-        }
-    }
 
-/*
- sort low to high all the shoes in db and render in the shoelist view
- */
 
-    public async sortPriceLowDb(req: Request, res: Response, next: NextFunction) {
-        const idString = "id";
-        const queryint = parseInt(req.params[idString], 10);
-        if (await this.check_local(queryint)) {
-            // const allShoes = this.getAllDbShoes()
-            const shoeIf = new ShoeModel();
-            const allShoes = await shoeIf.getAllDB();
-            const sortedShoes: any = allShoes;
-            sortedShoes.sort((a: any, b: any) => a.current_price - b.current_price);
-            this.render(req, res, "shoeList", {
-                data: sortedShoes,
-                id: queryint,
-                title: "Shoes",
-                username: userJson.username,
-            });
-        } else {
-            res.status(404);
-            res.send("invalid user");
-        }
-    }
-    public async sortPriceHighDb(req: Request, res: Response, next: NextFunction) {
-        const idString = "id";
-        const queryint = parseInt(req.params[idString], 10);
-        if (await this.check_local(queryint)) {
-            const shoeIf = new ShoeModel();
-            const allShoes = await shoeIf.getAllDB();
-            const sortedShoes: any = allShoes;
-            sortedShoes.sort((a: any, b: any) => b.current_price - a.current_price);
-            this.render(req, res, "shoeList", {
-                data: sortedShoes,
-                id: queryint,
-                title: "Shoes",
-                username: userJson.username,
-            });
-        } else {
-            res.status(404);
-            res.send("invalid user");
-        }
-    }
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
