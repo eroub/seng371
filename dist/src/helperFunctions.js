@@ -235,10 +235,6 @@ var helpers = /** @class */ (function () {
         });
     };
     helpers.prototype.findShoe = function (shoeID) {
-<<<<<<< HEAD
-        console.log(shoeID);
-=======
->>>>>>> 813f86ccfae5fcaf8d082907b25c0bee47f262cc
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];
@@ -246,6 +242,55 @@ var helpers = /** @class */ (function () {
                     return shoe;
             }
         }
+    };
+    helpers.prototype.getUsers = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var user_arr;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new user_model_1.UserModel().get_users()];
+                    case 1:
+                        user_arr = _a.sent();
+                        return [2 /*return*/, user_arr];
+                }
+            });
+        });
+    };
+    helpers.prototype.getShoe = function (shoeId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var shoeIf, shoe;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.getOneShoe(shoeId)];
+                    case 1:
+                        shoe = _a.sent();
+                        if (shoe) {
+                            return [2 /*return*/, shoe];
+                        }
+                        else {
+                            return [2 /*return*/];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    helpers.prototype.getUserShoes = function (userKeys) {
+        return __awaiter(this, void 0, void 0, function () {
+            var shoeIf, uShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        shoeIf = new shoe_model_1.ShoeModel();
+                        return [4 /*yield*/, shoeIf.getAllShoes(userKeys)];
+                    case 1:
+                        uShoes = _a.sent();
+                        return [2 /*return*/, uShoes];
+                }
+            });
+        });
     };
     return helpers;
 }());

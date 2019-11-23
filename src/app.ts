@@ -5,7 +5,6 @@ import express from "express";
 import logger from "morgan";
 import path from "path";
 import { IndexRoute } from "./routes/index";
-import { ShoeRouter } from "./routes/shoeRouter";
 import { NotificationController } from "./routes/notificationController";
 import { LeaderboardController } from "./routes/leaderboardController";
 import { CustomerController } from "./routes/customerController";
@@ -105,7 +104,6 @@ export default class Server {
 
         // Create routes for all controllers
         IndexRoute.create(router);
-        ShoeRouter.create(router);
         NotificationController.create(router);
         LeaderboardController.create(router);
         CustomerController.create(router);
