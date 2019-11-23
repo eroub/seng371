@@ -5,25 +5,25 @@ import { UserModel } from "../models/user_model";
 import { BaseRoute } from "./router";
 
 
-export class product_controller extends BaseRoute {
+export class productController extends BaseRoute {
 
 // show all shoes from db
     public static create(router: Router) {
 
 
         router.get("/user/:id/allShoes", (req: Request, res: Response, next: NextFunction) => {
-            new product_controller().allShoes(req, res, next);
+            new productController().allShoes(req, res, next);
         });
 
 // show all shoes sorted from high to low
         router.get("/user/:id/allShoes/sort/price_high", (req: Request, res: Response, next: NextFunction) => {
-            new product_controller().sortPriceHighDb(req, res, next);
+            new productController().sortPriceHighDb(req, res, next);
         });
 
 // show all shoes sorted from low to high
 
         router.get("/user/:id/allShoes/sort/price_low", (req: Request, res: Response, next: NextFunction) => {
-            new product_controller().sortPriceLowDb(req, res, next);
+            new productController().sortPriceLowDb(req, res, next);
         });
 
     }
