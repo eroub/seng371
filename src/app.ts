@@ -4,13 +4,13 @@ import errorHandler from "errorhandler";
 import express from "express";
 import logger from "morgan";
 import path from "path";
-import { IndexRoute } from "./routes/index";
-import { ShoeRouter } from "./routes/shoeRouter";
-import { NotificationController } from "./routes/notificationController";
-import { LeaderboardController } from "./routes/leaderboardController";
-import { CustomerController } from "./routes/customerController";
 import { AdminController } from "./routes/adminController";
+import { CustomerController } from "./routes/customerController";
+import { IndexRoute } from "./routes/index";
+import { LeaderboardController } from "./routes/leaderboardController";
+import { NotificationController } from "./routes/notificationController";
 import { ProductController } from "./routes/productController";
+import { ShoeRouter } from "./routes/shoeRouter";
 
 /**
  * The server.

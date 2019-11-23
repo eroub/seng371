@@ -1,7 +1,7 @@
 import DbClient = require("../DbClient");
 const ObjectID = require("mongodb").ObjectID;
 
-export class UserModel {
+export class CustomerModel {
 
     constructor() {}
 
@@ -27,7 +27,7 @@ export class UserModel {
     public add_shoe(userId: any, shoeID: number, purchase: number) {
         const shoeAdd = DbClient.connect()
             .then((db) => {
-                db!.collection("user_shoes").insertOne({user_id:userId,shoe_id:shoeID,purchase_price:purchase});
+                db!.collection("user_shoes").insertOne({user_id: userId, shoe_id: shoeID, purchase_price: purchase});
                 console.log("adding shoe");
                 return true;
             })
@@ -57,10 +57,11 @@ export class UserModel {
                 return db!.collection("users").find({user_id: userID}).toArray();
             })
             .then((value: any) => {
-                if (value.length == 0) {
+                if (value.length === 0) {
                     return false;
+                } else {
+                    return true;
                 }
-                else return true
             })
             .catch((err) => {
                 console.log("err.message");
@@ -68,21 +69,19 @@ export class UserModel {
         return result;
     }
 
-    public get_keys(userID: any) {
-        const user_keys = DbClient.connect()
+    public getKeys(userID: any) {
+        const userKeys = DbClient.connect()
             .then((db) => {
                 return db!.collection("user_shoes").find({user_id: userID}).toArray();
             })
             .then((sneakers: any) => {
-                // console.log(sneakers);
-                console.log(sneakers);
                 return sneakers;
                 // res.send(sneakers);
             })
             .catch((err) => {
                 console.log("err.message");
             });
-        return user_keys;
+        return userKeys;
     }
 
     public get_users() {
@@ -91,8 +90,6 @@ export class UserModel {
                 return db!.collection("users").find().toArray();
             })
             .then((sneakers: any) => {
-                // console.log(sneakers);
-                //console.log(sneakers);
                 return sneakers;
                 // res.send(sneakers);
             })
@@ -103,7 +100,7 @@ export class UserModel {
     }
 
     public get_all_keys() {
-        const user_keys = DbClient.connect()
+        const userKeys = DbClient.connect()
             .then((db) => {
                 return db!.collection("user_shoes").find().toArray();
             })
@@ -116,6 +113,6 @@ export class UserModel {
             .catch((err) => {
                 console.log("err.message");
             });
-        return user_keys;
+        return userKeys;
     }
 }

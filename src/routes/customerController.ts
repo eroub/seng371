@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { UserModel } from "../models/user_model";
+import { CustomerModel } from "../models/customerModel";
 import { BaseRoute } from "./router";
-import helpers = require("../helperFunctions");
+import Helpers = require("../helperFunctions");
 
 let userJson: any;
 let userShoes: any[] = [];
@@ -42,7 +42,7 @@ export class CustomerController extends BaseRoute {
     public async sortPriceLow(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        if (await helpers.check_local(queryint)) {
+        if (await Helpers.check_local(queryint)) {
             const sortedShoes: any = userShoes;
             sortedShoes.sort((a: any, b: any) => a.current_price - b.current_price);
             this.render(req, res, "allShoes",
@@ -58,7 +58,7 @@ export class CustomerController extends BaseRoute {
     public async sortPriceHigh(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        if (await helpers.check_local(queryint)) {
+        if (await Helpers.check_local(queryint)) {
             const sortedShoes: any = userShoes;
             sortedShoes.sort((a: any, b: any) => b.current_price - a.current_price);
             this.render(req, res, "allShoes",
@@ -76,8 +76,8 @@ export class CustomerController extends BaseRoute {
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
         const shoeId = parseInt(req.params[shoeIdString], 10);
-        if (await helpers.check_local(userId)) {
-            const uif = new UserModel();
+        if (await Helpers.check_local(userId)) {
+            const uif = new CustomerModel();
             let price = req.body.purchase_price;
             if (!price) {
                 price = 0;
@@ -98,7 +98,7 @@ export class CustomerController extends BaseRoute {
     public async removeShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
-        if (!(await helpers.check_local(userId))) {
+        if (!(await Helpers.check_local(userId))) {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
@@ -107,7 +107,7 @@ export class CustomerController extends BaseRoute {
         }
         const idString = "id2";
         const docID = req.params[idString];
-        const uif = new UserModel();
+        const uif = new CustomerModel();
         await uif.remove_shoe(docID);
         res.redirect("/user/" + userId + "/shoes/");
     }
@@ -123,11 +123,11 @@ export class CustomerController extends BaseRoute {
         netGain = 0;
         sunkCost = 0;
         totalRevenue = 0;
-        userJson = await helpers.getUserInfo(queryint);
+        userJson = await Helpers.getUserInfo(queryint);
         if (userJson) {
-            userKeys = await helpers.getUserKeys(queryint);
-            userShoes = await helpers.setUserShoes(userKeys);
-            [netGain,sunkCost,totalRevenue]= await helpers.setNet(userShoes);
+            userKeys = await Helpers.getUserKeys(queryint);
+            userShoes = await Helpers.setUserShoes(userKeys);
+            [netGain,sunkCost,totalRevenue]= await Helpers.setNet(userShoes);
 
             this.render(req, res, "allShoes",
                 {id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
@@ -146,8 +146,8 @@ export class CustomerController extends BaseRoute {
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
         const shoeId = req.params[shoeIdString];
-        if (await helpers.check_local(userId)) {
-            const shoe = helpers.findShoe(shoeId);
+        if (await Helpers.check_local(userId)) {
+            const shoe = Helpers.findShoe(shoeId);
             if (shoe) {
                 const diff = shoe.current_price - shoe.purchase_price;
                 this.render(req, res, "oneShoe", {id: userId, diff, purchase:shoe.purchase_price, shoe});

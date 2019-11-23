@@ -35,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var user_model_1 = require("./models/user_model");
-var shoe_model_1 = require("./models/shoe_model");
+var customerModel_1 = require("./models/customerModel");
+var productModel_1 = require("./models/productModel");
 var userJson;
 var userKeys;
 var userShoes = [];
@@ -128,7 +128,7 @@ var helpers = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        userIf = new user_model_1.UserModel();
+                        userIf = new customerModel_1.CustomerModel();
                         userInfo = null;
                         _b.label = 1;
                     case 1:
@@ -183,7 +183,7 @@ var helpers = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        user_if = new user_model_1.UserModel();
+                        user_if = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, user_if.get_keys(userID)];
                     case 1:
                         userKeys = _a.sent();
@@ -199,7 +199,7 @@ var helpers = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        userIF = new user_model_1.UserModel();
+                        userIF = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, userIF.isUser(userID)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
@@ -214,7 +214,7 @@ var helpers = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         allShoes = null;
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new productModel_1.ProductModel();
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -235,10 +235,6 @@ var helpers = /** @class */ (function () {
         });
     };
     helpers.prototype.findShoe = function (shoeID) {
-<<<<<<< HEAD
-        console.log(shoeID);
-=======
->>>>>>> 813f86ccfae5fcaf8d082907b25c0bee47f262cc
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];

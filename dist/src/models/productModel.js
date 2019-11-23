@@ -97,4 +97,4 @@ var ProductModel = /** @class */ (function () {
     return ProductModel;
 }());
 exports.ProductModel = ProductModel;
-//# sourceMappingURL=shoe_model.js.map
+//# sourceMappingURL=productModel.js.map

@@ -1,6 +1,6 @@
 import "mocha";
 import chai from "chai";
-import { ShoeModel } from "../../src/models/shoe_model";
+import { ProductModel } from "../../src/models/ProductModel";
 import { Server } from "../../src/app"
 const request = require('supertest');
 

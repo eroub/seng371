@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { ShoeModel } from "../models/shoe_model";
+import { ProductModel } from "../models/productModel";
 import { BaseRoute } from "./router";
-import helpers = require("../helperFunctions");
 
 let userJson: any;
 let userKeys: any;
@@ -60,13 +59,13 @@ export class ShoeRouter extends BaseRoute {
     }
 
     private async getUserShoes(userKeys: any) {
-        const shoeIf = new ShoeModel();
+        const shoeIf = new ProductModel();
         const uShoes = await shoeIf.getAllShoes(userKeys);
         return uShoes;
     }
 
     private async getShoe(shoeId: number) {
-        const shoeIf = new ShoeModel();
+        const shoeIf = new ProductModel();
         const shoe = await shoeIf.getOneShoe(shoeId);
         if (shoe) {
             return shoe;

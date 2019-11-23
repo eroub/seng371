@@ -49,41 +49,41 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var shoe_model_1 = require("../models/shoe_model");
-var notification_model_1 = require("../models/notification_model");
-var user_model_1 = require("../models/user_model");
+var productModel_1 = require("../models/productModel");
+var notificationModel_1 = require("../models/notificationModel");
+var customerModel_1 = require("../models/customerModel");
 var router_1 = require("./router");
 var userNotifications;
 var Shoes;
-var NotificationRouter = /** @class */ (function (_super) {
-    __extends(NotificationRouter, _super);
-    function NotificationRouter() {
+var NotificationController = /** @class */ (function (_super) {
+    __extends(NotificationController, _super);
+    function NotificationController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    NotificationRouter.create = function (router) {
+    NotificationController.create = function (router) {
         router.get("/user/:id/notifications", function (req, res, next) {
-            new NotificationRouter().notificationCentre(req, res, next);
+            new NotificationController().notificationCentre(req, res, next);
         });
         router.get("/user/:id/add_notification/:id2", function (req, res, next) {
-            new NotificationRouter().inputNotification(req, res, next);
+            new NotificationController().inputNotification(req, res, next);
         });
         router.get("/user/:id/edit_notification/:id2", function (req, res, next) {
-            new NotificationRouter().editNotificationForm(req, res, next);
+            new NotificationController().editNotificationForm(req, res, next);
         });
         router.post("/user/:id/add_notification/:id2", function (req, res, next) {
-            new NotificationRouter().addNotification(req, res, next);
+            new NotificationController().addNotification(req, res, next);
         });
         router.post("/user/:id/remove_notification/:id2", function (req, res, next) {
-            new NotificationRouter().removeNotification(req, res, next);
+            new NotificationController().removeNotification(req, res, next);
         });
         router.post("/user/:id/edit_notification/:id2", function (req, res, next) {
-            new NotificationRouter().editNotification(req, res, next);
+            new NotificationController().editNotification(req, res, next);
         });
     };
     // constructor() {
     // not much here yet
     // }
-    NotificationRouter.prototype.notificationCentre = function (req, res, next) {
+    NotificationController.prototype.notificationCentre = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId, shoe_if, notif_if, notifArray, _a, _b, _i, item, notification, shoe;
             return __generator(this, function (_c) {
@@ -91,8 +91,8 @@ var NotificationRouter = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         userId = parseInt(req.params[idString], 10);
-                        shoe_if = new shoe_model_1.ProductModel();
-                        notif_if = new notification_model_1.NotificationModel();
+                        shoe_if = new productModel_1.ProductModel();
+                        notif_if = new notificationModel_1.NotificationModel();
                         notifArray = [];
                         return [4 /*yield*/, this.isUser(userId)];
                     case 1:
@@ -153,7 +153,7 @@ var NotificationRouter = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationRouter.prototype.addNotification = function (req, res, next) {
+    NotificationController.prototype.addNotification = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, sString, userID, shoeID, nIF, threshold;
             return __generator(this, function (_a) {
@@ -163,7 +163,7 @@ var NotificationRouter = /** @class */ (function (_super) {
                         sString = "id2";
                         userID = parseInt(req.params[uString]);
                         shoeID = parseInt(req.params[sString]);
-                        nIF = new notification_model_1.NotificationModel();
+                        nIF = new notificationModel_1.NotificationModel();
                         threshold = req.body.threshold;
                         if (!threshold) {
                             threshold = 0;
@@ -177,7 +177,7 @@ var NotificationRouter = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationRouter.prototype.removeNotification = function (req, res, next) {
+    NotificationController.prototype.removeNotification = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, idString, userID, notifID, nIF;
             return __generator(this, function (_a) {
@@ -187,7 +187,7 @@ var NotificationRouter = /** @class */ (function (_super) {
                         idString = "id2";
                         userID = parseInt(req.params[uString]);
                         notifID = req.params[idString];
-                        nIF = new notification_model_1.NotificationModel();
+                        nIF = new notificationModel_1.NotificationModel();
                         return [4 /*yield*/, nIF.remove_notif(notifID)];
                     case 1:
                         _a.sent();
@@ -197,7 +197,7 @@ var NotificationRouter = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationRouter.prototype.editNotification = function (req, res, next) {
+    NotificationController.prototype.editNotification = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, idString, userID, notifID, nIF;
             return __generator(this, function (_a) {
@@ -207,7 +207,7 @@ var NotificationRouter = /** @class */ (function (_super) {
                         idString = "id2";
                         userID = parseInt(req.params[uString]);
                         notifID = req.params[idString];
-                        nIF = new notification_model_1.NotificationModel();
+                        nIF = new notificationModel_1.NotificationModel();
                         if (!req.body.threshold) {
                             req.body.threshold = 0;
                         }
@@ -220,13 +220,13 @@ var NotificationRouter = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationRouter.prototype.getUserNotifications = function (userID) {
+    NotificationController.prototype.getUserNotifications = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var notif_if;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        notif_if = new notification_model_1.NotificationModel();
+                        notif_if = new notificationModel_1.NotificationModel();
                         return [4 /*yield*/, notif_if.getUserNotifications(userID)];
                     case 1:
                         userNotifications = _a.sent();
@@ -235,7 +235,7 @@ var NotificationRouter = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationRouter.prototype.inputNotification = function (req, res, next) {
+    NotificationController.prototype.inputNotification = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var userIdString, userId, shoeIdString, shoeId, shoeIF, shoe, _a;
             return __generator(this, function (_b) {
@@ -245,7 +245,7 @@ var NotificationRouter = /** @class */ (function (_super) {
                         userId = parseInt(req.params[userIdString], 10);
                         shoeIdString = "id2";
                         shoeId = parseInt(req.params[shoeIdString], 10);
-                        shoeIF = new shoe_model_1.ProductModel();
+                        shoeIF = new productModel_1.ProductModel();
                         return [4 /*yield*/, shoeIF.getOneShoe(shoeId)];
                     case 1:
                         shoe = _b.sent();
@@ -277,7 +277,7 @@ var NotificationRouter = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationRouter.prototype.editNotificationForm = function (req, res, next) {
+    NotificationController.prototype.editNotificationForm = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var userIdString, userId, notIdString, notId, notification;
             return __generator(this, function (_a) {
@@ -296,7 +296,7 @@ var NotificationRouter = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationRouter.prototype.getShoe = function (shoeID) {
+    NotificationController.prototype.getShoe = function (shoeID) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 var shoe = Shoes[item];
@@ -305,13 +305,13 @@ var NotificationRouter = /** @class */ (function (_super) {
             }
         }
     };
-    NotificationRouter.prototype.getNotif = function (id) {
+    NotificationController.prototype.getNotif = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var nIF, notif;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        nIF = new notification_model_1.NotificationModel();
+                        nIF = new notificationModel_1.NotificationModel();
                         return [4 /*yield*/, nIF.get_notif(id)];
                     case 1:
                         notif = _a.sent();
@@ -320,20 +320,20 @@ var NotificationRouter = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationRouter.prototype.isUser = function (userID) {
+    NotificationController.prototype.isUser = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var userIF;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        userIF = new user_model_1.UserModel();
+                        userIF = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, userIF.isUser(userID)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    return NotificationRouter;
+    return NotificationController;
 }(router_1.BaseRoute));
-exports.NotificationRouter = NotificationRouter;
-//# sourceMappingURL=notificationRouter.js.map
+exports.NotificationController = NotificationController;
+//# sourceMappingURL=notificationController.js.map

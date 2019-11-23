@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { ShoeModel } from "../models/shoe_model";
+import { ProductModel } from "../models/productModel";
 import { BaseRoute } from "./router";
-import helpers = require("../helperFunctions");
+import Helpers = require("../helperFunctions");
 
 
 export class ProductController extends BaseRoute {
@@ -27,8 +27,8 @@ export class ProductController extends BaseRoute {
     public async allShoes(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        if (await helpers.isUser(userId)) {
-            const shoeIf = new ShoeModel();
+        if (await Helpers.isUser(userId)) {
+            const shoeIf = new ProductModel();
             const allShoes = await shoeIf.getAllDB();
             this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
         } else {
@@ -43,8 +43,8 @@ export class ProductController extends BaseRoute {
     public async sortPriceLowDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        if (await helpers.isUser(queryint)) {
-            const shoeIf = new ShoeModel();
+        if (await Helpers.isUser(queryint)) {
+            const shoeIf = new ProductModel();
             const allShoes = await shoeIf.getAllDB();
             const sortedShoes: any = allShoes;
             sortedShoes.sort((a: any, b: any) => a.current_price - b.current_price);
@@ -62,8 +62,8 @@ export class ProductController extends BaseRoute {
     public async sortPriceHighDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
-        if (await helpers.isUser(queryint)) {
-            const shoeIf = new ShoeModel();
+        if (await Helpers.isUser(queryint)) {
+            const shoeIf = new ProductModel();
             const allShoes = await shoeIf.getAllDB();
             const sortedShoes: any = allShoes;
             sortedShoes.sort((a: any, b: any) => b.current_price - a.current_price);

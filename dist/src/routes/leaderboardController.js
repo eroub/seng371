@@ -49,24 +49,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var shoe_model_1 = require("../models/shoe_model");
-var user_model_1 = require("../models/user_model");
+var productModel_1 = require("../models/productModel");
+var customerModel_1 = require("../models/customerModel");
 var router_1 = require("./router");
 var leaderboard = [];
 var Shoes;
 var users;
 var allUserShoes;
-var LeaderboardRouter = /** @class */ (function (_super) {
-    __extends(LeaderboardRouter, _super);
-    function LeaderboardRouter() {
+var LeaderboardController = /** @class */ (function (_super) {
+    __extends(LeaderboardController, _super);
+    function LeaderboardController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    LeaderboardRouter.create = function (router) {
+    LeaderboardController.create = function (router) {
         router.get("/user/:id/leaderboard", function (req, res, next) {
-            new LeaderboardRouter().leaderboard(req, res, next);
+            new LeaderboardController().leaderboard(req, res, next);
         });
     };
-    LeaderboardRouter.prototype.leaderboard = function (req, res, next) {
+    LeaderboardController.prototype.leaderboard = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;
             return __generator(this, function (_a) {
@@ -94,7 +94,7 @@ var LeaderboardRouter = /** @class */ (function (_super) {
             });
         });
     };
-    LeaderboardRouter.prototype.createBoard = function () {
+    LeaderboardController.prototype.createBoard = function () {
         return __awaiter(this, void 0, void 0, function () {
             var item, ranking, userShoes, net, sunk, revenue, shoe, avg_net;
             return __generator(this, function (_a) {
@@ -139,7 +139,7 @@ var LeaderboardRouter = /** @class */ (function (_super) {
             });
         });
     };
-    LeaderboardRouter.prototype.setLocals = function () {
+    LeaderboardController.prototype.setLocals = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -154,13 +154,13 @@ var LeaderboardRouter = /** @class */ (function (_super) {
             });
         });
     };
-    LeaderboardRouter.prototype.setUsers = function () {
+    LeaderboardController.prototype.setUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
             var uif;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        uif = new user_model_1.UserModel();
+                        uif = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, uif.get_users()];
                     case 1:
                         users = _a.sent();
@@ -172,13 +172,13 @@ var LeaderboardRouter = /** @class */ (function (_super) {
             });
         });
     };
-    LeaderboardRouter.prototype.setShoes = function () {
+    LeaderboardController.prototype.setShoes = function () {
         return __awaiter(this, void 0, void 0, function () {
             var shoeIF;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        shoeIF = new shoe_model_1.ProductModel();
+                        shoeIF = new productModel_1.ProductModel();
                         return [4 /*yield*/, shoeIF.getAllDB()];
                     case 1:
                         Shoes = _a.sent();
@@ -187,7 +187,7 @@ var LeaderboardRouter = /** @class */ (function (_super) {
             });
         });
     };
-    LeaderboardRouter.prototype.getShoe = function (shoeID) {
+    LeaderboardController.prototype.getShoe = function (shoeID) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 var shoe = Shoes[item];
@@ -196,7 +196,7 @@ var LeaderboardRouter = /** @class */ (function (_super) {
             }
         }
     };
-    LeaderboardRouter.prototype.getUserShoes = function (userID) {
+    LeaderboardController.prototype.getUserShoes = function (userID) {
         var userShoes = [];
         for (var item in allUserShoes) {
             if (allUserShoes.hasOwnProperty(item)) {
@@ -210,20 +210,20 @@ var LeaderboardRouter = /** @class */ (function (_super) {
         }
         return userShoes;
     };
-    LeaderboardRouter.prototype.isUser = function (userID) {
+    LeaderboardController.prototype.isUser = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var userIF;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        userIF = new user_model_1.UserModel();
+                        userIF = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, userIF.isUser(userID)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    return LeaderboardRouter;
+    return LeaderboardController;
 }(router_1.BaseRoute));
-exports.LeaderboardRouter = LeaderboardRouter;
-//# sourceMappingURL=leaderboardRouter.js.map
+exports.LeaderboardController = LeaderboardController;
+//# sourceMappingURL=leaderboardController.js.map

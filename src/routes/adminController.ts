@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { ShoeModel } from "../models/shoe_model";
-import { NotificationModel } from "../models/notification_model";
-import { UserModel } from "../models/user_model";
+import { ProductModel } from "../models/productModel";
+import { NotificationModel } from "../models/notificationModel";
+import { CustomerModel } from "../models/customerModel";
 import { BaseRoute } from "./router";
+
 export class AdminController extends BaseRoute {
 
     public static create(router: Router) {
@@ -13,7 +14,7 @@ export class AdminController extends BaseRoute {
     }
 
     /*
-                 Shows all users in the db in a list.
+    Shows all users in the db in a list.
      */
 
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
@@ -26,7 +27,7 @@ export class AdminController extends BaseRoute {
 
 
     private async getUsers() {
-        const user_arr = await new UserModel().get_users();
-        return user_arr;
+        const userArr = await new CustomerModel().get_users();
+        return userArr;
     }
 }

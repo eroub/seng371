@@ -49,109 +49,52 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var productModel_1 = require("../models/productModel");
+var customerModel_1 = require("../models/customerModel");
 var router_1 = require("./router");
-var userJson;
-var userKeys;
-var userShoes = [];
-var ShoeRouter = /** @class */ (function (_super) {
-    __extends(ShoeRouter, _super);
-    function ShoeRouter() {
+var AdminController = /** @class */ (function (_super) {
+    __extends(AdminController, _super);
+    function AdminController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    ShoeRouter.create = function (router) {
-        router.get("/user/:id/add_shoe/:id2", function (req, res, next) {
-            new ShoeRouter().inputShoe(req, res, next);
+    AdminController.create = function (router) {
+        router.get('/admin', function (req, res, next) {
+            new AdminController().showAllUsers(req, res, next);
         });
     };
-    ShoeRouter.prototype.inputShoe = function (req, res, next) {
+    /*
+                 Shows all users in the db in a list.
+     */
+    AdminController.prototype.showAllUsers = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var userIdString, userId, shoeIdString, shoeId, shoe;
+            var user_Arr;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        userIdString = "id";
-                        userId = parseInt(req.params[userIdString], 10);
-                        shoeIdString = "id2";
-                        shoeId = parseInt(req.params[shoeIdString], 10);
-                        return [4 /*yield*/, this.getShoe(shoeId)];
+                        user_Arr = [];
+                        return [4 /*yield*/, this.getUsers()];
                     case 1:
-                        shoe = _a.sent();
-                        if (shoe) {
-                            this.render(req, res, "addShoe", { id: userId, shoe: shoe });
-                        }
-                        else {
-                            res.status(404)
-                                .send({
-                                message: "No shoe found with the given id.",
-                                status: res.status,
-                            });
-                        }
+                        user_Arr = _a.sent();
+                        console.log(user_Arr);
+                        this.render(req, res, "admin", { users: user_Arr, title: "All users" });
                         return [2 /*return*/];
                 }
             });
         });
     };
-    ShoeRouter.prototype.has_shoe = function (userShoes, shoeID) {
-        for (var item in userShoes) {
-            if (userShoes.hasOwnProperty(item)) {
-                var shoeid = userShoes[item].shoe_id;
-                if (shoeid === shoeID) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-    ShoeRouter.prototype.getPurchasePrice = function (id) {
-        var purchase = 0;
-        for (var item in userShoes) {
-            if (userShoes.hasOwnProperty(item)) {
-                var shoeid = userKeys[item].shoe_id;
-                if (shoeid === id) {
-                    purchase = userKeys[item].purchase_price;
-                }
-            }
-        }
-        return purchase;
-    };
-    ShoeRouter.prototype.getUserShoes = function (userKeys) {
+    AdminController.prototype.getUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var shoeIf, uShoes;
+            var user_arr;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        shoeIf = new productModel_1.ProductModel();
-                        return [4 /*yield*/, shoeIf.getAllShoes(userKeys)];
+                    case 0: return [4 /*yield*/, new customerModel_1.CustomerModel().get_users()];
                     case 1:
-                        uShoes = _a.sent();
-                        return [2 /*return*/, uShoes];
+                        user_arr = _a.sent();
+                        return [2 /*return*/, user_arr];
                 }
             });
         });
     };
-    ShoeRouter.prototype.getShoe = function (shoeId) {
-        return __awaiter(this, void 0, void 0, function () {
-            var shoeIf, shoe;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        shoeIf = new productModel_1.ProductModel();
-                        return [4 /*yield*/, shoeIf.getOneShoe(shoeId)];
-                    case 1:
-                        shoe = _a.sent();
-                        if (shoe) {
-                            return [2 /*return*/, shoe];
-                        }
-                        else {
-                            return [2 /*return*/];
-                        }
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return ShoeRouter;
+    return AdminController;
 }(router_1.BaseRoute));
-exports.ShoeRouter = ShoeRouter;
-//# sourceMappingURL=shoeRouter.js.map
+exports.AdminController = AdminController;
+//# sourceMappingURL=adminController.js.map

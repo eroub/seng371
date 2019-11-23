@@ -49,30 +49,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var shoe_model_1 = require("../models/shoe_model");
+var productModel_1 = require("../models/productModel");
 var router_1 = require("./router");
 var helpers = require("../helperFunctions");
-var productController = /** @class */ (function (_super) {
-    __extends(productController, _super);
-    function productController() {
+var ProductController = /** @class */ (function (_super) {
+    __extends(ProductController, _super);
+    function ProductController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     // show all shoes from db
-    productController.create = function (router) {
+    ProductController.create = function (router) {
         router.get("/user/:id/allShoes", function (req, res, next) {
-            new productController().allShoes(req, res, next);
+            new ProductController().allShoes(req, res, next);
         });
         // show all shoes sorted from high to low
         router.get("/user/:id/allShoes/sort/price_high", function (req, res, next) {
-            new productController().sortPriceHighDb(req, res, next);
+            new ProductController().sortPriceHighDb(req, res, next);
         });
         // show all shoes sorted from low to high
         router.get("/user/:id/allShoes/sort/price_low", function (req, res, next) {
-            new productController().sortPriceLowDb(req, res, next);
+            new ProductController().sortPriceLowDb(req, res, next);
         });
     };
     // get all the shoes from the db and render to shoesList view
-    productController.prototype.allShoes = function (req, res, next) {
+    ProductController.prototype.allShoes = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId, shoeIf, allShoes;
             return __generator(this, function (_a) {
@@ -83,7 +83,7 @@ var productController = /** @class */ (function (_super) {
                         return [4 /*yield*/, helpers.isUser(userId)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new productModel_1.ProductModel();
                         return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         allShoes = _a.sent();
@@ -101,7 +101,7 @@ var productController = /** @class */ (function (_super) {
             });
         });
     };
-    productController.prototype.sortPriceLowDb = function (req, res, next) {
+    ProductController.prototype.sortPriceLowDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, shoeIf, allShoes, sortedShoes;
             return __generator(this, function (_a) {
@@ -112,7 +112,7 @@ var productController = /** @class */ (function (_super) {
                         return [4 /*yield*/, helpers.isUser(queryint)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new productModel_1.ProductModel();
                         return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         allShoes = _a.sent();
@@ -133,7 +133,7 @@ var productController = /** @class */ (function (_super) {
             });
         });
     };
-    productController.prototype.sortPriceHighDb = function (req, res, next) {
+    ProductController.prototype.sortPriceHighDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, shoeIf, allShoes, sortedShoes;
             return __generator(this, function (_a) {
@@ -144,7 +144,7 @@ var productController = /** @class */ (function (_super) {
                         return [4 /*yield*/, helpers.isUser(queryint)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new productModel_1.ProductModel();
                         return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         allShoes = _a.sent();
@@ -165,7 +165,7 @@ var productController = /** @class */ (function (_super) {
             });
         });
     };
-    return productController;
+    return ProductController;
 }(router_1.BaseRoute));
-exports.productController = productController;
+exports.ProductController = ProductController;
 //# sourceMappingURL=productController.js.map

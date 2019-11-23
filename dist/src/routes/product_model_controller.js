@@ -83,7 +83,7 @@ var product_controller = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.isUser(userId)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new shoe_model_1.ProductModel();
                         return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         allShoes = _a.sent();
@@ -112,7 +112,7 @@ var product_controller = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.isUser(queryint)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new shoe_model_1.ProductModel();
                         return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         allShoes = _a.sent();
@@ -144,7 +144,7 @@ var product_controller = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.isUser(queryint)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new shoe_model_1.ProductModel();
                         return [4 /*yield*/, shoeIf.getAllDB()];
                     case 2:
                         allShoes = _a.sent();

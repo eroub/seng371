@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { ShoeModel } from "../models/shoe_model";
-import { NotificationModel } from "../models/notification_model";
-import { UserModel } from "../models/user_model";
+import { ProductModel } from "../models/productModel";
+import { NotificationModel } from "../models/notificationModel";
+import { CustomerModel } from "../models/customerModel";
 import { BaseRoute } from "./router";
 
 let leaderboard: any[] = [];
@@ -75,13 +75,13 @@ export class LeaderboardController extends BaseRoute {
     }
 
     private async setUsers() {
-        const uif = new UserModel();
+        const uif = new CustomerModel();
         users = await uif.get_users();
         allUserShoes = await uif.get_all_keys();
     }
 
     private async setShoes() {
-        const shoeIF = new ShoeModel();
+        const shoeIF = new ProductModel();
         Shoes = await shoeIF.getAllDB();
     }
 
@@ -110,7 +110,7 @@ export class LeaderboardController extends BaseRoute {
     }
 
     private async isUser(userID: any) {
-        const userIF = new UserModel();
+        const userIF = new CustomerModel();
         return await userIF.isUser(userID);
     }
 }
