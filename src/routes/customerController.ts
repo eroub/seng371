@@ -126,8 +126,9 @@ export class CustomerController extends BaseRoute {
         userJson = await helpers.getUserInfo(queryint);
         if (userJson) {
             userKeys = await helpers.getUserKeys(queryint);
-            await helpers.setUserShoes(userKeys);
-            await helpers.setNet(userShoes);
+            userShoes = await helpers.setUserShoes(userKeys);
+            [netGain,sunkCost,totalRevenue]= await helpers.setNet(userShoes);
+
             this.render(req, res, "allShoes",
                 {id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
                     net: netGain, sunk: sunkCost, total:totalRevenue, keys: userKeys});
@@ -139,10 +140,6 @@ export class CustomerController extends BaseRoute {
                 });
         }
     }
-
-    /**
-     * GET one shoe by id
-     */
 
     public async getOne(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";

@@ -19,9 +19,6 @@ export class LeaderboardController extends BaseRoute {
 
     }
 
-    // constructor() {
-        // not much here yet
-    // }
 
     public async leaderboard(req: Request, res: Response, next: NextFunction) {
         const idString = "id";

@@ -117,7 +117,7 @@ var helpers = /** @class */ (function () {
                                 userShoes.push(key);
                             }
                         }
-                        return [2 /*return*/];
+                        return [2 /*return*/, userShoes];
                 }
             });
         });
@@ -164,7 +164,7 @@ var helpers = /** @class */ (function () {
                         totalRevenue = totalRevenue + shoe.current_price;
                     }
                 }
-                return [2 /*return*/];
+                return [2 /*return*/, [netGain, sunkCost, totalRevenue]];
             });
         });
     };
@@ -235,7 +235,10 @@ var helpers = /** @class */ (function () {
         });
     };
     helpers.prototype.findShoe = function (shoeID) {
+<<<<<<< HEAD
         console.log(shoeID);
+=======
+>>>>>>> 813f86ccfae5fcaf8d082907b25c0bee47f262cc
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];

@@ -66,9 +66,6 @@ var LeaderboardRouter = /** @class */ (function (_super) {
             new LeaderboardRouter().leaderboard(req, res, next);
         });
     };
-    // constructor() {
-    // not much here yet
-    // }
     LeaderboardRouter.prototype.leaderboard = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;

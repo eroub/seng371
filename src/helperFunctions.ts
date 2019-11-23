@@ -53,6 +53,7 @@ class helpers {
                 userShoes.push(key);
             }
         }
+        return userShoes;
     }
 
     public async getUserInfo(queryint: number) {
@@ -79,6 +80,7 @@ class helpers {
                 totalRevenue = totalRevenue + shoe.current_price;
             }
         }
+        return [netGain,sunkCost,totalRevenue];
     }
 
     public getShoeInfo(shoeID:number) {
@@ -117,8 +119,8 @@ class helpers {
         return;
     }
 
+
     public findShoe(shoeID: any) {
-        console.log(shoeID);
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 const shoe = userShoes[item];
@@ -128,4 +130,5 @@ class helpers {
     }
 
 }
+
 export = new helpers();
