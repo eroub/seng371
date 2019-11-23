@@ -49,7 +49,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 var customerModel_1 = require("../models/customerModel");
+=======
+var user_model_1 = require("../models/user_model");
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
 var router_1 = require("./router");
 var helpers = require("../helperFunctions");
 var userJson;
@@ -152,7 +156,11 @@ var CustomerController = /** @class */ (function (_super) {
                         return [4 /*yield*/, helpers.check_local(userId)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
+<<<<<<< HEAD
                         uif = new customerModel_1.CustomerModel();
+=======
+                        uif = new user_model_1.UserModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         price = req.body.purchase_price;
                         if (!price) {
                             price = 0;
@@ -194,7 +202,11 @@ var CustomerController = /** @class */ (function (_super) {
                         }
                         idString = "id2";
                         docID = req.params[idString];
+<<<<<<< HEAD
                         uif = new customerModel_1.CustomerModel();
+=======
+                        uif = new user_model_1.UserModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, uif.remove_shoe(docID)];
                     case 2:
                         _a.sent();

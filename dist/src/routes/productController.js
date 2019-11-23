@@ -69,6 +69,40 @@ var ProductController = /** @class */ (function (_super) {
         // show all shoes sorted from low to high
         router.get("/user/:id/allShoes/sort/price_low", function (req, res, next) {
             new ProductController().sortPriceLowDb(req, res, next);
+<<<<<<< HEAD
+=======
+        });
+        router.get("/user/:id/add_shoe/:id2", function (req, res, next) {
+            new ProductController().inputShoe(req, res, next);
+        });
+    };
+    ProductController.prototype.inputShoe = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userIdString, userId, shoeIdString, shoeId, shoe;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userIdString = "id";
+                        userId = parseInt(req.params[userIdString], 10);
+                        shoeIdString = "id2";
+                        shoeId = parseInt(req.params[shoeIdString], 10);
+                        return [4 /*yield*/, helpers.getShoe(shoeId)];
+                    case 1:
+                        shoe = _a.sent();
+                        if (shoe) {
+                            this.render(req, res, "addShoe", { id: userId, shoe: shoe });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No shoe found with the given id.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
         });
     };
     // get all the shoes from the db and render to shoesList view

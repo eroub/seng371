@@ -1,4 +1,5 @@
 "use strict";
+<<<<<<< HEAD
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -154,4 +155,6 @@ var ShoeRouter = /** @class */ (function (_super) {
     return ShoeRouter;
 }(router_1.BaseRoute));
 exports.ShoeRouter = ShoeRouter;
+=======
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
 //# sourceMappingURL=shoeRouter.js.map

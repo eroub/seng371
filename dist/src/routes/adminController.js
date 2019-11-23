@@ -49,8 +49,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 var customerModel_1 = require("../models/customerModel");
 var router_1 = require("./router");
+=======
+var router_1 = require("./router");
+var helpers = require("../helperFunctions");
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
 var AdminController = /** @class */ (function (_super) {
     __extends(AdminController, _super);
     function AdminController() {
@@ -62,7 +67,11 @@ var AdminController = /** @class */ (function (_super) {
         });
     };
     /*
+<<<<<<< HEAD
                  Shows all users in the db in a list.
+=======
+     Shows all users in the db in a list.
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
      */
     AdminController.prototype.showAllUsers = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
@@ -71,7 +80,11 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         user_Arr = [];
+<<<<<<< HEAD
                         return [4 /*yield*/, this.getUsers()];
+=======
+                        return [4 /*yield*/, helpers.getUsers()];
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                     case 1:
                         user_Arr = _a.sent();
                         console.log(user_Arr);
@@ -81,6 +94,7 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+<<<<<<< HEAD
     AdminController.prototype.getUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
             var user_arr;
@@ -94,6 +108,8 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+=======
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
     return AdminController;
 }(router_1.BaseRoute));
 exports.AdminController = AdminController;

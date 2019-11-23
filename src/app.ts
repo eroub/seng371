@@ -10,7 +10,6 @@ import { IndexRoute } from "./routes/index";
 import { LeaderboardController } from "./routes/leaderboardController";
 import { NotificationController } from "./routes/notificationController";
 import { ProductController } from "./routes/productController";
-import { ShoeRouter } from "./routes/shoeRouter";
 
 /**
  * The server.
@@ -105,7 +104,6 @@ export default class Server {
 
         // Create routes for all controllers
         IndexRoute.create(router);
-        ShoeRouter.create(router);
         NotificationController.create(router);
         LeaderboardController.create(router);
         CustomerController.create(router);

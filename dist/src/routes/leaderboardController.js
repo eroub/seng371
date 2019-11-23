@@ -49,8 +49,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 var productModel_1 = require("../models/productModel");
 var customerModel_1 = require("../models/customerModel");
+=======
+var shoe_model_1 = require("../models/shoe_model");
+var user_model_1 = require("../models/user_model");
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
 var router_1 = require("./router");
 var leaderboard = [];
 var Shoes;
@@ -160,7 +165,11 @@ var LeaderboardController = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+<<<<<<< HEAD
                         uif = new customerModel_1.CustomerModel();
+=======
+                        uif = new user_model_1.UserModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, uif.get_users()];
                     case 1:
                         users = _a.sent();
@@ -178,7 +187,11 @@ var LeaderboardController = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+<<<<<<< HEAD
                         shoeIF = new productModel_1.ProductModel();
+=======
+                        shoeIF = new shoe_model_1.ShoeModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, shoeIF.getAllDB()];
                     case 1:
                         Shoes = _a.sent();
@@ -216,7 +229,11 @@ var LeaderboardController = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+<<<<<<< HEAD
                         userIF = new customerModel_1.CustomerModel();
+=======
+                        userIF = new user_model_1.UserModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, userIF.isUser(userID)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }

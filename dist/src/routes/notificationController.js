@@ -49,9 +49,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 var productModel_1 = require("../models/productModel");
 var notificationModel_1 = require("../models/notificationModel");
 var customerModel_1 = require("../models/customerModel");
+=======
+var shoe_model_1 = require("../models/shoe_model");
+var notification_model_1 = require("../models/notification_model");
+var user_model_1 = require("../models/user_model");
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
 var router_1 = require("./router");
 var userNotifications;
 var Shoes;
@@ -91,8 +97,13 @@ var NotificationController = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         userId = parseInt(req.params[idString], 10);
+<<<<<<< HEAD
                         shoe_if = new productModel_1.ProductModel();
                         notif_if = new notificationModel_1.NotificationModel();
+=======
+                        shoe_if = new shoe_model_1.ShoeModel();
+                        notif_if = new notification_model_1.NotificationModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         notifArray = [];
                         return [4 /*yield*/, this.isUser(userId)];
                     case 1:
@@ -163,7 +174,11 @@ var NotificationController = /** @class */ (function (_super) {
                         sString = "id2";
                         userID = parseInt(req.params[uString]);
                         shoeID = parseInt(req.params[sString]);
+<<<<<<< HEAD
                         nIF = new notificationModel_1.NotificationModel();
+=======
+                        nIF = new notification_model_1.NotificationModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         threshold = req.body.threshold;
                         if (!threshold) {
                             threshold = 0;
@@ -187,7 +202,11 @@ var NotificationController = /** @class */ (function (_super) {
                         idString = "id2";
                         userID = parseInt(req.params[uString]);
                         notifID = req.params[idString];
+<<<<<<< HEAD
                         nIF = new notificationModel_1.NotificationModel();
+=======
+                        nIF = new notification_model_1.NotificationModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, nIF.remove_notif(notifID)];
                     case 1:
                         _a.sent();
@@ -207,7 +226,11 @@ var NotificationController = /** @class */ (function (_super) {
                         idString = "id2";
                         userID = parseInt(req.params[uString]);
                         notifID = req.params[idString];
+<<<<<<< HEAD
                         nIF = new notificationModel_1.NotificationModel();
+=======
+                        nIF = new notification_model_1.NotificationModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         if (!req.body.threshold) {
                             req.body.threshold = 0;
                         }
@@ -226,7 +249,11 @@ var NotificationController = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+<<<<<<< HEAD
                         notif_if = new notificationModel_1.NotificationModel();
+=======
+                        notif_if = new notification_model_1.NotificationModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, notif_if.getUserNotifications(userID)];
                     case 1:
                         userNotifications = _a.sent();
@@ -245,7 +272,11 @@ var NotificationController = /** @class */ (function (_super) {
                         userId = parseInt(req.params[userIdString], 10);
                         shoeIdString = "id2";
                         shoeId = parseInt(req.params[shoeIdString], 10);
+<<<<<<< HEAD
                         shoeIF = new productModel_1.ProductModel();
+=======
+                        shoeIF = new shoe_model_1.ShoeModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, shoeIF.getOneShoe(shoeId)];
                     case 1:
                         shoe = _b.sent();
@@ -311,7 +342,11 @@ var NotificationController = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+<<<<<<< HEAD
                         nIF = new notificationModel_1.NotificationModel();
+=======
+                        nIF = new notification_model_1.NotificationModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, nIF.get_notif(id)];
                     case 1:
                         notif = _a.sent();
@@ -326,7 +361,11 @@ var NotificationController = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+<<<<<<< HEAD
                         userIF = new customerModel_1.CustomerModel();
+=======
+                        userIF = new user_model_1.UserModel();
+>>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
                         return [4 /*yield*/, userIF.isUser(userID)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
