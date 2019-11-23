@@ -11,6 +11,9 @@ var morgan_1 = __importDefault(require("morgan"));
 var path_1 = __importDefault(require("path"));
 var index_1 = require("./routes/index");
 var shoeRouter_1 = require("./routes/shoeRouter");
+var notificationRouter_1 = require("./routes/notificationRouter");
+var leaderboardRouter_1 = require("./routes/leaderboardRouter");
+var customerRouter_1 = require("./routes/customerRouter");
 /**
  * The server.
  *
@@ -87,6 +90,9 @@ var Server = /** @class */ (function () {
         router = express_1.default.Router();
         index_1.IndexRoute.create(router);
         shoeRouter_1.ShoeRouter.create(router);
+        notificationRouter_1.NotificationRouter.create(router);
+        leaderboardRouter_1.LeaderboardRouter.create(router);
+        customerRouter_1.CustomerRouter.create(router);
         // use router middleware
         this.app.use(router);
     };

@@ -8,6 +8,7 @@ import { IndexRoute } from "./routes/index";
 import { ShoeRouter } from "./routes/shoeRouter";
 import {NotificationRouter} from "./routes/notificationRouter";
 import {LeaderboardRouter} from "./routes/leaderboardRouter";
+import { CustomerRouter } from "./routes/customerRouter";
 
 /**
  * The server.
@@ -104,6 +105,7 @@ export default class Server {
         ShoeRouter.create(router);
         NotificationRouter.create(router);
         LeaderboardRouter.create(router);
+        CustomerRouter.create(router);
 
         // use router middleware
         this.app.use(router);
