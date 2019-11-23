@@ -1,5 +1,5 @@
-import { UserModel } from "../src/models/user_model"
-import { ShoeModel } from "../src/models/shoe_model";
+import { UserModel } from "./models/user_model"
+import { ShoeModel } from "./models/shoe_model";
 
 let userJson: any;
 let userKeys: any;
@@ -97,6 +97,12 @@ class helpers {
         console.log(userKeys);
         return userKeys;
     }
+    
+    public async isUser(userID: any) {
+        const userIF = new UserModel();
+        return await userIF.isUser(userID);
+    }
+
 
     /* returns every shoe in db */
     public async getAllDbShoes() {

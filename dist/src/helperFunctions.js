@@ -35,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var user_model_1 = require("../src/models/user_model");
-var shoe_model_1 = require("../src/models/shoe_model");
+var user_model_1 = require("./models/user_model");
+var shoe_model_1 = require("./models/shoe_model");
 var userJson;
 var userKeys;
 var userShoes = [];
@@ -189,6 +189,19 @@ var helpers = /** @class */ (function () {
                         userKeys = _a.sent();
                         console.log(userKeys);
                         return [2 /*return*/, userKeys];
+                }
+            });
+        });
+    };
+    helpers.prototype.isUser = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userIF;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userIF = new user_model_1.UserModel();
+                        return [4 /*yield*/, userIF.isUser(userID)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
