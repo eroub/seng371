@@ -55,6 +55,7 @@ var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
 var userNotifications;
 var Shoes;
+var id;
 var NotificationController = /** @class */ (function (_super) {
     __extends(NotificationController, _super);
     function NotificationController() {
@@ -85,70 +86,25 @@ var NotificationController = /** @class */ (function (_super) {
     // }
     NotificationController.prototype.notificationCentre = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var idString, userId, shoeIf, notifIf, notifArray, _a, _b, _i, item, notification, shoe;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            var idString, userId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
                         idString = "id";
                         userId = parseInt(req.params[idString], 10);
-                        shoeIf = new productModel_1.ProductModel();
-                        notifIf = new notificationModel_1.NotificationModel();
-                        notifArray = [];
-                        return [4 /*yield*/, this.isUser(userId)];
+                        return [4 /*yield*/, this.buildNotifications(userId)];
                     case 1:
-                        if (!_c.sent()) return [3 /*break*/, 11];
-                        return [4 /*yield*/, shoeIf.getAllDB()];
-                    case 2:
-                        Shoes = _c.sent();
-                        return [4 /*yield*/, this.getUserNotifications(userId)];
-                    case 3:
-                        _c.sent();
-                        _a = [];
-                        for (_b in userNotifications)
-                            _a.push(_b);
-                        _i = 0;
-                        _c.label = 4;
-                    case 4:
-                        if (!(_i < _a.length)) return [3 /*break*/, 10];
-                        item = _a[_i];
-                        if (!userNotifications.hasOwnProperty(item)) return [3 /*break*/, 9];
-                        notification = userNotifications[item];
-                        shoe = this.getShoe(notification.shoe_id);
-                        notification["shoename"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
-                        notification["current_price"] = shoe.current_price;
-                        notification["size"] = shoe.size;
-                        if (!!notification.fulfilled) return [3 /*break*/, 8];
-                        if (!((notification.type === "Below") && (notification.threshold > shoe.current_price))) return [3 /*break*/, 6];
-                        return [4 /*yield*/, notifIf.fulfill(notification._id)];
-                    case 5:
-                        _c.sent();
-                        notification.fulfilled = true;
-                        _c.label = 6;
-                    case 6:
-                        if (!((notification.type === "Above") && (notification.threshold < shoe.current_price))) return [3 /*break*/, 8];
-                        console.log(notification._id);
-                        return [4 /*yield*/, notifIf.fulfill(notification._id)];
-                    case 7:
-                        _c.sent();
-                        notification.fulfilled = true;
-                        _c.label = 8;
-                    case 8:
-                        notifArray.push(notification);
-                        _c.label = 9;
-                    case 9:
-                        _i++;
-                        return [3 /*break*/, 4];
-                    case 10:
-                        this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: notifArray });
-                        return [3 /*break*/, 12];
-                    case 11:
-                        res.status(404)
-                            .send({
-                            message: "No user with associated ID. Check the entered number.",
-                            status: res.status,
-                        });
-                        _c.label = 12;
-                    case 12: return [2 /*return*/];
+                        if (_a.sent()) {
+                            this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: userNotifications });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
                 }
             });
         });
@@ -214,7 +170,147 @@ var NotificationController = /** @class */ (function (_super) {
                         return [4 /*yield*/, nIF.edit_notif(notifID, req.body.threshold, req.body.type)];
                     case 1:
                         _a.sent();
-                        res.redirect("/user/" + userID + "/notifications");
+                        res.redirect('/user/' + userID + '/notifications');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.buildNotifications = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var item, notification, shoe;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.isUser(userID)];
+                    case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
+                        id = userID;
+                        return [4 /*yield*/, this.setLocals(userID)];
+                    case 2:
+                        _a.sent();
+                        for (item in userNotifications) {
+                            if (userNotifications.hasOwnProperty(item)) {
+                                notification = userNotifications[item];
+                                shoe = this.getShoe(notification.shoe_id);
+                                notification["shoename"] = shoe.brand + ' ' + shoe.model + ' ' + shoe.colorway;
+                                notification["current_price"] = shoe.current_price;
+                                notification["size"] = shoe.size;
+                                //console.log(notification);
+                                this.checkFulfilled(notification, shoe.current_price);
+                            }
+                        }
+                        userNotifications.sort(function (a, b) {
+                            if (a.shoename < b.shoename) {
+                                return -1;
+                            }
+                            if (a.shoename > b.shoename) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                        return [2 /*return*/, true];
+                    case 3: return [2 /*return*/, false];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.checkFulfilled = function (notification, current_price) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!notification.fulfilled) return [3 /*break*/, 4];
+                        if (!((notification.type == "Below") && (notification.threshold > current_price))) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.fulfill(notification._id)];
+                    case 1:
+                        _a.sent();
+                        notification.fulfilled = true;
+                        _a.label = 2;
+                    case 2:
+                        if (!((notification.type == "Above") && (notification.threshold < current_price))) return [3 /*break*/, 4];
+                        console.log(notification._id);
+                        return [4 /*yield*/, this.fulfill(notification._id)];
+                    case 3:
+                        _a.sent();
+                        notification.fulfilled = true;
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.fulfill = function (notification) {
+        return __awaiter(this, void 0, void 0, function () {
+            var nIF;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        nIF = new notificationModel_1.NotificationModel();
+                        return [4 /*yield*/, nIF.fulfill(notification._id)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.check_local = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!userNotifications) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.buildNotifications(userID)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        if (!(id != userID)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.buildNotifications(userID)];
+                    case 3: return [2 /*return*/, _a.sent()];
+                    case 4: return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.setLocals = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.setUserNotifications(userID)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.setShoes()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.setUserNotifications = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var notif_if;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        notif_if = new notificationModel_1.NotificationModel();
+                        return [4 /*yield*/, notif_if.getUserNotifications(userID)];
+                    case 1:
+                        userNotifications = _a.sent();
+                        return [2 /*return*/, userNotifications];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.setShoes = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var shoe_if;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        shoe_if = new productModel_1.ProductModel();
+                        return [4 /*yield*/, shoe_if.getAllDB()];
+                    case 1:
+                        Shoes = _a.sent();
                         return [2 /*return*/];
                 }
             });

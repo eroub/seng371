@@ -6,6 +6,7 @@ import { BaseRoute } from "../routes/router";
 
 let userNotifications: any;
 let Shoes: any;
+let id:number;
 
 export class NotificationController extends BaseRoute {
 
@@ -42,35 +43,8 @@ export class NotificationController extends BaseRoute {
     public async notificationCentre(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        const shoeIf = new ProductModel();
-        const notifIf = new NotificationModel();
-        const notifArray: any[] = [];
-        if (await this.isUser(userId)) {
-            Shoes = await shoeIf.getAllDB();
-            await this.getUserNotifications(userId);
-            for (const item in userNotifications) {
-                if (userNotifications.hasOwnProperty(item)) {
-                    const notification = userNotifications[item];
-                    const shoe = this.getShoe(notification.shoe_id);
-                    notification["shoename"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
-                    notification["current_price"] = shoe.current_price;
-                    notification["size"] = shoe.size;
-                    if (!notification.fulfilled) {
-                        if ((notification.type === "Below") && (notification.threshold > shoe.current_price)) {
-                            await notifIf.fulfill(notification._id);
-                            notification.fulfilled = true;
-                        }
-                        if ((notification.type === "Above") && (notification.threshold < shoe.current_price)) {
-                            console.log(notification._id);
-                            await notifIf.fulfill(notification._id);
-                            notification.fulfilled = true;
-                        }
-                    }
-                    notifArray.push(notification);
-                }
-            }
-            this.render(req, res, "notificationCentre",
-                {id: userId, title: "Notifications", notifications: notifArray});
+        if (await this.buildNotifications(userId)) {
+            this.render(req, res, "notificationCentre", {id: userId, title: "Notifications", notifications:userNotifications});
         } else {
             res.status(404)
             .send({
@@ -113,7 +87,78 @@ export class NotificationController extends BaseRoute {
             req.body.threshold = 0;
         }
         await nIF.edit_notif(notifID, req.body.threshold, req.body.type);
-        res.redirect("/user/" + userID + "/notifications");
+        res.redirect('/user/' + userID + '/notifications');
+    }
+
+    private async buildNotifications(userID: number) {
+        if (await this.isUser(userID)) {
+            id = userID;
+            await this.setLocals(userID);
+            for (const item in userNotifications) {
+                if (userNotifications.hasOwnProperty(item)) {
+                    const notification = userNotifications[item];
+                    const shoe = this.getShoe(notification.shoe_id);
+                    notification["shoename"] = shoe.brand + ' ' + shoe.model + ' ' + shoe.colorway;
+                    notification["current_price"] = shoe.current_price;
+                    notification["size"] = shoe.size;
+                    //console.log(notification);
+                    this.checkFulfilled(notification, shoe.current_price);
+                }
+            }
+            userNotifications.sort((a: any, b: any) => {
+                if(a.shoename < b.shoename) { return -1; }
+                if(a.shoename > b.shoename) { return 1; }
+                return 0;
+            });
+            return true;
+        }
+        else return false;
+    }
+
+    private async checkFulfilled(notification: any, current_price: any) {
+        if (!notification.fulfilled) {
+            if ((notification.type == "Below") && (notification.threshold > current_price)) {
+                await this.fulfill(notification._id);
+                notification.fulfilled = true;
+            }
+            if ((notification.type == "Above") && (notification.threshold < current_price)) {
+                console.log(notification._id);
+                await this.fulfill(notification._id);
+                notification.fulfilled = true;
+            }
+        }
+    }
+
+    private async fulfill(notification: any) {
+        const nIF = new NotificationModel();
+        await nIF.fulfill(notification._id);
+    }
+
+    private async check_local(userID: number) {
+        if (!userNotifications) {
+            return await this.buildNotifications(userID);
+        }
+        else if (id != userID) {
+            return await this.buildNotifications(userID);
+        }
+        return true;
+    }
+
+    private async setLocals(userID: number) {
+        await this.setUserNotifications(userID);
+        await this.setShoes();
+    }
+
+    private async setUserNotifications(userID:number) {
+        const notif_if = new NotificationModel();
+        userNotifications = await notif_if.getUserNotifications(userID);
+
+        return userNotifications;
+    }
+
+    private async setShoes() {
+        const shoe_if = new ProductModel();
+        Shoes = await shoe_if.getAllDB();
     }
 
     public async inputNotification(req: Request, res: Response, next: NextFunction) {

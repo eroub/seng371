@@ -62,7 +62,7 @@ var AdminController = /** @class */ (function (_super) {
         });
     };
     /*
-    Shows all users in the db in a list.
+     Shows all users in the db in a list.
      */
     AdminController.prototype.showAllUsers = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {

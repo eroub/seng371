@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var DbClient = require("../DbClient");
 var mongodb = require("mongodb");
+var DbClient = require("../DbClient");
 var ObjectID = mongodb.ObjectID;
 var NotificationModel = /** @class */ (function () {
     function NotificationModel() {

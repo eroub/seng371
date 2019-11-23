@@ -57,6 +57,7 @@ var leaderboard = [];
 var Shoes;
 var users;
 var allUserShoes;
+var id;
 var LeaderboardController = /** @class */ (function (_super) {
     __extends(LeaderboardController, _super);
     function LeaderboardController() {
@@ -65,6 +66,18 @@ var LeaderboardController = /** @class */ (function (_super) {
     LeaderboardController.create = function (router) {
         router.get("/user/:id/leaderboard", function (req, res, next) {
             new LeaderboardController().leaderboard(req, res, next);
+        });
+        router.get("/user/:id/leaderboard/avgNetHigh", function (req, res, next) {
+            new LeaderboardController().avgNetHigh(req, res, next);
+        });
+        router.get("/user/:id/leaderboard/avgNetLow", function (req, res, next) {
+            new LeaderboardController().avgNetLow(req, res, next);
+        });
+        router.get("/user/:id/leaderboard/netHigh", function (req, res, next) {
+            new LeaderboardController().netHigh(req, res, next);
+        });
+        router.get("/user/:id/leaderboard/netLow", function (req, res, next) {
+            new LeaderboardController().netLow(req, res, next);
         });
     };
     LeaderboardController.prototype.leaderboard = function (req, res, next) {
@@ -75,71 +88,196 @@ var LeaderboardController = /** @class */ (function (_super) {
                     case 0:
                         idString = "id";
                         userId = parseInt(req.params[idString], 10);
-                        return [4 /*yield*/, Helpers.isUser(userId)];
+                        return [4 /*yield*/, this.createBoard(userId)];
                     case 1:
-                        if (!_a.sent()) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this.createBoard()];
-                    case 2:
-                        _a.sent();
-                        this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
-                        return [3 /*break*/, 4];
-                    case 3:
-                        res.status(404)
-                            .send({
-                            message: "No user with associated ID. Check the entered number.",
-                            status: res.status,
-                        });
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        if (_a.sent()) {
+                            this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    LeaderboardController.prototype.createBoard = function () {
+    LeaderboardController.prototype.avgNetHigh = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var item, ranking, userShoes, net, sunk, revenue, shoe, avgNet;
+            var idString, userId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (_a.sent()) {
+                            leaderboard.sort(function (a, b) { return b.avg_net - a.avg_net; });
+                            this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    LeaderboardController.prototype.avgNetLow = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, userId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (_a.sent()) {
+                            leaderboard.sort(function (a, b) { return a.avg_net - b.avg_net; });
+                            this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    LeaderboardController.prototype.netLow = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, userId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (_a.sent()) {
+                            leaderboard.sort(function (a, b) { return a.net - b.net; });
+                            this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    LeaderboardController.prototype.netHigh = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, userId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (_a.sent()) {
+                            leaderboard.sort(function (a, b) { return b.net - a.net; });
+                            this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    LeaderboardController.prototype.check_local = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(leaderboard.length == 0)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.createBoard(userID)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        if (!(userID != id)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.createBoard(userID)];
+                    case 3: return [2 /*return*/, _a.sent()];
+                    case 4: return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    LeaderboardController.prototype.createBoard = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var item, ranking, userShoes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         leaderboard = [];
-                        return [4 /*yield*/, this.setLocals()];
+                        return [4 /*yield*/, Helpers.isUser(userID)];
                     case 1:
+                        if (!_a.sent()) return [3 /*break*/, 3];
+                        id = userID;
+                        return [4 /*yield*/, this.setLocals()];
+                    case 2:
                         _a.sent();
                         for (item in users) {
                             if (users.hasOwnProperty(item)) {
                                 ranking = users[item];
                                 userShoes = this.getUserShoes(users[item].user_id);
                                 console.log(userShoes);
-                                net = 0;
-                                sunk = 0;
-                                revenue = 0;
-                                for (shoe in userShoes) {
-                                    if (userShoes.hasOwnProperty(shoe)) {
-                                        net = net + userShoes[shoe].current_price - userShoes[shoe].purchase_price;
-                                        sunk = sunk + userShoes[shoe].purchase_price;
-                                        revenue = revenue + userShoes[shoe].current_price;
-                                    }
-                                }
-                                avgNet = void 0;
-                                if (userShoes.length === 0) {
-                                    avgNet = 0;
-                                }
-                                else {
-                                    avgNet = net / userShoes.length;
-                                    ranking["net"] = net;
-                                    ranking["sunk"] = sunk;
-                                    ranking["revenue"] = revenue;
-                                    ranking["avg_net"] = avgNet;
-                                    ranking["num"] = userShoes.length;
-                                    leaderboard.push(ranking);
-                                }
+                                this.buildRanking(userShoes, ranking);
                             }
                         }
                         leaderboard.sort(function (a, b) { return b.net - a.net; });
-                        return [2 /*return*/];
+                        return [2 /*return*/, true];
+                    case 3: return [2 /*return*/, false];
                 }
             });
         });
+    };
+    LeaderboardController.prototype.buildRanking = function (userShoes, ranking) {
+        var net = 0;
+        var sunk = 0;
+        var revenue = 0;
+        for (var shoe in userShoes) {
+            if (userShoes.hasOwnProperty(shoe)) {
+                net = net + userShoes[shoe].current_price - userShoes[shoe].purchase_price;
+                sunk = sunk + userShoes[shoe].purchase_price;
+                revenue = revenue + userShoes[shoe].current_price;
+            }
+        }
+        var avg_net;
+        if (userShoes.length === 0) {
+            avg_net = 0;
+        }
+        else
+            avg_net = net / userShoes.length;
+        ranking["net"] = net;
+        ranking["sunk"] = sunk;
+        ranking["revenue"] = revenue;
+        ranking["avg_net"] = avg_net;
+        ranking["num"] = userShoes.length;
+        leaderboard.push(ranking);
     };
     LeaderboardController.prototype.setLocals = function () {
         return __awaiter(this, void 0, void 0, function () {

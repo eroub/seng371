@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+"use strict";
+=======
 "use strict";
 <<<<<<< HEAD
 var __extends = (this && this.__extends) || (function () {
@@ -157,4 +160,5 @@ var ShoeRouter = /** @class */ (function (_super) {
 exports.ShoeRouter = ShoeRouter;
 =======
 >>>>>>> 3cd606248212a819bc63e99c081755e3a6df94f3
+>>>>>>> 411ee14dbe0d3c2212e55da5cbc7ccc5c5ee8e4a
 //# sourceMappingURL=shoeRouter.js.map
