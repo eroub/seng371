@@ -132,8 +132,8 @@ class Helpers {
         }
     }
     public async getUsers() {
-        const user_arr = await new CustomerModel().get_users();
-        return user_arr;
+        const userArr = await new CustomerModel().get_users();
+        return userArr;
     }
 
     public async getShoe(shoeId: number) {
@@ -145,7 +145,6 @@ class Helpers {
             return;
         }
     }
-
 
     public async getUserShoes(userKeys: any) {
         const shoeIf = new ProductModel();

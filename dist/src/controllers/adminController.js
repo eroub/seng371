@@ -49,7 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var router_1 = require("./router");
+var router_1 = require("../routes/router");
 var helpers = require("../helperFunctions");
 var AdminController = /** @class */ (function (_super) {
     __extends(AdminController, _super);

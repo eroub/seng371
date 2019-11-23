@@ -52,32 +52,31 @@ var CustomerModel = /** @class */ (function () {
             return db.collection("users").find({ user_id: userID }).toArray();
         })
             .then(function (value) {
-            if (value.length == 0) {
+            if (value.length === 0) {
                 return false;
             }
-            else
+            else {
                 return true;
+            }
         })
             .catch(function (err) {
             console.log("err.message");
         });
         return result;
     };
-    CustomerModel.prototype.get_keys = function (userID) {
-        var user_keys = DbClient.connect()
+    CustomerModel.prototype.getKeys = function (userID) {
+        var userKeys = DbClient.connect()
             .then(function (db) {
             return db.collection("user_shoes").find({ user_id: userID }).toArray();
         })
             .then(function (sneakers) {
-            // console.log(sneakers);
-            console.log(sneakers);
             return sneakers;
             // res.send(sneakers);
         })
             .catch(function (err) {
             console.log("err.message");
         });
-        return user_keys;
+        return userKeys;
     };
     CustomerModel.prototype.get_users = function () {
         var users = DbClient.connect()
@@ -85,8 +84,6 @@ var CustomerModel = /** @class */ (function () {
             return db.collection("users").find().toArray();
         })
             .then(function (sneakers) {
-            // console.log(sneakers);
-            //console.log(sneakers);
             return sneakers;
             // res.send(sneakers);
         })
@@ -96,7 +93,7 @@ var CustomerModel = /** @class */ (function () {
         return users;
     };
     CustomerModel.prototype.get_all_keys = function () {
-        var user_keys = DbClient.connect()
+        var userKeys = DbClient.connect()
             .then(function (db) {
             return db.collection("user_shoes").find().toArray();
         })
@@ -109,7 +106,7 @@ var CustomerModel = /** @class */ (function () {
             .catch(function (err) {
             console.log("err.message");
         });
-        return user_keys;
+        return userKeys;
     };
     return CustomerModel;
 }());

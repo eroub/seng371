@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router} from "express";
 import { CustomerModel } from "../models/customerModel";
-import { BaseRoute } from "./router";
+import { BaseRoute } from "../routes/router";
 import Helpers = require("../helperFunctions");
 
 let userJson: any;
@@ -112,7 +112,6 @@ export class CustomerController extends BaseRoute {
         res.redirect("/user/" + userId + "/shoes/");
     }
 
-    
     /**
      * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
      */
@@ -127,11 +126,10 @@ export class CustomerController extends BaseRoute {
         if (userJson) {
             userKeys = await Helpers.getUserKeys(queryint);
             userShoes = await Helpers.setUserShoes(userKeys);
-            [netGain,sunkCost,totalRevenue]= await Helpers.setNet(userShoes);
-
+            [netGain, sunkCost, totalRevenue] = await Helpers.setNet(userShoes);
             this.render(req, res, "allShoes",
                 {id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
-                    net: netGain, sunk: sunkCost, total:totalRevenue, keys: userKeys});
+                    net: netGain, sunk: sunkCost, total: totalRevenue, keys: userKeys});
         } else {
             res.status(404)
                 .send({
@@ -150,7 +148,7 @@ export class CustomerController extends BaseRoute {
             const shoe = Helpers.findShoe(shoeId);
             if (shoe) {
                 const diff = shoe.current_price - shoe.purchase_price;
-                this.render(req, res, "oneShoe", {id: userId, diff, purchase:shoe.purchase_price, shoe});
+                this.render(req, res, "oneShoe", {id: userId, diff, purchase: shoe.purchase_price, shoe});
             } else {
                 res.status(404)
                     .send({
@@ -167,5 +165,5 @@ export class CustomerController extends BaseRoute {
         }
 
     }
-    
+
 }

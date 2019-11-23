@@ -52,7 +52,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var productModel_1 = require("../models/productModel");
 var notificationModel_1 = require("../models/notificationModel");
 var customerModel_1 = require("../models/customerModel");
-var router_1 = require("./router");
+var router_1 = require("../routes/router");
 var userNotifications;
 var Shoes;
 var NotificationController = /** @class */ (function (_super) {

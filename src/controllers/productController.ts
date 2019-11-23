@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router} from "express";
 import { ProductModel } from "../models/productModel";
-import { BaseRoute } from "./router";
+import { BaseRoute } from "../routes/router";
 import Helpers = require("../helperFunctions");
 
 
@@ -33,7 +33,7 @@ export class ProductController extends BaseRoute {
         const userId = parseInt(req.params[userIdString], 10);
         const shoeIdString = "id2";
         const shoeId = parseInt(req.params[shoeIdString], 10);
-        const shoe = await helpers.getShoe(shoeId);
+        const shoe = await Helpers.getShoe(shoeId);
         if (shoe) {
             this.render(req, res, "addShoe", {id: userId, shoe});
         } else {

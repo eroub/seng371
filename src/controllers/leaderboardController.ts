@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response, Router} from "express";
-import { ProductModel } from "../models/productModel";
-import { NotificationModel } from "../models/notificationModel";
+import { BaseRoute } from "../routes/router";
 import { CustomerModel } from "../models/customerModel";
-import { BaseRoute } from "./router";
+import { NotificationModel } from "../models/notificationModel";
+import { ProductModel } from "../models/productModel";
 
 let leaderboard: any[] = [];
 let Shoes: any;
@@ -15,10 +15,7 @@ export class LeaderboardController extends BaseRoute {
         router.get("/user/:id/leaderboard", (req: Request, res: Response, next: NextFunction) => {
             new LeaderboardController().leaderboard(req, res, next);
         });
-
-
     }
-
 
     public async leaderboard(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -40,7 +37,7 @@ export class LeaderboardController extends BaseRoute {
         for (const item in users) {
             if (users.hasOwnProperty(item)) {
                 const ranking = users[item];
-                //console.log(ranking);
+                // console.log(ranking);
                 const userShoes: any = this.getUserShoes(users[item].user_id);
                 console.log(userShoes);
                 let net: number = 0;
@@ -53,17 +50,18 @@ export class LeaderboardController extends BaseRoute {
                         revenue = revenue + userShoes[shoe].current_price;
                     }
                 }
-                let avg_net: number;
+                let avgNet: number;
                 if (userShoes.length === 0) {
-                    avg_net = 0;
+                    avgNet = 0;
+                } else {
+                    avgNet = net / userShoes.length;
+                    ranking["net"] = net;
+                    ranking["sunk"] = sunk;
+                    ranking["revenue"] = revenue;
+                    ranking["avg_net"] = avgNet;
+                    ranking["num"] = userShoes.length;
+                    leaderboard.push(ranking);
                 }
-                else avg_net = net/userShoes.length;
-                ranking["net"] = net;
-                ranking["sunk"] = sunk;
-                ranking["revenue"] = revenue;
-                ranking["avg_net"] = avg_net;
-                ranking["num"] = userShoes.length;
-                leaderboard.push(ranking);
             }
         }
         leaderboard.sort((a: any, b: any) => b.net - a.net);

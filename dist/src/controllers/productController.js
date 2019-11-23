@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var productModel_1 = require("../models/productModel");
-var router_1 = require("./router");
+var router_1 = require("../routes/router");
 var Helpers = require("../helperFunctions");
 var ProductController = /** @class */ (function (_super) {
     __extends(ProductController, _super);

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router} from "express";
 import { ProductModel } from "../models/productModel";
 import { NotificationModel } from "../models/notificationModel";
 import { CustomerModel } from "../models/customerModel";
-import { BaseRoute } from "./router";
+import { BaseRoute } from "../routes/router";
 
 let userNotifications: any;
 let Shoes: any;

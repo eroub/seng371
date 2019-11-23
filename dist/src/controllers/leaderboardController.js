@@ -51,7 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var productModel_1 = require("../models/productModel");
 var customerModel_1 = require("../models/customerModel");
-var router_1 = require("./router");
+var router_1 = require("../routes/router");
 var leaderboard = [];
 var Shoes;
 var users;

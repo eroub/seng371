@@ -34,11 +34,11 @@ var NotificationModel = /** @class */ (function () {
         // console.log(users);
         return result;
     };
-    NotificationModel.prototype.add_notif = function (user_id, shoe_id, threshold, type) {
+    NotificationModel.prototype.addNotification = function (userId, shoeId, threshold, type) {
         var nAdd = DbClient.connect()
             .then(function (db) {
-            db.collection("notifications").insertOne({ user_id: user_id,
-                shoe_id: shoe_id, threshold: threshold, type: type, fulfilled: false });
+            db.collection("notifications").insertOne({ user_id: userId,
+                shoe_id: shoeId, threshold: threshold, type: type, fulfilled: false });
             return true;
         })
             .catch(function (err) {

@@ -44,10 +44,10 @@ var netGain = 0;
 var sunkCost = 0;
 var totalRevenue = 0;
 var Shoes;
-var helpers = /** @class */ (function () {
-    function helpers() {
+var Helpers = /** @class */ (function () {
+    function Helpers() {
     }
-    helpers.prototype.check_local = function (userID) {
+    Helpers.prototype.check_local = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -71,7 +71,7 @@ var helpers = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/, true];
                     case 5:
-                        if (!(userJson.user_id != userID)) return [3 /*break*/, 10];
+                        if (!(userJson.user_id !== userID)) return [3 /*break*/, 10];
                         return [4 /*yield*/, this.getUserInfo(userID)];
                     case 6:
                         userJson = _a.sent();
@@ -97,8 +97,7 @@ var helpers = /** @class */ (function () {
             });
         });
     };
-    ;
-    helpers.prototype.setUserShoes = function (userKeys) {
+    Helpers.prototype.setUserShoes = function (userKeys) {
         return __awaiter(this, void 0, void 0, function () {
             var item, key, shoe;
             return __generator(this, function (_a) {
@@ -110,7 +109,7 @@ var helpers = /** @class */ (function () {
                             if (userKeys.hasOwnProperty(item)) {
                                 key = userKeys[item];
                                 shoe = this.getShoeInfo(key.shoe_id);
-                                key["name"] = shoe.brand + ' ' + shoe.model + ' ' + shoe.colorway;
+                                key["name"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
                                 key["size"] = shoe.size;
                                 key["current_price"] = shoe.current_price;
                                 key["retail_price"] = shoe.retail_price;
@@ -122,7 +121,7 @@ var helpers = /** @class */ (function () {
             });
         });
     };
-    helpers.prototype.getUserInfo = function (queryint) {
+    Helpers.prototype.getUserInfo = function (queryint) {
         return __awaiter(this, void 0, void 0, function () {
             var userIf, userInfo, _a;
             return __generator(this, function (_b) {
@@ -152,7 +151,7 @@ var helpers = /** @class */ (function () {
             });
         });
     };
-    helpers.prototype.setNet = function (shoelist) {
+    Helpers.prototype.setNet = function (shoelist) {
         return __awaiter(this, void 0, void 0, function () {
             var item, shoe;
             return __generator(this, function (_a) {
@@ -160,7 +159,7 @@ var helpers = /** @class */ (function () {
                     if (shoelist.hasOwnProperty(item)) {
                         shoe = shoelist[item];
                         netGain = netGain + shoe.current_price - shoe.purchase_price;
-                        sunkCost = sunkCost + parseInt(shoe.purchase_price);
+                        sunkCost = sunkCost + parseInt(shoe.purchase_price, 10);
                         totalRevenue = totalRevenue + shoe.current_price;
                     }
                 }
@@ -168,23 +167,24 @@ var helpers = /** @class */ (function () {
             });
         });
     };
-    helpers.prototype.getShoeInfo = function (shoeID) {
+    Helpers.prototype.getShoeInfo = function (shoeID) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
                 var shoe = Shoes[item];
-                if (shoe.shoe_id === shoeID)
+                if (shoe.shoe_id === shoeID) {
                     return shoe;
+                }
             }
         }
     };
-    helpers.prototype.getUserKeys = function (userID) {
+    Helpers.prototype.getUserKeys = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_if, userKeys;
+            var userIf, userKeys;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        user_if = new customerModel_1.CustomerModel();
-                        return [4 /*yield*/, user_if.get_keys(userID)];
+                        userIf = new customerModel_1.CustomerModel();
+                        return [4 /*yield*/, userIf.getKeys(userID)];
                     case 1:
                         userKeys = _a.sent();
                         console.log(userKeys);
@@ -193,7 +193,7 @@ var helpers = /** @class */ (function () {
             });
         });
     };
-    helpers.prototype.isUser = function (userID) {
+    Helpers.prototype.isUser = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var userIF;
             return __generator(this, function (_a) {
@@ -207,7 +207,7 @@ var helpers = /** @class */ (function () {
         });
     };
     /* returns every shoe in db */
-    helpers.prototype.getAllDbShoes = function () {
+    Helpers.prototype.getAllDbShoes = function () {
         return __awaiter(this, void 0, void 0, function () {
             var allShoes, shoeIf, _a;
             return __generator(this, function (_b) {
@@ -234,35 +234,36 @@ var helpers = /** @class */ (function () {
             });
         });
     };
-    helpers.prototype.findShoe = function (shoeID) {
+    Helpers.prototype.findShoe = function (shoeID) {
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];
-                if (shoe._id == shoeID)
+                if (shoe._id === shoeID) {
                     return shoe;
+                }
             }
         }
     };
-    helpers.prototype.getUsers = function () {
+    Helpers.prototype.getUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var user_arr;
+            var userArr;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, new user_model_1.UserModel().get_users()];
+                    case 0: return [4 /*yield*/, new customerModel_1.CustomerModel().get_users()];
                     case 1:
-                        user_arr = _a.sent();
-                        return [2 /*return*/, user_arr];
+                        userArr = _a.sent();
+                        return [2 /*return*/, userArr];
                 }
             });
         });
     };
-    helpers.prototype.getShoe = function (shoeId) {
+    Helpers.prototype.getShoe = function (shoeId) {
         return __awaiter(this, void 0, void 0, function () {
             var shoeIf, shoe;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new productModel_1.ProductModel();
                         return [4 /*yield*/, shoeIf.getOneShoe(shoeId)];
                     case 1:
                         shoe = _a.sent();
@@ -277,13 +278,13 @@ var helpers = /** @class */ (function () {
             });
         });
     };
-    helpers.prototype.getUserShoes = function (userKeys) {
+    Helpers.prototype.getUserShoes = function (userKeys) {
         return __awaiter(this, void 0, void 0, function () {
             var shoeIf, uShoes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        shoeIf = new shoe_model_1.ShoeModel();
+                        shoeIf = new productModel_1.ProductModel();
                         return [4 /*yield*/, shoeIf.getAllShoes(userKeys)];
                     case 1:
                         uShoes = _a.sent();
@@ -292,7 +293,7 @@ var helpers = /** @class */ (function () {
             });
         });
     };
-    return helpers;
+    return Helpers;
 }());
-module.exports = new helpers();
+module.exports = new Helpers();
 //# sourceMappingURL=helperFunctions.js.map
