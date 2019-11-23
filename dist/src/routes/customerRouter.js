@@ -82,6 +82,10 @@ var CustomerRouter = /** @class */ (function (_super) {
         router.get("/user/:id/shoes", function (req, res, next) {
             new CustomerRouter().getAll(req, res, next);
         });
+        // showing a specific shoe that the user owns
+        router.get("/user/:id/shoes/:id2", function (req, res, next) {
+            new CustomerRouter().getOne(req, res, next);
+        });
     };
     CustomerRouter.prototype.sortPriceLow = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
@@ -227,8 +231,6 @@ var CustomerRouter = /** @class */ (function (_super) {
                         return [4 /*yield*/, helpers.setNet(userShoes)];
                     case 4:
                         _a = _b.sent(), netGain = _a[0], sunkCost = _a[1], totalRevenue = _a[2];
-                        console.log(userShoes);
-                        console.log(netGain);
                         this.render(req, res, "allShoes", { id: queryint, title: "Shoes", username: userJson.username, data: userShoes,
                             net: netGain, sunk: sunkCost, total: totalRevenue, keys: userKeys });
                         return [3 /*break*/, 6];
@@ -240,6 +242,44 @@ var CustomerRouter = /** @class */ (function (_super) {
                         });
                         _b.label = 6;
                     case 6: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CustomerRouter.prototype.getOne = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userIdString, userId, shoeIdString, shoeId, shoe, diff;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userIdString = "id";
+                        userId = parseInt(req.params[userIdString], 10);
+                        shoeIdString = "id2";
+                        shoeId = req.params[shoeIdString];
+                        return [4 /*yield*/, helpers.check_local(userId)];
+                    case 1:
+                        if (_a.sent()) {
+                            shoe = helpers.findShoe(shoeId);
+                            if (shoe) {
+                                diff = shoe.current_price - shoe.purchase_price;
+                                this.render(req, res, "oneShoe", { id: userId, diff: diff, purchase: shoe.purchase_price, shoe: shoe });
+                            }
+                            else {
+                                res.status(404)
+                                    .send({
+                                    message: "No shoe found with the given id.",
+                                    status: res.status,
+                                });
+                            }
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user found with the given id.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
                 }
             });
         });

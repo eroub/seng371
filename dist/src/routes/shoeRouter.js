@@ -61,10 +61,6 @@ var ShoeRouter = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     ShoeRouter.create = function (router) {
-        // showing a specific shoe that the user owns
-        router.get("/user/:id/shoes/:id2", function (req, res, next) {
-            new ShoeRouter().getOne(req, res, next);
-        });
         router.get("/user/:id/add_shoe/:id2", function (req, res, next) {
             new ShoeRouter().inputShoe(req, res, next);
         });

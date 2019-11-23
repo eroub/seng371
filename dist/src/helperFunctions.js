@@ -234,6 +234,15 @@ var helpers = /** @class */ (function () {
             });
         });
     };
+    helpers.prototype.findShoe = function (shoeID) {
+        for (var item in userShoes) {
+            if (userShoes.hasOwnProperty(item)) {
+                var shoe = userShoes[item];
+                if (shoe._id == shoeID)
+                    return shoe;
+            }
+        }
+    };
     return helpers;
 }());
 module.exports = new helpers();

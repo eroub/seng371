@@ -121,6 +121,16 @@ class helpers {
         return;
     }
 
+
+    public findShoe(shoeID: any) {
+        for (const item in userShoes) {
+            if (userShoes.hasOwnProperty(item)) {
+                const shoe = userShoes[item];
+                if (shoe._id == shoeID) return shoe;
+            }
+        }
+    }
+
 }
 
 export = new helpers();

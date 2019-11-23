@@ -10,10 +10,7 @@ let userShoes: any[] = [];
 export class ShoeRouter extends BaseRoute {
 
     public static create(router: Router) {
-        // showing a specific shoe that the user owns
-        router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
-            new ShoeRouter().getOne(req, res, next);
-        });
+
         router.get("/user/:id/add_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
             new ShoeRouter().inputShoe(req, res, next);
         });

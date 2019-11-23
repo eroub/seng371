@@ -32,6 +32,11 @@ export class CustomerRouter extends BaseRoute {
         router.get("/user/:id/shoes", (req: Request, res: Response, next: NextFunction) => {
             new CustomerRouter().getAll(req, res, next);
         });
+
+        // showing a specific shoe that the user owns
+        router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
+            new CustomerRouter().getOne(req, res, next);
+        });
     }
 
     public async sortPriceLow(req: Request, res: Response, next: NextFunction) {
@@ -136,5 +141,33 @@ export class CustomerRouter extends BaseRoute {
                 });
         }
     }
+
+    public async getOne(req: Request, res: Response, next: NextFunction) {
+        const userIdString = "id";
+        const userId = parseInt(req.params[userIdString], 10);
+        const shoeIdString = "id2";
+        const shoeId = req.params[shoeIdString];
+        if (await helpers.check_local(userId)) {
+            const shoe = helpers.findShoe(shoeId);
+            if (shoe) {
+                const diff = shoe.current_price - shoe.purchase_price;
+                this.render(req, res, "oneShoe", {id: userId, diff, purchase:shoe.purchase_price, shoe});
+            } else {
+                res.status(404)
+                    .send({
+                        message: "No shoe found with the given id.",
+                        status: res.status,
+                    });
+            }
+        } else {
+            res.status(404)
+                .send({
+                    message: "No user found with the given id.",
+                    status: res.status,
+                });
+        }
+
+    }
+
     
 }
