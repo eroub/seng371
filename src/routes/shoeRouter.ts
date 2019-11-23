@@ -35,36 +35,6 @@ export class ShoeRouter extends BaseRoute {
 
     }
 
-    /**
-     * GET one shoe by id
-     */
-
-    public async getOne(req: Request, res: Response, next: NextFunction) {
-        const userIdString = "id";
-        const userId = parseInt(req.params[userIdString], 10);
-        const shoeIdString = "id2";
-        const shoeId = req.params[shoeIdString];
-        if (await helpers.check_local(userId)) {
-            const shoe = this.findShoe(shoeId);
-            if (shoe) {
-                const diff = shoe.current_price - shoe.purchase_price;
-                this.render(req, res, "oneShoe", {id: userId, diff, purchase:shoe.purchase_price, shoe});
-            } else {
-                res.status(404)
-                    .send({
-                        message: "No shoe found with the given id.",
-                        status: res.status,
-                    });
-            }
-        } else {
-            res.status(404)
-                .send({
-                    message: "No user found with the given id.",
-                    status: res.status,
-                });
-        }
-
-    }
 
     private findShoe(shoeID: any) {
         console.log(shoeID);
