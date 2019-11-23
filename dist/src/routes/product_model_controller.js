@@ -52,13 +52,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var shoe_model_1 = require("../models/shoe_model");
 var user_model_1 = require("../models/user_model");
 var router_1 = require("./router");
-var userJson;
-var userKeys;
-var userShoes = [];
-var netGain = 0;
-var sunkCost = 0;
-var totalRevenue = 0;
-var Shoes;
 var product_controller = /** @class */ (function (_super) {
     __extends(product_controller, _super);
     function product_controller() {
