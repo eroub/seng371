@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router} from "express";
 import Helpers = require("../helperFunctions");
 import { CustomerModel } from "../models/customerModel";
-import { NotificationModel } from "../models/notificationModel";
 import { ProductModel } from "../models/productModel";
 import { BaseRoute } from "../routes/router";
 
@@ -129,7 +128,6 @@ export class LeaderboardController extends BaseRoute {
                     const ranking = users[item];
                     //console.log(ranking);
                     const userShoes: any = this.getUserShoes(users[item].user_id);
-                    console.log(userShoes);
                     this.buildRanking(userShoes, ranking);
                 }
             }
@@ -140,16 +138,10 @@ export class LeaderboardController extends BaseRoute {
     }
 
     private buildRanking(userShoes: any, ranking: any) {
-        let net: number = 0;
-        let sunk: number = 0;
-        let revenue: number = 0;
-        for (const shoe in userShoes) {
-            if (userShoes.hasOwnProperty(shoe)) {
-                net = net + userShoes[shoe].current_price - userShoes[shoe].purchase_price;
-                sunk = sunk + userShoes[shoe].purchase_price;
-                revenue = revenue + userShoes[shoe].current_price;
-            }
-        }
+        let net: number;
+        let sunk: number;
+        let revenue: number;
+        [net, sunk, revenue] = Helpers.setNet(userShoes);
         let avg_net: number;
         if (userShoes.length === 0) {
             avg_net = 0;
@@ -159,23 +151,14 @@ export class LeaderboardController extends BaseRoute {
         ranking["revenue"] = revenue;
         ranking["avg_net"] = avg_net;
         ranking["num"] = userShoes.length;
+        console.log(ranking);
         leaderboard.push(ranking);
     }
 
     private async setLocals() {
-        await this.setUsers();
-        await this.setShoes();
-    }
-
-    private async setUsers() {
-        const uif = new CustomerModel();
-        users = await uif.get_users();
-        allUserShoes = await uif.get_all_keys();
-    }
-
-    private async setShoes() {
-        const shoeIF = new ProductModel();
-        Shoes = await shoeIF.getAllDB();
+        users = await Helpers.getUsers();
+        Shoes = await Helpers.getAllDbShoes();
+        allUserShoes = await Helpers.getAllUserShoes();
     }
 
     private getShoe(shoeID: number) {
@@ -203,5 +186,7 @@ export class LeaderboardController extends BaseRoute {
         }
         return userShoes;
     }
+
+
 
 }

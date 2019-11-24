@@ -3,7 +3,14 @@ import { ProductModel } from "./models/productModel";
 
 class Helpers {
 
-    public async setUserShoes(userKeys: any) {
+    public async getAllUserShoes() {
+        const c = new CustomerModel();
+        const shoes = await c.get_all_keys();
+        return shoes;
+    }
+
+    public async getUserShoes(userID: any) {
+        const userKeys = await this.getUserKeys(userID);
         const Shoes = await this.getAllDbShoes();
         const userShoes: any[] = [];
         for (const item in userKeys) {
@@ -73,15 +80,30 @@ class Helpers {
         return;
     }
 
-    public findShoe(shoeID: any, userShoes: any) {
+    public findUserShoe(shoeID: any, userShoes: any) {
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 const shoe = userShoes[item];
-                if (shoe._id === shoeID) {
+                if (shoe._id == shoeID) {
                     return shoe;
                 }
             }
         }
+    }
+
+    public setNet(shoelist: any) {
+        let net: number = 0;
+        let sunk: number = 0;
+        let total: number = 0;
+        for (const item in shoelist) {
+            if (shoelist.hasOwnProperty(item)) {
+                const shoe = shoelist[item];
+                net = net + shoe.current_price - shoe.purchase_price;
+                sunk = sunk + parseInt(shoe.purchase_price, 10);
+                total = total + shoe.current_price;
+            }
+        }
+        return [net, sunk, total];
     }
 
     public async getUsers() {
@@ -99,11 +121,11 @@ class Helpers {
         }
     }
 
-    public async getUserShoes(userKeys: any) {
+    /* public async getUserShoes(userKeys: any) {
         const shoeIf = new ProductModel();
         const uShoes = await shoeIf.getAllShoes(userKeys);
         return uShoes;
-    }
+    } */
 
 }
 

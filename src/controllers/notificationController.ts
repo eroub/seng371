@@ -3,6 +3,7 @@ import { CustomerModel } from "../models/customerModel";
 import { NotificationModel } from "../models/notificationModel";
 import { ProductModel } from "../models/productModel";
 import { BaseRoute } from "../routes/router";
+import Helpers = require('../helperFunctions');
 
 let userNotifications: any;
 let Shoes: any;
@@ -91,7 +92,7 @@ export class NotificationController extends BaseRoute {
     }
 
     private async buildNotifications(userID: number) {
-        if (await this.isUser(userID)) {
+        if (await Helpers.isUser(userID)) {
             id = userID;
             await this.setLocals(userID);
             for (const item in userNotifications) {
@@ -146,19 +147,12 @@ export class NotificationController extends BaseRoute {
 
     private async setLocals(userID: number) {
         await this.setUserNotifications(userID);
-        await this.setShoes();
+        Shoes = await Helpers.getAllDbShoes();
     }
 
     private async setUserNotifications(userID:number) {
         const notif_if = new NotificationModel();
         userNotifications = await notif_if.getUserNotifications(userID);
-
-        return userNotifications;
-    }
-
-    private async setShoes() {
-        const shoe_if = new ProductModel();
-        Shoes = await shoe_if.getAllDB();
     }
 
     public async inputNotification(req: Request, res: Response, next: NextFunction) {
@@ -168,7 +162,7 @@ export class NotificationController extends BaseRoute {
         const shoeId = parseInt(req.params[shoeIdString], 10);
         const shoeIF = new ProductModel();
         const shoe = await shoeIF.getOneShoe(shoeId);
-        if (shoe && await this.isUser(userId)) {
+        if (shoe && await Helpers.isUser(userId)) {
             this.render(req, res, "addNotification", {id: userId, shoe});
             /* res.status(200)
                 .send({
@@ -195,13 +189,6 @@ export class NotificationController extends BaseRoute {
         this.render(req, res, "editNotification", {id: userId, title: "Notification", notification});
     }
 
-    private async getUserNotifications(userID: number) {
-        const notifIf = new NotificationModel();
-        userNotifications = await notifIf.getUserNotifications(userID);
-
-        return userNotifications;
-    }
-
     private getShoe(shoeID: number) {
         for (const item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
@@ -217,10 +204,5 @@ export class NotificationController extends BaseRoute {
         const nIF = new NotificationModel();
         const notif = await nIF.get_notif(id);
         return notif[0];
-    }
-
-    private async isUser(userID: any) {
-        const userIF = new CustomerModel();
-        return await userIF.isUser(userID);
     }
 }
