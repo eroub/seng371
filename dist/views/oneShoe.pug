@@ -4,7 +4,11 @@ block content
     a(href='/user/' + id + '/shoes') Back
     h1 #{shoe.name}
     p Current Price: $#{shoe.current_price}
-    p Purchase Price: $#{purchase}
+    form(method='POST' action='/user/' + id + '/edit_shoe/' + shoe._id)
+        div.form-group
+            label Purchase Price:&nbsp
+            input#name.form-control(type='text', placeholder='$0', name='purchase_price', value=shoe.purchase_price)
+            button.btn.btn-primary(type='submit') Save Changes
     p Difference: $#{diff}
     p Retail Price: $#{shoe.retail_price}
     p Size: #{shoe.size}

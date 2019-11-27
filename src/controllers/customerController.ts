@@ -2,6 +2,8 @@ import { NextFunction, Request, Response, Router} from "express";
 import Helpers = require("../helperFunctions");
 import { CustomerModel } from "../models/customerModel";
 import { BaseRoute } from "../routes/router";
+import {ProductModel} from "../models/productModel";
+import {NotificationModel} from "../models/notificationModel";
 
 let userJson: any;
 let userShoes: any;
@@ -36,6 +38,11 @@ export class CustomerController extends BaseRoute {
         router.get("/user/:id/shoes/:id2", (req: Request, res: Response, next: NextFunction) => {
             new CustomerController().getOne(req, res, next);
         });
+
+        router.post("/user/:id/edit_shoe/:id2", (req: Request, res: Response, next: NextFunction) => {
+            new CustomerController().editShoe(req, res, next);
+        });
+
     }
 
     public async sortPriceLow(req: Request, res: Response, next: NextFunction) {
@@ -92,6 +99,19 @@ export class CustomerController extends BaseRoute {
             res.send("invalid user");
 
         }
+    }
+
+    public async editShoe(req: Request, res: Response, next: NextFunction) {
+        const uString = "id";
+        const idString = "id2";
+        const userID = parseInt(req.params[uString], 10);
+        const shoeID = req.params[idString];
+        const uIF = new CustomerModel();
+        if (!req.body.threshold) {
+            req.body.threshold = 0;
+        }
+        await uIF.edit_shoe(shoeID, req.body.purchase_price);
+        res.redirect('/user/' + userID + '/shoes');
     }
 
     public async removeShoe(req: Request, res: Response, next: NextFunction) {
