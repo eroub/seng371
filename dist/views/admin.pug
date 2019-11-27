@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    p #[a(href='/') Back]&nbsp #[a(href='/user/' + id + '/allShoes') Add Shoes]&nbsp #[a(href='/user/' + id + '/notifications') Notifications]&nbsp #[a(href='/user/' + id + '/leaderboard') Leaderboard]
+    h1 All users :
+    for user in users
+
+        p User ID: #{user.user_id} Username: #{user.username}
+
+
+        //Each user has buttons for editing router.get(‘/admin/edit_user/:id’)
+
+        form(method='post' action='/admin/' + 'edit_user/'+user.user_id )
+            div.form-group
+            button.btn.btn-primary(type='submit') Edit User
+
+        form(method='post' action='/admin/' + 'del_user/' + user.user_id )
+             div.form-group
+              button.btn.btn-primary(type='submit') Delete User

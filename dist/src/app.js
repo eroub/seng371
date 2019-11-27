@@ -9,8 +9,12 @@ var errorhandler_1 = __importDefault(require("errorhandler"));
 var express_1 = __importDefault(require("express"));
 var morgan_1 = __importDefault(require("morgan"));
 var path_1 = __importDefault(require("path"));
+var adminController_1 = require("./controllers/adminController");
+var customerController_1 = require("./controllers/customerController");
+var leaderboardController_1 = require("./controllers/leaderboardController");
+var notificationController_1 = require("./controllers/notificationController");
+var productController_1 = require("./controllers/productController");
 var index_1 = require("./routes/index");
-var shoeRouter_1 = require("./routes/shoeRouter");
 /**
  * The server.
  *
@@ -85,8 +89,13 @@ var Server = /** @class */ (function () {
     Server.prototype.routes = function () {
         var router;
         router = express_1.default.Router();
+        // Create routes for all controllers
         index_1.IndexRoute.create(router);
-        shoeRouter_1.ShoeRouter.create(router);
+        notificationController_1.NotificationController.create(router);
+        leaderboardController_1.LeaderboardController.create(router);
+        customerController_1.CustomerController.create(router);
+        adminController_1.AdminController.create(router);
+        productController_1.ProductController.create(router);
         // use router middleware
         this.app.use(router);
     };
