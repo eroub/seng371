@@ -49,10 +49,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var customerModel_1 = require("../models/customerModel");
 var notificationModel_1 = require("../models/notificationModel");
 var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
+var Helpers = require("../helperFunctions");
 var userNotifications;
 var Shoes;
 var id;
@@ -181,7 +181,7 @@ var NotificationController = /** @class */ (function (_super) {
             var item, notification, shoe;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.isUser(userID)];
+                    case 0: return [4 /*yield*/, Helpers.isUser(userID)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
                         id = userID;
@@ -278,9 +278,9 @@ var NotificationController = /** @class */ (function (_super) {
                     case 0: return [4 /*yield*/, this.setUserNotifications(userID)];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.setShoes()];
+                        return [4 /*yield*/, Helpers.getAllDbShoes()];
                     case 2:
-                        _a.sent();
+                        Shoes = _a.sent();
                         return [2 /*return*/];
                 }
             });
@@ -296,21 +296,6 @@ var NotificationController = /** @class */ (function (_super) {
                         return [4 /*yield*/, notif_if.getUserNotifications(userID)];
                     case 1:
                         userNotifications = _a.sent();
-                        return [2 /*return*/, userNotifications];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.setShoes = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var shoe_if;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        shoe_if = new productModel_1.ProductModel();
-                        return [4 /*yield*/, shoe_if.getAllDB()];
-                    case 1:
-                        Shoes = _a.sent();
                         return [2 /*return*/];
                 }
             });
@@ -332,7 +317,7 @@ var NotificationController = /** @class */ (function (_super) {
                         shoe = _b.sent();
                         _a = shoe;
                         if (!_a) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this.isUser(userId)];
+                        return [4 /*yield*/, Helpers.isUser(userId)];
                     case 2:
                         _a = (_b.sent());
                         _b.label = 3;
@@ -377,21 +362,6 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
-    NotificationController.prototype.getUserNotifications = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            var notifIf;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        notifIf = new notificationModel_1.NotificationModel();
-                        return [4 /*yield*/, notifIf.getUserNotifications(userID)];
-                    case 1:
-                        userNotifications = _a.sent();
-                        return [2 /*return*/, userNotifications];
-                }
-            });
-        });
-    };
     NotificationController.prototype.getShoe = function (shoeID) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
@@ -413,19 +383,6 @@ var NotificationController = /** @class */ (function (_super) {
                     case 1:
                         notif = _a.sent();
                         return [2 /*return*/, notif[0]];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.isUser = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            var userIF;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        userIF = new customerModel_1.CustomerModel();
-                        return [4 /*yield*/, userIF.isUser(userID)];
-                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
