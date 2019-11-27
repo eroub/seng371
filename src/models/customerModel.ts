@@ -40,6 +40,20 @@ export class CustomerModel {
         return shoeAdd;
     }
 
+    public edit_shoe(id: any, purchase_price: any) {
+        const result = DbClient.connect()
+            .then((db) => {
+                db!.collection("user_shoes").updateOne({_id: ObjectID(id)},
+                    {$set: {purchase_price: purchase_price}});
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return result;
+    }
+
     public remove_shoe(id: any) {
         const shoeRemove = DbClient.connect()
             .then((db) => {
