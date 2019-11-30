@@ -19,7 +19,7 @@ export class AdminController extends BaseRoute {
         router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUser(req, res, next);
         });
-<<<<<<< HEAD
+
 
         router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUser(req, res, next);
@@ -29,8 +29,6 @@ export class AdminController extends BaseRoute {
             new AdminController().addUser(req, res, next);
         });
 
-=======
->>>>>>> 4859b19390fc98c2b903c577f2414a17f32fdba2
     }
 
     /*
@@ -66,7 +64,6 @@ export class AdminController extends BaseRoute {
 
     }
 
-<<<<<<< HEAD
     public async addUser(req: Request, res: Response, next: NextFunction) {
         let CM = new CustomerModel();
         let editedName:any = req.body.newusername;
@@ -78,6 +75,4 @@ export class AdminController extends BaseRoute {
     }
 
 
-=======
->>>>>>> 4859b19390fc98c2b903c577f2414a17f32fdba2
 }
