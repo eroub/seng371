@@ -194,7 +194,7 @@ var CustomerController = /** @class */ (function (_super) {
                         return [4 /*yield*/, uIF.edit_shoe(shoeID, req.body.purchase_price)];
                     case 1:
                         _a.sent();
-                        res.redirect('/user/' + userID + '/shoes');
+                        res.redirect("/user/" + userID + "/shoes");
                         return [2 /*return*/];
                 }
             });

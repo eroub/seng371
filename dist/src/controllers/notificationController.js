@@ -49,10 +49,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Helpers = require("../helperFunctions");
 var notificationModel_1 = require("../models/notificationModel");
 var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
-var Helpers = require("../helperFunctions");
 var userNotifications;
 var Shoes;
 var id;
@@ -170,144 +170,7 @@ var NotificationController = /** @class */ (function (_super) {
                         return [4 /*yield*/, nIF.edit_notif(notifID, req.body.threshold, req.body.type)];
                     case 1:
                         _a.sent();
-                        res.redirect('/user/' + userID + '/notifications');
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.buildNotifications = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, _i, item, notification, shoe;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, Helpers.isUser(userID)];
-                    case 1:
-                        if (!_c.sent()) return [3 /*break*/, 7];
-                        id = userID;
-                        return [4 /*yield*/, this.setLocals(userID)];
-                    case 2:
-                        _c.sent();
-                        _a = [];
-                        for (_b in userNotifications)
-                            _a.push(_b);
-                        _i = 0;
-                        _c.label = 3;
-                    case 3:
-                        if (!(_i < _a.length)) return [3 /*break*/, 6];
-                        item = _a[_i];
-                        if (!userNotifications.hasOwnProperty(item)) return [3 /*break*/, 5];
-                        notification = userNotifications[item];
-                        shoe = this.getShoe(notification.shoe_id);
-                        notification["shoename"] = shoe.brand + ' ' + shoe.model + ' ' + shoe.colorway;
-                        notification["current_price"] = shoe.current_price;
-                        notification["size"] = shoe.size;
-                        //console.log(notification);
-                        return [4 /*yield*/, this.checkFulfilled(notification, shoe.current_price)];
-                    case 4:
-                        //console.log(notification);
-                        _c.sent();
-                        _c.label = 5;
-                    case 5:
-                        _i++;
-                        return [3 /*break*/, 3];
-                    case 6:
-                        userNotifications.sort(function (a, b) {
-                            if (a.shoename < b.shoename) {
-                                return -1;
-                            }
-                            if (a.shoename > b.shoename) {
-                                return 1;
-                            }
-                            return 0;
-                        });
-                        return [2 /*return*/, true];
-                    case 7: return [2 /*return*/, false];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.checkFulfilled = function (notification, current_price) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!!notification.fulfilled) return [3 /*break*/, 4];
-                        if (!((notification.type == "Below") && (notification.threshold > current_price))) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.fulfill(notification._id)];
-                    case 1:
-                        _a.sent();
-                        notification.fulfilled = true;
-                        _a.label = 2;
-                    case 2:
-                        if (!((notification.type == "Above") && (notification.threshold < current_price))) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.fulfill(notification._id)];
-                    case 3:
-                        _a.sent();
-                        notification.fulfilled = true;
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.fulfill = function (notification) {
-        return __awaiter(this, void 0, void 0, function () {
-            var nIF;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        nIF = new notificationModel_1.NotificationModel();
-                        return [4 /*yield*/, nIF.fulfill(notification._id)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.check_local = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!!userNotifications) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.buildNotifications(userID)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                    case 2:
-                        if (!(id != userID)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.buildNotifications(userID)];
-                    case 3: return [2 /*return*/, _a.sent()];
-                    case 4: return [2 /*return*/, true];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.setLocals = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.setUserNotifications(userID)];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, Helpers.getAllDbShoes()];
-                    case 2:
-                        Shoes = _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    NotificationController.prototype.setUserNotifications = function (userID) {
-        return __awaiter(this, void 0, void 0, function () {
-            var notif_if;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        notif_if = new notificationModel_1.NotificationModel();
-                        return [4 /*yield*/, notif_if.getUserNotifications(userID)];
-                    case 1:
-                        userNotifications = _a.sent();
+                        res.redirect("/user/" + userID + "/notifications");
                         return [2 /*return*/];
                 }
             });
@@ -369,6 +232,141 @@ var NotificationController = /** @class */ (function (_super) {
                     case 1:
                         notification = _a.sent();
                         this.render(req, res, "editNotification", { id: userId, title: "Notification", notification: notification });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.buildNotifications = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, _b, _i, item, notification, shoe;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, Helpers.isUser(userID)];
+                    case 1:
+                        if (!_c.sent()) return [3 /*break*/, 7];
+                        id = userID;
+                        return [4 /*yield*/, this.setLocals(userID)];
+                    case 2:
+                        _c.sent();
+                        _a = [];
+                        for (_b in userNotifications)
+                            _a.push(_b);
+                        _i = 0;
+                        _c.label = 3;
+                    case 3:
+                        if (!(_i < _a.length)) return [3 /*break*/, 6];
+                        item = _a[_i];
+                        if (!userNotifications.hasOwnProperty(item)) return [3 /*break*/, 5];
+                        notification = userNotifications[item];
+                        shoe = this.getShoe(notification.shoe_id);
+                        notification["shoename"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
+                        notification["current_price"] = shoe.current_price;
+                        notification["size"] = shoe.size;
+                        return [4 /*yield*/, this.checkFulfilled(notification, shoe.current_price)];
+                    case 4:
+                        _c.sent();
+                        _c.label = 5;
+                    case 5:
+                        _i++;
+                        return [3 /*break*/, 3];
+                    case 6:
+                        userNotifications.sort(function (a, b) {
+                            if (a.shoename < b.shoename) {
+                                return -1;
+                            }
+                            if (a.shoename > b.shoename) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                        return [2 /*return*/, true];
+                    case 7: return [2 /*return*/, false];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.checkFulfilled = function (notification, currentPrice) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!notification.fulfilled) return [3 /*break*/, 4];
+                        if (!((notification.type === "Below") && (notification.threshold > currentPrice))) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.fulfill(notification._id)];
+                    case 1:
+                        _a.sent();
+                        notification.fulfilled = true;
+                        _a.label = 2;
+                    case 2:
+                        if (!((notification.type == "Above") && (notification.threshold < currentPrice))) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.fulfill(notification._id)];
+                    case 3:
+                        _a.sent();
+                        notification.fulfilled = true;
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.fulfill = function (notification) {
+        return __awaiter(this, void 0, void 0, function () {
+            var nIF;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        nIF = new notificationModel_1.NotificationModel();
+                        return [4 /*yield*/, nIF.fulfill(notification._id)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.check_local = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!userNotifications) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.buildNotifications(userID)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        if (!(id !== userID)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.buildNotifications(userID)];
+                    case 3: return [2 /*return*/, _a.sent()];
+                    case 4: return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.setLocals = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.setUserNotifications(userID)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Helpers.getAllDbShoes()];
+                    case 2:
+                        Shoes = _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.setUserNotifications = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var notifIf;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        notifIf = new notificationModel_1.NotificationModel();
+                        return [4 /*yield*/, notifIf.getUserNotifications(userID)];
+                    case 1:
+                        userNotifications = _a.sent();
                         return [2 /*return*/];
                 }
             });
