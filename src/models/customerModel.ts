@@ -131,4 +131,18 @@ export class CustomerModel {
             });
         return userKeys;
     }
+
+    public edit_userName(id:any, editedName) {
+        const result = DbClient.connect()
+            .then((db) => {
+                db!.collection("users").updateOne({_id: ObjectID(id)},
+                    {$set: {username:editedName}});
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return result;
+    }
 }
