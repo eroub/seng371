@@ -1,6 +1,6 @@
 import "mocha";
 let chai = require("chai");
-import { NotificationModel } from "../../src/models/notificationModel";
+import { NotificationModel } from "../../../src/models/notificationModel";
 
 describe ('Testing NotificationModel Functionality:', () => {
     it('Trying to get notifications for user 1 (should return the correct notification array for user 1)', async () => {
