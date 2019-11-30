@@ -19,6 +19,20 @@ export class AdminController extends BaseRoute {
         router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUser(req, res, next);
         });
+
+
+        router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().editUser(req, res, next);
+        });
+
+        router.post("/admin/add_user", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().addUser(req, res, next);
+        });
+
+        router.post("/admin/del_user/:id", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().delUser(req, res, next);
+        });
+
     }
 
     /*
@@ -28,6 +42,7 @@ export class AdminController extends BaseRoute {
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
         let userArr: any[] = [];
         userArr = await Helpers.getUsers();
+        console.log(userArr)
         this.render(req, res, "admin", {users: userArr, title: "All users"});
     }
 
@@ -50,6 +65,28 @@ export class AdminController extends BaseRoute {
         console.log(editedName + userID)
         await CM.edit_userName(userID, editedName);
         res.redirect('/admin');
+
+    }
+
+    public async addUser(req: Request, res: Response, next: NextFunction) {
+        let CM = new CustomerModel();
+        let editedName:any = req.body.newusername;
+        let newID:any = req.body.newuserid;
+        newID = parseInt(newID, 10);
+        console.log("this is new id",newID);
+        await CM.add_user(newID,editedName);
+        res.redirect('/admin');
+
+
+    }
+
+    public async delUser(req: Request, res: Response, next: NextFunction) {
+        const uString = "id";
+        const userID = parseInt(req.params[uString], 10);
+        let CM = new CustomerModel();
+        await CM.remove_user(userID);
+        res.redirect('/admin');
+
 
     }
 
