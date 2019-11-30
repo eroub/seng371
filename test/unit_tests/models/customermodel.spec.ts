@@ -1,6 +1,6 @@
 import "mocha";
  let chai = require("chai");
-import { CustomerModel } from "../../src/models/CustomerModel";
+import { CustomerModel } from "../../../src/models/customerModel";
 
 describe ('Testing CustomerModel Functionality:', () => {
     it('Should return the correct specified user: 1', async () => {

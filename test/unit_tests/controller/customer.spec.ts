@@ -1,40 +1,33 @@
 import "mocha";
 import chai from "chai";
-import { ShoeModel } from "../../src/models/shoe_model";
-import { Server } from "../../src/app"
+import { ProductModel } from "../../../src/models/productModel";
+import { Server } from "../../../src/app"
 const request = require('supertest');
 
 const serve = new Server();
 
-describe('Testing ShoeRouter Functionality:', () => {
-    it ('/user/4/shoes (Should have status 404)', async () => {
+describe('Testing customerController Functionality:', () => {
+    it('/user/4/shoes (Should have status 404)', async () => {
         const response = await request(serve.getExpressInstance()).get('/user/4/shoes');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
-    it ('/user/2/shoes (Should have status 200)', async () => {
+    it('/user/2/shoes (Should have status 200)', async () => {
         const response = await request(serve.getExpressInstance()).get('/user/2/shoes');
         chai.expect(response.statusCode).to.equal(200);
     }).timeout(5000);
-    it ('/user/0/shoes/3 (Should have status 200)', async () => {
+    it('/user/0/shoes/3 (Should have status 200)', async () => {
         const response = await request(serve.getExpressInstance()).get('/user/0/shoes/3');
         chai.expect(response.statusCode).to.equal(200);
     }).timeout(5000);
-    it ('/user/0/shoes/100 (Should have status 404)', async () => {
+    it('/user/0/shoes/100 (Should have status 404)', async () => {
         const response = await request(serve.getExpressInstance()).get('/user/0/shoes/100');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
-    it ('/user/9/shoes/1 (Should have status 404)', async () => {
+    it('/user/9/shoes/1 (Should have status 404)', async () => {
         const response = await request(serve.getExpressInstance()).get('/user/9/shoes/1');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
-    it('Notification Centre Response to correct user_id (200)', async () => {
-        const response = await request(serve.getExpressInstance()).get('/user/2/notifications');
-        chai.expect(response.statusCode).to.equal(200);
-    }).timeout(5000);
-    it('Notification Centre Response to incorrect user_id (404)', async () => {
-        const response = await request(serve.getExpressInstance()).get('/user/999/notifications');
-        chai.expect(response.statusCode).to.equal(404);
-    }).timeout(5000);
+
     it('Successfully adds a shoe to user portfolio (redirects)', async () => {
         const response = await request(serve.getExpressInstance()).post('/user/1/add_shoe/1');
         chai.expect(response.statusCode).to.equal(302);
@@ -44,6 +37,7 @@ describe('Testing ShoeRouter Functionality:', () => {
         const response = await request(serve.getExpressInstance()).post('/user/55/add_shoe/3');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
+
     it('Successfully removes shoe from portfolio (redirects)', async () => {
         const response = await request(serve.getExpressInstance()).post('/user/1/remove_shoe/1');
         chai.expect(response.statusCode).to.equal(302);
@@ -52,5 +46,6 @@ describe('Testing ShoeRouter Functionality:', () => {
         const response = await request(serve.getExpressInstance()).post('/user/999/remove_shoe/1');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
+    
 });
 
