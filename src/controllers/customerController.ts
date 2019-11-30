@@ -2,8 +2,6 @@ import { NextFunction, Request, Response, Router} from "express";
 import Helpers = require("../helperFunctions");
 import { CustomerModel } from "../models/customerModel";
 import { BaseRoute } from "../routes/router";
-import {ProductModel} from "../models/productModel";
-import {NotificationModel} from "../models/notificationModel";
 
 let userJson: any;
 let userShoes: any;
@@ -111,7 +109,7 @@ export class CustomerController extends BaseRoute {
             req.body.threshold = 0;
         }
         await uIF.edit_shoe(shoeID, req.body.purchase_price);
-        res.redirect('/user/' + userID + '/shoes');
+        res.redirect("/user/" + userID + "/shoes");
     }
 
     public async removeShoe(req: Request, res: Response, next: NextFunction) {
@@ -139,8 +137,8 @@ export class CustomerController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.setLocal(queryint)) {
             userShoes.sort((a: any, b: any) => {
-                if(a.name < b.name) { return -1; }
-                if(a.name > b.name) { return 1; }
+                if (a.name < b.name) { return -1; }
+                if (a.name > b.name) { return 1; }
                 return 0;
             });
             this.render(req, res, "allShoes",

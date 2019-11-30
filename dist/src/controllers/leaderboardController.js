@@ -212,11 +212,11 @@ var LeaderboardController = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(leaderboard.length == 0)) return [3 /*break*/, 2];
+                        if (!(leaderboard.length === 0)) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.createBoard(userID)];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2:
-                        if (!(userID != id)) return [3 /*break*/, 4];
+                        if (!(userID !== id)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.createBoard(userID)];
                     case 3: return [2 /*return*/, _a.sent()];
                     case 4: return [2 /*return*/, true];
@@ -258,16 +258,17 @@ var LeaderboardController = /** @class */ (function (_super) {
         var sunk;
         var revenue;
         _a = Helpers.setNet(userShoes), net = _a[0], sunk = _a[1], revenue = _a[2];
-        var avg_net;
+        var avgNet;
         if (userShoes.length === 0) {
-            avg_net = 0;
+            avgNet = 0;
         }
-        else
-            avg_net = net / userShoes.length;
+        else {
+            avgNet = net / userShoes.length;
+        }
         ranking["net"] = net;
         ranking["sunk"] = sunk;
         ranking["revenue"] = revenue;
-        ranking["avg_net"] = avg_net;
+        ranking["avg_net"] = avgNet;
         ranking["num"] = userShoes.length;
         console.log(ranking);
         leaderboard.push(ranking);

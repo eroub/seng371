@@ -27,7 +27,7 @@ COPY . ./
 # Start the app
 RUN npm run build
 
+EXPOSE 7000
+
 # Start
 CMD ["npm", "start"]
-
-EXPOSE 7000
