@@ -11,7 +11,6 @@ export class AdminController extends BaseRoute {
         router.get("/admin", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().showAllUsers(req, res, next);
         });
-
         // edit user
         router.get("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUserForm(req, res, next);
@@ -20,7 +19,6 @@ export class AdminController extends BaseRoute {
         router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUser(req, res, next);
         });
-
     }
 
     /*
