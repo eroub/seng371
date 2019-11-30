@@ -8,7 +8,7 @@ block content
     form(method='POST' action= '/admin/' + 'edit_user/'+user.user_id)
         div.form-group
             label Username
-            input#name.form-control(type='text', placeholder= user.username, name='threshold', value=user.username)
+            input#name.form-control(type='text', placeholder= user.username, name='username', value=user.username)
         div.form-group
         button.btn.btn-primary(type='submit') Save Changes
 

@@ -32,14 +32,12 @@ export class AdminController extends BaseRoute {
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
         let userArr: any[] = [];
         userArr = await Helpers.getUsers();
-        console.log(userArr);
         this.render(req, res, "admin", {users: userArr, title: "All users"});
     }
 
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const userID = parseInt(req.params[uString], 10);
-        console.log(userID)
         let CM = new CustomerModel();
         let user = await CM.userInfo(userID);
         user = user[0];
@@ -48,17 +46,12 @@ export class AdminController extends BaseRoute {
 
 
     public async editUser(req: Request, res: Response, next: NextFunction) {
-
         const uString = "id";
         const userID = parseInt(req.params[uString], 10);
-        console.log(userID)
         let CM = new CustomerModel();
-        await CM.
+        console.log("this is req", req);
+        await CM.edit_userName("id", req.body.username);
         res.redirect('/admin');
-
-
-
-
 
     }
 

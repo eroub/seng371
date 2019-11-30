@@ -103,7 +103,6 @@ var AdminController = /** @class */ (function (_super) {
                     case 1:
                         user = _a.sent();
                         user = user[0];
-                        console.log(user.username);
                         this.render(req, res, "editUser", { user: user, title: "Edit User" });
                         return [2 /*return*/];
                 }
@@ -112,7 +111,14 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.editUser = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
+            var uString, userID, CM;
             return __generator(this, function (_a) {
+                uString = "id";
+                userID = parseInt(req.params[uString], 10);
+                console.log(userID);
+                CM = new customerModel_1.CustomerModel();
+                console.log("this is req", req);
+                //await CM.edit_userName("id");
                 res.redirect('/admin');
                 return [2 /*return*/];
             });

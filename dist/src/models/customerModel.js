@@ -121,6 +121,18 @@ var CustomerModel = /** @class */ (function () {
         });
         return userKeys;
     };
+    CustomerModel.prototype.edit_userName = function (id, editedName) {
+        var result = DbClient.connect()
+            .then(function (db) {
+            db.collection("users").updateOne({ _id: ObjectID(id) }, { $set: { username: editedName } });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return result;
+    };
     return CustomerModel;
 }());
 exports.CustomerModel = CustomerModel;
