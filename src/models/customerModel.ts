@@ -135,7 +135,7 @@ export class CustomerModel {
     public edit_userName(id:any, editedName:any) {
         const result = DbClient.connect()
             .then((db) => {
-                db!.collection("users").updateOne({_id: id},
+                db!.collection("users").updateOne({user_id: id},
                     {$set: {username:editedName}});
                 return true;
             })

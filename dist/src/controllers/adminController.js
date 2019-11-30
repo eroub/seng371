@@ -109,15 +109,16 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.editUser = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var uString, userID, CM;
+            var uString, userID, CM, editedName;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
                         userID = parseInt(req.params[uString], 10);
                         CM = new customerModel_1.CustomerModel();
-                        console.log("this is req", req);
-                        return [4 /*yield*/, CM.edit_userName("id", req.body.editedusername)];
+                        editedName = req.body.editedusername;
+                        console.log(editedName + userID);
+                        return [4 /*yield*/, CM.edit_userName(userID, editedName)];
                     case 1:
                         _a.sent();
                         res.redirect('/admin');

@@ -124,7 +124,7 @@ var CustomerModel = /** @class */ (function () {
     CustomerModel.prototype.edit_userName = function (id, editedName) {
         var result = DbClient.connect()
             .then(function (db) {
-            db.collection("users").updateOne({ _id: id }, { $set: { username: editedName } });
+            db.collection("users").updateOne({ user_id: id }, { $set: { username: editedName } });
             return true;
         })
             .catch(function (err) {
