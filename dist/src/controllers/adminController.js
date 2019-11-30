@@ -143,6 +143,7 @@ var AdminController = /** @class */ (function (_super) {
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.newusername;
                         newID = req.body.newuserid;
+                        console.log("this is new id", newID);
                         return [4 /*yield*/, CM.add_user(newID, editedName)];
                     case 1:
                         _a.sent();

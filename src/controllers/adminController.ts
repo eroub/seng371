@@ -68,6 +68,7 @@ export class AdminController extends BaseRoute {
         let CM = new CustomerModel();
         let editedName:any = req.body.newusername;
         let newID:any = req.body.newuserid;
+        console.log("this is new id",newID);
         await CM.add_user(newID,editedName);
         res.redirect('/admin');
 
