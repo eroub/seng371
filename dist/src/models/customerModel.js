@@ -133,6 +133,19 @@ var CustomerModel = /** @class */ (function () {
         });
         return result;
     };
+    CustomerModel.prototype.add_user = function (userId, username) {
+        var shoeAdd = DbClient.connect()
+            .then(function (db) {
+            db.collection("users").insertOne({ user_id: userId, shoelist: {}, username: username });
+            console.log("adding user");
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return shoeAdd;
+    };
     return CustomerModel;
 }());
 exports.CustomerModel = CustomerModel;

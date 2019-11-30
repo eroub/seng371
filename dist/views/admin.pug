@@ -12,3 +12,17 @@ block content
         form(method='post' action='/admin/' + 'del_user/' + user.user_id )
              div.form-group
               button.btn.btn-primary(type='submit') Delete User
+
+
+    h1 Add a new user
+
+    form(method='POST' action='/admin/add_user')
+        div.form-group
+            label(for='name') Username:&nbsp
+            input#name.form-control(type='text', placeholder='Enter Name',name='newusername')
+
+            div.form-group
+                label(for='ID') ID:&nbsp
+                input#ID.form-control(type='text', placeholder='Enter ID',ID='newuserid')
+            p
+        button.btn.btn-primary(type='submit') Add new user

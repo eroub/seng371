@@ -145,4 +145,25 @@ export class CustomerModel {
             });
         return result;
     }
+
+
+
+    public add_user(userId: any, username: any) {
+        const shoeAdd = DbClient.connect()
+            .then((db) => {
+                db!.collection("users").insertOne({ user_id: userId,shoelist: {}, username:username});
+                console.log("adding user");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return shoeAdd;
+    }
+
+
+
+
+
 }

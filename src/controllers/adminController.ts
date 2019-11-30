@@ -22,6 +22,13 @@ export class AdminController extends BaseRoute {
             new AdminController().editUser(req, res, next);
         });
 
+        router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().editUser(req, res, next);
+        });
+
+        router.post("/admin/add_user", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().addUser(req, res, next);
+        });
 
     }
 
@@ -32,6 +39,7 @@ export class AdminController extends BaseRoute {
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
         let userArr: any[] = [];
         userArr = await Helpers.getUsers();
+        console.log(userArr)
         this.render(req, res, "admin", {users: userArr, title: "All users"});
     }
 
@@ -57,6 +65,15 @@ export class AdminController extends BaseRoute {
 
     }
 
+    public async addUser(req: Request, res: Response, next: NextFunction) {
+        let CM = new CustomerModel();
+        let editedName:any = req.body.newusername;
+        let newID:any = req.body.newuserid;
+        await CM.add_user(newID,editedName);
+        res.redirect('/admin');
+
+
+    }
 
 
 }
