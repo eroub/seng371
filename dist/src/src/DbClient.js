@@ -1,17 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -48,61 +35,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var Helpers = require("../helperFunctions");
-var router_1 = require("../routes/router");
-var AdminController = /** @class */ (function (_super) {
-    __extends(AdminController, _super);
-    function AdminController() {
-        return _super !== null && _super.apply(this, arguments) || this;
+// @ts-ignore
+var mongodb_1 = require("mongodb");
+var DbClient = /** @class */ (function () {
+    function DbClient() {
     }
-    AdminController.create = function (router) {
-        router.get("/admin", function (req, res, next) {
-            new AdminController().showAllUsers(req, res, next);
-        });
-        // edit user
-        router.post("/admin/edit_user/:id", function (req, res, next) {
-            new AdminController().editUser(req, res, next);
-        });
-    };
-    /*
-    Shows all users in the db in a list.
-     */
-    AdminController.prototype.showAllUsers = function (req, res, next) {
+    DbClient.prototype.connect = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var userArr;
+            var client, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        userArr = [];
-                        return [4 /*yield*/, Helpers.getUsers()];
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, mongodb_1.MongoClient.connect("mongodb+srv://shaun:yeet@cluster0-rn1fn.gcp.mongodb.net/stalkx?retryWrites=true&w=majority")];
                     case 1:
-                        userArr = _a.sent();
-                        console.log(userArr);
-                        this.render(req, res, "admin", { users: userArr, title: "All users" });
-                        return [2 /*return*/];
+                        client = _a.sent();
+                        this.db = client.db("stalkx");
+                        return [2 /*return*/, this.db];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.log("Unable to connect to db");
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    AdminController.prototype.editUser = function (req, res, next) {
-        return __awaiter(this, void 0, void 0, function () {
-            var userArr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        userArr = [];
-                        return [4 /*yield*/, Helpers.getUsers()];
-                    case 1:
-                        userArr = _a.sent();
-                        console.log(userArr);
-                        this.render(req, res, "admin", { users: userArr, title: "All users" });
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return AdminController;
-}(router_1.BaseRoute));
-exports.AdminController = AdminController;
-//# sourceMappingURL=adminController.js.map
+    return DbClient;
+}());
+module.exports = new DbClient();
+//# sourceMappingURL=DbClient.js.map

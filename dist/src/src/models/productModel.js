@@ -84,7 +84,7 @@ var ProductModel = /** @class */ (function () {
     ProductModel.prototype.updateShoes = function (priceChange) {
         var shoeUpdate = DbClient.connect()
             .then(function (db) {
-            db.collection("shoes").updateMany({}, { $inc: { current_price: priceChange } });
+            // db!.collection("shoes").updateMany({});
             return true;
         })
             .catch(function (err) {

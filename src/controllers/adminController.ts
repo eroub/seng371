@@ -12,12 +12,10 @@ export class AdminController extends BaseRoute {
             new AdminController().showAllUsers(req, res, next);
         });
 
-
         // edit user
         router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUser(req, res, next);
         });
-
 
     }
 
@@ -38,6 +36,5 @@ export class AdminController extends BaseRoute {
         console.log(userArr);
         this.render(req, res, "admin", {users: userArr, title: "All users"});
     }
-
 
 }

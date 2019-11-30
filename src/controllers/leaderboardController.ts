@@ -1,14 +1,12 @@
 import { NextFunction, Request, Response, Router} from "express";
 import Helpers = require("../helperFunctions");
-import { CustomerModel } from "../models/customerModel";
-import { ProductModel } from "../models/productModel";
 import { BaseRoute } from "../routes/router";
 
 let leaderboard: any[] = [];
 let Shoes: any;
 let users: any;
 let allUserShoes: any;
-let id:any;
+let id: any;
 
 export class LeaderboardController extends BaseRoute {
 
@@ -54,8 +52,7 @@ export class LeaderboardController extends BaseRoute {
         if (await this.check_local(userId)) {
                 leaderboard.sort((a: any, b: any) => b.avg_net - a.avg_net);
                 this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
-        }
-        else {
+        } else {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
@@ -69,8 +66,7 @@ export class LeaderboardController extends BaseRoute {
         if (await this.check_local(userId)) {
             leaderboard.sort((a: any, b: any) => a.avg_net - b.avg_net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
-        }
-        else {
+        } else {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
@@ -84,8 +80,7 @@ export class LeaderboardController extends BaseRoute {
         if (await this.check_local(userId)) {
             leaderboard.sort((a: any, b: any) => a.net - b.net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
-        }
-        else {
+        } else {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
@@ -99,8 +94,7 @@ export class LeaderboardController extends BaseRoute {
         if (await this.check_local(userId)) {
             leaderboard.sort((a: any, b: any) => b.net - a.net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
-        }
-        else {
+        } else {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
@@ -109,10 +103,9 @@ export class LeaderboardController extends BaseRoute {
     }
 
     private async check_local(userID: any) {
-        if (leaderboard.length == 0) {
+        if (leaderboard.length === 0) {
             return await this.createBoard(userID);
-        }
-        else if (userID != id) {
+        } else if (userID !== id) {
             return await this.createBoard(userID);
         }
         return true;
@@ -126,15 +119,15 @@ export class LeaderboardController extends BaseRoute {
             for (const item in users) {
                 if (users.hasOwnProperty(item)) {
                     const ranking = users[item];
-                    //console.log(ranking);
                     const userShoes: any = this.getUserShoes(users[item].user_id);
                     this.buildRanking(userShoes, ranking);
                 }
             }
             leaderboard.sort((a: any, b: any) => b.net - a.net);
             return true;
+        } else {
+            return false;
         }
-        else return false;
     }
 
     private buildRanking(userShoes: any, ranking: any) {
@@ -142,14 +135,16 @@ export class LeaderboardController extends BaseRoute {
         let sunk: number;
         let revenue: number;
         [net, sunk, revenue] = Helpers.setNet(userShoes);
-        let avg_net: number;
+        let avgNet: number;
         if (userShoes.length === 0) {
-            avg_net = 0;
-        } else avg_net = net / userShoes.length;
+            avgNet = 0;
+        } else {
+            avgNet = net / userShoes.length;
+        }
         ranking["net"] = net;
         ranking["sunk"] = sunk;
         ranking["revenue"] = revenue;
-        ranking["avg_net"] = avg_net;
+        ranking["avg_net"] = avgNet;
         ranking["num"] = userShoes.length;
         console.log(ranking);
         leaderboard.push(ranking);
@@ -186,7 +181,5 @@ export class LeaderboardController extends BaseRoute {
         }
         return userShoes;
     }
-
-
 
 }
