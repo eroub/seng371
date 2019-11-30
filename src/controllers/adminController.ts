@@ -29,6 +29,10 @@ export class AdminController extends BaseRoute {
             new AdminController().addUser(req, res, next);
         });
 
+        router.post("/admin/del_user/:id", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().delUser(req, res, next);
+        });
+
     }
 
     /*
@@ -68,6 +72,7 @@ export class AdminController extends BaseRoute {
         let CM = new CustomerModel();
         let editedName:any = req.body.newusername;
         let newID:any = req.body.newuserid;
+        newID = parseInt(newID, 10);
         console.log("this is new id",newID);
         await CM.add_user(newID,editedName);
         res.redirect('/admin');
@@ -75,5 +80,14 @@ export class AdminController extends BaseRoute {
 
     }
 
+    public async delUser(req: Request, res: Response, next: NextFunction) {
+        const uString = "id";
+        const userID = parseInt(req.params[uString], 10);
+        let CM = new CustomerModel();
+        await CM.remove_user(userID);
+        res.redirect('/admin');
+
+
+    }
 
 }

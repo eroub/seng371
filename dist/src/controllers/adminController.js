@@ -74,6 +74,9 @@ var AdminController = /** @class */ (function (_super) {
         router.post("/admin/add_user", function (req, res, next) {
             new AdminController().addUser(req, res, next);
         });
+        router.post("/admin/del_user/:id", function (req, res, next) {
+            new AdminController().delUser(req, res, next);
+        });
     };
     /*
     Shows all users in the db in a list.
@@ -143,8 +146,27 @@ var AdminController = /** @class */ (function (_super) {
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.newusername;
                         newID = req.body.newuserid;
+                        newID = parseInt(newID, 10);
                         console.log("this is new id", newID);
                         return [4 /*yield*/, CM.add_user(newID, editedName)];
+                    case 1:
+                        _a.sent();
+                        res.redirect('/admin');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.delUser = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, userID, CM;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        userID = parseInt(req.params[uString], 10);
+                        CM = new customerModel_1.CustomerModel();
+                        return [4 /*yield*/, CM.remove_user(userID)];
                     case 1:
                         _a.sent();
                         res.redirect('/admin');
