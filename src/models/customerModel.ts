@@ -145,4 +145,39 @@ export class CustomerModel {
             });
         return result;
     }
+
+
+
+    public add_user(userId: any, username: any) {
+        const add_user = DbClient.connect()
+            .then((db) => {
+                db!.collection("users").insertOne({ user_id: userId,shoelist: {}, username:username});
+                console.log("adding user");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return add_user;
+    }
+
+
+    public remove_user(userId: any) {
+        const remove_user = DbClient.connect()
+            .then((db) => {
+                db!.collection("users").deleteOne({ user_id: userId});
+                console.log("deleted user");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return remove_user;
+    }
+
+
+
+
 }
