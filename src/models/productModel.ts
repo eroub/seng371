@@ -93,6 +93,19 @@ export class ProductModel {
             Return all the shoes for the view where we need to see all shoes available in db
      */
 
+    public updateShoes(priceChange: any) {
+        const shoeUpdate = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").updateMany({}, { $inc: { current_price: priceChange }});
+                return true;
+            })
+            .catch((err) => {
+                console.log("failed to update shoes");
+                return false;
+            });
+        return shoeUpdate;
+    }
+
     public getAllDB() {
         const shoes = DbClient.connect()
             .then((db) => {

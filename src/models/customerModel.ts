@@ -40,11 +40,11 @@ export class CustomerModel {
         return shoeAdd;
     }
 
-    public edit_shoe(id: any, purchase_price: any) {
+    public edit_shoe(id: any, purchasePrice: any) {
         const result = DbClient.connect()
             .then((db) => {
                 db!.collection("user_shoes").updateOne({_id: ObjectID(id)},
-                    {$set: {purchase_price: purchase_price}});
+                    {$set: {purchase_price: purchasePrice}});
                 return true;
             })
             .catch((err) => {
@@ -130,5 +130,19 @@ export class CustomerModel {
                 console.log("err.message");
             });
         return userKeys;
+    }
+
+    public edit_userName(id:any, editedName:any) {
+        const result = DbClient.connect()
+            .then((db) => {
+                db!.collection("users").updateOne({user_id: id},
+                    {$set: {username:editedName}});
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return result;
     }
 }

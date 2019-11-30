@@ -1,9 +1,14 @@
 extends layout
-
-//Form with the user’s username. Default value for the post request should always be the user’s username.
-//“Save Changes” button submits the post request. See editNotification view for an example.
-
-
 block content
-    a(href='/user/' + id + '/admin') Back
-    h1 Edit User
+    a(href='/admin') Back
+    h1 Edit Username
+    //Form with the user’s username. Default value for the post request should always be the user’s username.
+    //“Save Changes” button submits the post request. See editNotification view for an example.
+
+    form(method='POST' action= '/admin/' + 'edit_user/'+user.user_id)
+        div.form-group
+            label Username
+            input#name.form-control(type='text', placeholder= user.username, name='editedusername', value=user.username)
+        div.form-group
+        button.btn.btn-primary(type='submit') Save Changes
+

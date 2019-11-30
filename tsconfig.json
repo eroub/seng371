@@ -10,7 +10,8 @@
     "inlineSources": true,
     "resolveJsonModule": true,
     "types": ["node", "mocha", "chai"]
+    // "noImplicitAny": false
   },
   "typeRoots": [ "./node_modules/@types" ],
-  "exclude": [ "node_modules", "test/*" ]
+  "exclude": [ "node_modules", "test/*" ],
 }
