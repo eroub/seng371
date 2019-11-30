@@ -50,6 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Helpers = require("../helperFunctions");
+var customerModel_1 = require("../models/customerModel");
 var router_1 = require("../routes/router");
 var AdminController = /** @class */ (function (_super) {
     __extends(AdminController, _super);
@@ -59,6 +60,13 @@ var AdminController = /** @class */ (function (_super) {
     AdminController.create = function (router) {
         router.get("/admin", function (req, res, next) {
             new AdminController().showAllUsers(req, res, next);
+        });
+        // edit user
+        router.get("/admin/edit_user/:id", function (req, res, next) {
+            new AdminController().editUserForm(req, res, next);
+        });
+        router.post("/admin/edit_user/:id", function (req, res, next) {
+            new AdminController().editUser(req, res, next);
         });
     };
     /*
@@ -78,6 +86,35 @@ var AdminController = /** @class */ (function (_super) {
                         this.render(req, res, "admin", { users: userArr, title: "All users" });
                         return [2 /*return*/];
                 }
+            });
+        });
+    };
+    AdminController.prototype.editUserForm = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, userID, CM, user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        userID = parseInt(req.params[uString], 10);
+                        console.log(userID);
+                        CM = new customerModel_1.CustomerModel();
+                        return [4 /*yield*/, CM.userInfo(userID)];
+                    case 1:
+                        user = _a.sent();
+                        user = user[0];
+                        console.log(user.username);
+                        this.render(req, res, "editUser", { user: user, title: "Edit User" });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.editUser = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                res.redirect('/admin');
+                return [2 /*return*/];
             });
         });
     };

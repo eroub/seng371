@@ -50,8 +50,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Helpers = require("../helperFunctions");
-var customerModel_1 = require("../models/customerModel");
-var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
 var leaderboard = [];
 var Shoes;
@@ -244,7 +242,6 @@ var LeaderboardController = /** @class */ (function (_super) {
                             if (users.hasOwnProperty(item)) {
                                 ranking = users[item];
                                 userShoes = this.getUserShoes(users[item].user_id);
-                                console.log(userShoes);
                                 this.buildRanking(userShoes, ranking);
                             }
                         }
@@ -256,16 +253,11 @@ var LeaderboardController = /** @class */ (function (_super) {
         });
     };
     LeaderboardController.prototype.buildRanking = function (userShoes, ranking) {
-        var net = 0;
-        var sunk = 0;
-        var revenue = 0;
-        for (var shoe in userShoes) {
-            if (userShoes.hasOwnProperty(shoe)) {
-                net = net + userShoes[shoe].current_price - userShoes[shoe].purchase_price;
-                sunk = sunk + userShoes[shoe].purchase_price;
-                revenue = revenue + userShoes[shoe].current_price;
-            }
-        }
+        var _a;
+        var net;
+        var sunk;
+        var revenue;
+        _a = Helpers.setNet(userShoes), net = _a[0], sunk = _a[1], revenue = _a[2];
         var avg_net;
         if (userShoes.length === 0) {
             avg_net = 0;
@@ -277,51 +269,22 @@ var LeaderboardController = /** @class */ (function (_super) {
         ranking["revenue"] = revenue;
         ranking["avg_net"] = avg_net;
         ranking["num"] = userShoes.length;
+        console.log(ranking);
         leaderboard.push(ranking);
     };
     LeaderboardController.prototype.setLocals = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.setUsers()];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.setShoes()];
-                    case 2:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    LeaderboardController.prototype.setUsers = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var uif;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        uif = new customerModel_1.CustomerModel();
-                        return [4 /*yield*/, uif.get_users()];
+                    case 0: return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
                         users = _a.sent();
-                        return [4 /*yield*/, uif.get_all_keys()];
+                        return [4 /*yield*/, Helpers.getAllDbShoes()];
                     case 2:
-                        allUserShoes = _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    LeaderboardController.prototype.setShoes = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var shoeIF;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        shoeIF = new productModel_1.ProductModel();
-                        return [4 /*yield*/, shoeIF.getAllDB()];
-                    case 1:
                         Shoes = _a.sent();
+                        return [4 /*yield*/, Helpers.getAllUserShoes()];
+                    case 3:
+                        allUserShoes = _a.sent();
                         return [2 /*return*/];
                 }
             });
