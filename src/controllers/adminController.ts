@@ -50,7 +50,7 @@ export class AdminController extends BaseRoute {
         const userID = parseInt(req.params[uString], 10);
         let CM = new CustomerModel();
         console.log("this is req", req);
-        await CM.edit_userName("id", req.body.username);
+        await CM.edit_userName("id", req.body.editedusername);
         res.redirect('/admin');
 
     }

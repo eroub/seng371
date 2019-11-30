@@ -82,7 +82,6 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
                         userArr = _a.sent();
-                        console.log(userArr);
                         this.render(req, res, "admin", { users: userArr, title: "All users" });
                         return [2 /*return*/];
                 }
@@ -97,7 +96,6 @@ var AdminController = /** @class */ (function (_super) {
                     case 0:
                         uString = "id";
                         userID = parseInt(req.params[uString], 10);
-                        console.log(userID);
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.userInfo(userID)];
                     case 1:
@@ -113,14 +111,18 @@ var AdminController = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, userID, CM;
             return __generator(this, function (_a) {
-                uString = "id";
-                userID = parseInt(req.params[uString], 10);
-                console.log(userID);
-                CM = new customerModel_1.CustomerModel();
-                console.log("this is req", req);
-                //await CM.edit_userName("id");
-                res.redirect('/admin');
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        userID = parseInt(req.params[uString], 10);
+                        CM = new customerModel_1.CustomerModel();
+                        console.log("this is req", req);
+                        return [4 /*yield*/, CM.edit_userName("id", req.body.editedusername)];
+                    case 1:
+                        _a.sent();
+                        res.redirect('/admin');
+                        return [2 /*return*/];
+                }
             });
         });
     };
