@@ -1,6 +1,6 @@
 import "mocha";
 import chai from "chai";
-import { ProductModel } from "../../src/models/ProductModel";
+import { ProductModel } from "../../src/models/productModel";
 
 describe ('Testing ProductModel Functionality:', () => {
     it('should return all correct shoes', async () => {

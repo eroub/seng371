@@ -81,6 +81,18 @@ var ProductModel = /** @class */ (function () {
     /*
             Return all the shoes for the view where we need to see all shoes available in db
      */
+    ProductModel.prototype.updateShoes = function (priceChange) {
+        var shoeUpdate = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").updateMany({}, { $inc: { current_price: priceChange } });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("failed to update shoes");
+            return false;
+        });
+        return shoeUpdate;
+    };
     ProductModel.prototype.getAllDB = function () {
         var shoes = DbClient.connect()
             .then(function (db) {

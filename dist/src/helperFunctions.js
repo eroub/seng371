@@ -40,13 +40,31 @@ var productModel_1 = require("./models/productModel");
 var Helpers = /** @class */ (function () {
     function Helpers() {
     }
-    Helpers.prototype.setUserShoes = function (userKeys) {
+    Helpers.prototype.getAllUserShoes = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var Shoes, userShoes, item, key, shoe;
+            var c, shoes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getAllDbShoes()];
+                    case 0:
+                        c = new customerModel_1.CustomerModel();
+                        return [4 /*yield*/, c.get_all_keys()];
                     case 1:
+                        shoes = _a.sent();
+                        return [2 /*return*/, shoes];
+                }
+            });
+        });
+    };
+    Helpers.prototype.getUserShoes = function (userID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userKeys, Shoes, userShoes, item, key, shoe;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getUserKeys(userID)];
+                    case 1:
+                        userKeys = _a.sent();
+                        return [4 /*yield*/, this.getAllDbShoes()];
+                    case 2:
                         Shoes = _a.sent();
                         userShoes = [];
                         for (item in userKeys) {
@@ -162,7 +180,7 @@ var Helpers = /** @class */ (function () {
             });
         });
     };
-    Helpers.prototype.findShoe = function (shoeID, userShoes) {
+    Helpers.prototype.findUserShoe = function (shoeID, userShoes) {
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];
@@ -171,6 +189,20 @@ var Helpers = /** @class */ (function () {
                 }
             }
         }
+    };
+    Helpers.prototype.setNet = function (shoelist) {
+        var net = 0;
+        var sunk = 0;
+        var total = 0;
+        for (var item in shoelist) {
+            if (shoelist.hasOwnProperty(item)) {
+                var shoe = shoelist[item];
+                net = net + shoe.current_price - shoe.purchase_price;
+                sunk = sunk + parseInt(shoe.purchase_price, 10);
+                total = total + shoe.current_price;
+            }
+        }
+        return [net, sunk, total];
     };
     Helpers.prototype.getUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -202,21 +234,6 @@ var Helpers = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Helpers.prototype.getUserShoes = function (userKeys) {
-        return __awaiter(this, void 0, void 0, function () {
-            var shoeIf, uShoes;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        shoeIf = new productModel_1.ProductModel();
-                        return [4 /*yield*/, shoeIf.getAllShoes(userKeys)];
-                    case 1:
-                        uShoes = _a.sent();
-                        return [2 /*return*/, uShoes];
                 }
             });
         });

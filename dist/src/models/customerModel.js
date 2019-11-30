@@ -35,6 +35,18 @@ var CustomerModel = /** @class */ (function () {
         });
         return shoeAdd;
     };
+    CustomerModel.prototype.edit_shoe = function (id, purchasePrice) {
+        var result = DbClient.connect()
+            .then(function (db) {
+            db.collection("user_shoes").updateOne({ _id: ObjectID(id) }, { $set: { purchase_price: purchasePrice } });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return result;
+    };
     CustomerModel.prototype.remove_shoe = function (id) {
         var shoeRemove = DbClient.connect()
             .then(function (db) {
@@ -108,6 +120,18 @@ var CustomerModel = /** @class */ (function () {
             console.log("err.message");
         });
         return userKeys;
+    };
+    CustomerModel.prototype.edit_userName = function (id, editedName) {
+        var result = DbClient.connect()
+            .then(function (db) {
+            db.collection("users").updateOne({ user_id: id }, { $set: { username: editedName } });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return result;
     };
     return CustomerModel;
 }());
