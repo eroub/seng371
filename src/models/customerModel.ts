@@ -167,6 +167,8 @@ export class CustomerModel {
         const remove_user = DbClient.connect()
             .then((db) => {
                 db!.collection("users").deleteOne({ user_id: userId});
+                //db!.collection("users").deleteMany({ user_id: null});
+
                 console.log("deleted user");
                 return true;
             })

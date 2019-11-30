@@ -33,6 +33,10 @@ export class AdminController extends BaseRoute {
             new AdminController().delUser(req, res, next);
         });
 
+        router.post("/admin/add_shoe", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().addShoe(req, res, next);
+        });
+
     }
 
     /*
@@ -89,5 +93,28 @@ export class AdminController extends BaseRoute {
 
 
     }
+
+
+    public async addShoe(req: Request, res: Response, next: NextFunction) {
+        let CM = new CustomerModel();
+        let shoeName, shoeCP, shoeRP,shoeid, shoeSize: any;
+
+
+
+        shoeName = req.body.name;
+        shoeCP = req.body.current_price;
+        shoeRP = req.body.retail_price;
+        shoeSize = parseInt(req.body.size);
+        shoeid = req.body.id;
+        let pm:any = new ProductModel();
+        await pm.add_shoe(shoeName,shoeid, shoeSize, shoeCP, shoeRP);
+        res.redirect('/admin');
+
+
+    }
+
+
+
+
 
 }

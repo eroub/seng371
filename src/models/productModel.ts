@@ -120,4 +120,21 @@ export class ProductModel {
 
         return shoes;
     }
+
+    public add_shoe(name:any, shoe_id:any, size:any, cp:any, rp:any) {
+        const add_shoes = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").insertOne({ shoe_id:shoe_id,name:name,current_price: cp, retail_price:rp});
+                console.log("adding user");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return add_shoes;
+    }
+
+
+
 }
