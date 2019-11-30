@@ -46,7 +46,6 @@ export class AdminController extends BaseRoute {
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
         let userArr: any[] = [];
         userArr = await Helpers.getUsers();
-        console.log(userArr)
         this.render(req, res, "admin", {users: userArr, title: "All users"});
     }
 
@@ -97,17 +96,17 @@ export class AdminController extends BaseRoute {
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         let CM = new CustomerModel();
-        let shoeName, shoeCP, shoeRP,shoeid, shoeSize: any;
-
-
+        let shoeName, shoeCP, shoeRP,shoeid, shoeSize,brand,colorway: any;
 
         shoeName = req.body.name;
+        colorway = req.body.colorway;
+        brand = req.body.brand;
         shoeCP = req.body.current_price;
         shoeRP = req.body.retail_price;
         shoeSize = parseInt(req.body.size);
-        shoeid = req.body.id;
+        shoeid = parseInt(req.body.id);
         let pm:any = new ProductModel();
-        await pm.add_shoe(shoeName,shoeid, shoeSize, shoeCP, shoeRP);
+        await pm.add_shoe(shoeName,shoeid, shoeSize, shoeCP, shoeRP,brand,colorway);
         res.redirect('/admin');
 
 

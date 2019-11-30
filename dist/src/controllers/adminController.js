@@ -51,6 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Helpers = require("../helperFunctions");
 var customerModel_1 = require("../models/customerModel");
+var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
 var AdminController = /** @class */ (function (_super) {
     __extends(AdminController, _super);
@@ -77,6 +78,9 @@ var AdminController = /** @class */ (function (_super) {
         router.post("/admin/del_user/:id", function (req, res, next) {
             new AdminController().delUser(req, res, next);
         });
+        router.post("/admin/add_shoe", function (req, res, next) {
+            new AdminController().addShoe(req, res, next);
+        });
     };
     /*
     Shows all users in the db in a list.
@@ -91,7 +95,6 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
                         userArr = _a.sent();
-                        console.log(userArr);
                         this.render(req, res, "admin", { users: userArr, title: "All users" });
                         return [2 /*return*/];
                 }
@@ -167,6 +170,30 @@ var AdminController = /** @class */ (function (_super) {
                         userID = parseInt(req.params[uString], 10);
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.remove_user(userID)];
+                    case 1:
+                        _a.sent();
+                        res.redirect('/admin');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.addShoe = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var CM, shoeName, shoeCP, shoeRP, shoeid, shoeSize, brand, colorway, pm;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        CM = new customerModel_1.CustomerModel();
+                        shoeName = req.body.name;
+                        colorway = req.body.colorway;
+                        brand = req.body.brand;
+                        shoeCP = req.body.current_price;
+                        shoeRP = req.body.retail_price;
+                        shoeSize = parseInt(req.body.size);
+                        shoeid = req.body.id;
+                        pm = new productModel_1.ProductModel();
+                        return [4 /*yield*/, pm.add_shoe(shoeName, shoeid, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 1:
                         _a.sent();
                         res.redirect('/admin');

@@ -252,7 +252,6 @@ var CustomerController = /** @class */ (function (_super) {
                                 }
                                 return 0;
                             });
-                            console.log(userShoes[1]);
                             this.render(req, res, "allShoes", { data: userShoes, id: queryint, net: netGain, sunk: sunkCost,
                                 title: "Shoes", total: totalRevenue, username: userJson.username });
                         }
