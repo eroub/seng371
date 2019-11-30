@@ -136,7 +136,7 @@ export class NotificationController extends BaseRoute {
                     notification["shoename"] = shoe.brand + " " + shoe.model + " " + shoe.colorway;
                     notification["current_price"] = shoe.current_price;
                     notification["size"] = shoe.size;
-                    this.checkFulfilled(notification, shoe.current_price);
+                    await this.checkFulfilled(notification, shoe.current_price);
                 }
             }
             userNotifications.sort((a: any, b: any) => {
@@ -156,8 +156,7 @@ export class NotificationController extends BaseRoute {
                 await this.fulfill(notification._id);
                 notification.fulfilled = true;
             }
-            if ((notification.type === "Above") && (notification.threshold < currentPrice)) {
-                console.log(notification._id);
+            if ((notification.type == "Above") && (notification.threshold < currentPrice)) {
                 await this.fulfill(notification._id);
                 notification.fulfilled = true;
             }
