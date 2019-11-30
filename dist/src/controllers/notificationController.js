@@ -53,7 +53,6 @@ var Helpers = require("../helperFunctions");
 var notificationModel_1 = require("../models/notificationModel");
 var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
-var Helpers = require("../helperFunctions");
 var userNotifications;
 var Shoes;
 var id;
