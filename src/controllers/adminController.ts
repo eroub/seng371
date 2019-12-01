@@ -98,7 +98,7 @@ export class AdminController extends BaseRoute {
         let editedName:any = req.body.editedusername;
         console.log(editedName + userID)
         await CM.edit_userName(userID, editedName);
-        res.redirect('/admin');
+        res.redirect('/admin/users');
 
     }
 
@@ -109,7 +109,7 @@ export class AdminController extends BaseRoute {
         newID = parseInt(newID, 10);
         console.log("this is new id",newID);
         await CM.add_user(newID,editedName);
-        res.redirect('/admin');
+        res.redirect('/admin/users');
 
 
     }
@@ -119,7 +119,7 @@ export class AdminController extends BaseRoute {
         const userID = parseInt(req.params[uString], 10);
         let CM = new CustomerModel();
         await CM.remove_user(userID);
-        res.redirect('/admin');
+        res.redirect('/admin/users');
 
 
     }
@@ -139,7 +139,7 @@ export class AdminController extends BaseRoute {
 
         let pm:any = new ProductModel();
         await pm.add_shoe(shoeModel,shoeid, shoeSize, shoeCP, shoeRP,brand,colorway);
-        res.redirect('/admin');
+        res.redirect('/admin/shoes');
 
 
     }
@@ -170,7 +170,7 @@ export class AdminController extends BaseRoute {
         shoeRP = req.body.retail_price;
         shoeSize = parseInt(req.body.size);
         await PM.edit_shoe(shoeModel,shoeID, shoeSize, shoeCP, shoeRP,brand,colorway);
-        res.redirect('/admin');
+        res.redirect('/admin/shoes');
 
     }
 
@@ -180,7 +180,7 @@ export class AdminController extends BaseRoute {
         const shoeID = parseInt(req.params[uString], 10);
         let PM = new ProductModel();
         await PM.remove_shoe(shoeID);
-        res.redirect('/admin');
+        res.redirect('/admin/shoes');
 
 
     }
