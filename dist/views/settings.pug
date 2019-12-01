@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    a(href='/user/' + id + '/shoes') Back
+    h1 User Settings:
+    form(method='POST' action='/user/' + id + '/edit_username/')
+        div.form-group
+            label Username:&nbsp
+            input#name.form-control(type='text', placeholder='Your Display Name', name='uname', value=username)
+            p
+        p
+        button.btn.btn-primary(type='submit') Save Changes

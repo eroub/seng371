@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { BaseRoute } from "./router";
+import { CustomerModel } from "../models/customerModel";
+import Helpers = require("../helperFunctions");
 
 /**
  * / route
@@ -43,13 +45,22 @@ export class IndexRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public index(req: Request, res: Response, next: NextFunction) {
+    public async index(req: Request, res: Response, next: NextFunction) {
         // set custom title
         this.title = "StalkX";
         // set message
+        const cIF = new CustomerModel();
+        const users = await cIF.get_users();
+
+        users.sort((a: any, b: any) => {
+            return a.username.toLowerCase().localeCompare(b.username.toLowerCase());
+        });
+
         const options: object = {
             message: "Welcome!",
+            users: users
         };
+
 
         // render template
         this.render(req, res, "index", options);

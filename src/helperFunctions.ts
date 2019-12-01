@@ -95,15 +95,17 @@ class Helpers {
         let net: number = 0;
         let sunk: number = 0;
         let total: number = 0;
+        let num: number = 0;
         for (const item in shoelist) {
             if (shoelist.hasOwnProperty(item)) {
                 const shoe = shoelist[item];
-                net = net + shoe.current_price - shoe.purchase_price;
+                net = net + parseInt(shoe.current_price) - parseInt(shoe.purchase_price);
                 sunk = sunk + parseInt(shoe.purchase_price, 10);
-                total = total + shoe.current_price;
+                total = total + parseInt(shoe.current_price);
+                num++;
             }
         }
-        return [net, sunk, total];
+        return [net, sunk, total, num];
     }
 
     public async getUsers() {
