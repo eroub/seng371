@@ -60,33 +60,47 @@ var AdminController = /** @class */ (function (_super) {
     }
     AdminController.create = function (router) {
         router.get("/admin", function (req, res, next) {
+            new AdminController().showAdmin(req, res, next);
+        });
+        router.get("/admin/users", function (req, res, next) {
             new AdminController().showAllUsers(req, res, next);
         });
+        router.get("/admin/shoes", function (req, res, next) {
+            new AdminController().showAllShoes(req, res, next);
+        });
         // edit user
-        router.get("/admin/edit_user/:id", function (req, res, next) {
+        router.get("/admin/users/edit_user/:id", function (req, res, next) {
             new AdminController().editUserForm(req, res, next);
         });
         // edit shoe
-        router.get("/admin/edit_shoe/:id", function (req, res, next) {
+        router.get("/admin/shoes/edit_shoe/:id", function (req, res, next) {
             new AdminController().editShoeForm(req, res, next);
         });
-        router.post("/admin/edit_shoe/:id", function (req, res, next) {
+        router.post("/admin/shoes/edit_shoe/:id", function (req, res, next) {
             new AdminController().editShoe(req, res, next);
         });
-        router.post("/admin/edit_user/:id", function (req, res, next) {
+        router.post("/admin/users/edit_user/:id", function (req, res, next) {
             new AdminController().editUser(req, res, next);
         });
-        router.post("/admin/add_user", function (req, res, next) {
+        router.post("/admin/users/add_user", function (req, res, next) {
             new AdminController().addUser(req, res, next);
         });
-        router.post("/admin/add_shoe", function (req, res, next) {
+        router.post("/admin/shoes/add_shoe", function (req, res, next) {
             new AdminController().addShoe(req, res, next);
         });
-        router.post("/admin/del_user/:id", function (req, res, next) {
+        router.post("/admin/users/del_user/:id", function (req, res, next) {
             new AdminController().delUser(req, res, next);
         });
-        router.post("/admin/del_shoe/:id", function (req, res, next) {
+        router.post("/admin/shoes/del_shoe/:id", function (req, res, next) {
             new AdminController().delShoe(req, res, next);
+        });
+    };
+    AdminController.prototype.showAdmin = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.render(req, res, "admin", { title: "Admin" });
+                return [2 /*return*/];
+            });
         });
     };
     /*
@@ -102,7 +116,23 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
                         userArr = _a.sent();
-                        this.render(req, res, "admin", { users: userArr, title: "All users" });
+                        this.render(req, res, "admin_users", { users: userArr, title: "All users" });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.showAllShoes = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userArr;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userArr = [];
+                        return [4 /*yield*/, Helpers.getAllDbShoes()];
+                    case 1:
+                        userArr = _a.sent();
+                        this.render(req, res, "admin_shoes", { users: userArr, title: "All users" });
                         return [2 /*return*/];
                 }
             });

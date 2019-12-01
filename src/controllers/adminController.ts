@@ -76,9 +76,9 @@ export class AdminController extends BaseRoute {
 
 
     public async showAllShoes(req: Request, res: Response, next: NextFunction) {
-        let userArr: any[] = [];
-        userArr = await Helpers.getAllDbShoes();
-        this.render(req, res, "admin_shoes", {users: userArr, title: "All users"});
+        let shoeArr: any[] = [];
+        shoeArr = await Helpers.getAllDbShoes();
+        this.render(req, res, "admin_shoes", {shoes: shoeArr, title: "All shoes"});
     }
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
