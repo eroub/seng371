@@ -4,18 +4,24 @@ block content
     p #[a(href='/') Back]&nbsp #[a(href='/user/' + id + '/allShoes') Add Shoes]&nbsp #[a(href='/user/' + id + '/notifications') Notifications]&nbsp #[a(href='/user/' + id + '/leaderboard') Leaderboard]
     h1 All shoes :
     for shoe in shoes
-        p Shoe ID: #{shoe.shoe_id} shoe name: #{shoe.model}
-        a(href='/admin/' + 'edit_shoe/'+shoe.shoe_id )
+        p  ID #{shoe.shoe_id} Name #{shoe.brand}  #{shoe.model} #{shoe.colorway}
+            p Current price #{shoe.current_price}
+            p retail price #{shoe.retail_price}
+            p shoe size #{shoe.size}
+
+
+
+        a(href='/admin/shoes/' + 'edit_shoe/'+shoe.shoe_id )
             button.btn.btn-primary(type='button') Edit Shoe
 
-        form(method='post' action='/admin/' + 'del_shoe/' + shoe.shoe_id )
+        form(method='post' action='/admin/shoes/' + 'del_shoe/' + shoe.shoe_id )
             div.form-group
                 button.btn.btn-primary(type='submit') Delete shoe
 
 
     h1 Add a new shoe to db
 
-    form(method='POST' action='/admin/add_shoe')
+    form(method='POST' action='/admin/shoes/add_shoe')
         div.form-group
             label(for='md') Add new shoe info:&nbsp
             input#md.form-control(type='text', placeholder=' model',brand='model')

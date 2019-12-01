@@ -71,7 +71,7 @@ export class AdminController extends BaseRoute {
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
         let userArr: any[] = [];
         userArr = await Helpers.getUsers();
-        this.render(req, res, "admin_users", {users: userArr, title: "All users"});
+        this.render(req, res, "admin_user", {users: userArr, title: "All users"});
     }
 
 
@@ -148,9 +148,10 @@ export class AdminController extends BaseRoute {
         const uString = "id";
         const shoeID = parseInt(req.params[uString], 10);
         let PM = new ProductModel();
+        console.log("this id",shoeID)
         let shoe = await PM.getOneShoe(shoeID);
-        shoe = shoe[0];
-        this.render(req, res, "editUser", {shoe: shoe, title: "Edit shoe"});
+        console.log("this shoe",shoe);
+        this.render(req, res, "editShoe", {shoe: shoe, title: "Edit shoe"});
     }
 
 

@@ -1,11 +1,9 @@
 extends layout
 block content
-    a(href='/admin') Back
+    a(href='/admin/shoes') Back
     h1 Edit Shoe
-    //Form with the user’s username. Default value for the post request should always be the user’s username.
-    //“Save Changes” button submits the post request. See editNotification view for an example.
 
-    form(method='POST' action= '/admin/' + 'edit_shoe/'+shoe.shoe_id)
+    form(method='POST' action= '/admin/shoes/' + 'edit_shoe/'+shoe.shoe_id)
         div.form-group
             label shoe
             input#name.form-control(type='text', placeholder= shoe.brand, name='brand', value=shoe.brand)

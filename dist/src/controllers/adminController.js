@@ -116,7 +116,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
                         userArr = _a.sent();
-                        this.render(req, res, "admin_users", { users: userArr, title: "All users" });
+                        this.render(req, res, "admin_user", { users: userArr, title: "All users" });
                         return [2 /*return*/];
                 }
             });
@@ -124,15 +124,15 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.showAllShoes = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var userArr;
+            var shoeArr;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        userArr = [];
+                        shoeArr = [];
                         return [4 /*yield*/, Helpers.getAllDbShoes()];
                     case 1:
-                        userArr = _a.sent();
-                        this.render(req, res, "admin_shoes", { users: userArr, title: "All users" });
+                        shoeArr = _a.sent();
+                        this.render(req, res, "admin_shoes", { shoes: shoeArr, title: "All shoes" });
                         return [2 /*return*/];
                 }
             });
@@ -248,11 +248,12 @@ var AdminController = /** @class */ (function (_super) {
                         uString = "id";
                         shoeID = parseInt(req.params[uString], 10);
                         PM = new productModel_1.ProductModel();
+                        console.log("this id", shoeID);
                         return [4 /*yield*/, PM.getOneShoe(shoeID)];
                     case 1:
                         shoe = _a.sent();
-                        shoe = shoe[0];
-                        this.render(req, res, "editUser", { shoe: shoe, title: "Edit shoe" });
+                        console.log("this shoe", shoe);
+                        this.render(req, res, "editShoe", { shoe: shoe, title: "Edit shoe" });
                         return [2 /*return*/];
                 }
             });
