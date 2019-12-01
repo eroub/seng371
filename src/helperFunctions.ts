@@ -84,7 +84,7 @@ class Helpers {
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 const shoe = userShoes[item];
-                if (shoe._id === shoeID) {
+                if (shoe._id.toString() === shoeID.toString()) {
                     return shoe;
                 }
             }

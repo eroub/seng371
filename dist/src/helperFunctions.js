@@ -184,7 +184,7 @@ var Helpers = /** @class */ (function () {
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];
-                if (shoe._id === shoeID) {
+                if (shoe._id.toString() === shoeID.toString()) {
                     return shoe;
                 }
             }

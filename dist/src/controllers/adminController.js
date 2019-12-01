@@ -191,7 +191,7 @@ var AdminController = /** @class */ (function (_super) {
                         shoeCP = req.body.current_price;
                         shoeRP = req.body.retail_price;
                         shoeSize = parseInt(req.body.size);
-                        shoeid = req.body.id;
+                        shoeid = parseInt(req.body.id);
                         pm = new productModel_1.ProductModel();
                         return [4 /*yield*/, pm.add_shoe(shoeName, shoeid, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 1:

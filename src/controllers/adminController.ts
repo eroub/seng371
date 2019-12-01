@@ -105,6 +105,7 @@ export class AdminController extends BaseRoute {
         shoeRP = req.body.retail_price;
         shoeSize = parseInt(req.body.size);
         shoeid = parseInt(req.body.id);
+
         let pm:any = new ProductModel();
         await pm.add_shoe(shoeName,shoeid, shoeSize, shoeCP, shoeRP,brand,colorway);
         res.redirect('/admin');
