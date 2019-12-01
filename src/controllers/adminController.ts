@@ -16,10 +16,16 @@ export class AdminController extends BaseRoute {
             new AdminController().editUserForm(req, res, next);
         });
 
-        router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
-            new AdminController().editUser(req, res, next);
+        // edit shoe
+        router.get("/admin/edit_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().editShoeForm(req, res, next);
         });
 
+
+
+        router.post("/admin/edit_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().editShoe(req, res, next);
+        });
 
         router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUser(req, res, next);
@@ -29,13 +35,18 @@ export class AdminController extends BaseRoute {
             new AdminController().addUser(req, res, next);
         });
 
+        router.post("/admin/add_shoe", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().addShoe(req, res, next);
+        });
+
         router.post("/admin/del_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().delUser(req, res, next);
         });
 
-        router.post("/admin/add_shoe", (req: Request, res: Response, next: NextFunction) => {
-            new AdminController().addShoe(req, res, next);
+        router.post("/admin/del_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().delShoe(req, res, next);
         });
+
 
     }
 
