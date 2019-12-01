@@ -1,1 +1,0 @@
-{"version":3,"file":"server.js","sourceRoot":"","sources":["../../src/server.ts"],"names":[],"mappings":";;;;;AAAA,8CAA2B;AAE3B,IAAM,GAAG,GAAG,IAAI,aAAM,EAAE,CAAC;AAEzB,kBAAe,GAAG,CAAC","sourcesContent":["import Server from \"./app\";\r\n\r\nconst app = new Server();\r\n\r\nexport default app;\r\n"]}
