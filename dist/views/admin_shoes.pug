@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    p #[a(href='/') Back]&nbsp
+    h1 All shoes :
+    for shoe in shoes
+        p  ID #{shoe.shoe_id} Name #{shoe.brand}  #{shoe.model} #{shoe.colorway}
+            p Current price #{shoe.current_price}
+            p retail price #{shoe.retail_price}
+            p shoe size #{shoe.size}
+
+
+
+        a(href='/admin/shoes/' + 'edit_shoe/'+shoe.shoe_id )
+            button.btn.btn-primary(type='button') Edit Shoe
+
+        form(method='post' action='/admin/shoes/' + 'del_shoe/' + shoe.shoe_id )
+            div.form-group
+                button.btn.btn-primary(type='submit') Delete shoe
+
+
+    h1 Add a new shoe to db
+
+    form(method='POST' action='/admin/shoes/add_shoe')
+        div.form-group
+            label(for='md') Add new shoe info:&nbsp
+            input#md.form-control(type='text', placeholder=' model',brand='model')
+            input#cw.form-control(type='text', placeholder='colorway',name='colorway')
+            input#brand.form-control(type='text', placeholder='brand name',name='brand')
+            input#idd.form-control(type='text', placeholder='shoe_id',name='id')
+            input#cp.form-control(type='text', placeholder='current price',name='current_price')
+            input#rp.form-control(type='text', placeholder='retail price',name='retail_price')
+            input#sz.form-control(type='text', placeholder='size',name='size')
+        button.btn.btn-primary(type='submit') Add Shoe
+

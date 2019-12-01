@@ -131,7 +131,8 @@ var CustomerModel = /** @class */ (function () {
     CustomerModel.prototype.add_user = function (userId, username) {
         var add_user = DbClient.connect()
             .then(function (db) {
-            db.collection("users").insertOne({ user_id: userId, shoelist: {}, username: username });
+            db.collection("users").insertOne({ isAdmin: false, user_id: userId, username: username });
+            console.log("adding user");
             return true;
         })
             .catch(function (err) {
@@ -144,6 +145,8 @@ var CustomerModel = /** @class */ (function () {
         var remove_user = DbClient.connect()
             .then(function (db) {
             db.collection("users").deleteOne({ user_id: userId });
+            //db!.collection("users").deleteMany({ user_id: null});
+            console.log("deleted user");
             return true;
         })
             .catch(function (err) {

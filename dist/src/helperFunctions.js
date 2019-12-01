@@ -183,7 +183,7 @@ var Helpers = /** @class */ (function () {
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];
-                if (shoe._id === shoeID) {
+                if (shoe._id.toString() === shoeID.toString()) {
                     return shoe;
                 }
             }
@@ -193,15 +193,17 @@ var Helpers = /** @class */ (function () {
         var net = 0;
         var sunk = 0;
         var total = 0;
+        var num = 0;
         for (var item in shoelist) {
             if (shoelist.hasOwnProperty(item)) {
                 var shoe = shoelist[item];
-                net = net + shoe.current_price - shoe.purchase_price;
+                net = net + parseInt(shoe.current_price) - parseInt(shoe.purchase_price);
                 sunk = sunk + parseInt(shoe.purchase_price, 10);
-                total = total + shoe.current_price;
+                total = total + parseInt(shoe.current_price);
+                num++;
             }
         }
-        return [net, sunk, total];
+        return [net, sunk, total, num];
     };
     Helpers.prototype.getUsers = function () {
         return __awaiter(this, void 0, void 0, function () {

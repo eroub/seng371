@@ -51,6 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Helpers = require("../helperFunctions");
 var customerModel_1 = require("../models/customerModel");
+var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
 var AdminController = /** @class */ (function (_super) {
     __extends(AdminController, _super);
@@ -59,23 +60,47 @@ var AdminController = /** @class */ (function (_super) {
     }
     AdminController.create = function (router) {
         router.get("/admin", function (req, res, next) {
+            new AdminController().showAdmin(req, res, next);
+        });
+        router.get("/admin/users", function (req, res, next) {
             new AdminController().showAllUsers(req, res, next);
         });
+        router.get("/admin/shoes", function (req, res, next) {
+            new AdminController().showAllShoes(req, res, next);
+        });
         // edit user
-        router.get("/admin/edit_user/:id", function (req, res, next) {
+        router.get("/admin/users/edit_user/:id", function (req, res, next) {
             new AdminController().editUserForm(req, res, next);
         });
-        router.post("/admin/edit_user/:id", function (req, res, next) {
+        // edit shoe
+        router.get("/admin/shoes/edit_shoe/:id", function (req, res, next) {
+            new AdminController().editShoeForm(req, res, next);
+        });
+        router.post("/admin/shoes/edit_shoe/:id", function (req, res, next) {
+            new AdminController().editShoe(req, res, next);
+        });
+        router.post("/admin/users/edit_user/:id", function (req, res, next) {
             new AdminController().editUser(req, res, next);
         });
-        router.post("/admin/edit_user/:id", function (req, res, next) {
-            new AdminController().editUser(req, res, next);
-        });
-        router.post("/admin/add_user", function (req, res, next) {
+        router.post("/admin/users/add_user", function (req, res, next) {
             new AdminController().addUser(req, res, next);
         });
-        router.post("/admin/del_user/:id", function (req, res, next) {
+        router.post("/admin/shoes/add_shoe", function (req, res, next) {
+            new AdminController().addShoe(req, res, next);
+        });
+        router.post("/admin/users/del_user/:id", function (req, res, next) {
             new AdminController().delUser(req, res, next);
+        });
+        router.post("/admin/shoes/del_shoe/:id", function (req, res, next) {
+            new AdminController().delShoe(req, res, next);
+        });
+    };
+    AdminController.prototype.showAdmin = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.render(req, res, "admin", { title: "Admin" });
+                return [2 /*return*/];
+            });
         });
     };
     /*
@@ -91,7 +116,23 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
                         userArr = _a.sent();
-                        this.render(req, res, "admin", { users: userArr, title: "All users" });
+                        this.render(req, res, "admin_user", { users: userArr, title: "All users" });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.showAllShoes = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var shoeArr;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        shoeArr = [];
+                        return [4 /*yield*/, Helpers.getAllDbShoes()];
+                    case 1:
+                        shoeArr = _a.sent();
+                        this.render(req, res, "admin_shoes", { shoes: shoeArr, title: "All shoes" });
                         return [2 /*return*/];
                 }
             });
@@ -104,7 +145,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString], 10);
+                        userID = uString;
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.userInfo(userID)];
                     case 1:
@@ -123,13 +164,13 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString], 10);
+                        userID = uString;
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.editedusername;
                         return [4 /*yield*/, CM.edit_userName(userID, editedName)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/users');
                         return [2 /*return*/];
                 }
             });
@@ -144,11 +185,11 @@ var AdminController = /** @class */ (function (_super) {
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.newusername;
                         newID = req.body.newuserid;
-                        newID = parseInt(newID, 10);
+                        console.log("this is new id", newID);
                         return [4 /*yield*/, CM.add_user(newID, editedName)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/users');
                         return [2 /*return*/];
                 }
             });
@@ -161,12 +202,98 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString], 10);
+                        userID = uString;
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.remove_user(userID)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/users');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.addShoe = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var CM, shoeModel, shoeCP, shoeRP, shoeid, shoeSize, brand, colorway, pm;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        CM = new customerModel_1.CustomerModel();
+                        shoeModel = req.body.model;
+                        colorway = req.body.colorway;
+                        brand = req.body.brand;
+                        shoeCP = req.body.current_price;
+                        shoeRP = req.body.retail_price;
+                        shoeSize = (req.body.size);
+                        shoeid = req.body.id;
+                        pm = new productModel_1.ProductModel();
+                        return [4 /*yield*/, pm.add_shoe(shoeModel, shoeid, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                    case 1:
+                        _a.sent();
+                        res.redirect('/admin/shoes');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.editShoeForm = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, shoeID, PM, shoe;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        shoeID = req.params[uString];
+                        PM = new productModel_1.ProductModel();
+                        console.log("this id", shoeID);
+                        return [4 /*yield*/, PM.getOneShoe(shoeID)];
+                    case 1:
+                        shoe = _a.sent();
+                        console.log("this shoe", shoe);
+                        this.render(req, res, "editShoe", { shoe: shoe, title: "Edit shoe" });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.editShoe = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, shoeID, PM, shoeModel, shoeCP, shoeRP, shoeid, shoeSize, brand, colorway;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        shoeID = req.params[uString];
+                        PM = new productModel_1.ProductModel();
+                        shoeModel = req.body.model;
+                        colorway = req.body.colorway;
+                        brand = req.body.brand;
+                        shoeCP = req.body.current_price;
+                        shoeRP = req.body.retail_price;
+                        shoeSize = req.body.size;
+                        return [4 /*yield*/, PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                    case 1:
+                        _a.sent();
+                        res.redirect('/admin/shoes');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.delShoe = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, shoeID, PM;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        shoeID = req.params[uString];
+                        PM = new productModel_1.ProductModel();
+                        return [4 /*yield*/, PM.remove_shoe(shoeID)];
+                    case 1:
+                        _a.sent();
+                        res.redirect('/admin/shoes');
                         return [2 /*return*/];
                 }
             });

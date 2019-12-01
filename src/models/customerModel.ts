@@ -143,7 +143,7 @@ export class CustomerModel {
     public add_user(userId: any, username: any) {
         const add_user = DbClient.connect()
             .then((db) => {
-                db!.collection("users").insertOne({ user_id: userId,shoelist: {}, username:username});
+                db!.collection("users").insertOne({ isAdmin: false, user_id: userId, username:username});
                 return true;
             })
             .catch((err) => {

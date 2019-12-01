@@ -3,7 +3,7 @@ extends layout
 block content
     a(href='/user/' + id + '/shoes') Back
     h1 Leaderboard:
-    p Sort #[a(href='/user/' + id + '/leaderboard/avgNetHigh') Avg Net High] #[a(href='/user/' + id + '/leaderboard/avgNetLow') Avg Net Low] #[a(href='/user/' + id + '/leaderboard/netHigh') Net High] #[a(href='/user/' + id + '/leaderboard/netLow') Net Low]
+    p Sort #[a(href='/user/' + id + '/leaderboard/avgNetHigh') Avg Net High]&nbsp #[a(href='/user/' + id + '/leaderboard/avgNetLow') Avg Net Low]&nbsp #[a(href='/user/' + id + '/leaderboard/netHigh') Net High]&nbsp #[a(href='/user/' + id + '/leaderboard/netLow') Net Low]
     for user, index in leaderboard
         if user.user_id == id
             p

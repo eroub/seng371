@@ -119,4 +119,58 @@ export class ProductModel {
 
         return shoes;
     }
+
+    public add_shoe(model:any, shoe_id:any, size:any, cp:any, rp:any,brand:any,colorway:any) {
+        const add_shoes = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").insertOne({ brand:brand, colorway:colorway, shoe_id:shoe_id,model:model,current_price: cp, retail_price:rp});
+                console.log("adding shoe");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return add_shoes;
+    }
+
+
+    public edit_shoe(model:any, shoe_id:any, size:any, cp:any, rp:any,brand:any,colorway:any) {
+        const result = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").updateOne({shoe_id: shoe_id},
+                    {$set: {brand:brand, colorway:colorway,model:model,current_price: cp, retail_price:rp}});
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return result;
+    }
+
+    public remove_shoe(shoeId: any) {
+        const remove_user = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").deleteOne({ shoe_id: shoeId});
+                db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
+                db!.collection("notifications").deleteMany({ shoe_id: shoeId});
+                db!.collection("users").deleteMany({ shoe_id: null});
+
+                console.log("deleted shoe");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return remove_user;
+    }
+
+
+
+
+
+
+
 }

@@ -1,25 +1,7 @@
 extends layout
 
 block content
-    p #[a(href='/') Back]&nbsp #[a(href='/user/' + id + '/allShoes') Add Shoes]&nbsp #[a(href='/user/' + id + '/notifications') Notifications]&nbsp #[a(href='/user/' + id + '/leaderboard') Leaderboard]
-    h1 All users :
-    for user in users
-        p User ID: #{user.user_id} Username: #{user.username}
-        //Each user has buttons for editing router.get(‘/admin/edit_user/:id’)
-        a(href='/admin/' + 'edit_user/'+user.user_id )
-         button.btn.btn-primary(type='button') Edit User
+    h1 Admin
 
-        form(method='post' action='/admin/' + 'del_user/' + user.user_id )
-             div.form-group
-              button.btn.btn-primary(type='submit') Delete User
-
-
-    h1 Add a new user
-
-    form(method='POST' action='/admin/add_user')
-        div.form-group
-            label(for='name') Username:&nbsp
-            input#name.form-control(type='text', placeholder='Enter Name',name='newusername')
-            input#Id.form-control(type='text', placeholder='Enter ID',name='newuserid')
-
-        button.btn.btn-primary(type='submit') Add new user
+    p #[a(href="/admin/shoes") Shoes]
+    p #[a(href="/admin/users") Users]
