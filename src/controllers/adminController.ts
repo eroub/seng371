@@ -138,7 +138,7 @@ export class AdminController extends BaseRoute {
     public async editShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const shoeID = parseInt(req.params[uString], 10);
-        let CM = new CustomerModel();
+        let PM = new ProductModel();
 
         let shoeModel, shoeCP, shoeRP,shoeid, shoeSize,brand,colorway: any;
 
@@ -148,13 +148,21 @@ export class AdminController extends BaseRoute {
         shoeCP = req.body.current_price;
         shoeRP = req.body.retail_price;
         shoeSize = parseInt(req.body.size);
-        shoeid = parseInt(req.body.id);
-
-        await CM.edit_userName(userID, editedName);
+        await PM.edit_shoe(shoeModel,shoeID, shoeSize, shoeCP, shoeRP,brand,colorway);
         res.redirect('/admin');
 
     }
 
+
+    public async delShoe(req: Request, res: Response, next: NextFunction) {
+        const uString = "id";
+        const shoeID = parseInt(req.params[uString], 10);
+        let PM = new ProductModel();
+        await PM.remove_shoe(shoeID);
+        res.redirect('/admin');
+
+
+    }
 
 
 }

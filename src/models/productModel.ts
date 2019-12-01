@@ -150,4 +150,26 @@ export class ProductModel {
         return result;
     }
 
+    public remove_shoe(shoeId: any) {
+        const remove_user = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").deleteOne({ shoe_id: shoeId});
+                //db!.collection("users").deleteMany({ user_id: null});
+
+                console.log("deleted shoe");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return remove_user;
+    }
+
+
+
+
+
+
+
 }
