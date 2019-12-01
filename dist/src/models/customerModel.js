@@ -12,21 +12,18 @@ var CustomerModel = /** @class */ (function () {
             return db.collection("users").find({ user_id: userId }).toArray();
         })
             .then(function (sneakers) {
-            // console.log(sneakers);
             return sneakers;
             // res.send(sneakers);
         })
             .catch(function (err) {
             console.log("err.message");
         });
-        // console.log(users);
         return users;
     };
     CustomerModel.prototype.add_shoe = function (userId, shoeID, purchase) {
         var shoeAdd = DbClient.connect()
             .then(function (db) {
             db.collection("user_shoes").insertOne({ user_id: userId, shoe_id: shoeID, purchase_price: purchase });
-            console.log("adding shoe");
             return true;
         })
             .catch(function (err) {
@@ -111,8 +108,6 @@ var CustomerModel = /** @class */ (function () {
             return db.collection("user_shoes").find().toArray();
         })
             .then(function (sneakers) {
-            // console.log(sneakers);
-            console.log(sneakers);
             return sneakers;
             // res.send(sneakers);
         })
@@ -137,7 +132,6 @@ var CustomerModel = /** @class */ (function () {
         var add_user = DbClient.connect()
             .then(function (db) {
             db.collection("users").insertOne({ user_id: userId, shoelist: {}, username: username });
-            console.log("adding user");
             return true;
         })
             .catch(function (err) {
@@ -150,7 +144,6 @@ var CustomerModel = /** @class */ (function () {
         var remove_user = DbClient.connect()
             .then(function (db) {
             db.collection("users").deleteOne({ user_id: userId });
-            console.log("deleted user");
             return true;
         })
             .catch(function (err) {

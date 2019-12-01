@@ -133,7 +133,6 @@ var Helpers = /** @class */ (function () {
                         return [4 /*yield*/, userIf.getKeys(userID)];
                     case 1:
                         userKeys = _a.sent();
-                        console.log(userKeys);
                         return [2 /*return*/, userKeys];
                 }
             });

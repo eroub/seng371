@@ -146,7 +146,6 @@ export class LeaderboardController extends BaseRoute {
         ranking["revenue"] = revenue;
         ranking["avg_net"] = avgNet;
         ranking["num"] = userShoes.length;
-        console.log(ranking);
         leaderboard.push(ranking);
     }
 

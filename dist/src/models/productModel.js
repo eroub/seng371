@@ -51,7 +51,6 @@ var ProductModel = /** @class */ (function () {
      Output type: a json shoe obejct ex: {shoe_id:3 ... }
      */
     ProductModel.prototype.getOneShoe = function (shoeID) {
-        console.log(shoeID);
         // an array of objects holding indvidual json objects for each of the shoes the user has
         var jsonShoeArr = [];
         var shoes = DbClient.connect()

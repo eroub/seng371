@@ -13,15 +13,12 @@ export class CustomerModel {
                 return db!.collection("users").find({user_id: userId}).toArray();
             })
             .then((sneakers: any) => {
-                // console.log(sneakers);
                 return sneakers;
                 // res.send(sneakers);
             })
             .catch((err) => {
                 console.log("err.message");
             });
-
-        // console.log(users);
 
         return users;
     }
@@ -30,7 +27,6 @@ export class CustomerModel {
         const shoeAdd = DbClient.connect()
             .then((db) => {
                 db!.collection("user_shoes").insertOne({user_id: userId, shoe_id: shoeID, purchase_price: purchase});
-                console.log("adding shoe");
                 return true;
             })
             .catch((err) => {
@@ -121,8 +117,6 @@ export class CustomerModel {
                 return db!.collection("user_shoes").find().toArray();
             })
             .then((sneakers: any) => {
-                // console.log(sneakers);
-                console.log(sneakers);
                 return sneakers;
                 // res.send(sneakers);
             })
@@ -146,13 +140,10 @@ export class CustomerModel {
         return result;
     }
 
-
-
     public add_user(userId: any, username: any) {
         const add_user = DbClient.connect()
             .then((db) => {
                 db!.collection("users").insertOne({ user_id: userId,shoelist: {}, username:username});
-                console.log("adding user");
                 return true;
             })
             .catch((err) => {
@@ -162,12 +153,10 @@ export class CustomerModel {
         return add_user;
     }
 
-
     public remove_user(userId: any) {
         const remove_user = DbClient.connect()
             .then((db) => {
                 db!.collection("users").deleteOne({ user_id: userId});
-                console.log("deleted user");
                 return true;
             })
             .catch((err) => {
@@ -176,8 +165,5 @@ export class CustomerModel {
             });
         return remove_user;
     }
-
-
-
 
 }

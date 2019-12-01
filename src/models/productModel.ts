@@ -56,7 +56,6 @@ export class ProductModel {
 
     public getOneShoe(shoeID: any) {
 
-        console.log(shoeID);
         // an array of objects holding indvidual json objects for each of the shoes the user has
         const jsonShoeArr: any[] = [];
 

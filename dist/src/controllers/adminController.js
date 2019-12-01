@@ -91,7 +91,6 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
                         userArr = _a.sent();
-                        console.log(userArr);
                         this.render(req, res, "admin", { users: userArr, title: "All users" });
                         return [2 /*return*/];
                 }
@@ -127,7 +126,6 @@ var AdminController = /** @class */ (function (_super) {
                         userID = parseInt(req.params[uString], 10);
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.editedusername;
-                        console.log(editedName + userID);
                         return [4 /*yield*/, CM.edit_userName(userID, editedName)];
                     case 1:
                         _a.sent();
@@ -147,7 +145,6 @@ var AdminController = /** @class */ (function (_super) {
                         editedName = req.body.newusername;
                         newID = req.body.newuserid;
                         newID = parseInt(newID, 10);
-                        console.log("this is new id", newID);
                         return [4 /*yield*/, CM.add_user(newID, editedName)];
                     case 1:
                         _a.sent();

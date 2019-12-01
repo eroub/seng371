@@ -42,7 +42,6 @@ export class AdminController extends BaseRoute {
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
         let userArr: any[] = [];
         userArr = await Helpers.getUsers();
-        console.log(userArr)
         this.render(req, res, "admin", {users: userArr, title: "All users"});
     }
 
@@ -62,7 +61,6 @@ export class AdminController extends BaseRoute {
         let CM = new CustomerModel();
 
         let editedName:any = req.body.editedusername;
-        console.log(editedName + userID)
         await CM.edit_userName(userID, editedName);
         res.redirect('/admin');
 
@@ -73,7 +71,6 @@ export class AdminController extends BaseRoute {
         let editedName:any = req.body.newusername;
         let newID:any = req.body.newuserid;
         newID = parseInt(newID, 10);
-        console.log("this is new id",newID);
         await CM.add_user(newID,editedName);
         res.redirect('/admin');
 
