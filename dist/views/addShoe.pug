@@ -6,7 +6,7 @@ block content
     p Size: #{shoe.size}
     form(method='POST' action='/user/' + id + '/add_shoe/' + shoe.shoe_id)
         div.form-group
-            label(for='name') Purchase Price:&nbsp
-            input#name.form-control(type='text', placeholder='$0',name='purchase_price')
+            label(for='name') Purchase Price: $
+            input#name.form-control(type='text', placeholder='0',name='purchase_price')
             p
         button.btn.btn-primary(type='submit') Add Shoe

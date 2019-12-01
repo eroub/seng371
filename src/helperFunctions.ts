@@ -3,6 +3,31 @@ import { ProductModel } from "./models/productModel";
 
 class Helpers {
 
+    public async getMaxUser() {
+        const c = new CustomerModel();
+        const users: any = await c.get_users();
+        let max: number = 0;
+        for (const item in users) {
+            if (users.hasOwnProperty(item)) {
+                console.log(users[item].user_id, max);
+                if(users[item].user_id > max) max = users[item].user_id;
+            }
+        }
+        return max;
+    }
+
+    public async getMaxShoe() {
+        const p = new ProductModel();
+        const shoes: any = await p.getAllDB();
+        let max: any = 0;
+        for (const item in shoes) {
+            if (shoes.hasOwnProperty(item)) {
+                if(shoes[item].shoe_id > max) max = shoes[item].shoe_id;
+            }
+        }
+        return max;
+    }
+
     public async getAllUserShoes() {
         const c = new CustomerModel();
         const shoes = await c.get_all_keys();
@@ -77,7 +102,7 @@ class Helpers {
         if (allShoes) {
             return allShoes;
         }
-        return;
+        return [];
     }
 
     public findUserShoe(shoeID: any, userShoes: any) {
