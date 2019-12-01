@@ -136,5 +136,18 @@ export class ProductModel {
     }
 
 
+    public edit_shoe(model:any, shoe_id:any, size:any, cp:any, rp:any,brand:any,colorway:any) {
+        const result = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").updateOne({shoe_id: shoe_id},
+                    {$set: {brand:brand, colorway:colorway,model:model,current_price: cp, retail_price:rp}});
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return result;
+    }
 
 }

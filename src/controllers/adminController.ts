@@ -135,6 +135,26 @@ export class AdminController extends BaseRoute {
 
 
 
+    public async editShoe(req: Request, res: Response, next: NextFunction) {
+        const uString = "id";
+        const shoeID = parseInt(req.params[uString], 10);
+        let CM = new CustomerModel();
+
+        let shoeModel, shoeCP, shoeRP,shoeid, shoeSize,brand,colorway: any;
+
+        shoeModel = req.body.model;
+        colorway = req.body.colorway;
+        brand = req.body.brand;
+        shoeCP = req.body.current_price;
+        shoeRP = req.body.retail_price;
+        shoeSize = parseInt(req.body.size);
+        shoeid = parseInt(req.body.id);
+
+        await CM.edit_userName(userID, editedName);
+        res.redirect('/admin');
+
+    }
+
 
 
 }

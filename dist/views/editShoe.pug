@@ -8,7 +8,12 @@ block content
     form(method='POST' action= '/admin/' + 'edit_shoe/'+shoe.shoe_id)
         div.form-group
             label shoe
-            input#name.form-control(type='text', placeholder= shoe.brand, name='editedusername', value=user.username)
+            input#name.form-control(type='text', placeholder= shoe.brand, name='brand', value=shoe.brand)
+            input#cw.form-control(type='text', placeholder='colorway',name='colorway',value=shoe.colorway)
+                input#idd.form-control(type='text', placeholder='shoe_id',name='id',value = shoe.shoe_id)
+                input#cp.form-control(type='text', placeholder='current price',name='current_price',value=shoe.current_price)
+                input#rp.form-control(type='text', placeholder='retail price',name='retail_price',value=shoe.retail_price)
+                input#sz.form-control(type='text', placeholder='size',name='size',value = shoe.size)
         div.form-group
         button.btn.btn-primary(type='submit') Save Changes
 
