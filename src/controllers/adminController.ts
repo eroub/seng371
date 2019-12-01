@@ -133,7 +133,7 @@ export class AdminController extends BaseRoute {
         brand = req.body.brand;
         shoeCP = req.body.current_price;
         shoeRP = req.body.retail_price;
-        shoeSize = (req.body.size);
+        shoeSize = req.body.size;
         shoeid = req.body.id;
 
         let pm:any = new ProductModel();

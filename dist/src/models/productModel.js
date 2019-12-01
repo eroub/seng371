@@ -109,7 +109,7 @@ var ProductModel = /** @class */ (function () {
     ProductModel.prototype.add_shoe = function (model, shoe_id, size, cp, rp, brand, colorway) {
         var add_shoes = DbClient.connect()
             .then(function (db) {
-            db.collection("shoes").insertOne({ brand: brand, colorway: colorway, shoe_id: shoe_id, model: model, current_price: cp, retail_price: rp });
+            db.collection("shoes").insertOne({ size: size, brand: brand, colorway: colorway, shoe_id: shoe_id, model: model, current_price: cp, retail_price: rp });
             console.log("adding shoe");
             return true;
         })
