@@ -9,45 +9,59 @@ export class AdminController extends BaseRoute {
 
     public static create(router: Router) {
         router.get("/admin", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().showAdmin(req, res, next);
+        });
+
+
+        router.get("/admin/users", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().showAllUsers(req, res, next);
         });
+
+        router.get("/admin/shoes", (req: Request, res: Response, next: NextFunction) => {
+            new AdminController().showAllShoes(req, res, next);
+        });
+
         // edit user
-        router.get("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/admin/users/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUserForm(req, res, next);
         });
 
         // edit shoe
-        router.get("/admin/edit_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/admin/shoes/edit_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editShoeForm(req, res, next);
         });
 
 
 
-        router.post("/admin/edit_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/admin/shoes/edit_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editShoe(req, res, next);
         });
 
-        router.post("/admin/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/admin/users/edit_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editUser(req, res, next);
         });
 
-        router.post("/admin/add_user", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/admin/users/add_user", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().addUser(req, res, next);
         });
 
-        router.post("/admin/add_shoe", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/admin/shoes/add_shoe", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().addShoe(req, res, next);
         });
 
-        router.post("/admin/del_user/:id", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/admin/users/del_user/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().delUser(req, res, next);
         });
 
-        router.post("/admin/del_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/admin/shoes/del_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().delShoe(req, res, next);
         });
 
 
+    }
+
+    public async showAdmin(req: Request, res: Response, next: NextFunction) {
+        this.render(req, res, "admin", { title: "Admin"});
     }
 
     /*
@@ -57,9 +71,15 @@ export class AdminController extends BaseRoute {
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
         let userArr: any[] = [];
         userArr = await Helpers.getUsers();
-        this.render(req, res, "admin", {users: userArr, title: "All users"});
+        this.render(req, res, "admin_users", {users: userArr, title: "All users"});
     }
 
+
+    public async showAllShoes(req: Request, res: Response, next: NextFunction) {
+        let userArr: any[] = [];
+        userArr = await Helpers.getAllDbShoes();
+        this.render(req, res, "admin_shoes", {users: userArr, title: "All users"});
+    }
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const userID = parseInt(req.params[uString], 10);

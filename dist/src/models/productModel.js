@@ -106,10 +106,10 @@ var ProductModel = /** @class */ (function () {
         });
         return shoes;
     };
-    ProductModel.prototype.add_shoe = function (name, shoe_id, size, cp, rp, brand, colorway) {
+    ProductModel.prototype.add_shoe = function (model, shoe_id, size, cp, rp, brand, colorway) {
         var add_shoes = DbClient.connect()
             .then(function (db) {
-            db.collection("shoes").insertOne({ brand: brand, colorway: colorway, shoe_id: shoe_id, name: name, current_price: cp, retail_price: rp });
+            db.collection("shoes").insertOne({ brand: brand, colorway: colorway, shoe_id: shoe_id, model: model, current_price: cp, retail_price: rp });
             console.log("adding shoe");
             return true;
         })
@@ -118,6 +118,32 @@ var ProductModel = /** @class */ (function () {
             return false;
         });
         return add_shoes;
+    };
+    ProductModel.prototype.edit_shoe = function (model, shoe_id, size, cp, rp, brand, colorway) {
+        var result = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").updateOne({ shoe_id: shoe_id }, { $set: { brand: brand, colorway: colorway, model: model, current_price: cp, retail_price: rp } });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return result;
+    };
+    ProductModel.prototype.remove_shoe = function (shoeId) {
+        var remove_user = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").deleteOne({ shoe_id: shoeId });
+            //db!.collection("users").deleteMany({ user_id: null});
+            console.log("deleted shoe");
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return remove_user;
     };
     return ProductModel;
 }());

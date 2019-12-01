@@ -187,12 +187,12 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.addShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var CM, shoeName, shoeCP, shoeRP, shoeid, shoeSize, brand, colorway, pm;
+            var CM, shoeModel, shoeCP, shoeRP, shoeid, shoeSize, brand, colorway, pm;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         CM = new customerModel_1.CustomerModel();
-                        shoeName = req.body.name;
+                        shoeModel = req.body.model;
                         colorway = req.body.colorway;
                         brand = req.body.brand;
                         shoeCP = req.body.current_price;
@@ -200,7 +200,68 @@ var AdminController = /** @class */ (function (_super) {
                         shoeSize = parseInt(req.body.size);
                         shoeid = parseInt(req.body.id);
                         pm = new productModel_1.ProductModel();
-                        return [4 /*yield*/, pm.add_shoe(shoeName, shoeid, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                        return [4 /*yield*/, pm.add_shoe(shoeModel, shoeid, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                    case 1:
+                        _a.sent();
+                        res.redirect('/admin');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.editShoeForm = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, shoeID, PM, shoe;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        shoeID = parseInt(req.params[uString], 10);
+                        PM = new productModel_1.ProductModel();
+                        return [4 /*yield*/, PM.getOneShoe(shoeID)];
+                    case 1:
+                        shoe = _a.sent();
+                        shoe = shoe[0];
+                        this.render(req, res, "editUser", { shoe: shoe, title: "Edit shoe" });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.editShoe = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, shoeID, PM, shoeModel, shoeCP, shoeRP, shoeid, shoeSize, brand, colorway;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        shoeID = parseInt(req.params[uString], 10);
+                        PM = new productModel_1.ProductModel();
+                        shoeModel = req.body.model;
+                        colorway = req.body.colorway;
+                        brand = req.body.brand;
+                        shoeCP = req.body.current_price;
+                        shoeRP = req.body.retail_price;
+                        shoeSize = parseInt(req.body.size);
+                        return [4 /*yield*/, PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                    case 1:
+                        _a.sent();
+                        res.redirect('/admin');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AdminController.prototype.delShoe = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, shoeID, PM;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        shoeID = parseInt(req.params[uString], 10);
+                        PM = new productModel_1.ProductModel();
+                        return [4 /*yield*/, PM.remove_shoe(shoeID)];
                     case 1:
                         _a.sent();
                         res.redirect('/admin');
