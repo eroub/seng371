@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    p #[a(href='/') Back]&nbsp #[a(href='/user/' + id + '/allShoes') Add Shoes]&nbsp #[a(href='/user/' + id + '/notifications') Notifications]&nbsp #[a(href='/user/' + id + '/leaderboard') Leaderboard]
+    p #[a(href='/') Back]&nbsp
     h1 All shoes :
     for shoe in shoes
         p  ID #{shoe.shoe_id} Name #{shoe.brand}  #{shoe.model} #{shoe.colorway}
