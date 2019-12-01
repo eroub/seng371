@@ -171,7 +171,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, CM.edit_userName(userID, editedName)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/users');
                         return [2 /*return*/];
                 }
             });
@@ -191,7 +191,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, CM.add_user(newID, editedName)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/users');
                         return [2 /*return*/];
                 }
             });
@@ -209,7 +209,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, CM.remove_user(userID)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/users');
                         return [2 /*return*/];
                 }
             });
@@ -228,12 +228,12 @@ var AdminController = /** @class */ (function (_super) {
                         shoeCP = req.body.current_price;
                         shoeRP = req.body.retail_price;
                         shoeSize = parseInt(req.body.size);
-                        shoeid = parseInt(req.body.id);
+                        shoeid = parseInt(req.body.id, 10);
                         pm = new productModel_1.ProductModel();
                         return [4 /*yield*/, pm.add_shoe(shoeModel, shoeid, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/shoes');
                         return [2 /*return*/];
                 }
             });
@@ -271,13 +271,13 @@ var AdminController = /** @class */ (function (_super) {
                         shoeModel = req.body.model;
                         colorway = req.body.colorway;
                         brand = req.body.brand;
-                        shoeCP = req.body.current_price;
-                        shoeRP = req.body.retail_price;
+                        shoeCP = parseInt(req.body.current_price, 10);
+                        shoeRP = parseInt(req.body.retail_price, 10);
                         shoeSize = parseInt(req.body.size);
                         return [4 /*yield*/, PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/shoes');
                         return [2 /*return*/];
                 }
             });
@@ -295,7 +295,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, PM.remove_shoe(shoeID)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin');
+                        res.redirect('/admin/shoes');
                         return [2 /*return*/];
                 }
             });

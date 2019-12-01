@@ -154,8 +154,9 @@ export class ProductModel {
         const remove_user = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").deleteOne({ shoe_id: shoeId});
-
-                //db!.collection("users").deleteMany({ user_id: null});
+                db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
+                db!.collection("notifications").deleteMany({ shoe_id: shoeId});
+                db!.collection("users").deleteMany({ shoe_id: null});
 
                 console.log("deleted shoe");
                 return true;

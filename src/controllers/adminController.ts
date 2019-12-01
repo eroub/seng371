@@ -135,7 +135,7 @@ export class AdminController extends BaseRoute {
         shoeCP = req.body.current_price;
         shoeRP = req.body.retail_price;
         shoeSize = parseInt(req.body.size);
-        shoeid = parseInt(req.body.id);
+        shoeid = parseInt(req.body.id,10);
 
         let pm:any = new ProductModel();
         await pm.add_shoe(shoeModel,shoeid, shoeSize, shoeCP, shoeRP,brand,colorway);
@@ -166,8 +166,8 @@ export class AdminController extends BaseRoute {
         shoeModel = req.body.model;
         colorway = req.body.colorway;
         brand = req.body.brand;
-        shoeCP = req.body.current_price;
-        shoeRP = req.body.retail_price;
+        shoeCP = parseInt(req.body.current_price,10);
+        shoeRP = parseInt(req.body.retail_price,10);
         shoeSize = parseInt(req.body.size);
         await PM.edit_shoe(shoeModel,shoeID, shoeSize, shoeCP, shoeRP,brand,colorway);
         res.redirect('/admin/shoes');
