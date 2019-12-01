@@ -107,9 +107,9 @@ export class AdminController extends BaseRoute {
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         let CM = new CustomerModel();
-        let shoeName, shoeCP, shoeRP,shoeid, shoeSize,brand,colorway: any;
+        let shoeModel, shoeCP, shoeRP,shoeid, shoeSize,brand,colorway: any;
 
-        shoeName = req.body.name;
+        shoeModel = req.body.model;
         colorway = req.body.colorway;
         brand = req.body.brand;
         shoeCP = req.body.current_price;
@@ -118,10 +118,19 @@ export class AdminController extends BaseRoute {
         shoeid = parseInt(req.body.id);
 
         let pm:any = new ProductModel();
-        await pm.add_shoe(shoeName,shoeid, shoeSize, shoeCP, shoeRP,brand,colorway);
+        await pm.add_shoe(shoeModel,shoeid, shoeSize, shoeCP, shoeRP,brand,colorway);
         res.redirect('/admin');
 
 
+    }
+
+    public async editShoeForm(req: Request, res: Response, next: NextFunction) {
+        const uString = "id";
+        const shoeID = parseInt(req.params[uString], 10);
+        let PM = new ProductModel();
+        let shoe = await PM.getOneShoe(shoeID);
+        shoe = shoe[0];
+        this.render(req, res, "editUser", {shoe: shoe, title: "Edit shoe"});
     }
 
 

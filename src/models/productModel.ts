@@ -121,10 +121,10 @@ export class ProductModel {
         return shoes;
     }
 
-    public add_shoe(name:any, shoe_id:any, size:any, cp:any, rp:any,brand:any,colorway:any) {
+    public add_shoe(model:any, shoe_id:any, size:any, cp:any, rp:any,brand:any,colorway:any) {
         const add_shoes = DbClient.connect()
             .then((db) => {
-                db!.collection("shoes").insertOne({ brand:brand, colorway:colorway, shoe_id:shoe_id,name:name,current_price: cp, retail_price:rp});
+                db!.collection("shoes").insertOne({ brand:brand, colorway:colorway, shoe_id:shoe_id,model:model,current_price: cp, retail_price:rp});
                 console.log("adding shoe");
                 return true;
             })

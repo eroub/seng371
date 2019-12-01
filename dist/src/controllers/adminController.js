@@ -66,8 +66,12 @@ var AdminController = /** @class */ (function (_super) {
         router.get("/admin/edit_user/:id", function (req, res, next) {
             new AdminController().editUserForm(req, res, next);
         });
-        router.post("/admin/edit_user/:id", function (req, res, next) {
-            new AdminController().editUser(req, res, next);
+        // edit shoe
+        router.get("/admin/edit_shoe/:id", function (req, res, next) {
+            new AdminController().editShoeForm(req, res, next);
+        });
+        router.post("/admin/edit_shoe/:id", function (req, res, next) {
+            new AdminController().editShoe(req, res, next);
         });
         router.post("/admin/edit_user/:id", function (req, res, next) {
             new AdminController().editUser(req, res, next);
@@ -75,11 +79,14 @@ var AdminController = /** @class */ (function (_super) {
         router.post("/admin/add_user", function (req, res, next) {
             new AdminController().addUser(req, res, next);
         });
+        router.post("/admin/add_shoe", function (req, res, next) {
+            new AdminController().addShoe(req, res, next);
+        });
         router.post("/admin/del_user/:id", function (req, res, next) {
             new AdminController().delUser(req, res, next);
         });
-        router.post("/admin/add_shoe", function (req, res, next) {
-            new AdminController().addShoe(req, res, next);
+        router.post("/admin/del_shoe/:id", function (req, res, next) {
+            new AdminController().delShoe(req, res, next);
         });
     };
     /*

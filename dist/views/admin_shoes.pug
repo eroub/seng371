@@ -4,8 +4,7 @@ block content
     p #[a(href='/') Back]&nbsp #[a(href='/user/' + id + '/allShoes') Add Shoes]&nbsp #[a(href='/user/' + id + '/notifications') Notifications]&nbsp #[a(href='/user/' + id + '/leaderboard') Leaderboard]
     h1 All shoes :
     for shoe in shoes
-        p Shoe ID: #{user.user_id} shoe name: #{shoe.username}
-        //Each user has buttons for editing router.get(‘/admin/edit_user/:id’)
+        p Shoe ID: #{shoe.shoe_id} shoe name: #{shoe.model}
         a(href='/admin/' + 'edit_shoe/'+shoe.shoe_id )
             button.btn.btn-primary(type='button') Edit Shoe
 
@@ -18,11 +17,11 @@ block content
 
     form(method='POST' action='/admin/add_shoe')
         div.form-group
-            label(for='nm') Add new shoe info:&nbsp
-            input#nm.form-control(type='text', placeholder=' name',name='name')
-            input#idd.form-control(type='text', placeholder='shoe id',name='id')
-            input#brand.form-control(type='text', placeholder='brand name',name='brand')
+            label(for='md') Add new shoe info:&nbsp
+            input#md.form-control(type='text', placeholder=' model',brand='model')
             input#cw.form-control(type='text', placeholder='colorway',name='colorway')
+            input#brand.form-control(type='text', placeholder='brand name',name='brand')
+            input#idd.form-control(type='text', placeholder='shoe_id',name='id')
             input#cp.form-control(type='text', placeholder='current price',name='current_price')
             input#rp.form-control(type='text', placeholder='retail price',name='retail_price')
             input#sz.form-control(type='text', placeholder='size',name='size')
