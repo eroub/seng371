@@ -79,8 +79,8 @@ export class ProductController extends BaseRoute {
         id = userId;
         if (await this.setLocal(userId)) {
             allShoes.sort((a: any, b: any) => {
-                const aname = a.brand + " " + a.model + " " + a.colorway;
                 const bname = b.brand + " " + b.model + " " + b.colorway;
+                const aname = a.brand + " " + a.model + " " + a.colorway;
                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
             });
             this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});

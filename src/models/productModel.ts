@@ -126,7 +126,7 @@ export class ProductModel {
                 return true;
             })
             .catch((err) => {
-                console.log("Adding a shoe to the database has failed");
+                console.log("Failed to add a shoe");
                 return false;
             });
         return addShoes;
