@@ -39,11 +39,7 @@ export class LeaderboardController extends BaseRoute {
         if (await this.createBoard(userId)) {
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-            .send({
-                message: "No user with associated ID. Check the entered number.",
-                status: res.status,
-            });        
+            this.ID404(res);    
         }
     }
 
@@ -54,11 +50,7 @@ export class LeaderboardController extends BaseRoute {
                 leaderboard.sort((a: any, b: any) => b.avg_net - a.avg_net);
                 this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        
+            this.ID404(res);       
         }
     }
 
@@ -69,11 +61,7 @@ export class LeaderboardController extends BaseRoute {
             leaderboard.sort((a: any, b: any) => a.avg_net - b.avg_net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        
+            this.ID404(res);   
         }
     }
 
@@ -84,11 +72,7 @@ export class LeaderboardController extends BaseRoute {
             leaderboard.sort((a: any, b: any) => a.net - b.net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        
+            this.ID404(res);       
         }
     }
 
@@ -99,11 +83,7 @@ export class LeaderboardController extends BaseRoute {
             leaderboard.sort((a: any, b: any) => b.net - a.net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        
+            this.ID404(res);       
         }
     }
 
@@ -184,6 +164,14 @@ export class LeaderboardController extends BaseRoute {
             }
         }
         return userShoes;
+    }
+
+    private ID404(res: any) {
+        res.status(404)
+                .send({
+                    message: "No user with associated ID. Check the entered number.",
+                    status: res.status,
+                });   
     }
 
 }
