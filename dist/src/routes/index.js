@@ -76,7 +76,6 @@ var IndexRoute = /** @class */ (function (_super) {
      */
     IndexRoute.create = function (router) {
         // log
-        // console.log("[IndexRoute::create] Creating index route.");
         // add home page route
         router.get("/", function (req, res, next) {
             new IndexRoute().index(req, res, next);

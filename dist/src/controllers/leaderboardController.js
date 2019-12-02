@@ -270,7 +270,6 @@ var LeaderboardController = /** @class */ (function (_super) {
         ranking["revenue"] = revenue;
         ranking["avg_net"] = avgNet;
         ranking["num"] = userShoes.length;
-        console.log(ranking);
         leaderboard.push(ranking);
     };
     LeaderboardController.prototype.setLocals = function () {

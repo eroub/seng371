@@ -1,5 +1,5 @@
 import "mocha";
- let chai = require("chai");
+let chai = require("chai");
 import { CustomerModel } from "../../../src/models/customerModel";
 
 describe ('Testing CustomerModel Functionality:', () => {

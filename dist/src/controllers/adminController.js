@@ -167,7 +167,6 @@ var AdminController = /** @class */ (function (_super) {
                         userID = uString;
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.editedusername;
-                        console.log(editedName + userID);
                         return [4 /*yield*/, CM.edit_userName(userID, editedName)];
                     case 1:
                         _a.sent();

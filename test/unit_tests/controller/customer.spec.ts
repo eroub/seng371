@@ -1,6 +1,5 @@
 import "mocha";
 import chai from "chai";
-import { ProductModel } from "../../../src/models/productModel";
 import { Server } from "../../../src/app"
 const request = require('supertest');
 
@@ -44,6 +43,28 @@ describe('Testing customerController Functionality:', () => {
     }).timeout(5000);
     it('Fails to remove a shoe from non-existent user portfolio (404)', async () => {
         const response = await request(serve.getExpressInstance()).post('/user/999/remove_shoe/1');
+        chai.expect(response.statusCode).to.equal(404);
+    }).timeout(5000);
+
+    it(' should show a user their shoes from low to high ', async () => {
+        let id = '1'; //this is an example of an invalid id, a correct id should consist of only digits
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/price_low');
+        chai.expect(response.statusCode).to.equal(200);
+    }).timeout(5000);
+    it(' should  return 404 when for invalid ids (users shoes low to high) ', async () => {
+        let id = 'xy'; //this is an example of an invalid id, a correct id should consist of only digits
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/price_low');
+        chai.expect(response.statusCode).to.equal(404);
+    }).timeout(5000);
+
+    it('should show a user their shoes from high to low', async () => {
+        let id = '1'; //this is an example of an invalid id, a correct id should consist of only digits
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/price_high');
+        chai.expect(response.statusCode).to.equal(200);
+    }).timeout(5000);
+    it(' should  return 404 when for invalid ids (users shoes high to low) ', async () => {
+        let id = '50'; //this is an example of an invalid id, a correct id should consist of only digits
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/price_high');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
     
