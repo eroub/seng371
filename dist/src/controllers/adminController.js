@@ -145,7 +145,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = uString;
+                        userID = parseInt(uString, 10);
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.userInfo(userID)];
                     case 1:
@@ -184,10 +184,12 @@ var AdminController = /** @class */ (function (_super) {
                     case 0:
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.newusername;
-                        newID = req.body.newuserid;
+                        return [4 /*yield*/, Helpers.getMaxUser()];
+                    case 1:
+                        newID = (_a.sent()) + 1;
                         console.log("this is new id", newID);
                         return [4 /*yield*/, CM.add_user(newID, editedName)];
-                    case 1:
+                    case 2:
                         _a.sent();
                         res.redirect('/admin/users');
                         return [2 /*return*/];
@@ -215,21 +217,22 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.addShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var CM, shoeModel, shoeCP, shoeRP, shoeid, shoeSize, brand, colorway, pm;
+            var PM, shoeID, shoeModel, shoeCP, shoeRP, shoeSize, brand, colorway;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        CM = new customerModel_1.CustomerModel();
+                        PM = new productModel_1.ProductModel();
                         shoeModel = req.body.model;
                         colorway = req.body.colorway;
                         brand = req.body.brand;
-                        shoeCP = req.body.current_price;
-                        shoeRP = req.body.retail_price;
-                        shoeSize = req.body.size;
-                        shoeid = req.body.id;
-                        pm = new productModel_1.ProductModel();
-                        return [4 /*yield*/, pm.add_shoe(shoeModel, shoeid, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                        shoeCP = parseInt(req.body.current_price);
+                        shoeRP = parseInt(req.body.retail_price);
+                        shoeSize = parseInt(req.body.size);
+                        return [4 /*yield*/, Helpers.getMaxShoe()];
                     case 1:
+                        shoeID = (_a.sent()) + 1;
+                        return [4 /*yield*/, PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                    case 2:
                         _a.sent();
                         res.redirect('/admin/shoes');
                         return [2 /*return*/];
@@ -259,7 +262,7 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.editShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var uString, shoeID, PM, shoeModel, shoeCP, shoeRP, shoeid, shoeSize, brand, colorway;
+            var uString, shoeID, PM, shoeModel, shoeCP, shoeRP, shoeSize, brand, colorway;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -269,9 +272,9 @@ var AdminController = /** @class */ (function (_super) {
                         shoeModel = req.body.model;
                         colorway = req.body.colorway;
                         brand = req.body.brand;
-                        shoeCP = req.body.current_price;
-                        shoeRP = req.body.retail_price;
-                        shoeSize = req.body.size;
+                        shoeCP = parseInt(req.body.current_price, 10);
+                        shoeRP = parseInt(req.body.retail_price, 10);
+                        shoeSize = parseInt(req.body.size);
                         return [4 /*yield*/, PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 1:
                         _a.sent();

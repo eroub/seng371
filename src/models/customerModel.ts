@@ -126,11 +126,11 @@ export class CustomerModel {
         return userKeys;
     }
 
-    public edit_userName(id:any, editedName:any) {
+    public edit_userName(id: any, editedName: any) {
         const result = DbClient.connect()
             .then((db) => {
                 db!.collection("users").updateOne({user_id: id},
-                    {$set: {username:editedName}});
+                    {$set: {username: editedName}});
                 return true;
             })
             .catch((err) => {
@@ -140,12 +140,10 @@ export class CustomerModel {
         return result;
     }
 
-
-
     public add_user(userId: number, username: any) {
-        const add_user = DbClient.connect()
+        const addUser = DbClient.connect()
             .then((db) => {
-                db!.collection("users").insertOne({ isAdmin: false, user_id: userId, username: username});
+                db!.collection("users").insertOne({ isAdmin: false, user_id: userId, username});
                 console.log("adding user");
 
                 return true;
@@ -154,11 +152,11 @@ export class CustomerModel {
                 console.log("err.message");
                 return false;
             });
-        return add_user;
+        return addUser;
     }
 
     public remove_user(userId: any) {
-        const remove_user = DbClient.connect()
+        const removeUser = DbClient.connect()
             .then((db) => {
                 db!.collection("users").deleteOne({ user_id: userId});
                 return true;
@@ -167,7 +165,7 @@ export class CustomerModel {
                 console.log("err.message");
                 return false;
             });
-        return remove_user;
+        return removeUser;
     }
 
 }

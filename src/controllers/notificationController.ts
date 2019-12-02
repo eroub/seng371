@@ -65,19 +65,18 @@ export class NotificationController extends BaseRoute {
     public async filterFulfilled(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        let fulfilledNots: any = [];
-        if(await this.check_local(userId)) {
-            for(const item in userNotifications) {
-                if(userNotifications.hasOwnProperty(item)) {
-                    if(userNotifications[item].fulfilled) {
+        const fulfilledNots: any = [];
+        if (await this.check_local(userId)) {
+            for (const item in userNotifications) {
+                if (userNotifications.hasOwnProperty(item)) {
+                    if (userNotifications[item].fulfilled) {
                         fulfilledNots.push(userNotifications[item]);
                     }
                 }
             }
             this.render(req, res, "notificationCentre",
                 {id: userId, title: "Notifications", notifications: fulfilledNots});
-        }
-        else {
+        } else {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
@@ -88,19 +87,18 @@ export class NotificationController extends BaseRoute {
     public async filterUnfulfilled(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        let unfulfilledNots: any = [];
-        if(await this.check_local(userId)) {
-            for(const item in userNotifications) {
-                if(userNotifications.hasOwnProperty(item)) {
-                    if(!userNotifications[item].fulfilled) {
+        const unfulfilledNots: any = [];
+        if (await this.check_local(userId)) {
+            for (const item in userNotifications) {
+                if (userNotifications.hasOwnProperty(item)) {
+                    if (!userNotifications[item].fulfilled) {
                         unfulfilledNots.push(userNotifications[item]);
                     }
                 }
             }
             this.render(req, res, "notificationCentre",
                 {id: userId, title: "Notifications", notifications: unfulfilledNots});
-        }
-        else {
+        } else {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
@@ -208,7 +206,7 @@ export class NotificationController extends BaseRoute {
                 await this.fulfill(notification._id);
                 notification.fulfilled = true;
             }
-            if ((notification.type == "Above") && (notification.threshold < currentPrice)) {
+            if ((notification.type === "Above") && (notification.threshold < currentPrice)) {
                 await this.fulfill(notification._id);
                 notification.fulfilled = true;
             }

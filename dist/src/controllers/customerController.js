@@ -263,7 +263,7 @@ var CustomerController = /** @class */ (function (_super) {
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
                         uif = new customerModel_1.CustomerModel();
-                        price = req.body.purchase_price;
+                        price = parseInt(req.body.purchase_price);
                         if (!price) {
                             price = 0;
                         }
@@ -299,7 +299,7 @@ var CustomerController = /** @class */ (function (_super) {
                         if (!req.body.threshold) {
                             req.body.threshold = 0;
                         }
-                        return [4 /*yield*/, uIF.edit_shoe(shoeID, req.body.purchase_price)];
+                        return [4 /*yield*/, uIF.edit_shoe(shoeID, parseInt(req.body.purchase_price))];
                     case 1:
                         _a.sent();
                         res.redirect("/user/" + userID + "/shoes");

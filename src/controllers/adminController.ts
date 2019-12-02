@@ -8,10 +8,10 @@ import { BaseRoute } from "../routes/router";
 export class AdminController extends BaseRoute {
 
     public static create(router: Router) {
+
         router.get("/admin", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().showAdmin(req, res, next);
         });
-
 
         router.get("/admin/users", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().showAllUsers(req, res, next);
@@ -55,7 +55,6 @@ export class AdminController extends BaseRoute {
             new AdminController().delShoe(req, res, next);
         });
 
-
     }
 
     public async showAdmin(req: Request, res: Response, next: NextFunction) {
@@ -80,102 +79,83 @@ export class AdminController extends BaseRoute {
 
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = uString;
-        let CM = new CustomerModel();
+        const userID = parseInt(uString, 10);
+        const CM = new CustomerModel();
         let user = await CM.userInfo(userID);
         user = user[0];
-        this.render(req, res, "editUser", {user: user, title: "Edit User"});
+        this.render(req, res, "editUser", {user, title: "Edit User"});
     }
 
     public async editUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = uString
-        let CM = new CustomerModel();
-
-        let editedName:any = req.body.editedusername;
+        const userID = uString;
+        const CM = new CustomerModel();
+        const editedName: any = req.body.editedusername;
         await CM.edit_userName(userID, editedName);
-        res.redirect('/admin/users');
-
+        res.redirect("/admin/users");
     }
 
     public async addUser(req: Request, res: Response, next: NextFunction) {
-        let CM = new CustomerModel();
-        let editedName:any = req.body.newusername;
-        let newID: any = (await Helpers.getMaxUser()) + 1;
-
-        console.log("this is new id",newID);
+        const CM = new CustomerModel();
+        const editedName: any = req.body.newusername;
+        const newID: any = (await Helpers.getMaxUser()) + 1;
         await CM.add_user(newID, editedName);
-        res.redirect('/admin/users');
-
-
+        res.redirect("/admin/users");
     }
 
     public async delUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const userID = uString;
-        let CM = new CustomerModel();
+        const CM = new CustomerModel();
         await CM.remove_user(userID);
-        res.redirect('/admin/users');
-
-
+        res.redirect("/admin/users");
     }
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
-        let PM = new ProductModel();
-        let shoeID, shoeModel, shoeCP, shoeRP, shoeSize, brand, colorway: any;
+        const PM = new ProductModel();
 
-        shoeModel = req.body.model;
-        colorway = req.body.colorway;
-        brand = req.body.brand;
-        shoeCP = parseInt(req.body.current_price);
-        shoeRP = parseInt(req.body.retail_price);
-        shoeSize = parseInt(req.body.size);
-        shoeID = (await Helpers.getMaxShoe()) + 1;
-
+        const shoeModel = req.body.model;
+        const colorway = req.body.colorway;
+        const brand = req.body.brand;
+        const shoeCP = parseInt(req.body.current_price, 10);
+        const shoeRP = parseInt(req.body.retail_price, 10);
+        const shoeSize = parseInt(req.body.size, 10);
+        const shoeID = (await Helpers.getMaxShoe()) + 1;
 
         await PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway);
-        res.redirect('/admin/shoes');
-
-
+        res.redirect("/admin/shoes");
     }
 
     public async editShoeForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const shoeID = req.params[uString];
-        let PM = new ProductModel();
-        console.log("this id",shoeID)
-        let shoe = await PM.getOneShoe(shoeID);
-        console.log("this shoe",shoe);
-        this.render(req, res, "editShoe", {shoe: shoe, title: "Edit shoe"});
+        const PM = new ProductModel();
+        const shoe = await PM.getOneShoe(shoeID);
+        this.render(req, res, "editShoe", {shoe, title: "Edit shoe"});
     }
 
     public async editShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const shoeID = req.params[uString];
-        let PM = new ProductModel();
+        const PM = new ProductModel();
 
-        let shoeModel, shoeCP, shoeRP, shoeSize,brand,colorway: any;
-
-        shoeModel = req.body.model;
-        colorway = req.body.colorway;
-        brand = req.body.brand;
-        shoeCP = parseInt(req.body.current_price,10);
-        shoeRP = parseInt(req.body.retail_price,10);
-        shoeSize = parseInt(req.body.size);
+        const shoeModel = req.body.model;
+        const colorway = req.body.colorway;
+        const brand = req.body.brand;
+        const shoeCP = parseInt(req.body.current_price, 10);
+        const shoeRP = parseInt(req.body.retail_price, 10);
+        const shoeSize = parseInt(req.body.size, 10);
         await PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway);
 
-        res.redirect('/admin/shoes');
-
+        res.redirect("/admin/shoes");
     }
 
     public async delShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const shoeID = req.params[uString];
-        let PM = new ProductModel();
+        const PM = new ProductModel();
         await PM.remove_shoe(shoeID);
-        res.redirect('/admin/shoes');
-
-
+        res.redirect("/admin/shoes");
     }
 
 }

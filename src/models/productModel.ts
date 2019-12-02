@@ -120,11 +120,11 @@ export class ProductModel {
         return shoes;
     }
 
-    public add_shoe(model: any, shoe_id: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
-        const add_shoes = DbClient.connect()
+    public add_shoe(model: any, shoeId: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
+        const addShoes = DbClient.connect()
             .then((db) => {
-                db!.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
-                    model: model, retail_price: rp, shoe_id: shoe_id, size: size});
+                db!.collection("shoes").insertOne({ brand, colorway, current_price: cp,
+                    model, retail_price: rp, shoe_id: shoeId, size});
 
                 console.log("adding shoe");
                 return true;
@@ -133,15 +133,14 @@ export class ProductModel {
                 console.log("err.message");
                 return false;
             });
-        return add_shoes;
+        return addShoes;
     }
 
-
-    public edit_shoe(model:any, shoe_id:any, size: any, cp: any, rp: any, brand: any, colorway: any) {
+    public edit_shoe(model: any, shoeId: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
         const result = DbClient.connect()
             .then((db) => {
-                db!.collection("shoes").updateOne({shoe_id: shoe_id},
-                    {$set: {brand: brand, colorway: colorway, current_price: cp, model: model, retail_price: rp, size: size}});
+                db!.collection("shoes").updateOne({shoe_id: shoeId},
+                    {$set: {brand, colorway, current_price: cp, model, retail_price: rp, size}});
                 return true;
             })
             .catch((err) => {
@@ -152,7 +151,7 @@ export class ProductModel {
     }
 
     public remove_shoe(shoeId: any) {
-        const remove_user = DbClient.connect()
+        const removeUser = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").deleteOne({ shoe_id: shoeId});
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
@@ -166,13 +165,7 @@ export class ProductModel {
                 console.log("err.message");
                 return false;
             });
-        return remove_user;
+        return removeUser;
     }
-
-
-
-
-
-
 
 }

@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { BaseRoute } from "./router";
 import { CustomerModel } from "../models/customerModel";
-import Helpers = require("../helperFunctions");
+import { BaseRoute } from "./router";
 
 /**
  * / route
@@ -57,9 +56,8 @@ export class IndexRoute extends BaseRoute {
 
         const options: object = {
             message: "Welcome!",
-            users: users
+            users,
         };
-
 
         // render template
         this.render(req, res, "index", options);

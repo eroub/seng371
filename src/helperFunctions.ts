@@ -10,7 +10,9 @@ class Helpers {
         for (const item in users) {
             if (users.hasOwnProperty(item)) {
                 console.log(users[item].user_id, max);
-                if(users[item].user_id > max) max = users[item].user_id;
+                if (users[item].user_id > max) {
+                    max = users[item].user_id;
+                }
             }
         }
         return max;
@@ -22,7 +24,9 @@ class Helpers {
         let max: any = 0;
         for (const item in shoes) {
             if (shoes.hasOwnProperty(item)) {
-                if(shoes[item].shoe_id > max) max = shoes[item].shoe_id;
+                if (shoes[item].shoe_id > max) {
+                    max = shoes[item].shoe_id;
+                }
             }
         }
         return max;
@@ -123,9 +127,9 @@ class Helpers {
         for (const item in shoelist) {
             if (shoelist.hasOwnProperty(item)) {
                 const shoe = shoelist[item];
-                net = net + parseInt(shoe.current_price) - parseInt(shoe.purchase_price);
+                net = net + parseInt(shoe.current_price, 10) - parseInt(shoe.purchase_price, 10);
                 sunk = sunk + parseInt(shoe.purchase_price, 10);
-                total = total + parseInt(shoe.current_price);
+                total = total + parseInt(shoe.current_price, 10);
                 num++;
             }
         }
