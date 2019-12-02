@@ -31,8 +31,6 @@ export class AdminController extends BaseRoute {
             new AdminController().editShoeForm(req, res, next);
         });
 
-
-
         router.post("/admin/shoes/edit_shoe/:id", (req: Request, res: Response, next: NextFunction) => {
             new AdminController().editShoe(req, res, next);
         });
@@ -74,12 +72,12 @@ export class AdminController extends BaseRoute {
         this.render(req, res, "admin_user", {users: userArr, title: "All users"});
     }
 
-
     public async showAllShoes(req: Request, res: Response, next: NextFunction) {
         let shoeArr: any[] = [];
         shoeArr = await Helpers.getAllDbShoes();
         this.render(req, res, "admin_shoes", {shoes: shoeArr, title: "All shoes"});
     }
+
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const userID = uString;
@@ -88,7 +86,6 @@ export class AdminController extends BaseRoute {
         user = user[0];
         this.render(req, res, "editUser", {user: user, title: "Edit User"});
     }
-
 
     public async editUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
@@ -122,7 +119,6 @@ export class AdminController extends BaseRoute {
 
     }
 
-
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         let CM = new CustomerModel();
         let shoeModel, shoeCP, shoeRP,shoeid, shoeSize,brand,colorway: any;
@@ -152,8 +148,6 @@ export class AdminController extends BaseRoute {
         this.render(req, res, "editShoe", {shoe: shoe, title: "Edit shoe"});
     }
 
-
-
     public async editShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const shoeID = req.params[uString];
@@ -181,6 +175,5 @@ export class AdminController extends BaseRoute {
 
 
     }
-
 
 }
