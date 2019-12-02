@@ -153,7 +153,7 @@ export class AdminController extends BaseRoute {
 
     public async delShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const shoeID = req.params[uString];
+        const shoeID = parseInt(uString,10);
         const PM = new ProductModel();
         await PM.remove_shoe(shoeID);
         res.redirect("/admin/shoes");

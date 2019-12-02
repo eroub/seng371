@@ -1,4 +1,4 @@
-import DbClient = require("../DbClient");
+ import DbClient = require("../DbClient");
 
 export class ProductModel {
 
@@ -150,13 +150,13 @@ export class ProductModel {
         return result;
     }
 
-    public remove_shoe(shoeId: any) {
+    public remove_shoe(shoeId: number) {
         const removeUser = DbClient.connect()
             .then((db) => {
-                db!.collection("shoes").deleteOne({ shoe_id: shoeId});
+                db!.collection("shoes").deleteOne( {shoe_id: shoeId});
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
                 db!.collection("notifications").deleteMany({ shoe_id: shoeId});
-                db!.collection("users").deleteMany({ shoe_id: null});
+                console.log("deleted a shoe with id",+shoeId);
                 return true;
             })
             .catch((err) => {
