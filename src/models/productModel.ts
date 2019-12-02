@@ -56,7 +56,6 @@ export class ProductModel {
 
     public getOneShoe(shoeID: any) {
 
-        console.log(shoeID);
         // an array of objects holding indvidual json objects for each of the shoes the user has
         const jsonShoeArr: any[] = [];
 
@@ -126,6 +125,7 @@ export class ProductModel {
             .then((db) => {
                 db!.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
                     model: model, retail_price: rp, shoe_id: shoe_id, size: size});
+
                 console.log("adding shoe");
                 return true;
             })

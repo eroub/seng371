@@ -81,7 +81,6 @@ class Helpers {
     public async getUserKeys(userID: any) {
         const userIf = new CustomerModel();
         const userKeys: any = await userIf.getKeys(userID);
-        console.log(userKeys);
         return userKeys;
     }
 
