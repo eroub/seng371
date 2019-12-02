@@ -55,11 +55,8 @@ export class NotificationController extends BaseRoute {
             this.render(req, res, "notificationCentre",
                 {id: userId, title: "Notifications", notifications: userNotifications});
         } else {
-            res.status(404)
-            .send({
-                message: "No user with associated ID. Check the entered number.",
-                status: res.status,
-            });        }
+            Helpers.ID404(res);      
+        }
     }
 
     public async filterFulfilled(req: Request, res: Response, next: NextFunction) {
@@ -77,11 +74,8 @@ export class NotificationController extends BaseRoute {
             this.render(req, res, "notificationCentre",
                 {id: userId, title: "Notifications", notifications: fulfilledNots});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        }
+            Helpers.ID404(res);  
+        }
     }
 
     public async filterUnfulfilled(req: Request, res: Response, next: NextFunction) {
@@ -150,11 +144,7 @@ export class NotificationController extends BaseRoute {
         if (shoe && await Helpers.isUser(userId)) {
             this.render(req, res, "addNotification", { id: userId, shoe });
         } else {
-            res.status(404)
-                .send({
-                    message: "No shoe found with the given id.",
-                    status: res.status,
-                });
+            Helpers.shoe404(res);
         }
 
     }

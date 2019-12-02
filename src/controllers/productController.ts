@@ -63,11 +63,7 @@ export class ProductController extends BaseRoute {
         if (shoe) {
             this.render(req, res, "addShoe", {id: userId, shoe});
         } else {
-            res.status(404)
-                .send({
-                    message: "No shoe found with the given id.",
-                    status: res.status,
-                });
+            Helpers.shoe404(res);
         }
 
     }
@@ -264,11 +260,7 @@ export class ProductController extends BaseRoute {
                 title: "Shoes",
             });
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });
+            Helpers.ID404(res);
         }
     }
 

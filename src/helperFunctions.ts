@@ -11,6 +11,14 @@ class Helpers {
                 });   
     }
 
+    public shoe404(res: any) {
+        res.status(404)
+                    .send({
+                        message: "No shoe found with the given id.",
+                        status: res.status,
+                    });
+    }
+
     public async getMaxUser() {
         const c = new CustomerModel();
         const users: any = await c.get_users();
