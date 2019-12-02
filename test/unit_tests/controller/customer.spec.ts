@@ -85,13 +85,20 @@ describe('Testing customerController Functionality:', () => {
 
 
     it('settings: return code 200', async () => {
-
+        let id =2;
+        const response = await request(serve.getExpressInstance()).get("/user/"+id+"/settings");
+        chai.expect(response.statusCode).to.equal(200);
     }).timeout(5000);
+
     it('edit_shoe: return code 200', async () => {
-
+        const response = await request(serve.getExpressInstance()).get("/user/2/edit_shoe/2");
+        chai.expect(response.statusCode).to.equal(200);
     }).timeout(5000);
-    it('edit_username: return code ___', async () => {
 
+    it('edit_username: return code 200', async () => {
+
+        const response = await request(serve.getExpressInstance()).get("/user/2/edit_username");
+        chai.expect(response.statusCode).to.equal(200);
     }).timeout(5000);
     
 });
