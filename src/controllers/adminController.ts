@@ -106,7 +106,7 @@ export class AdminController extends BaseRoute {
 
     public async delUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = uString;
+        const userID = parseInt(req.params[uString]);
         const CM = new CustomerModel();
         await CM.remove_user(userID);
         res.redirect("/admin/users");
@@ -137,7 +137,7 @@ export class AdminController extends BaseRoute {
 
     public async editShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const shoeID = req.params[uString];
+        const shoeID = parseInt(req.params[uString]);
         const PM = new ProductModel();
 
         const shoeModel = req.body.model;

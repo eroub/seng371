@@ -120,7 +120,7 @@ export class ProductModel {
         return shoes;
     }
 
-    public add_shoe(model: any, shoeId: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
+    public add_shoe(model: any, shoeId: number, size: any, cp: any, rp: any, brand: any, colorway: any) {
         const addShoes = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").insertOne({ brand, colorway, current_price: cp,
