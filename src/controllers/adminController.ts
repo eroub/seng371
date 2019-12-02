@@ -101,9 +101,10 @@ export class AdminController extends BaseRoute {
     public async addUser(req: Request, res: Response, next: NextFunction) {
         let CM = new CustomerModel();
         let editedName:any = req.body.newusername;
-        let newID:any = req.body.newuserid;
+        let newID: any = (await Helpers.getMaxUser()) + 1;
+
         console.log("this is new id",newID);
-        await CM.add_user(newID,editedName);
+        await CM.add_user(newID, editedName);
         res.redirect('/admin/users');
 
 
@@ -120,19 +121,19 @@ export class AdminController extends BaseRoute {
     }
 
     public async addShoe(req: Request, res: Response, next: NextFunction) {
-        let CM = new CustomerModel();
-        let shoeModel, shoeCP, shoeRP,shoeid, shoeSize,brand,colorway: any;
+        let PM = new ProductModel();
+        let shoeID, shoeModel, shoeCP, shoeRP, shoeSize, brand, colorway: any;
 
         shoeModel = req.body.model;
         colorway = req.body.colorway;
         brand = req.body.brand;
-        shoeCP = req.body.current_price;
-        shoeRP = req.body.retail_price;
-        shoeSize = (req.body.size);
-        shoeid = req.body.id;
+        shoeCP = parseInt(req.body.current_price);
+        shoeRP = parseInt(req.body.retail_price);
+        shoeSize = parseInt(req.body.size);
+        shoeID = (await Helpers.getMaxShoe()) + 1;
 
-        let pm:any = new ProductModel();
-        await pm.add_shoe(shoeModel,shoeid, shoeSize, shoeCP, shoeRP,brand,colorway);
+
+        await PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway);
         res.redirect('/admin/shoes');
 
 
@@ -153,15 +154,16 @@ export class AdminController extends BaseRoute {
         const shoeID = req.params[uString];
         let PM = new ProductModel();
 
-        let shoeModel, shoeCP, shoeRP,shoeid, shoeSize,brand,colorway: any;
+        let shoeModel, shoeCP, shoeRP, shoeSize,brand,colorway: any;
 
         shoeModel = req.body.model;
         colorway = req.body.colorway;
         brand = req.body.brand;
-        shoeCP = req.body.current_price;
-        shoeRP = req.body.retail_price;
-        shoeSize = req.body.size;
-        await PM.edit_shoe(shoeModel,shoeID, shoeSize, shoeCP, shoeRP,brand,colorway);
+        shoeCP = parseInt(req.body.current_price,10);
+        shoeRP = parseInt(req.body.retail_price,10);
+        shoeSize = parseInt(req.body.size);
+        await PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway);
+
         res.redirect('/admin/shoes');
 
     }
