@@ -49,30 +49,45 @@ describe('Testing customerController Functionality:', () => {
 
     it(' should show a user their shoes from low to high ', async () => {
         let id = '1'; //this is an example of an invalid id, a correct id should consist of only digits
-        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/price_low');
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/current_price_low');
         chai.expect(response.statusCode).to.equal(200);
     }).timeout(5000);
     it(' should  return 404 when for invalid ids (users shoes low to high) ', async () => {
         let id = 'xy'; //this is an example of an invalid id, a correct id should consist of only digits
-        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/price_low');
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/current_price_low');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
 
     it('should show a user their shoes from high to low', async () => {
         let id = '1'; //this is an example of an invalid id, a correct id should consist of only digits
-        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/price_high');
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/current_price_high');
         chai.expect(response.statusCode).to.equal(200);
     }).timeout(5000);
     it(' should  return 404 when for invalid ids (users shoes high to low) ', async () => {
         let id = '50'; //this is an example of an invalid id, a correct id should consist of only digits
-        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/price_high');
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/_current_price_high');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
-    
-    it('settings: return code ___', async () => {
+
+
+    it('should show a user their shoes from high to low purchase price', async () => {
+        let id = '1'; //this is an example of an invalid id, a correct id should consist of only digits
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/purchase_price_high');
+        chai.expect(response.statusCode).to.equal(200);
+    }).timeout(5000);
+
+
+    it('should show a user their shoes from low to high purchase price', async () => {
+        let id = '1'; //this is an example of an invalid id, a correct id should consist of only digits
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/shoes/sort/purchase_price_low');
+        chai.expect(response.statusCode).to.equal(200);
+    }).timeout(5000);
+
+
+    it('settings: return code 200', async () => {
 
     }).timeout(5000);
-    it('edit_shoe: return code ___', async () => {
+    it('edit_shoe: return code 200', async () => {
 
     }).timeout(5000);
     it('edit_username: return code ___', async () => {
