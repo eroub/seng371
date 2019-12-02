@@ -57,6 +57,7 @@ var userShoes;
 var netGain = 0;
 var sunkCost = 0;
 var totalRevenue = 0;
+var numShoes = 0;
 var CustomerController = /** @class */ (function (_super) {
     __extends(CustomerController, _super);
     function CustomerController() {
@@ -64,12 +65,22 @@ var CustomerController = /** @class */ (function (_super) {
     }
     CustomerController.create = function (router) {
         // sorting all the shoes the user (id) owns from low to high
-        router.get("/user/:id/shoes/sort/price_low", function (req, res, next) {
-            new CustomerController().sortPriceLow(req, res, next);
+        router.get("/user/:id/shoes/sort/current_price_low", function (req, res, next) {
+            new CustomerController().sortCurrentPriceLow(req, res, next);
         });
         // sorting the shoes the user (id) owns from high to low
-        router.get("/user/:id/shoes/sort/price_high", function (req, res, next) {
-            new CustomerController().sortPriceHigh(req, res, next);
+        router.get("/user/:id/shoes/sort/current_price_high", function (req, res, next) {
+            new CustomerController().sortCurrentPriceHigh(req, res, next);
+        });
+        router.get("/user/:id/shoes/sort/purchase_price_low", function (req, res, next) {
+            new CustomerController().sortPurchasePriceLow(req, res, next);
+        });
+        // sorting the shoes the user (id) owns from high to low
+        router.get("/user/:id/shoes/sort/purchase_price_high", function (req, res, next) {
+            new CustomerController().sortPurchasePriceHigh(req, res, next);
+        });
+        router.get("/user/:id/settings", function (req, res, next) {
+            new CustomerController().settings(req, res, next);
         });
         // adds a shoe (id2) to a users (id) portfolio
         router.post("/user/:id/add_shoe/:id2", function (req, res, next) {
@@ -90,8 +101,55 @@ var CustomerController = /** @class */ (function (_super) {
         router.post("/user/:id/edit_shoe/:id2", function (req, res, next) {
             new CustomerController().editShoe(req, res, next);
         });
+        router.post("/user/:id/edit_username", function (req, res, next) {
+            new CustomerController().editUsername(req, res, next);
+        });
     };
-    CustomerController.prototype.sortPriceLow = function (req, res, next) {
+    CustomerController.prototype.settings = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (_a.sent()) {
+                            this.render(req, res, "settings", { id: queryint,
+                                title: "Settings", username: userJson.username });
+                        }
+                        else {
+                            res.status(404);
+                            res.send("invalid user");
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CustomerController.prototype.editUsername = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var uString, userID, uIF;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        uString = "id";
+                        userID = parseInt(req.params[uString], 10);
+                        uIF = new customerModel_1.CustomerModel();
+                        if (!req.body.uname) {
+                            req.body.uname = userJson.username;
+                        }
+                        return [4 /*yield*/, uIF.edit_userName(userID, req.body.uname)];
+                    case 1:
+                        _a.sent();
+                        res.redirect("/user/" + userID + "/shoes");
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CustomerController.prototype.sortCurrentPriceLow = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, sortedShoes;
             return __generator(this, function (_a) {
@@ -104,7 +162,7 @@ var CustomerController = /** @class */ (function (_super) {
                         if (_a.sent()) {
                             sortedShoes = userShoes;
                             sortedShoes.sort(function (a, b) { return a.current_price - b.current_price; });
-                            this.render(req, res, "allShoes", { data: sortedShoes, id: queryint, net: netGain, sunk: sunkCost,
+                            this.render(req, res, "allShoes", { data: sortedShoes, id: queryint, net: netGain, num: numShoes, sunk: sunkCost,
                                 title: "Shoes", total: totalRevenue, username: userJson.username });
                         }
                         else {
@@ -116,7 +174,7 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
-    CustomerController.prototype.sortPriceHigh = function (req, res, next) {
+    CustomerController.prototype.sortCurrentPriceHigh = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, sortedShoes;
             return __generator(this, function (_a) {
@@ -129,7 +187,57 @@ var CustomerController = /** @class */ (function (_super) {
                         if (_a.sent()) {
                             sortedShoes = userShoes;
                             sortedShoes.sort(function (a, b) { return b.current_price - a.current_price; });
-                            this.render(req, res, "allShoes", { data: sortedShoes, id: queryint, net: netGain, sunk: sunkCost,
+                            this.render(req, res, "allShoes", { data: sortedShoes, id: queryint, net: netGain, num: numShoes, sunk: sunkCost,
+                                title: "Shoes", total: totalRevenue, username: userJson.username });
+                        }
+                        else {
+                            res.status(404);
+                            res.send("invalid user");
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CustomerController.prototype.sortPurchasePriceLow = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint, sortedShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (_a.sent()) {
+                            sortedShoes = userShoes;
+                            sortedShoes.sort(function (a, b) { return a.purchase_price - b.purchase_price; });
+                            this.render(req, res, "allShoes", { data: sortedShoes, id: queryint, net: netGain, num: numShoes, sunk: sunkCost,
+                                title: "Shoes", total: totalRevenue, username: userJson.username });
+                        }
+                        else {
+                            res.status(404);
+                            res.send("invalid user");
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CustomerController.prototype.sortPurchasePriceHigh = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, queryint, sortedShoes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        queryint = parseInt(req.params[idString], 10);
+                        return [4 /*yield*/, this.check_local(queryint)];
+                    case 1:
+                        if (_a.sent()) {
+                            sortedShoes = userShoes;
+                            sortedShoes.sort(function (a, b) { return b.purchase_price - a.purchase_price; });
+                            this.render(req, res, "allShoes", { data: sortedShoes, id: queryint, net: netGain, num: numShoes, sunk: sunkCost,
                                 title: "Shoes", total: totalRevenue, username: userJson.username });
                         }
                         else {
@@ -155,7 +263,7 @@ var CustomerController = /** @class */ (function (_super) {
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
                         uif = new customerModel_1.CustomerModel();
-                        price = req.body.purchase_price;
+                        price = parseInt(req.body.purchase_price);
                         if (!price) {
                             price = 0;
                         }
@@ -191,7 +299,7 @@ var CustomerController = /** @class */ (function (_super) {
                         if (!req.body.threshold) {
                             req.body.threshold = 0;
                         }
-                        return [4 /*yield*/, uIF.edit_shoe(shoeID, req.body.purchase_price)];
+                        return [4 /*yield*/, uIF.edit_shoe(shoeID, parseInt(req.body.purchase_price))];
                     case 1:
                         _a.sent();
                         res.redirect("/user/" + userID + "/shoes");
@@ -244,15 +352,9 @@ var CustomerController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             userShoes.sort(function (a, b) {
-                                if (a.name < b.name) {
-                                    return -1;
-                                }
-                                if (a.name > b.name) {
-                                    return 1;
-                                }
-                                return 0;
+                                return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                             });
-                            this.render(req, res, "allShoes", { data: userShoes, id: queryint, net: netGain, sunk: sunkCost,
+                            this.render(req, res, "allShoes", { data: userShoes, id: queryint, net: netGain, num: numShoes, sunk: sunkCost,
                                 title: "Shoes", total: totalRevenue, username: userJson.username });
                         }
                         else {
@@ -331,6 +433,7 @@ var CustomerController = /** @class */ (function (_super) {
                         netGain = 0;
                         sunkCost = 0;
                         totalRevenue = 0;
+                        numShoes = 0;
                         return [4 /*yield*/, Helpers.getUserInfo(userID)];
                     case 1:
                         userJson = _a.sent();
@@ -350,7 +453,7 @@ var CustomerController = /** @class */ (function (_super) {
     };
     CustomerController.prototype.setNet = function (userShoes) {
         var _a;
-        _a = Helpers.setNet(userShoes), netGain = _a[0], sunkCost = _a[1], totalRevenue = _a[2];
+        _a = Helpers.setNet(userShoes), netGain = _a[0], sunkCost = _a[1], totalRevenue = _a[2], numShoes = _a[3];
     };
     return CustomerController;
 }(router_1.BaseRoute));
