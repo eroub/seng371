@@ -115,13 +115,13 @@ export class AdminController extends BaseRoute {
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         const PM = new ProductModel();
 
-        const shoeModel = req.body.model;
-        const colorway = req.body.colorway;
-        const brand = req.body.brand;
-        const shoeCP = parseInt(req.body.current_price, 10);
-        const shoeRP = parseInt(req.body.retail_price, 10);
-        const shoeSize = parseInt(req.body.size, 10);
         const shoeID = (await Helpers.getMaxShoe()) + 1;
+        const shoeSize = parseInt(req.body.size, 10);
+        const shoeRP = parseInt(req.body.retail_price, 10);
+        const shoeCP = parseInt(req.body.current_price, 10);
+        const brand = req.body.brand;
+        const colorway = req.body.colorway;
+        const shoeModel = req.body.model;
 
         await PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway);
         res.redirect("/admin/shoes");

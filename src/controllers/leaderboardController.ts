@@ -43,7 +43,8 @@ export class LeaderboardController extends BaseRoute {
             .send({
                 message: "No user with associated ID. Check the entered number.",
                 status: res.status,
-            });        }
+            });        
+        }
     }
 
     public async avgNetHigh(req: Request, res: Response, next: NextFunction) {
@@ -57,7 +58,8 @@ export class LeaderboardController extends BaseRoute {
                 .send({
                     message: "No user with associated ID. Check the entered number.",
                     status: res.status,
-                });        }
+                });        
+        }
     }
 
     public async avgNetLow(req: Request, res: Response, next: NextFunction) {
@@ -71,7 +73,8 @@ export class LeaderboardController extends BaseRoute {
                 .send({
                     message: "No user with associated ID. Check the entered number.",
                     status: res.status,
-                });        }
+                });        
+        }
     }
 
     public async netLow(req: Request, res: Response, next: NextFunction) {
@@ -85,7 +88,8 @@ export class LeaderboardController extends BaseRoute {
                 .send({
                     message: "No user with associated ID. Check the entered number.",
                     status: res.status,
-                });        }
+                });        
+        }
     }
 
     public async netHigh(req: Request, res: Response, next: NextFunction) {
@@ -99,7 +103,8 @@ export class LeaderboardController extends BaseRoute {
                 .send({
                     message: "No user with associated ID. Check the entered number.",
                     status: res.status,
-                });        }
+                });        
+        }
     }
 
     private async check_local(userID: any) {

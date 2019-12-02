@@ -23,14 +23,14 @@ export class ProductModel {
 
         const shoes = DbClient.connect()
             .then((db) => {
-                // will return all the shoes in db
+                // returns shoes in db
                 return db!.collection("shoes").find().toArray();
             })
             .then((sneakers: any) => {
                 // loop over all the shoes in db and push into jsonShoeArr only those that are
                 // owned by user
-                let shoe;
                 let id;
+                let shoe;
                 for (shoe of sneakers ) {
                     for (id of keyArr) {
                         // if current shoe is also a shoe owned by user, id is type string so we typecast to number
@@ -61,14 +61,10 @@ export class ProductModel {
 
         const shoes = DbClient.connect()
             .then((db) => {
-
                 // will return all the shoes in db
                 return db!.collection("shoes").find().toArray();
-
             })
-
             .then((sneakers: any) => {
-
                 // loop over all the shoes in db and push into jsonShoeArr only the shoe that has id
                 // shoeID
                 let shoe;
