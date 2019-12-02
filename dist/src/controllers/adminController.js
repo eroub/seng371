@@ -117,6 +117,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getUsers()];
                     case 1:
                         userArr = _a.sent();
+                        console.log("####", userArr);
                         this.render(req, res, "admin_user", { users: userArr, title: "All users" });
                         return [2 /*return*/];
                 }
@@ -290,7 +291,6 @@ var AdminController = /** @class */ (function (_super) {
                     case 0:
                         uString = "id";
                         shoeID = parseInt(req.params[uString]);
-                        console.log("this is the shoe to be delted", shoeID);
                         PM = new productModel_1.ProductModel();
                         return [4 /*yield*/, PM.remove_shoe(shoeID)];
                     case 1:
