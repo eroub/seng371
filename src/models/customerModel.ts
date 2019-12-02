@@ -7,7 +7,7 @@ export class CustomerModel {
 
     constructor() {}
 
-    public userInfo(userId: any) {
+    public userInfo(userId: number) {
         const users = DbClient.connect()
             .then((db) => {
                 return db!.collection("users").find({user_id: userId}).toArray();
@@ -36,7 +36,7 @@ export class CustomerModel {
         return shoeAdd;
     }
 
-    public edit_shoe(id: any, purchasePrice: any) {
+    public edit_shoe(id: any, purchasePrice: number) {
         const result = DbClient.connect()
             .then((db) => {
                 db!.collection("user_shoes").updateOne({_id: ObjectID(id)},
@@ -140,10 +140,14 @@ export class CustomerModel {
         return result;
     }
 
-    public add_user(userId: any, username: any) {
+
+
+    public add_user(userId: number, username: any) {
         const add_user = DbClient.connect()
             .then((db) => {
-                db!.collection("users").insertOne({ isAdmin: false, user_id: userId, username:username});
+                db!.collection("users").insertOne({ isAdmin: false, user_id: userId, username: username});
+                console.log("adding user");
+
                 return true;
             })
             .catch((err) => {

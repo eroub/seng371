@@ -120,10 +120,12 @@ export class ProductModel {
         return shoes;
     }
 
-    public add_shoe(model:any, shoe_id:any, size:any, cp:any, rp:any,brand:any,colorway:any) {
+    public add_shoe(model: any, shoe_id: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
         const add_shoes = DbClient.connect()
             .then((db) => {
-                db!.collection("shoes").insertOne({ size:size, brand:brand, colorway:colorway, shoe_id:shoe_id,model:model,current_price: cp, retail_price:rp});
+                db!.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
+                    model: model, retail_price: rp, shoe_id: shoe_id, size: size});
+
                 console.log("adding shoe");
                 return true;
             })
@@ -135,11 +137,11 @@ export class ProductModel {
     }
 
 
-    public edit_shoe(model:any, shoe_id:any, size:any, cp:any, rp:any,brand:any,colorway:any) {
+    public edit_shoe(model:any, shoe_id:any, size: any, cp: any, rp: any, brand: any, colorway: any) {
         const result = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").updateOne({shoe_id: shoe_id},
-                    {$set: {brand:brand, colorway:colorway,model:model,current_price: cp, retail_price:rp}});
+                    {$set: {brand: brand, colorway: colorway, current_price: cp, model: model, retail_price: rp, size: size}});
                 return true;
             })
             .catch((err) => {

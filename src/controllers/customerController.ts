@@ -154,7 +154,7 @@ export class CustomerController extends BaseRoute {
         const shoeId = parseInt(req.params[shoeIdString], 10);
         if (await this.check_local(userId)) {
             const uif = new CustomerModel();
-            let price = req.body.purchase_price;
+            let price = parseInt(req.body.purchase_price);
             if (!price) {
                 price = 0;
             }
@@ -180,7 +180,7 @@ export class CustomerController extends BaseRoute {
         if (!req.body.threshold) {
             req.body.threshold = 0;
         }
-        await uIF.edit_shoe(shoeID, req.body.purchase_price);
+        await uIF.edit_shoe(shoeID, parseInt(req.body.purchase_price));
         res.redirect("/user/" + userID + "/shoes");
     }
 
