@@ -53,7 +53,6 @@ var Helpers = require("../helperFunctions");
 var notificationModel_1 = require("../models/notificationModel");
 var productModel_1 = require("../models/productModel");
 var router_1 = require("../routes/router");
-var Helpers = require("../helperFunctions");
 var userNotifications;
 var Shoes;
 var id;
@@ -71,6 +70,12 @@ var NotificationController = /** @class */ (function (_super) {
         });
         router.get("/user/:id/edit_notification/:id2", function (req, res, next) {
             new NotificationController().editNotificationForm(req, res, next);
+        });
+        router.get("/user/:id/notifications/filter/fulfilled", function (req, res, next) {
+            new NotificationController().filterFulfilled(req, res, next);
+        });
+        router.get("/user/:id/notifications/filter/unfulfilled", function (req, res, next) {
+            new NotificationController().filterUnfulfilled(req, res, next);
         });
         router.post("/user/:id/add_notification/:id2", function (req, res, next) {
             new NotificationController().addNotification(req, res, next);
@@ -97,6 +102,72 @@ var NotificationController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: userNotifications });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.filterFulfilled = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, userId, fulfilledNots, item;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        fulfilledNots = [];
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (_a.sent()) {
+                            for (item in userNotifications) {
+                                if (userNotifications.hasOwnProperty(item)) {
+                                    if (userNotifications[item].fulfilled) {
+                                        fulfilledNots.push(userNotifications[item]);
+                                    }
+                                }
+                            }
+                            this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: fulfilledNots });
+                        }
+                        else {
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NotificationController.prototype.filterUnfulfilled = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var idString, userId, unfulfilledNots, item;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        idString = "id";
+                        userId = parseInt(req.params[idString], 10);
+                        unfulfilledNots = [];
+                        return [4 /*yield*/, this.check_local(userId)];
+                    case 1:
+                        if (_a.sent()) {
+                            for (item in userNotifications) {
+                                if (userNotifications.hasOwnProperty(item)) {
+                                    if (!userNotifications[item].fulfilled) {
+                                        unfulfilledNots.push(userNotifications[item]);
+                                    }
+                                }
+                            }
+                            this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: unfulfilledNots });
                         }
                         else {
                             res.status(404)
@@ -273,13 +344,7 @@ var NotificationController = /** @class */ (function (_super) {
                         return [3 /*break*/, 3];
                     case 6:
                         userNotifications.sort(function (a, b) {
-                            if (a.shoename < b.shoename) {
-                                return -1;
-                            }
-                            if (a.shoename > b.shoename) {
-                                return 1;
-                            }
-                            return 0;
+                            return a.shoename.toLowerCase().localeCompare(b.shoename.toLowerCase());
                         });
                         return [2 /*return*/, true];
                     case 7: return [2 /*return*/, false];

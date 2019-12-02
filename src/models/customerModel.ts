@@ -7,21 +7,18 @@ export class CustomerModel {
 
     constructor() {}
 
-    public userInfo(userId: any) {
+    public userInfo(userId: number) {
         const users = DbClient.connect()
             .then((db) => {
                 return db!.collection("users").find({user_id: userId}).toArray();
             })
             .then((sneakers: any) => {
-                // console.log(sneakers);
                 return sneakers;
                 // res.send(sneakers);
             })
             .catch((err) => {
                 console.log("err.message");
             });
-
-        // console.log(users);
 
         return users;
     }
@@ -30,7 +27,6 @@ export class CustomerModel {
         const shoeAdd = DbClient.connect()
             .then((db) => {
                 db!.collection("user_shoes").insertOne({user_id: userId, shoe_id: shoeID, purchase_price: purchase});
-                console.log("adding shoe");
                 return true;
             })
             .catch((err) => {
@@ -40,7 +36,7 @@ export class CustomerModel {
         return shoeAdd;
     }
 
-    public edit_shoe(id: any, purchasePrice: any) {
+    public edit_shoe(id: any, purchasePrice: number) {
         const result = DbClient.connect()
             .then((db) => {
                 db!.collection("user_shoes").updateOne({_id: ObjectID(id)},
@@ -121,8 +117,6 @@ export class CustomerModel {
                 return db!.collection("user_shoes").find().toArray();
             })
             .then((sneakers: any) => {
-                // console.log(sneakers);
-                console.log(sneakers);
                 return sneakers;
                 // res.send(sneakers);
             })
@@ -132,11 +126,11 @@ export class CustomerModel {
         return userKeys;
     }
 
-    public edit_userName(id:any, editedName:any) {
+    public edit_userName(id: any, editedName: any) {
         const result = DbClient.connect()
             .then((db) => {
                 db!.collection("users").updateOne({user_id: id},
-                    {$set: {username:editedName}});
+                    {$set: {username: editedName}});
                 return true;
             })
             .catch((err) => {
@@ -145,4 +139,33 @@ export class CustomerModel {
             });
         return result;
     }
+
+    public add_user(userId: number, username: any) {
+        const addUser = DbClient.connect()
+            .then((db) => {
+                db!.collection("users").insertOne({ isAdmin: false, user_id: userId, username});
+                console.log("adding user");
+
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return addUser;
+    }
+
+    public remove_user(userId: any) {
+        const removeUser = DbClient.connect()
+            .then((db) => {
+                db!.collection("users").deleteOne({ user_id: userId});
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return removeUser;
+    }
+
 }

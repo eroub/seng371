@@ -51,7 +51,6 @@ var ProductModel = /** @class */ (function () {
      Output type: a json shoe obejct ex: {shoe_id:3 ... }
      */
     ProductModel.prototype.getOneShoe = function (shoeID) {
-        console.log(shoeID);
         // an array of objects holding indvidual json objects for each of the shoes the user has
         var jsonShoeArr = [];
         var shoes = DbClient.connect()
@@ -105,6 +104,48 @@ var ProductModel = /** @class */ (function () {
             console.log("err.message");
         });
         return shoes;
+    };
+    ProductModel.prototype.add_shoe = function (model, shoe_id, size, cp, rp, brand, colorway) {
+        var add_shoes = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
+                model: model, retail_price: rp, shoe_id: shoe_id, size: size });
+            console.log("adding shoe");
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return add_shoes;
+    };
+    ProductModel.prototype.edit_shoe = function (model, shoe_id, size, cp, rp, brand, colorway) {
+        var result = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").updateOne({ shoe_id: shoe_id }, { $set: { brand: brand, colorway: colorway, current_price: cp, model: model, retail_price: rp, size: size } });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return result;
+    };
+    ProductModel.prototype.remove_shoe = function (shoeId) {
+        var remove_user = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").deleteOne({ shoe_id: shoeId });
+            db.collection("user_shoes").deleteMany({ shoe_id: shoeId });
+            db.collection("notifications").deleteMany({ shoe_id: shoeId });
+            db.collection("users").deleteMany({ shoe_id: null });
+            console.log("deleted shoe");
+            return true;
+        })
+            .catch(function (err) {
+            console.log("err.message");
+            return false;
+        });
+        return remove_user;
     };
     return ProductModel;
 }());

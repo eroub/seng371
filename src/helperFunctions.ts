@@ -3,6 +3,35 @@ import { ProductModel } from "./models/productModel";
 
 class Helpers {
 
+    public async getMaxUser() {
+        const c = new CustomerModel();
+        const users: any = await c.get_users();
+        let max: number = 0;
+        for (const item in users) {
+            if (users.hasOwnProperty(item)) {
+                console.log(users[item].user_id, max);
+                if (users[item].user_id > max) {
+                    max = users[item].user_id;
+                }
+            }
+        }
+        return max;
+    }
+
+    public async getMaxShoe() {
+        const p = new ProductModel();
+        const shoes: any = await p.getAllDB();
+        let max: any = 0;
+        for (const item in shoes) {
+            if (shoes.hasOwnProperty(item)) {
+                if (shoes[item].shoe_id > max) {
+                    max = shoes[item].shoe_id;
+                }
+            }
+        }
+        return max;
+    }
+
     public async getAllUserShoes() {
         const c = new CustomerModel();
         const shoes = await c.get_all_keys();
@@ -56,7 +85,6 @@ class Helpers {
     public async getUserKeys(userID: any) {
         const userIf = new CustomerModel();
         const userKeys: any = await userIf.getKeys(userID);
-        console.log(userKeys);
         return userKeys;
     }
 
@@ -77,14 +105,14 @@ class Helpers {
         if (allShoes) {
             return allShoes;
         }
-        return;
+        return [];
     }
 
     public findUserShoe(shoeID: any, userShoes: any) {
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 const shoe = userShoes[item];
-                if (shoe._id === shoeID) {
+                if (shoe._id.toString() === shoeID.toString()) {
                     return shoe;
                 }
             }
@@ -95,15 +123,17 @@ class Helpers {
         let net: number = 0;
         let sunk: number = 0;
         let total: number = 0;
+        let num: number = 0;
         for (const item in shoelist) {
             if (shoelist.hasOwnProperty(item)) {
                 const shoe = shoelist[item];
-                net = net + shoe.current_price - shoe.purchase_price;
+                net = net + parseInt(shoe.current_price, 10) - parseInt(shoe.purchase_price, 10);
                 sunk = sunk + parseInt(shoe.purchase_price, 10);
-                total = total + shoe.current_price;
+                total = total + parseInt(shoe.current_price, 10);
+                num++;
             }
         }
-        return [net, sunk, total];
+        return [net, sunk, total, num];
     }
 
     public async getUsers() {

@@ -23,6 +23,14 @@ export class NotificationController extends BaseRoute {
             new NotificationController().editNotificationForm(req, res, next);
         });
 
+        router.get("/user/:id/notifications/filter/fulfilled", (req: Request, res: Response, next: NextFunction) => {
+            new NotificationController().filterFulfilled(req, res, next);
+        });
+
+        router.get("/user/:id/notifications/filter/unfulfilled", (req: Request, res: Response, next: NextFunction) => {
+            new NotificationController().filterUnfulfilled(req, res, next);
+        });
+
         router.post("/user/:id/add_notification/:id2", (req: Request, res: Response, next: NextFunction) => {
             new NotificationController().addNotification(req, res, next);
         });
@@ -52,6 +60,50 @@ export class NotificationController extends BaseRoute {
                 message: "No user with associated ID. Check the entered number.",
                 status: res.status,
             });        }
+    }
+
+    public async filterFulfilled(req: Request, res: Response, next: NextFunction) {
+        const idString = "id";
+        const userId = parseInt(req.params[idString], 10);
+        const fulfilledNots: any = [];
+        if (await this.check_local(userId)) {
+            for (const item in userNotifications) {
+                if (userNotifications.hasOwnProperty(item)) {
+                    if (userNotifications[item].fulfilled) {
+                        fulfilledNots.push(userNotifications[item]);
+                    }
+                }
+            }
+            this.render(req, res, "notificationCentre",
+                {id: userId, title: "Notifications", notifications: fulfilledNots});
+        } else {
+            res.status(404)
+                .send({
+                    message: "No user with associated ID. Check the entered number.",
+                    status: res.status,
+                });        }
+    }
+
+    public async filterUnfulfilled(req: Request, res: Response, next: NextFunction) {
+        const idString = "id";
+        const userId = parseInt(req.params[idString], 10);
+        const unfulfilledNots: any = [];
+        if (await this.check_local(userId)) {
+            for (const item in userNotifications) {
+                if (userNotifications.hasOwnProperty(item)) {
+                    if (!userNotifications[item].fulfilled) {
+                        unfulfilledNots.push(userNotifications[item]);
+                    }
+                }
+            }
+            this.render(req, res, "notificationCentre",
+                {id: userId, title: "Notifications", notifications: unfulfilledNots});
+        } else {
+            res.status(404)
+                .send({
+                    message: "No user with associated ID. Check the entered number.",
+                    status: res.status,
+                });        }
     }
 
     public async addNotification(req: Request, res: Response, next: NextFunction) {
@@ -140,9 +192,7 @@ export class NotificationController extends BaseRoute {
                 }
             }
             userNotifications.sort((a: any, b: any) => {
-                if (a.shoename < b.shoename) { return -1; }
-                if (a.shoename > b.shoename) { return 1; }
-                return 0;
+                return a.shoename.toLowerCase().localeCompare(b.shoename.toLowerCase());
             });
             return true;
         } else {
@@ -156,7 +206,7 @@ export class NotificationController extends BaseRoute {
                 await this.fulfill(notification._id);
                 notification.fulfilled = true;
             }
-            if ((notification.type == "Above") && (notification.threshold < currentPrice)) {
+            if ((notification.type === "Above") && (notification.threshold < currentPrice)) {
                 await this.fulfill(notification._id);
                 notification.fulfilled = true;
             }

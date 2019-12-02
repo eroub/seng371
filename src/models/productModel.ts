@@ -56,7 +56,6 @@ export class ProductModel {
 
     public getOneShoe(shoeID: any) {
 
-        console.log(shoeID);
         // an array of objects holding indvidual json objects for each of the shoes the user has
         const jsonShoeArr: any[] = [];
 
@@ -120,4 +119,53 @@ export class ProductModel {
 
         return shoes;
     }
+
+    public add_shoe(model: any, shoeId: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
+        const addShoes = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").insertOne({ brand, colorway, current_price: cp,
+                    model, retail_price: rp, shoe_id: shoeId, size});
+
+                console.log("adding shoe");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return addShoes;
+    }
+
+    public edit_shoe(model: any, shoeId: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
+        const result = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").updateOne({shoe_id: shoeId},
+                    {$set: {brand, colorway, current_price: cp, model, retail_price: rp, size}});
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return result;
+    }
+
+    public remove_shoe(shoeId: any) {
+        const removeUser = DbClient.connect()
+            .then((db) => {
+                db!.collection("shoes").deleteOne({ shoe_id: shoeId});
+                db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
+                db!.collection("notifications").deleteMany({ shoe_id: shoeId});
+                db!.collection("users").deleteMany({ shoe_id: null});
+
+                console.log("deleted shoe");
+                return true;
+            })
+            .catch((err) => {
+                console.log("err.message");
+                return false;
+            });
+        return removeUser;
+    }
+
 }

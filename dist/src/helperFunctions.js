@@ -40,6 +40,51 @@ var productModel_1 = require("./models/productModel");
 var Helpers = /** @class */ (function () {
     function Helpers() {
     }
+    Helpers.prototype.getMaxUser = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var c, users, max, item;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        c = new customerModel_1.CustomerModel();
+                        return [4 /*yield*/, c.get_users()];
+                    case 1:
+                        users = _a.sent();
+                        max = 0;
+                        for (item in users) {
+                            if (users.hasOwnProperty(item)) {
+                                console.log(users[item].user_id, max);
+                                if (users[item].user_id > max)
+                                    max = users[item].user_id;
+                            }
+                        }
+                        return [2 /*return*/, max];
+                }
+            });
+        });
+    };
+    Helpers.prototype.getMaxShoe = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var p, shoes, max, item;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        p = new productModel_1.ProductModel();
+                        return [4 /*yield*/, p.getAllDB()];
+                    case 1:
+                        shoes = _a.sent();
+                        max = 0;
+                        for (item in shoes) {
+                            if (shoes.hasOwnProperty(item)) {
+                                if (shoes[item].shoe_id > max)
+                                    max = shoes[item].shoe_id;
+                            }
+                        }
+                        return [2 /*return*/, max];
+                }
+            });
+        });
+    };
     Helpers.prototype.getAllUserShoes = function () {
         return __awaiter(this, void 0, void 0, function () {
             var c, shoes;
@@ -133,7 +178,6 @@ var Helpers = /** @class */ (function () {
                         return [4 /*yield*/, userIf.getKeys(userID)];
                     case 1:
                         userKeys = _a.sent();
-                        console.log(userKeys);
                         return [2 /*return*/, userKeys];
                 }
             });
@@ -175,7 +219,7 @@ var Helpers = /** @class */ (function () {
                         if (allShoes) {
                             return [2 /*return*/, allShoes];
                         }
-                        return [2 /*return*/];
+                        return [2 /*return*/, []];
                 }
             });
         });
@@ -184,7 +228,7 @@ var Helpers = /** @class */ (function () {
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];
-                if (shoe._id == shoeID) {
+                if (shoe._id.toString() === shoeID.toString()) {
                     return shoe;
                 }
             }
@@ -194,15 +238,17 @@ var Helpers = /** @class */ (function () {
         var net = 0;
         var sunk = 0;
         var total = 0;
+        var num = 0;
         for (var item in shoelist) {
             if (shoelist.hasOwnProperty(item)) {
                 var shoe = shoelist[item];
-                net = net + shoe.current_price - shoe.purchase_price;
+                net = net + parseInt(shoe.current_price) - parseInt(shoe.purchase_price);
                 sunk = sunk + parseInt(shoe.purchase_price, 10);
-                total = total + shoe.current_price;
+                total = total + parseInt(shoe.current_price);
+                num++;
             }
         }
-        return [net, sunk, total];
+        return [net, sunk, total, num];
     };
     Helpers.prototype.getUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
