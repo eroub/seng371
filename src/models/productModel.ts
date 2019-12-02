@@ -43,7 +43,7 @@ export class ProductModel {
                 return jsonShoeArr;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting all shoes has failed");
             });
 
         return shoes;
@@ -78,7 +78,7 @@ export class ProductModel {
                 return jsonShoeArr[0];
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting a shoe has failed");
             });
 
         return shoes;
@@ -95,7 +95,7 @@ export class ProductModel {
                 return true;
             })
             .catch((err) => {
-                console.log("failed to update shoes");
+                console.log("Failed to update shoes");
                 return false;
             });
         return shoeUpdate;
@@ -110,7 +110,7 @@ export class ProductModel {
                 return sneakers;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Returning all shoes in the database has failed");
             });
 
         return shoes;
@@ -126,7 +126,7 @@ export class ProductModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Adding a shoe to the database has failed");
                 return false;
             });
         return addShoes;
@@ -140,7 +140,7 @@ export class ProductModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Editing a shoe has failed");
                 return false;
             });
         return result;
@@ -153,12 +153,10 @@ export class ProductModel {
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
                 db!.collection("notifications").deleteMany({ shoe_id: shoeId});
                 db!.collection("users").deleteMany({ shoe_id: null});
-
-                console.log("deleted shoe");
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Removing a shoe has failed");
                 return false;
             });
         return removeUser;
