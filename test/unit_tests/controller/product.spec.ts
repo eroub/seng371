@@ -39,4 +39,24 @@ describe('Testing productController Functionality:', () => {
         const response = await request(serve.getExpressInstance()).get('/user/' + id + '/allShoes/sort/price_high');
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
+
+    it('diff_high: return code ___', async () => {
+        
+    }).timeout(5000);
+    it('diff_low: return code ___', async () => {
+        
+    }).timeout(5000);
+    it('alpha_desc: return code ___', async () => {
+        
+    }).timeout(5000);
+    it('alpha_asc: return code ___', async () => {
+        
+    }).timeout(5000);
+    it('under_retail: return code ___', async () => {
+        
+    }).timeout(5000);
+    it('add_shoe: return code ___', async () => {
+        
+    }).timeout(5000);
+
 });
