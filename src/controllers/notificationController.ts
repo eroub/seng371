@@ -99,11 +99,8 @@ export class NotificationController extends BaseRoute {
             this.render(req, res, "notificationCentre",
                 {id: userId, title: "Notifications", notifications: unfulfilledNots});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        }
+            Helpers.ID404(res);     
+        }
     }
 
     public async addNotification(req: Request, res: Response, next: NextFunction) {
@@ -152,12 +149,6 @@ export class NotificationController extends BaseRoute {
         const shoe = await shoeIF.getOneShoe(shoeId);
         if (shoe && await Helpers.isUser(userId)) {
             this.render(req, res, "addNotification", { id: userId, shoe });
-            /* res.status(200)
-                .send({
-                    message: 'Success',
-                    status: res.status,
-                    shoe
-                }); */
         } else {
             res.status(404)
                 .send({

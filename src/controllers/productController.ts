@@ -85,11 +85,7 @@ export class ProductController extends BaseRoute {
             });
             this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user found with the given user id.",
-                    status: res.status,
-                });
+            Helpers.ID404(res);
         }
     }
 

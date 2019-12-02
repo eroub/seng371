@@ -161,13 +161,7 @@ export class CustomerController extends BaseRoute {
             await uif.add_shoe(userId, shoeId, price);
             res.redirect("/user/" + userId + "/shoes/");
         } else {
-            res.status(404)
-            .send({
-                message: "No user with associated ID. Check the entered number.",
-                status: res.status,
-            });
-            res.send("invalid user");
-
+            Helpers.ID404(res);
         }
     }
 
