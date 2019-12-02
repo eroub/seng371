@@ -108,7 +108,8 @@ var ProductModel = /** @class */ (function () {
     ProductModel.prototype.add_shoe = function (model, shoe_id, size, cp, rp, brand, colorway) {
         var add_shoes = DbClient.connect()
             .then(function (db) {
-            db.collection("shoes").insertOne({ size: size, brand: brand, colorway: colorway, shoe_id: shoe_id, model: model, current_price: cp, retail_price: rp });
+            db.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
+                model: model, retail_price: rp, shoe_id: shoe_id, size: size });
             console.log("adding shoe");
             return true;
         })
@@ -121,7 +122,7 @@ var ProductModel = /** @class */ (function () {
     ProductModel.prototype.edit_shoe = function (model, shoe_id, size, cp, rp, brand, colorway) {
         var result = DbClient.connect()
             .then(function (db) {
-            db.collection("shoes").updateOne({ shoe_id: shoe_id }, { $set: { brand: brand, colorway: colorway, model: model, current_price: cp, retail_price: rp } });
+            db.collection("shoes").updateOne({ shoe_id: shoe_id }, { $set: { brand: brand, colorway: colorway, current_price: cp, model: model, retail_price: rp, size: size } });
             return true;
         })
             .catch(function (err) {

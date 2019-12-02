@@ -82,7 +82,7 @@ export class AdminController extends BaseRoute {
     }
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = uString;
+        const userID = parseInt(uString,10);
         let CM = new CustomerModel();
         let user = await CM.userInfo(userID);
         user = user[0];
