@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { BaseRoute } from "./router";
 import { CustomerModel } from "../models/customerModel";
-import Helpers = require("../helperFunctions");
+import { BaseRoute } from "./router";
 
 /**
  * / route
@@ -55,11 +54,21 @@ export class IndexRoute extends BaseRoute {
             return a.username.toLowerCase().localeCompare(b.username.toLowerCase());
         });
 
+        const admins: any = [];
+        const regularUsers: any = [];
+
+        for(const item in users) {
+            if(users.hasOwnProperty(item)) {
+                if(users[item].isAdmin) admins.push(users[item]);
+                else regularUsers.push(users[item]);
+            }
+        }
+
         const options: object = {
             message: "Welcome!",
-            users: users
+            regularUsers,
+            admins
         };
-
 
         // render template
         this.render(req, res, "index", options);

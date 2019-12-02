@@ -79,8 +79,8 @@ export class ProductController extends BaseRoute {
         id = userId;
         if (await this.setLocal(userId)) {
             allShoes.sort((a: any, b: any) => {
-                const aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                const bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                const aname = a.brand + " " + a.model + " " + a.colorway;
+                const bname = b.brand + " " + b.model + " " + b.colorway;
                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
             });
             this.render(req, res, "shoeList", {id: userId, title: "Shoes", data: allShoes});
@@ -99,16 +99,15 @@ export class ProductController extends BaseRoute {
             allShoes = await shoeIf.getAllDB();
             id = userID;
             return true;
+        } else {
+            return false;
         }
-        else return false;
-
     }
 
     public async check_local(userID: any) {
         if (!allShoes) {
             return await this.setLocal(userID);
-        }
-        else if (userID != id) {
+        } else if (userID !== id) {
             return await this.setLocal(userID);
         }
         return true;
@@ -135,8 +134,8 @@ export class ProductController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
             allShoes.sort((a: any, b: any) => {
-                const aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                const bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                const aname = a.brand + " " + a.model + " " + a.colorway;
+                const bname = b.brand + " " + b.model + " " + b.colorway;
                 return bname.toLowerCase().localeCompare(aname.toLowerCase());
             });
             this.render(req, res, "shoeList", {
@@ -155,8 +154,8 @@ export class ProductController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
             allShoes.sort((a: any, b: any) => {
-                const aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                const bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                const aname = a.brand + " " + a.model + " " + a.colorway;
+                const bname = b.brand + " " + b.model + " " + b.colorway;
                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
             });
             this.render(req, res, "shoeList", {
@@ -253,11 +252,11 @@ export class ProductController extends BaseRoute {
     public async underRetail(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
-        let underRetail: any = [];
-        if(await this.check_local(userId)) {
-            for(const item in allShoes) {
-                if(allShoes.hasOwnProperty(item)) {
-                    if((allShoes[item].current_price - allShoes[item].retail_price) < 0) {
+        const underRetail: any = [];
+        if (await this.check_local(userId)) {
+            for (const item in allShoes) {
+                if (allShoes.hasOwnProperty(item)) {
+                    if ((allShoes[item].current_price - allShoes[item].retail_price) < 0) {
                         underRetail.push(allShoes[item]);
                     }
                 }
@@ -268,13 +267,13 @@ export class ProductController extends BaseRoute {
                 id: userId,
                 title: "Shoes",
             });
-        }
-        else {
+        } else {
             res.status(404)
                 .send({
                     message: "No user with associated ID. Check the entered number.",
                     status: res.status,
-                });        }
+                });
+        }
     }
 
 }

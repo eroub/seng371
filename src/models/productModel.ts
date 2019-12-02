@@ -43,7 +43,7 @@ export class ProductModel {
                 return jsonShoeArr;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting all shoes has failed");
             });
 
         return shoes;
@@ -82,7 +82,7 @@ export class ProductModel {
                 return jsonShoeArr[0];
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting a shoe has failed");
             });
 
         return shoes;
@@ -99,7 +99,7 @@ export class ProductModel {
                 return true;
             })
             .catch((err) => {
-                console.log("failed to update shoes");
+                console.log("Failed to update shoes");
                 return false;
             });
         return shoeUpdate;
@@ -114,65 +114,56 @@ export class ProductModel {
                 return sneakers;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Returning all shoes in the database has failed");
             });
 
         return shoes;
     }
 
-    public add_shoe(model: any, shoe_id: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
-        const add_shoes = DbClient.connect()
+    public add_shoe(model: any, shoeId: number, size: any, cp: any, rp: any, brand: any, colorway: any) {
+        const addShoes = DbClient.connect()
             .then((db) => {
-                db!.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
-                    model: model, retail_price: rp, shoe_id: shoe_id, size: size});
+                db!.collection("shoes").insertOne({ brand, colorway, current_price: cp,
+                    model, retail_price: rp, shoe_id: shoeId, size});
 
                 console.log("adding shoe");
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Adding a shoe to the database has failed");
                 return false;
             });
-        return add_shoes;
+        return addShoes;
     }
 
-
-    public edit_shoe(model:any, shoe_id:any, size: any, cp: any, rp: any, brand: any, colorway: any) {
+    public edit_shoe(model: any, shoeId: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
         const result = DbClient.connect()
             .then((db) => {
-                db!.collection("shoes").updateOne({shoe_id: shoe_id},
-                    {$set: {brand: brand, colorway: colorway, current_price: cp, model: model, retail_price: rp, size: size}});
+                db!.collection("shoes").updateOne({shoe_id: shoeId},
+                    {$set: {brand, colorway, current_price: cp, model, retail_price: rp, size}});
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Editing a shoe has failed");
                 return false;
             });
         return result;
     }
 
     public remove_shoe(shoeId: any) {
-        const remove_user = DbClient.connect()
+        const removeUser = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").deleteOne({ shoe_id: shoeId});
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
                 db!.collection("notifications").deleteMany({ shoe_id: shoeId});
                 db!.collection("users").deleteMany({ shoe_id: null});
-
-                console.log("deleted shoe");
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Removing a shoe has failed");
                 return false;
             });
-        return remove_user;
+        return removeUser;
     }
-
-
-
-
-
-
 
 }
