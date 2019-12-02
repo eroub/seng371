@@ -68,5 +68,15 @@ describe('Testing customerController Functionality:', () => {
         chai.expect(response.statusCode).to.equal(404);
     }).timeout(5000);
     
+    it('settings: return code ___', async () => {
+
+    }).timeout(5000);
+    it('edit_shoe: return code ___', async () => {
+
+    }).timeout(5000);
+    it('edit_username: return code ___', async () => {
+
+    }).timeout(5000);
+    
 });
 
