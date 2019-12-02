@@ -14,10 +14,9 @@ export class CustomerModel {
             })
             .then((sneakers: any) => {
                 return sneakers;
-                // res.send(sneakers);
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Grabbing user info from the database has failed");
             });
 
         return users;
@@ -30,7 +29,7 @@ export class CustomerModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Adding a shoe to the database has failed");
                 return false;
             });
         return shoeAdd;
@@ -44,7 +43,7 @@ export class CustomerModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Editing a shoe in the database has failed");
                 return false;
             });
         return result;
@@ -57,7 +56,7 @@ export class CustomerModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Removing a shoe from the database has failed");
                 return false;
             });
         return shoeRemove;
@@ -76,7 +75,7 @@ export class CustomerModel {
                 }
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Confirmation of user has failed");
             });
         return result;
     }
@@ -88,10 +87,9 @@ export class CustomerModel {
             })
             .then((sneakers: any) => {
                 return sneakers;
-                // res.send(sneakers);
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting user keys has failed");
             });
         return userKeys;
     }
@@ -103,10 +101,9 @@ export class CustomerModel {
             })
             .then((sneakers: any) => {
                 return sneakers;
-                // res.send(sneakers);
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting user array has failed");
             });
         return users;
     }
@@ -118,10 +115,9 @@ export class CustomerModel {
             })
             .then((sneakers: any) => {
                 return sneakers;
-                // res.send(sneakers);
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting key array has failed");
             });
         return userKeys;
     }
@@ -134,7 +130,7 @@ export class CustomerModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Editing the user name has failed");
                 return false;
             });
         return result;
@@ -144,12 +140,10 @@ export class CustomerModel {
         const addUser = DbClient.connect()
             .then((db) => {
                 db!.collection("users").insertOne({ isAdmin: false, user_id: userId, username});
-                console.log("adding user");
-
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Adding the user has failed");
                 return false;
             });
         return addUser;
@@ -162,7 +156,7 @@ export class CustomerModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Removing the user has failed");
                 return false;
             });
         return removeUser;
