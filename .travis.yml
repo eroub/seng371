@@ -6,6 +6,8 @@ cache:
     - "node_modules"
 services:
   - docker
+install:
+  - npm install
 
 after_success:
   - docker login -u eroubekas -p software350 ; 
