@@ -289,7 +289,8 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        shoeID = parseInt(uString, 10);
+                        shoeID = parseInt(req.params[uString]);
+                        console.log("this is the shoe to be delted", shoeID);
                         PM = new productModel_1.ProductModel();
                         return [4 /*yield*/, PM.remove_shoe(shoeID)];
                     case 1:

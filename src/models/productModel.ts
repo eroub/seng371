@@ -150,8 +150,8 @@ export class ProductModel {
         return result;
     }
 
-    public remove_shoe(shoeId: number) {
-        const removeUser = DbClient.connect()
+    public remove_shoe(shoeId: any) {
+        const removeShoe = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").deleteOne( {shoe_id: shoeId});
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
@@ -163,7 +163,7 @@ export class ProductModel {
                 console.log("Removing a shoe has failed");
                 return false;
             });
-        return removeUser;
+        return removeShoe;
     }
 
 }
