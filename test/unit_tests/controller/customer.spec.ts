@@ -31,6 +31,7 @@ describe('Testing customerController Functionality:', () => {
         const response = await request(serve.getExpressInstance()).post('/user/1/add_shoe/1');
         chai.expect(response.statusCode).to.equal(302);
     }).timeout(5000);
+
     it('Fails to add a shoe to non-existent user portfolio (404)', async () => {
         const serve = new Server();
         const response = await request(serve.getExpressInstance()).post('/user/55/add_shoe/3');

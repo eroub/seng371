@@ -59,6 +59,7 @@ export class AdminController extends BaseRoute {
     }
 
     public async showAdmin(req: Request, res: Response, next: NextFunction) {
+        res.status(200);
         this.render(req, res, "admin", { title: "Admin"});
     }
 
