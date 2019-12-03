@@ -4,12 +4,13 @@ block content
     p #[a(href='/admin') Back]&nbsp
     h1 All Users:
     for user in users
-        h3 #{user.username} (User ID: #{user.user_id})
-        //Each user has buttons for editing router.get(‘/admin/edit_user/:id’)
-        a(href='/admin/users/' + 'edit_user/'+user.user_id )
-         button.btn.btn-primary(type='button') Edit User
-        p
-        form(method='post' action='/admin/users/' + 'del_user/' + user.user_id )
+        if !user.isAdmin
+            h3 #{user.username} (User ID: #{user.user_id})
+            //Each user has buttons for editing router.get(‘/admin/edit_user/:id’)
+            a(href='/admin/users/' + 'edit_user/'+user.user_id )
+             button.btn.btn-primary(type='button') Edit User
+            p
+            form(method='post' action='/admin/users/' + 'del_user/' + user.user_id )
              div.form-group
               button.btn.btn-primary(type='submit') Delete User
 

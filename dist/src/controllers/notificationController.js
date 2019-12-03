@@ -365,7 +365,7 @@ var NotificationController = /** @class */ (function (_super) {
                         notification.fulfilled = true;
                         _a.label = 2;
                     case 2:
-                        if (!((notification.type == "Above") && (notification.threshold < currentPrice))) return [3 /*break*/, 4];
+                        if (!((notification.type === "Above") && (notification.threshold < currentPrice))) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.fulfill(notification._id)];
                     case 3:
                         _a.sent();

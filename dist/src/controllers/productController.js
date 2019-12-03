@@ -142,8 +142,8 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                                var bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                                var aname = a.brand + " " + a.model + " " + a.colorway;
+                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });
@@ -187,7 +187,7 @@ var ProductController = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.setLocal(userID)];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2:
-                        if (!(userID != id)) return [3 /*break*/, 4];
+                        if (!(userID !== id)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.setLocal(userID)];
                     case 3: return [2 /*return*/, _a.sent()];
                     case 4: return [2 /*return*/, true];
@@ -234,8 +234,8 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                                var bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                                var aname = a.brand + " " + a.model + " " + a.colorway;
+                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return bname.toLowerCase().localeCompare(aname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", {
@@ -265,8 +265,8 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                                var bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                                var aname = a.brand + " " + a.model + " " + a.colorway;
+                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", {

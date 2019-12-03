@@ -13,10 +13,9 @@ var NotificationModel = /** @class */ (function () {
         })
             .then(function (notif) {
             return notif;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting user notifications has failed");
         });
         return notifications;
     };
@@ -27,7 +26,7 @@ var NotificationModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Notification fulfillment has failed");
             return false;
         });
         return result;
@@ -40,7 +39,7 @@ var NotificationModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Adding a notification has failed");
             return false;
         });
         return nAdd;
@@ -52,7 +51,7 @@ var NotificationModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Removing a notification has failed");
             return false;
         });
         return nRemove;
@@ -67,7 +66,7 @@ var NotificationModel = /** @class */ (function () {
             // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting a notification has failed");
         });
         return notification;
     };
@@ -78,7 +77,7 @@ var NotificationModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Editing a notification has failed");
             return false;
         });
         return result;

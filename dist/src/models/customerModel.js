@@ -13,10 +13,9 @@ var CustomerModel = /** @class */ (function () {
         })
             .then(function (sneakers) {
             return sneakers;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Grabbing user info from the database has failed");
         });
         return users;
     };
@@ -27,7 +26,7 @@ var CustomerModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Adding a shoe to the database has failed");
             return false;
         });
         return shoeAdd;
@@ -39,7 +38,7 @@ var CustomerModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Editing a shoe in the database has failed");
             return false;
         });
         return result;
@@ -51,7 +50,7 @@ var CustomerModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Removing a shoe from the database has failed");
             return false;
         });
         return shoeRemove;
@@ -70,7 +69,7 @@ var CustomerModel = /** @class */ (function () {
             }
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Confirmation of user has failed");
         });
         return result;
     };
@@ -81,10 +80,9 @@ var CustomerModel = /** @class */ (function () {
         })
             .then(function (sneakers) {
             return sneakers;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting user keys has failed");
         });
         return userKeys;
     };
@@ -95,10 +93,9 @@ var CustomerModel = /** @class */ (function () {
         })
             .then(function (sneakers) {
             return sneakers;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting user array has failed");
         });
         return users;
     };
@@ -109,10 +106,9 @@ var CustomerModel = /** @class */ (function () {
         })
             .then(function (sneakers) {
             return sneakers;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting key array has failed");
         });
         return userKeys;
     };
@@ -123,35 +119,36 @@ var CustomerModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Editing the user name has failed");
             return false;
         });
         return result;
     };
     CustomerModel.prototype.add_user = function (userId, username) {
-        var add_user = DbClient.connect()
+        var addUser = DbClient.connect()
             .then(function (db) {
             db.collection("users").insertOne({ isAdmin: false, user_id: userId, username: username });
-            console.log("adding user");
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Adding the user has failed");
             return false;
         });
-        return add_user;
+        return addUser;
     };
     CustomerModel.prototype.remove_user = function (userId) {
-        var remove_user = DbClient.connect()
+        var removeUser = DbClient.connect()
             .then(function (db) {
             db.collection("users").deleteOne({ user_id: userId });
+            db.collection("user_shoes").deleteMany({ user_id: userId });
+            db.collection("notifications").deleteMany({ user_id: userId });
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Removing the user has failed");
             return false;
         });
-        return remove_user;
+        return removeUser;
     };
     return CustomerModel;
 }());
