@@ -1,4 +1,4 @@
-import DbClient = require("../DbClient");
+ import DbClient = require("../DbClient");
 
 export class ProductModel {
 
@@ -116,7 +116,7 @@ export class ProductModel {
         return shoes;
     }
 
-    public add_shoe(model: any, shoeId: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
+    public add_shoe(model: any, shoeId: number, size: any, cp: any, rp: any, brand: any, colorway: any) {
         const addShoes = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").insertOne({ brand, colorway, current_price: cp,
@@ -147,19 +147,19 @@ export class ProductModel {
     }
 
     public remove_shoe(shoeId: any) {
-        const removeUser = DbClient.connect()
+        const removeShoe = DbClient.connect()
             .then((db) => {
-                db!.collection("shoes").deleteOne({ shoe_id: shoeId});
+                db!.collection("shoes").deleteOne( {shoe_id: shoeId});
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
                 db!.collection("notifications").deleteMany({ shoe_id: shoeId});
-                db!.collection("users").deleteMany({ shoe_id: null});
+                console.log("deleted a shoe with id",+shoeId);
                 return true;
             })
             .catch((err) => {
                 console.log("Removing a shoe has failed");
                 return false;
             });
-        return removeUser;
+        return removeShoe;
     }
 
 }

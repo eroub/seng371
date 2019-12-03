@@ -140,6 +140,8 @@ var CustomerModel = /** @class */ (function () {
         var removeUser = DbClient.connect()
             .then(function (db) {
             db.collection("users").deleteOne({ user_id: userId });
+            db.collection("user_shoes").deleteMany({ user_id: userId });
+            db.collection("notifications").deleteMany({ user_id: userId });
             return true;
         })
             .catch(function (err) {

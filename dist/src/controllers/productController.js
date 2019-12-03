@@ -138,8 +138,8 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 var aname = a.brand + " " + a.model + " " + a.colorway;
+                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });

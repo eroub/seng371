@@ -54,9 +54,20 @@ export class IndexRoute extends BaseRoute {
             return a.username.toLowerCase().localeCompare(b.username.toLowerCase());
         });
 
+        const admins: any = [];
+        const regularUsers: any = [];
+
+        for(const item in users) {
+            if(users.hasOwnProperty(item)) {
+                if(users[item].isAdmin) admins.push(users[item]);
+                else regularUsers.push(users[item]);
+            }
+        }
+
         const options: object = {
             message: "Welcome!",
-            users,
+            regularUsers,
+            admins
         };
 
         // render template

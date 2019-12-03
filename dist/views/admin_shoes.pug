@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    p #[a(href='/') Back]&nbsp
+    p #[a(href='/admin') Back]&nbsp
     h1 All Shoes:
     for shoe in shoes
         h2 #{shoe.brand}  #{shoe.model} #{shoe.colorway}
@@ -17,7 +17,7 @@ block content
         p
         form(method='post' action='/admin/shoes/' + 'del_shoe/' + shoe.shoe_id )
             div.form-group
-                button.btn.btn-primary(type='submit') Delete shoe
+            button.btn.btn-primary(type='submit') Delete shoe
 
 
     h1 Add Shoe:

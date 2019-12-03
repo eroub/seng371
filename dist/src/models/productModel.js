@@ -114,7 +114,7 @@ var ProductModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("Failed to add a shoe");
+            console.log("Adding a shoe to the database has failed");
             return false;
         });
         return addShoes;
@@ -132,19 +132,19 @@ var ProductModel = /** @class */ (function () {
         return result;
     };
     ProductModel.prototype.remove_shoe = function (shoeId) {
-        var removeUser = DbClient.connect()
+        var removeShoe = DbClient.connect()
             .then(function (db) {
             db.collection("shoes").deleteOne({ shoe_id: shoeId });
             db.collection("user_shoes").deleteMany({ shoe_id: shoeId });
             db.collection("notifications").deleteMany({ shoe_id: shoeId });
-            db.collection("users").deleteMany({ shoe_id: null });
+            console.log("deleted a shoe with id", +shoeId);
             return true;
         })
             .catch(function (err) {
             console.log("Removing a shoe has failed");
             return false;
         });
-        return removeUser;
+        return removeShoe;
     };
     return ProductModel;
 }());

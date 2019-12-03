@@ -92,7 +92,7 @@ var IndexRoute = /** @class */ (function (_super) {
      */
     IndexRoute.prototype.index = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var cIF, users, options;
+            var cIF, users, admins, regularUsers, item, options;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -105,9 +105,20 @@ var IndexRoute = /** @class */ (function (_super) {
                         users.sort(function (a, b) {
                             return a.username.toLowerCase().localeCompare(b.username.toLowerCase());
                         });
+                        admins = [];
+                        regularUsers = [];
+                        for (item in users) {
+                            if (users.hasOwnProperty(item)) {
+                                if (users[item].isAdmin)
+                                    admins.push(users[item]);
+                                else
+                                    regularUsers.push(users[item]);
+                            }
+                        }
                         options = {
                             message: "Welcome!",
-                            users: users,
+                            regularUsers: regularUsers,
+                            admins: admins
                         };
                         // render template
                         this.render(req, res, "index", options);
