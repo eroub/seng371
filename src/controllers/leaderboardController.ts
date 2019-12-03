@@ -39,11 +39,8 @@ export class LeaderboardController extends BaseRoute {
         if (await this.createBoard(userId)) {
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-            .send({
-                message: "No user with associated ID. Check the entered number.",
-                status: res.status,
-            });        }
+            Helpers.ID404(res);    
+        }
     }
 
     public async avgNetHigh(req: Request, res: Response, next: NextFunction) {
@@ -53,11 +50,8 @@ export class LeaderboardController extends BaseRoute {
                 leaderboard.sort((a: any, b: any) => b.avg_net - a.avg_net);
                 this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        }
+            Helpers.ID404(res);       
+        }
     }
 
     public async avgNetLow(req: Request, res: Response, next: NextFunction) {
@@ -67,11 +61,8 @@ export class LeaderboardController extends BaseRoute {
             leaderboard.sort((a: any, b: any) => a.avg_net - b.avg_net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        }
+            Helpers.ID404(res);   
+        }
     }
 
     public async netLow(req: Request, res: Response, next: NextFunction) {
@@ -81,11 +72,8 @@ export class LeaderboardController extends BaseRoute {
             leaderboard.sort((a: any, b: any) => a.net - b.net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        }
+            Helpers.ID404(res);       
+        }
     }
 
     public async netHigh(req: Request, res: Response, next: NextFunction) {
@@ -95,11 +83,8 @@ export class LeaderboardController extends BaseRoute {
             leaderboard.sort((a: any, b: any) => b.net - a.net);
             this.render(req, res, "leaderboard", {id: userId, title: "Leaderboard", leaderboard});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });        }
+            Helpers.ID404(res);       
+        }
     }
 
     private async check_local(userID: any) {
@@ -146,7 +131,6 @@ export class LeaderboardController extends BaseRoute {
         ranking["revenue"] = revenue;
         ranking["avg_net"] = avgNet;
         ranking["num"] = userShoes.length;
-        console.log(ranking);
         leaderboard.push(ranking);
     }
 

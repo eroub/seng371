@@ -14,10 +14,9 @@ export class NotificationModel {
             })
             .then((notif: any) => {
                 return notif;
-                // res.send(sneakers);
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting user notifications has failed");
             });
         return notifications;
     }
@@ -29,7 +28,7 @@ export class NotificationModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Notification fulfillment has failed");
                 return false;
             });
         return result;
@@ -43,7 +42,7 @@ export class NotificationModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Adding a notification has failed");
                 return false;
             });
         return nAdd;
@@ -56,7 +55,7 @@ export class NotificationModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Removing a notification has failed");
                 return false;
             });
         return nRemove;
@@ -72,7 +71,7 @@ export class NotificationModel {
                 // res.send(sneakers);
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Getting a notification has failed");
             });
         return notification;
     }
@@ -85,7 +84,7 @@ export class NotificationModel {
                 return true;
             })
             .catch((err) => {
-                console.log("err.message");
+                console.log("Editing a notification has failed");
                 return false;
             });
         return result;

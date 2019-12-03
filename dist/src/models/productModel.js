@@ -42,7 +42,7 @@ var ProductModel = /** @class */ (function () {
             return jsonShoeArr;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting all shoes has failed");
         });
         return shoes;
     };
@@ -51,7 +51,6 @@ var ProductModel = /** @class */ (function () {
      Output type: a json shoe obejct ex: {shoe_id:3 ... }
      */
     ProductModel.prototype.getOneShoe = function (shoeID) {
-        console.log(shoeID);
         // an array of objects holding indvidual json objects for each of the shoes the user has
         var jsonShoeArr = [];
         var shoes = DbClient.connect()
@@ -74,7 +73,7 @@ var ProductModel = /** @class */ (function () {
             return jsonShoeArr[0];
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting a shoe has failed");
         });
         return shoes;
     };
@@ -88,7 +87,7 @@ var ProductModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("failed to update shoes");
+            console.log("Failed to update shoes");
             return false;
         });
         return shoeUpdate;
@@ -102,9 +101,50 @@ var ProductModel = /** @class */ (function () {
             return sneakers;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Returning all shoes in the database has failed");
         });
         return shoes;
+    };
+    ProductModel.prototype.add_shoe = function (model, shoeId, size, cp, rp, brand, colorway) {
+        var addShoes = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
+                model: model, retail_price: rp, shoe_id: shoeId, size: size });
+            console.log("adding shoe");
+            return true;
+        })
+            .catch(function (err) {
+            console.log("Adding a shoe to the database has failed");
+            return false;
+        });
+        return addShoes;
+    };
+    ProductModel.prototype.edit_shoe = function (model, shoeId, size, cp, rp, brand, colorway) {
+        var result = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").updateOne({ shoe_id: shoeId }, { $set: { brand: brand, colorway: colorway, current_price: cp, model: model, retail_price: rp, size: size } });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("Editing a shoe has failed");
+            return false;
+        });
+        return result;
+    };
+    ProductModel.prototype.remove_shoe = function (shoeId) {
+        var removeShoe = DbClient.connect()
+            .then(function (db) {
+            db.collection("shoes").deleteOne({ shoe_id: shoeId });
+            db.collection("user_shoes").deleteMany({ shoe_id: shoeId });
+            db.collection("notifications").deleteMany({ shoe_id: shoeId });
+            console.log("deleted a shoe with id", +shoeId);
+            return true;
+        })
+            .catch(function (err) {
+            console.log("Removing a shoe has failed");
+            return false;
+        });
+        return removeShoe;
     };
     return ProductModel;
 }());

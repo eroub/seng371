@@ -3,6 +3,7 @@ extends layout
 block content
     a(href='/user/' + id + '/shoes') Back
     h1 Notifications:
+    p Filter: #[a(href='/user/' + id + '/notifications') All]&nbsp #[a(href='/user/' + id + '/notifications/filter/fulfilled') Fulfilled]&nbsp #[a(href='/user/' + id + '/notifications/filter/unfulfilled') Unfulfilled]
     for notif in notifications
         p #{notif.shoename}
         p Size: #{notif.size}

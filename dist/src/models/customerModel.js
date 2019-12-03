@@ -12,25 +12,21 @@ var CustomerModel = /** @class */ (function () {
             return db.collection("users").find({ user_id: userId }).toArray();
         })
             .then(function (sneakers) {
-            // console.log(sneakers);
             return sneakers;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Grabbing user info from the database has failed");
         });
-        // console.log(users);
         return users;
     };
     CustomerModel.prototype.add_shoe = function (userId, shoeID, purchase) {
         var shoeAdd = DbClient.connect()
             .then(function (db) {
             db.collection("user_shoes").insertOne({ user_id: userId, shoe_id: shoeID, purchase_price: purchase });
-            console.log("adding shoe");
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Adding a shoe to the database has failed");
             return false;
         });
         return shoeAdd;
@@ -42,7 +38,7 @@ var CustomerModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Editing a shoe in the database has failed");
             return false;
         });
         return result;
@@ -54,7 +50,7 @@ var CustomerModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Removing a shoe from the database has failed");
             return false;
         });
         return shoeRemove;
@@ -73,7 +69,7 @@ var CustomerModel = /** @class */ (function () {
             }
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Confirmation of user has failed");
         });
         return result;
     };
@@ -84,10 +80,9 @@ var CustomerModel = /** @class */ (function () {
         })
             .then(function (sneakers) {
             return sneakers;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting user keys has failed");
         });
         return userKeys;
     };
@@ -98,10 +93,9 @@ var CustomerModel = /** @class */ (function () {
         })
             .then(function (sneakers) {
             return sneakers;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting user array has failed");
         });
         return users;
     };
@@ -111,13 +105,10 @@ var CustomerModel = /** @class */ (function () {
             return db.collection("user_shoes").find().toArray();
         })
             .then(function (sneakers) {
-            // console.log(sneakers);
-            console.log(sneakers);
             return sneakers;
-            // res.send(sneakers);
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Getting key array has failed");
         });
         return userKeys;
     };
@@ -128,10 +119,36 @@ var CustomerModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("err.message");
+            console.log("Editing the user name has failed");
             return false;
         });
         return result;
+    };
+    CustomerModel.prototype.add_user = function (userId, username) {
+        var addUser = DbClient.connect()
+            .then(function (db) {
+            db.collection("users").insertOne({ isAdmin: false, user_id: userId, username: username });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("Adding the user has failed");
+            return false;
+        });
+        return addUser;
+    };
+    CustomerModel.prototype.remove_user = function (userId) {
+        var removeUser = DbClient.connect()
+            .then(function (db) {
+            db.collection("users").deleteOne({ user_id: userId });
+            db.collection("user_shoes").deleteMany({ user_id: userId });
+            db.collection("notifications").deleteMany({ user_id: userId });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("Removing the user has failed");
+            return false;
+        });
+        return removeUser;
     };
     return CustomerModel;
 }());
