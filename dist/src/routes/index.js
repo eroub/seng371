@@ -49,8 +49,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var router_1 = require("./router");
 var customerModel_1 = require("../models/customerModel");
+var router_1 = require("./router");
 /**
  * / route
  *
@@ -107,7 +107,7 @@ var IndexRoute = /** @class */ (function (_super) {
                         });
                         options = {
                             message: "Welcome!",
-                            users: users
+                            users: users,
                         };
                         // render template
                         this.render(req, res, "index", options);

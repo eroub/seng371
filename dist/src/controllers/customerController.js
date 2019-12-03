@@ -263,7 +263,7 @@ var CustomerController = /** @class */ (function (_super) {
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 3];
                         uif = new customerModel_1.CustomerModel();
-                        price = parseInt(req.body.purchase_price);
+                        price = parseInt(req.body.purchase_price, 10);
                         if (!price) {
                             price = 0;
                         }
@@ -273,12 +273,7 @@ var CustomerController = /** @class */ (function (_super) {
                         res.redirect("/user/" + userId + "/shoes/");
                         return [3 /*break*/, 4];
                     case 3:
-                        res.status(404)
-                            .send({
-                            message: "No user with associated ID. Check the entered number.",
-                            status: res.status,
-                        });
-                        res.send("invalid user");
+                        Helpers.ID404(res);
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
@@ -299,7 +294,7 @@ var CustomerController = /** @class */ (function (_super) {
                         if (!req.body.threshold) {
                             req.body.threshold = 0;
                         }
-                        return [4 /*yield*/, uIF.edit_shoe(shoeID, parseInt(req.body.purchase_price))];
+                        return [4 /*yield*/, uIF.edit_shoe(shoeID, parseInt(req.body.purchase_price, 10))];
                     case 1:
                         _a.sent();
                         res.redirect("/user/" + userID + "/shoes");
@@ -319,11 +314,7 @@ var CustomerController = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.check_local(userId)];
                     case 1:
                         if (!(_a.sent())) {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         idString = "id2";
                         docID = req.params[idString];
@@ -358,11 +349,7 @@ var CustomerController = /** @class */ (function (_super) {
                                 title: "Shoes", total: totalRevenue, username: userJson.username });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user found with the given id.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -388,19 +375,11 @@ var CustomerController = /** @class */ (function (_super) {
                                 this.render(req, res, "oneShoe", { id: userId, diff: diff, purchase: shoe.purchase_price, shoe: shoe });
                             }
                             else {
-                                res.status(404)
-                                    .send({
-                                    message: "No shoe found with the given id.",
-                                    status: res.status,
-                                });
+                                Helpers.shoe404(res);
                             }
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user found with the given id.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }

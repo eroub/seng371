@@ -92,11 +92,7 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -118,11 +114,7 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -144,11 +136,7 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -170,11 +158,7 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -196,11 +180,7 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }

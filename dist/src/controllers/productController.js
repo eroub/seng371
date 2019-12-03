@@ -117,11 +117,7 @@ var ProductController = /** @class */ (function (_super) {
                             this.render(req, res, "addShoe", { id: userId, shoe: shoe });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No shoe found with the given id.",
-                                status: res.status,
-                            });
+                            Helpers.shoe404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -142,18 +138,14 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                                var bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                                var bname = b.brand + " " + b.model + " " + b.colorway;
+                                var aname = a.brand + " " + a.model + " " + a.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user found with the given user id.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -187,7 +179,7 @@ var ProductController = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.setLocal(userID)];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2:
-                        if (!(userID != id)) return [3 /*break*/, 4];
+                        if (!(userID !== id)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.setLocal(userID)];
                     case 3: return [2 /*return*/, _a.sent()];
                     case 4: return [2 /*return*/, true];
@@ -234,8 +226,8 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                                var bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                                var aname = a.brand + " " + a.model + " " + a.colorway;
+                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return bname.toLowerCase().localeCompare(aname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", {
@@ -265,8 +257,8 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var aname = a.brand + ' ' + a.model + ' ' + a.colorway;
-                                var bname = b.brand + ' ' + b.model + ' ' + b.colorway;
+                                var aname = a.brand + " " + a.model + " " + a.colorway;
+                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", {
@@ -446,11 +438,7 @@ var ProductController = /** @class */ (function (_super) {
                             });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }

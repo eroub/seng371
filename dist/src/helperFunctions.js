@@ -40,6 +40,20 @@ var productModel_1 = require("./models/productModel");
 var Helpers = /** @class */ (function () {
     function Helpers() {
     }
+    Helpers.prototype.ID404 = function (res) {
+        res.status(404)
+            .send({
+            message: "No user with associated ID. Check the entered number.",
+            status: res.status,
+        });
+    };
+    Helpers.prototype.shoe404 = function (res) {
+        res.status(404)
+            .send({
+            message: "No shoe found with the given id.",
+            status: res.status,
+        });
+    };
     Helpers.prototype.getMaxUser = function () {
         return __awaiter(this, void 0, void 0, function () {
             var c, users, max, item;
@@ -54,8 +68,9 @@ var Helpers = /** @class */ (function () {
                         for (item in users) {
                             if (users.hasOwnProperty(item)) {
                                 console.log(users[item].user_id, max);
-                                if (users[item].user_id > max)
+                                if (users[item].user_id > max) {
                                     max = users[item].user_id;
+                                }
                             }
                         }
                         return [2 /*return*/, max];
@@ -76,8 +91,9 @@ var Helpers = /** @class */ (function () {
                         max = 0;
                         for (item in shoes) {
                             if (shoes.hasOwnProperty(item)) {
-                                if (shoes[item].shoe_id > max)
+                                if (shoes[item].shoe_id > max) {
                                     max = shoes[item].shoe_id;
+                                }
                             }
                         }
                         return [2 /*return*/, max];
@@ -242,9 +258,9 @@ var Helpers = /** @class */ (function () {
         for (var item in shoelist) {
             if (shoelist.hasOwnProperty(item)) {
                 var shoe = shoelist[item];
-                net = net + parseInt(shoe.current_price) - parseInt(shoe.purchase_price);
+                net = net + parseInt(shoe.current_price, 10) - parseInt(shoe.purchase_price, 10);
                 sunk = sunk + parseInt(shoe.purchase_price, 10);
-                total = total + parseInt(shoe.current_price);
+                total = total + parseInt(shoe.current_price, 10);
                 num++;
             }
         }

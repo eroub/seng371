@@ -98,6 +98,7 @@ var AdminController = /** @class */ (function (_super) {
     AdminController.prototype.showAdmin = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
+                res.status(200);
                 this.render(req, res, "admin", { title: "Admin" });
                 return [2 /*return*/];
             });
@@ -170,7 +171,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, CM.edit_userName(userID, editedName)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin/users');
+                        res.redirect("/admin/users");
                         return [2 /*return*/];
                 }
             });
@@ -187,11 +188,10 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getMaxUser()];
                     case 1:
                         newID = (_a.sent()) + 1;
-                        console.log("this is new id", newID);
                         return [4 /*yield*/, CM.add_user(newID, editedName)];
                     case 2:
                         _a.sent();
-                        res.redirect('/admin/users');
+                        res.redirect("/admin/users");
                         return [2 /*return*/];
                 }
             });
@@ -209,7 +209,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, CM.remove_user(userID)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin/users');
+                        res.redirect("/admin/users");
                         return [2 /*return*/];
                 }
             });
@@ -217,24 +217,24 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.addShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var PM, shoeID, shoeModel, shoeCP, shoeRP, shoeSize, brand, colorway;
+            var PM, shoeID, shoeSize, shoeRP, shoeCP, brand, colorway, shoeModel;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         PM = new productModel_1.ProductModel();
-                        shoeModel = req.body.model;
-                        colorway = req.body.colorway;
-                        brand = req.body.brand;
-                        shoeCP = parseInt(req.body.current_price);
-                        shoeRP = parseInt(req.body.retail_price);
-                        shoeSize = parseInt(req.body.size);
                         return [4 /*yield*/, Helpers.getMaxShoe()];
                     case 1:
                         shoeID = (_a.sent()) + 1;
+                        shoeSize = parseInt(req.body.size, 10);
+                        shoeRP = parseInt(req.body.retail_price, 10);
+                        shoeCP = parseInt(req.body.current_price, 10);
+                        brand = req.body.brand;
+                        colorway = req.body.colorway;
+                        shoeModel = req.body.model;
                         return [4 /*yield*/, PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 2:
                         _a.sent();
-                        res.redirect('/admin/shoes');
+                        res.redirect("/admin/shoes");
                         return [2 /*return*/];
                 }
             });
@@ -249,11 +249,9 @@ var AdminController = /** @class */ (function (_super) {
                         uString = "id";
                         shoeID = req.params[uString];
                         PM = new productModel_1.ProductModel();
-                        console.log("this id", shoeID);
                         return [4 /*yield*/, PM.getOneShoe(shoeID)];
                     case 1:
                         shoe = _a.sent();
-                        console.log("this shoe", shoe);
                         this.render(req, res, "editShoe", { shoe: shoe, title: "Edit shoe" });
                         return [2 /*return*/];
                 }
@@ -262,7 +260,7 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.editShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var uString, shoeID, PM, shoeModel, shoeCP, shoeRP, shoeSize, brand, colorway;
+            var uString, shoeID, PM, shoeModel, colorway, brand, shoeCP, shoeRP, shoeSize;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -274,11 +272,11 @@ var AdminController = /** @class */ (function (_super) {
                         brand = req.body.brand;
                         shoeCP = parseInt(req.body.current_price, 10);
                         shoeRP = parseInt(req.body.retail_price, 10);
-                        shoeSize = parseInt(req.body.size);
+                        shoeSize = parseInt(req.body.size, 10);
                         return [4 /*yield*/, PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin/shoes');
+                        res.redirect("/admin/shoes");
                         return [2 /*return*/];
                 }
             });
@@ -296,7 +294,7 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, PM.remove_shoe(shoeID)];
                     case 1:
                         _a.sent();
-                        res.redirect('/admin/shoes');
+                        res.redirect("/admin/shoes");
                         return [2 /*return*/];
                 }
             });
