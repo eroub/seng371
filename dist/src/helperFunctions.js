@@ -40,6 +40,20 @@ var productModel_1 = require("./models/productModel");
 var Helpers = /** @class */ (function () {
     function Helpers() {
     }
+    Helpers.prototype.ID404 = function (res) {
+        res.status(404)
+            .send({
+            message: "No user with associated ID. Check the entered number.",
+            status: res.status,
+        });
+    };
+    Helpers.prototype.shoe404 = function (res) {
+        res.status(404)
+            .send({
+            message: "No shoe found with the given id.",
+            status: res.status,
+        });
+    };
     Helpers.prototype.getMaxUser = function () {
         return __awaiter(this, void 0, void 0, function () {
             var c, users, max, item;

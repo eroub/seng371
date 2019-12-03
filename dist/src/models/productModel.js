@@ -20,14 +20,14 @@ var ProductModel = /** @class */ (function () {
         var jsonShoeArr = [];
         var shoes = DbClient.connect()
             .then(function (db) {
-            // will return all the shoes in db
+            // returns shoes in db
             return db.collection("shoes").find().toArray();
         })
             .then(function (sneakers) {
             // loop over all the shoes in db and push into jsonShoeArr only those that are
             // owned by user
-            var shoe;
             var id;
+            var shoe;
             for (var _i = 0, sneakers_1 = sneakers; _i < sneakers_1.length; _i++) {
                 shoe = sneakers_1[_i];
                 for (var _a = 0, keyArr_1 = keyArr; _a < keyArr_1.length; _a++) {

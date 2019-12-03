@@ -104,11 +104,7 @@ var NotificationController = /** @class */ (function (_super) {
                             this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: userNotifications });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -137,11 +133,7 @@ var NotificationController = /** @class */ (function (_super) {
                             this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: fulfilledNots });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -170,11 +162,7 @@ var NotificationController = /** @class */ (function (_super) {
                             this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: unfulfilledNots });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -271,19 +259,9 @@ var NotificationController = /** @class */ (function (_super) {
                     case 3:
                         if (_a) {
                             this.render(req, res, "addNotification", { id: userId, shoe: shoe });
-                            /* res.status(200)
-                                .send({
-                                    message: 'Success',
-                                    status: res.status,
-                                    shoe
-                                }); */
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No shoe found with the given id.",
-                                status: res.status,
-                            });
+                            Helpers.shoe404(res);
                         }
                         return [2 /*return*/];
                 }

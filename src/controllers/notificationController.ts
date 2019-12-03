@@ -55,7 +55,7 @@ export class NotificationController extends BaseRoute {
             this.render(req, res, "notificationCentre",
                 {id: userId, title: "Notifications", notifications: userNotifications});
         } else {
-            Helpers.ID404(res);      
+            Helpers.ID404(res);
         }
     }
 
@@ -74,7 +74,7 @@ export class NotificationController extends BaseRoute {
             this.render(req, res, "notificationCentre",
                 {id: userId, title: "Notifications", notifications: fulfilledNots});
         } else {
-            Helpers.ID404(res);  
+            Helpers.ID404(res);
         }
     }
 
@@ -93,7 +93,7 @@ export class NotificationController extends BaseRoute {
             this.render(req, res, "notificationCentre",
                 {id: userId, title: "Notifications", notifications: unfulfilledNots});
         } else {
-            Helpers.ID404(res);     
+            Helpers.ID404(res);
         }
     }
 

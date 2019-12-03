@@ -231,6 +231,12 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getMaxShoe()];
                     case 1:
                         shoeID = (_a.sent()) + 1;
+                        shoeSize = parseInt(req.body.size, 10);
+                        shoeRP = parseInt(req.body.retail_price, 10);
+                        shoeCP = parseInt(req.body.current_price, 10);
+                        brand = req.body.brand;
+                        colorway = req.body.colorway;
+                        shoeModel = req.body.model;
                         return [4 /*yield*/, PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 2:
                         _a.sent();
