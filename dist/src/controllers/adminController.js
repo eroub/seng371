@@ -217,17 +217,11 @@ var AdminController = /** @class */ (function (_super) {
     };
     AdminController.prototype.addShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var PM, shoeModel, colorway, brand, shoeCP, shoeRP, shoeSize, shoeID;
+            var PM, shoeID, shoeSize, shoeRP, shoeCP, brand, colorway, shoeModel;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         PM = new productModel_1.ProductModel();
-                        shoeModel = req.body.model;
-                        colorway = req.body.colorway;
-                        brand = req.body.brand;
-                        shoeCP = parseInt(req.body.current_price, 10);
-                        shoeRP = parseInt(req.body.retail_price, 10);
-                        shoeSize = parseInt(req.body.size, 10);
                         return [4 /*yield*/, Helpers.getMaxShoe()];
                     case 1:
                         shoeID = (_a.sent()) + 1;

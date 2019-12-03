@@ -114,7 +114,7 @@ var ProductModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("Adding a shoe to the database has failed");
+            console.log("Failed to add a shoe");
             return false;
         });
         return addShoes;
