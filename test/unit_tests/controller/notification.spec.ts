@@ -7,7 +7,7 @@ const serve = new Server();
 
 describe('Testing notificationController Functionality:', () => {
     let id = 1;
-    let notification_id=1;
+    let notification_id='5de6f98778a1291e244e3992';
 
     it('notifications: return code 200 from correct user_id', async () => {
 
@@ -49,11 +49,11 @@ describe('Testing notificationController Functionality:', () => {
 
 
 
-    it('remove_notification: return code ___', async () => {
+    it('remove_notification: return code 302(redirects)', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/remove_notification/'+id);
+        const response = await request(serve.getExpressInstance()).post('/user/'+id+'/remove_notification/'+id);
 
-        chai.expect(response.statusCode).to.equal(200);
+        chai.expect(response.statusCode).to.equal(302);
 
     }).timeout(5000);
 
@@ -61,7 +61,7 @@ describe('Testing notificationController Functionality:', () => {
 
     it('edit_notification (form): return code ', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/edit_notification/'+id);
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/edit_notification/'+notification_id);
 
         chai.expect(response.statusCode).to.equal(200);
 
@@ -82,7 +82,7 @@ describe('Testing notificationController Functionality:', () => {
 
         chai.expect(response.statusCode).to.equal(200);
 
-    }).timeout(5000);
+    }).timeout(10000);
 
     it('unfulfilled: return code 200', async () => {
 
@@ -90,7 +90,7 @@ describe('Testing notificationController Functionality:', () => {
 
         chai.expect(response.statusCode).to.equal(200);
 
-    }).timeout(5000);
+    }).timeout(10000);
 
 
 
