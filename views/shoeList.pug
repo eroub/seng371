@@ -3,12 +3,13 @@ extends layout
 block content
     a(href='/user/' + id + '/shoes') Back
     h1 All Shoes:
-    p Sort #[a(href='/user/' + id + '/allShoes/sort/price_high') High] #[a(href='/user/' + id + '/allShoes/sort/price_low') Low]
-
+    p Sort #[a(href='/user/' + id + '/allShoes/sort/alpha_asc') Alphabetical Ascending]&nbsp #[a(href='/user/' + id + '/allShoes/sort/alpha_desc') Alphabetical Descending]&nbsp #[a(href='/user/' + id + '/allShoes/sort/current_price_high') Current Price High]&nbsp #[a(href='/user/' + id + '/allShoes/sort/current_price_low') Current Price Low]&nbsp #[a(href='/user/' + id + '/allShoes/sort/retail_price_high') Retail Price High]&nbsp #[a(href='/user/' + id + '/allShoes/sort/retail_price_low') Retail Price Low]&nbsp #[a(href='/user/' + id + '/allShoes/sort/diff_high') Diff Price High]&nbsp #[a(href='/user/' + id + '/allShoes/sort/diff_low') Diff Price Low]
+    p Filter #[a(href='/user/' + id + '/allShoes/filter/under_retail') Under Retail]&nbsp #[a(href='/user/' + id + '/allShoes') Reset]
     for shoe in data
         h2 #{shoe.brand} #{shoe.model} #{shoe.colorway}
         p Size: #{shoe.size}
         p Current market value: $#{shoe.current_price}
-        p Retail Price: #{shoe.retail_price}
-        p #[a(href='/user/' + id + '/add_shoe/' + shoe.shoe_id) Add Shoe]
+        p Retail Price: $#{shoe.retail_price}
+        p Difference: $#{shoe.current_price - shoe.retail_price}
+        p #[a(href='/user/' + id + '/add_shoe/' + shoe.shoe_id) Add Shoe] #[a(href='/user/' + id + '/add_notification/' + shoe.shoe_id) Add Notification]
         p ----------------------
