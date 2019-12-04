@@ -16,22 +16,27 @@ describe ('Testing ProductModel Functionality:', () => {
     }).timeout(5000);
     it('getAllDB: return all shoes in the database', async () => {
         const SM = new ProductModel();
-        const shoes:any = await SM.getAllDB();
-        chai.expect(shoes.length).to.equal(3);
+        const shoes: any = await SM.getAllDB();
+        chai.expect(shoes).to.to.be.a('array');
     }).timeout(5000);
     it('updateShoes: return true', async () => {
-        
+        const SM = new ProductModel();
+        const shoe: any = await SM.updateShoes(0);
+        chai.expect(shoe).to.equal(true);
     }).timeout(5000);
     it('add_shoe: return true', async () => {
-        
+        const SM = new ProductModel();
+        const shoe: any = await SM.add_shoe('v1.1', 99, 10, 100, 100, 'nike', 'red');
+        chai.expect(shoe).to.equal(true);
     }).timeout(5000);
     it('edit_shoe: return true for valid shoe', async () => {
-        
+        const SM = new ProductModel();
+        const shoe: any = await SM.edit_shoe('v1.2', 99, 99, 999, 999, 'adidas', 'black');
+        chai.expect(shoe).to.equal(true);
     }).timeout(5000);
     it('remove_shoe: return true for valid shoe', async () => {
-        
-    }).timeout(5000);
-    it('remove_shoe: return false for invalid true', async () => {
-        
+        const SM = new ProductModel();
+        const shoe: any = await SM.remove_shoe(99);
+        chai.expect(shoe).to.equal(true);
     }).timeout(5000);
 });

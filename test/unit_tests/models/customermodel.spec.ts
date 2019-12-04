@@ -15,7 +15,7 @@ describe ('Testing CustomerModel Functionality:', () => {
     }).timeout(5000);
     it('isUser: should return false, id:99', async () => {
         const UM = new CustomerModel();
-        const user: any = await UM.isUser(99);
+        const user: any = await UM.isUser(9999);
         chai.expect(user).to.equal(false);
     }).timeout(5000);
     it('getKeys: should return userKeys', async () => {

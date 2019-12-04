@@ -80,7 +80,7 @@ export class AdminController extends BaseRoute {
 
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = parseInt(req.params[uString]);
+        const userID = parseInt(req.params[uString], 10);
         const CM = new CustomerModel();
         let user = await CM.userInfo(userID);
         user = user[0];
@@ -89,7 +89,7 @@ export class AdminController extends BaseRoute {
 
     public async editUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = parseInt(req.params[uString]);
+        const userID = parseInt(req.params[uString], 10);
         const CM = new CustomerModel();
         const editedName: any = req.body.editedusername;
         await CM.edit_userName(userID, editedName);
@@ -106,7 +106,7 @@ export class AdminController extends BaseRoute {
 
     public async delUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = parseInt(req.params[uString]);
+        const userID = parseInt(req.params[uString], 10);
         const CM = new CustomerModel();
         await CM.remove_user(userID);
         res.redirect("/admin/users");
@@ -137,7 +137,7 @@ export class AdminController extends BaseRoute {
 
     public async editShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const shoeID = parseInt(req.params[uString]);
+        const shoeID = parseInt(req.params[uString], 10);
         const PM = new ProductModel();
 
         const shoeModel = req.body.model;
@@ -153,7 +153,7 @@ export class AdminController extends BaseRoute {
 
     public async delShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const shoeID = parseInt(req.params[uString]);
+        const shoeID = parseInt(req.params[uString], 10);
         const PM = new ProductModel();
         await PM.remove_shoe(shoeID);
         res.redirect("/admin/shoes");
