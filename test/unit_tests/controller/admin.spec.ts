@@ -1,5 +1,5 @@
 import "mocha";
-import chai from "chai";
+const chai = require("chai");
 import { Server } from "../../../src/app"
 const request = require('supertest');
 

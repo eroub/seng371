@@ -16,7 +16,7 @@ describe('Testing leaderboardController Functionality:', () => {
 
         chai.expect(response.statusCode).to.equal(200);
 
-    }).timeout(5000);
+    }).timeout(10000);
 
     it('avgNetHigh: return code 200', async () => {
 
@@ -24,7 +24,7 @@ describe('Testing leaderboardController Functionality:', () => {
 
         chai.expect(response.statusCode).to.equal(200);
 
-    }).timeout(5000);
+    }).timeout(10000);
 
     it('avgNetLow: return code 200', async () => {
 
@@ -33,7 +33,7 @@ describe('Testing leaderboardController Functionality:', () => {
         chai.expect(response.statusCode).to.equal(200);
 
 
-    }).timeout(5000);
+    }).timeout(10000);
 
     it('netHigh: return code 200', async () => {
 
@@ -41,7 +41,7 @@ describe('Testing leaderboardController Functionality:', () => {
 
         chai.expect(response.statusCode).to.equal(200);
         
-    }).timeout(5000);
+    }).timeout(10000);
 
     it('netLow: return code 200', async () => {
 
@@ -50,5 +50,5 @@ describe('Testing leaderboardController Functionality:', () => {
         chai.expect(response.statusCode).to.equal(200);
 
 
-    }).timeout(5000);
+    }).timeout(10000);
 });
