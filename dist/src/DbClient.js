@@ -47,7 +47,7 @@ var DbClient = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, mongodb_1.MongoClient.connect("mongodb+srv://shaun:yeet@cluster0-rn1fn.gcp.mongodb.net/stalkx?retryWrites=true&w=majority")];
+                        return [4 /*yield*/, mongodb_1.MongoClient.connect("mongodb+srv://shaun:yeet@cluster0-rn1fn.gcp.mongodb.net/stalkx?retryWrites=true&w=majority", { useUnifiedTopology: true })];
                     case 1:
                         client = _a.sent();
                         this.db = client.db("stalkx");

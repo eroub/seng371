@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "start": "concurrently --kill-others \"node ./bin/www\" \"node ./dist/src/cron.js\"",
+    "start": "concurrently \"node ./bin/www\" \"node ./dist/src/cron.js\"",
     "test": "cd test; ./test-suite.sh"
   },
   "nyc": {

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var DbClient = require("../DbClient");
+var datab = DbClient.connect();
 var ProductModel = /** @class */ (function () {
     function ProductModel() {
     }
@@ -93,7 +94,7 @@ var ProductModel = /** @class */ (function () {
         return shoeUpdate;
     };
     ProductModel.prototype.getAllDB = function () {
-        var shoes = DbClient.connect()
+        var shoes = datab
             .then(function (db) {
             return db.collection("shoes").find().toArray();
         })
@@ -137,7 +138,6 @@ var ProductModel = /** @class */ (function () {
             db.collection("shoes").deleteOne({ shoe_id: shoeId });
             db.collection("user_shoes").deleteMany({ shoe_id: shoeId });
             db.collection("notifications").deleteMany({ shoe_id: shoeId });
-            console.log("deleted a shoe with id", +shoeId);
             return true;
         })
             .catch(function (err) {
