@@ -118,6 +118,7 @@ export class NotificationController extends BaseRoute {
         }
         await nIF.addNotification(userID, shoeID, threshold, req.body.type);
         res.redirect("/user/" + userID + "/allShoes");
+
     }
 
     public async removeNotification(req: Request, res: Response, next: NextFunction) {
@@ -152,12 +153,11 @@ export class NotificationController extends BaseRoute {
         const shoe = await shoeIF.getOneShoe(shoeId);
         if (shoe && await Helpers.isUser(userId)) {
             this.render(req, res, "addNotification", { id: userId, shoe });
-            /* res.status(200)
+            res.status(200)
                 .send({
                     message: 'Success',
                     status: res.status,
-                    shoe
-                }); */
+                });
         } else {
             res.status(404)
                 .send({

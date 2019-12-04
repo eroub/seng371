@@ -49,6 +49,7 @@
     "esm": "^3.2.25",
     "express": "^4.16.4",
     "http-errors": "~1.6.3",
+    "loadtest": "^3.0.9",
     "mongodb": "^3.3.3",
     "morgan": "~1.9.1",
     "node-cron": "^2.0.3",
