@@ -1,10 +1,20 @@
 var loadtest = require('loadtest');
 var should = require('should');
+
+/*
+
+QAS response measure: The system should not time out or make users wait over 0.75 seconds
+                        for the system to respond to their reques
+ */
+
+
 describe("Performance Test", function() {
+
     let noRequestPerHour = 100000;
     let avgRequestTime = 1000;
 
     it("should not crash with 1000 users making requests", function(done) {
+        // run for 6 seconds
         this.timeout(1000 * 60);
 
         const options = {
