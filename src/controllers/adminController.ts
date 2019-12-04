@@ -7,6 +7,14 @@ import { BaseRoute } from "../routes/router";
 
 export class AdminController extends BaseRoute {
 
+    /**
+     * Creates admin routes.
+     *
+     * @class AdminController extends BaseRoute
+     * @method create
+     * @param router {Router} The router object.
+     * @return void
+     */
     public static create(router: Router) {
 
         router.get("/admin", (req: Request, res: Response, next: NextFunction) => {
@@ -57,27 +65,63 @@ export class AdminController extends BaseRoute {
 
     }
 
+    /**
+     * Renders the admin view when user navigates to /admin.
+     *
+     * @class AdminController extends BaseRoute
+     * @method showAdmin
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async showAdmin(req: Request, res: Response, next: NextFunction) {
         res.status(200);
         this.render(req, res, "admin", { title: "Admin"});
     }
 
-    /*
-    Shows all users in the db in a list.
+    /**
+     * Renders the admin_user view when user navigates to /admin/users.
+     *
+     * @class AdminController extends BaseRoute
+     * @method showAllUsers
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
      */
-
     public async showAllUsers(req: Request, res: Response, next: NextFunction) {
         let userArr: any[] = [];
         userArr = await Helpers.getUsers();
         this.render(req, res, "admin_user", {users: userArr, title: "All users"});
     }
 
+    /**
+     * Renders the admin_shoes view when user navigates to /admin/shoes.
+     *
+     * @class AdminController extends BaseRoute
+     * @method showAllShoes
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async showAllShoes(req: Request, res: Response, next: NextFunction) {
         let shoeArr: any[] = [];
         shoeArr = await Helpers.getAllDbShoes();
         this.render(req, res, "admin_shoes", {shoes: shoeArr, title: "All shoes"});
     }
 
+    /**
+     * Renders the editUser view for a specific user when an admin navigates to /admin/users/edit_user/<user_id>.
+     *
+     * @class AdminController extends BaseRoute
+     * @method editUserForm
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const userID = parseInt(req.params[uString]);
@@ -87,6 +131,16 @@ export class AdminController extends BaseRoute {
         this.render(req, res, "editUser", {user, title: "Edit User"});
     }
 
+    /**
+     * Handles the POST request sent by the editUser view to edit a user.
+     *
+     * @class AdminController extends BaseRoute
+     * @method editUser
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async editUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const userID = parseInt(req.params[uString]);
@@ -96,6 +150,16 @@ export class AdminController extends BaseRoute {
         res.redirect("/admin/users");
     }
 
+    /**
+     * Handles the POST request sent from the admin_users view to add a user.
+     *
+     * @class AdminController extends BaseRoute
+     * @method addUser
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async addUser(req: Request, res: Response, next: NextFunction) {
         const CM = new CustomerModel();
         const editedName: any = req.body.newusername;
@@ -104,6 +168,16 @@ export class AdminController extends BaseRoute {
         res.redirect("/admin/users");
     }
 
+    /**
+     * Handles the POST request sent from the admin_users view to delete a user.
+     *
+     * @class AdminController extends BaseRoute
+     * @method delUser
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async delUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const userID = parseInt(req.params[uString]);
@@ -112,6 +186,16 @@ export class AdminController extends BaseRoute {
         res.redirect("/admin/users");
     }
 
+    /**
+     * Handles the POST request sent from the admin_shoes view to add a shoe.
+     *
+     * @class AdminController extends BaseRoute
+     * @method addShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         const PM = new ProductModel();
 
@@ -127,6 +211,16 @@ export class AdminController extends BaseRoute {
         res.redirect("/admin/shoes");
     }
 
+    /**
+     * Renders the editShoe view for a specific shoe when an admin navigates to /admin/shoes/edit_shoe/<shoe_id>.
+     *
+     * @class AdminController extends BaseRoute
+     * @method editShoeForm
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async editShoeForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const shoeID = req.params[uString];
@@ -135,6 +229,16 @@ export class AdminController extends BaseRoute {
         this.render(req, res, "editShoe", {shoe, title: "Edit shoe"});
     }
 
+    /**
+     * Handles the POST request sent from the editShoe view to edit a shoe.
+     *
+     * @class AdminController extends BaseRoute
+     * @method editShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async editShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const shoeID = parseInt(req.params[uString]);
@@ -151,6 +255,16 @@ export class AdminController extends BaseRoute {
         res.redirect("/admin/shoes");
     }
 
+    /**
+     * Handles the POST request sent from the admin_shoes view to delete a shoe.
+     *
+     * @class AdminController extends BaseRoute
+     * @method delShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async delShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const shoeID = parseInt(req.params[uString]);

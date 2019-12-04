@@ -1,0 +1,34 @@
+extends layout
+block content
+    a(href='/admin/shoes') Back
+    h1 Edit Shoe
+
+    form(method='POST' action= '/admin/shoes/' + 'edit_shoe/'+shoe.shoe_id)
+        div.form-group
+            div.form-group
+            label Brand:&nbsp
+            input#name.form-control(type='text', placeholder= shoe.brand, name='brand', value=shoe.brand)
+            p
+            div.form-group
+            label Model:&nbsp
+            input#md.form-control(type='text', placeholder='model',name='model',value=shoe.model)
+            p
+            div.form-group
+            label Colorway:&nbsp
+            input#cw.form-control(type='text', placeholder='colorway',name='colorway',value=shoe.colorway)
+            p
+            div.form-group
+            label Current Price: $
+            input#cp.form-control(type='text', placeholder='current price',name='current_price',value=shoe.current_price)
+            p
+            div.form-group
+            label Retail Price: $
+            input#rp.form-control(type='text', placeholder='retail price',name='retail_price',value=shoe.retail_price)
+            p
+            div.form-group
+            label Size:&nbsp
+            input#sz.form-control(type='text', placeholder='size',name='size',value = shoe.size)
+            p
+        div.form-group
+        button.btn.btn-primary(type='submit') Save Changes
+

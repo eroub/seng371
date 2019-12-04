@@ -12,6 +12,14 @@ let numShoes: number = 0;
 
 export class CustomerController extends BaseRoute {
 
+    /**
+     * Creates customer routes.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method create
+     * @param router {Router} The router object.
+     * @return void
+     */
     public static create(router: Router) {
         // sorting all the shoes the user (id) owns from low to high
         router.get("/user/:id/shoes/sort/current_price_low", (req: Request, res: Response, next: NextFunction) => {
@@ -58,6 +66,16 @@ export class CustomerController extends BaseRoute {
 
     }
 
+    /**
+     * Renders the settings view for a specific user when they navigate to /user/<user_id>/settings.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method settings
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async settings(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -72,6 +90,16 @@ export class CustomerController extends BaseRoute {
 
     }
 
+    /**
+     * Handles the POST request sent from the settings view to edit a user's username.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method editUsername
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async editUsername(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const userID = parseInt(req.params[uString], 10);
@@ -83,6 +111,16 @@ export class CustomerController extends BaseRoute {
         res.redirect("/user/" + userID + "/shoes");
     }
 
+    /**
+     * Renders the allShoes view for a specific user with shoes sorted by the lowest current price to the highest current price.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method sortCurrentPriceLow
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async sortCurrentPriceLow(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -99,6 +137,16 @@ export class CustomerController extends BaseRoute {
 
     }
 
+    /**
+     * Renders the allShoes view for a specific user with shoes sorted by the highest current price to the lowest current price.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method sortCurrentPriceHigh
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async sortCurrentPriceHigh(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -115,6 +163,16 @@ export class CustomerController extends BaseRoute {
 
     }
 
+    /**
+     * Renders the allShoes view for a specific user with shoes sorted by the lowest purchase price to the highest purchase price.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method sortPurchasePriceLow
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async sortPurchasePriceLow(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -131,6 +189,16 @@ export class CustomerController extends BaseRoute {
 
     }
 
+    /**
+     * Renders the allShoes view for a specific user with shoes sorted by the highest purchase price to the lowest purchase price.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method sortPurchasePriceHigh
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async sortPurchasePriceHigh(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -147,6 +215,16 @@ export class CustomerController extends BaseRoute {
 
     }
 
+    /**
+     * Handles the POST request sent by the addShoe view to add a shoe to a specific user's portfolio.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method addShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
@@ -171,6 +249,16 @@ export class CustomerController extends BaseRoute {
         }
     }
 
+    /**
+     * Handles the POST request sent by the oneShoe view to edit a shoe in a specific user's portfolio.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method editShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async editShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const idString = "id2";
@@ -184,6 +272,16 @@ export class CustomerController extends BaseRoute {
         res.redirect("/user/" + userID + "/shoes");
     }
 
+    /**
+     * Handles the POST request sent by the allShoes view to remove a shoe in a specific user's portfolio.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method removeShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async removeShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
@@ -202,7 +300,14 @@ export class CustomerController extends BaseRoute {
     }
 
     /**
-     * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
+     * Renders the allShoes view (with shoes sorted alphabetically ascending) when a user navigates to /user/<user_id>/shoes.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method getAll
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
      */
     public async getAll(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -223,6 +328,16 @@ export class CustomerController extends BaseRoute {
         }
     }
 
+    /**
+     * Renders the oneShoe view when a user navigates to /user/<user_id>/shoes/<shoe_id>.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method getAll
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async getOne(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
@@ -250,6 +365,14 @@ export class CustomerController extends BaseRoute {
 
     }
 
+    /**
+     * Checks if local variables are set for sorting functions, and whether or not the local variables are correct for the current user.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method check_local
+     * @param userID {Number} The id of the current user.
+     * @return true
+     */
     private async check_local(userID: number) {
         if (!(userJson && userShoes)) {
             return await this.setLocal(userID);
@@ -259,6 +382,14 @@ export class CustomerController extends BaseRoute {
         return true;
     }
 
+    /**
+     * Sets local variables for a specific user.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method setLocal
+     * @param userID {Any} The id of the user.
+     * @return true if the local variables were set, false if the user does not exist and the local variables could not be set.
+     */
     private async setLocal(userID: any) {
         userShoes = [];
         netGain = 0;
@@ -274,6 +405,14 @@ export class CustomerController extends BaseRoute {
         return true;
     }
 
+    /**
+     * Sets local variables for net gain/loss, etc. for a users shoe list.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method setNet
+     * @param userShoes {Any} A list of user shoe JSON objects.
+     * @return true
+     */
     private setNet(userShoes: any) {
         [netGain, sunkCost, totalRevenue, numShoes] = Helpers.setNet(userShoes);
     }
