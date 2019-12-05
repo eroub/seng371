@@ -104,7 +104,7 @@ export class CustomerController extends BaseRoute {
         const uString = "id";
         const userID = parseInt(req.params[uString], 10);
         const uIF = new CustomerModel();
-        if (!req.body.uname) {
+        if (!req.body.uname && this.check_local(userID)) {
             req.body.uname = userJson.username;
         }
         await uIF.edit_userName(userID, req.body.uname);
@@ -244,7 +244,6 @@ export class CustomerController extends BaseRoute {
                 message: "No user with associated ID. Check the entered number.",
                 status: res.status,
             });
-            res.send("invalid user");
 
         }
     }
@@ -349,6 +348,7 @@ export class CustomerController extends BaseRoute {
                 const diff = shoe.current_price - shoe.purchase_price;
                 this.render(req, res, "oneShoe", {id: userId, diff, purchase: shoe.purchase_price, shoe});
             } else {
+                console.log("shoe wasn't found");
                 res.status(404)
                     .send({
                         message: "No shoe found with the given id.",
