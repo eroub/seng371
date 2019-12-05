@@ -146,7 +146,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString]);
+                        userID = parseInt(req.params[uString], 10);
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.userInfo(userID)];
                     case 1:
@@ -165,7 +165,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString]);
+                        userID = parseInt(req.params[uString], 10);
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.editedusername;
                         return [4 /*yield*/, CM.edit_userName(userID, editedName)];
@@ -204,7 +204,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString]);
+                        userID = parseInt(req.params[uString], 10);
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.remove_user(userID)];
                     case 1:
@@ -265,7 +265,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        shoeID = parseInt(req.params[uString]);
+                        shoeID = parseInt(req.params[uString], 10);
                         PM = new productModel_1.ProductModel();
                         shoeModel = req.body.model;
                         colorway = req.body.colorway;
@@ -289,7 +289,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        shoeID = parseInt(req.params[uString]);
+                        shoeID = parseInt(req.params[uString], 10);
                         PM = new productModel_1.ProductModel();
                         return [4 /*yield*/, PM.remove_shoe(shoeID)];
                     case 1:

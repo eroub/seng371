@@ -7,7 +7,7 @@ class DbClient {
     public async connect() {
 
         try {
-            const client = await MongoClient.connect("mongodb+srv://shaun:yeet@cluster0-rn1fn.gcp.mongodb.net/stalkx?retryWrites=true&w=majority");
+            const client = await MongoClient.connect("mongodb+srv://shaun:yeet@cluster0-rn1fn.gcp.mongodb.net/stalkx?retryWrites=true&w=majority", { useUnifiedTopology: true});
             this.db = client.db("stalkx");
             return this.db;
         } catch (error) {

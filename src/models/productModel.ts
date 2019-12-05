@@ -1,4 +1,6 @@
- import DbClient = require("../DbClient");
+import DbClient = require("../DbClient");
+
+const datab = DbClient.connect();
 
 export class ProductModel {
 
@@ -102,7 +104,7 @@ export class ProductModel {
     }
 
     public getAllDB() {
-        const shoes = DbClient.connect()
+        const shoes = datab
             .then((db) => {
                 return db!.collection("shoes").find().toArray();
             })
@@ -152,7 +154,6 @@ export class ProductModel {
                 db!.collection("shoes").deleteOne( {shoe_id: shoeId});
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
                 db!.collection("notifications").deleteMany({ shoe_id: shoeId});
-                console.log("deleted a shoe with id",+shoeId);
                 return true;
             })
             .catch((err) => {
