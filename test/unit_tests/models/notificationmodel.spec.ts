@@ -48,7 +48,7 @@ describe ('Testing NotificationModel Functionality:', () => {
 
     it('get_notif: return true for getting existing notification', async () => {
         const NM = new NotificationModel();
-        const nInfo: any = await NM.get_notif("5dd62647abad2534b480a0ec");
+        const nInfo: any = await NM.get_notif("5de6f71c82a52147301f9354");
         chai.expect(nInfo[0].fulfilled).to.equal(true);
     }).timeout(5000);
 
@@ -60,8 +60,8 @@ describe ('Testing NotificationModel Functionality:', () => {
 
     it('edit_notif: new changes should be reflected', async () => {
         const NM = new NotificationModel();
-        await NM.edit_notif("5dd62647abad2534b480a0ec", 1000, "Above");
-        const nInfo: any = await NM.get_notif("5dd62647abad2534b480a0ec");
+        await NM.edit_notif("5de6f71c82a52147301f9354", 1000, "Above");
+        const nInfo: any = await NM.get_notif("5de6f71c82a52147301f9354");
         chai.expect(nInfo[0].threshold).to.equal(1000);
     }).timeout(5000);
 
