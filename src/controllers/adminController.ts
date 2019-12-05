@@ -145,7 +145,10 @@ export class AdminController extends BaseRoute {
         const uString = "id";
         const userID = parseInt(req.params[uString]);
         const CM = new CustomerModel();
-        const editedName: any = req.body.editedusername;
+        let editedName: any = req.body.newusername;
+        if(!editedName) {
+            editedName = "USER";
+        }
         await CM.edit_userName(userID, editedName);
         res.redirect("/admin/users");
     }
@@ -162,7 +165,10 @@ export class AdminController extends BaseRoute {
      */
     public async addUser(req: Request, res: Response, next: NextFunction) {
         const CM = new CustomerModel();
-        const editedName: any = req.body.newusername;
+        let editedName: any = req.body.newusername;
+        if(!editedName) {
+            editedName = "USER";
+        }
         const newID: any = (await Helpers.getMaxUser()) + 1;
         await CM.add_user(newID, editedName);
         res.redirect("/admin/users");
@@ -199,13 +205,32 @@ export class AdminController extends BaseRoute {
     public async addShoe(req: Request, res: Response, next: NextFunction) {
         const PM = new ProductModel();
 
-        const shoeModel = req.body.model;
-        const colorway = req.body.colorway;
-        const brand = req.body.brand;
-        const shoeCP = parseInt(req.body.current_price, 10);
-        const shoeRP = parseInt(req.body.retail_price, 10);
-        const shoeSize = parseInt(req.body.size, 10);
-        const shoeID = (await Helpers.getMaxShoe()) + 1;
+        let shoeModel: any;
+        let colorway: any;
+        let brand: any;
+        let shoeCP: number;
+        let shoeRP: number;
+        let shoeSize: number;
+        let shoeID = (await Helpers.getMaxShoe()) + 1;
+
+        if(!req.body.model) {
+            shoeModel = "MODEL";
+            colorway = "COLORWAY";
+            brand = "BRAND";
+            shoeCP = 0;
+            shoeRP = 0;
+            shoeSize = 0;
+            shoeID = (await Helpers.getMaxShoe()) + 1;
+        }
+        else {
+            shoeModel = req.body.model;
+            colorway = req.body.colorway;
+            brand = req.body.brand;
+            shoeCP = parseInt(req.body.current_price, 10);
+            shoeRP = parseInt(req.body.retail_price, 10);
+            shoeSize = parseInt(req.body.size, 10);
+        }
+
 
         await PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway);
         res.redirect("/admin/shoes");
@@ -244,12 +269,32 @@ export class AdminController extends BaseRoute {
         const shoeID = parseInt(req.params[uString]);
         const PM = new ProductModel();
 
-        const shoeModel = req.body.model;
-        const colorway = req.body.colorway;
-        const brand = req.body.brand;
-        const shoeCP = parseInt(req.body.current_price, 10);
-        const shoeRP = parseInt(req.body.retail_price, 10);
-        const shoeSize = parseInt(req.body.size, 10);
+
+
+        let shoeModel: any;
+        let colorway: any;
+        let brand: any;
+        let shoeCP: number;
+        let shoeRP: number;
+        let shoeSize: number;
+
+        if(!req.body.model) {
+            shoeModel = "MODEL";
+            colorway = "COLORWAY";
+            brand = "BRAND";
+            shoeCP = 0;
+            shoeRP = 0;
+            shoeSize = 0;
+        }
+        else {
+            shoeModel = req.body.model;
+            colorway = req.body.colorway;
+            brand = req.body.brand;
+            shoeCP = parseInt(req.body.current_price, 10);
+            shoeRP = parseInt(req.body.retail_price, 10);
+            shoeSize = parseInt(req.body.size, 10);
+        }
+
         await PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway);
 
         res.redirect("/admin/shoes");
