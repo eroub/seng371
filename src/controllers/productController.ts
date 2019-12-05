@@ -180,9 +180,9 @@ export class ProductController extends BaseRoute {
 
 
     /**
-     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/current_price_high"
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/current_price_low"
      * @class ProductController extends BaseRoute
-     * @method check_local
+     * @method sortCurrentPriceLowDb
      * @param req {Request} The request object.
      * @param res {Response} The response object.
      * @param next {NextFunction} The NextFunction.
@@ -208,6 +208,18 @@ export class ProductController extends BaseRoute {
         }
     }
 
+
+
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/alpha_desc"
+     * @class ProductController extends BaseRoute
+     * @method sortAlphaDesc
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
+
     public async sortAlphaDesc(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -227,6 +239,17 @@ export class ProductController extends BaseRoute {
             res.send("invalid user");
         }
     }
+
+
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/alpha_asc"
+     * @class ProductController extends BaseRoute
+     * @method sortAlphaAsc
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
 
     public async sortAlphaAsc(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -248,6 +271,18 @@ export class ProductController extends BaseRoute {
         }
     }
 
+
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/current_price_high"
+     * @class ProductController extends BaseRoute
+     * @method sortCurrentPriceHighDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
+
+
     public async sortCurrentPriceHighDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -263,6 +298,16 @@ export class ProductController extends BaseRoute {
             res.send("invalid user");
         }
     }
+
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/retail_price_low"
+     * @class ProductController extends BaseRoute
+     * @method sortRetailPriceLowDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
 
     public async sortRetailPriceLowDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -280,6 +325,16 @@ export class ProductController extends BaseRoute {
         }
     }
 
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/retail_price_high"
+     * @class ProductController extends BaseRoute
+     * @method sortRetailPriceHighDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
+
     public async sortRetailPriceHighDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -295,6 +350,17 @@ export class ProductController extends BaseRoute {
             res.send("invalid user");
         }
     }
+
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/diff_low"
+     * @class ProductController extends BaseRoute
+     * @method sortDiffPriceLowDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
+
 
     public async sortDiffPriceLowDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -312,6 +378,17 @@ export class ProductController extends BaseRoute {
         }
     }
 
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/diff_high"
+     * @class ProductController extends BaseRoute
+     * @method sortDiffPriceHighDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
+
+
     public async sortDiffPriceHighDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -327,6 +404,18 @@ export class ProductController extends BaseRoute {
             res.send("invalid user");
         }
     }
+
+
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/filter/under_retail"
+     * @class ProductController extends BaseRoute
+     * @method underRetail
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
+
 
     public async underRetail(req: Request, res: Response, next: NextFunction) {
         const idString = "id";

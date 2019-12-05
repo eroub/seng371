@@ -8,7 +8,7 @@ echo "Running through unit tests via mocha ... "
 # istanbul cover --reporter=html --reporter=text mocha --require source-map-support/register --require ts-node/register --exit **/**/*.spec.ts
 # istanbul cover mocha --exit
 #mocha -r ts-node/register --exit **/**/*.spec.ts
-mocha -r ts-node/register --exit **/**/product.spec.ts
+mocha -r ts-node/register --exit **/**/loadtest.spec.ts
 
 
 echo "Running through static analysis via TSLint ... "

@@ -11,21 +11,20 @@ QAS response measure: The system should not time out or make users wait over 0.7
 describe("Performance Test", function() {
 
     let noRequestPerHour = 100000;
-    let avgRequestTime = 1000;
+    let avgRequestTime = 750;
 
     it("should not crash with 1000 users making requests", function(done) {
-        // run for 6 seconds
-        this.timeout(1000 * 60);
+        // run for 600 seconds
+        this.timeout(100000 * 60);
 
         const options = {
             url: 'http://localhost:7000',
-            maxSeconds: 5,
-            requestsPerSecond: 25,
-            concurrency: 1000,
+            maxRequests:1000,
+            requestsPerSecond: 0.5,
+            concurrency: 1,
             statusCallback: statusCallback
         };
 
-        let gLatency:any;
         function statusCallback(error: any, result: any, latency: any) {
             console.log('Current latency %j, result %j, error %j', latency, result, error);
         }
