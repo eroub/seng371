@@ -12,13 +12,11 @@ const datab = DbClient.connect()
 const date = new Date();
 var updateSuccess = false;
 var integrity_new;
-var integrity_old = datab.then(db => {
-    return db!.collection("shoes").find().toArray();
-})
-.catch((err) => {
-    console.log("Failed to grab shoe array");
-    return false;
-});
+var integrity_old;
+
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 /*************
  * CRON JOBS *
@@ -65,17 +63,31 @@ cron.schedule("* * * * *", (err: any) => {
 /**
  * The purpose of this log file is to automatically test our integrity quality attribute (issue #14)
  * The cron job will open it's own connection to the database and grab the list of shoes. It will then 
- * compare this list of shoes to the previous hours list to verify a change has been made. From there it
+ * compare this list of shoes to the shoe list before being updated list to verify an update has been made. From there it
  * will use one of the apps routes that will run a similar query, and compare the results. If there are any
  * discrepencies the cron job will log it. This is done at the beginning of every hour.
  */
-cron.schedule("* * * * *", (err: any) => {
+cron.schedule("0 * * * *", async (err: any) => {
     if (err) {
         throw err;
     }
+
+    // Grab integral data to be compared
+    integrity_old = await datab.then(db => {
+        return db!.collection("shoes").find().toArray();
+        })
+        .catch((err) => {
+            console.log("Failed to grab shoe array");
+            return false;
+        });
+
+    // Wait just over one minute. Enough time to data to update
+    await delay(63000);
+
     // If the last update was successful continue, otherwise no need
     if(updateSuccess) {
-        integrity_new = datab.then(db => {
+        // Grab new data to be compared
+        integrity_new = await datab.then(db => {
             return db!.collection("shoes").find().toArray();
         })
         .catch((err) => {
@@ -93,41 +105,31 @@ cron.schedule("* * * * *", (err: any) => {
     }
     
     // Verify that the update occured
-    chai.expect(integrity_new).to.not.equal(integrity_old)
-        // .catch((e: any) => {
-        //     fs.appendFile("./logs/integrity.log",
-        //         date.toLocaleString() + " --- FATAL ERROR: OLD DATA == NEW DATA. SOMETHING WEIRD HAPPENED\n", (err: any) => {
-        //             if (err) {
-        //                 throw err;
-        //             }
-        //         });
-        //     throw e
-        // });
+    try {
+        chai.expect(integrity_new).to.not.deep.equal(integrity_old)
+    } catch {
+        fs.appendFile("./logs/integrity.log",
+            date.toLocaleString() + " --- FATAL ERROR: OLD DATA == NEW DATA. SOMETHING WEIRD HAPPENED\n", (err: any) => {
+                if (err) {
+                    throw err;
+                }
+            });
+    }
 
     const shoes = new ProductModel();
-    const allShoes = shoes.getAllDB();
+    const allShoes = await shoes.getAllDB();
 
     // Verify that the shoe list is the same
-    chai.expect(allShoes).to.equal(integrity_new)
-        // .catch((e: any) => {
-        //     fs.appendFile("./logs/integrity.log",
-        //         date.toLocaleString() + " --- FATAL ERROR: NEW DATA NOT REFLECTED ON APP\n", (err: any) => {
-        //             if (err) {
-        //                 throw err;
-        //             }
-        //         });
-        //     throw e
-        // });
-
-    fs.appendFile("./logs/integrity.log",
-        date.toLocaleString() + " --- Data integrity test passed.\n", (err: any) => {
-            if (err) {
-                throw err;
-            }
-        });
-
-    // Update integrity_old
-    integrity_old = integrity_new;
+    try {
+        chai.expect(allShoes).to.deep.equal(integrity_new)
+    } catch {
+        fs.appendFile("./logs/integrity.log",
+            date.toLocaleString() + " --- FATAL ERROR: NEW DATA NOT REFLECTED ON APP\n", (err: any) => {
+                if (err) {
+                    throw err;
+                }
+            });
+    }
 });
 
 /**
@@ -144,7 +146,7 @@ cron.schedule("59 23 * * 0", () => {
         if (err) {
             throw err;
         }
-        console.log("Integrity file successfully re-created!");
+        console.log("Update file successfully re-created!");
     });
     fs.unlink("./logs/integrity.log", (err: any) => {
         if (err) {
