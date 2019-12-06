@@ -13,12 +13,12 @@
 `npm test # testing suite`
 
 #### 2. Docker
-*Prerequisites: Docker installed on your computer and basic knowledge of running docker containers*
-[Docker Image](https://hub.docker.com/r/eroubekas/seng350)
-`docker pull eroubekas/seng350 # Pull the docker image to a local repository`
-`docker ps -l # Verify that the image seng350 exists`
-`docker run -p 7000:7000 seng350 # To start the node instance in the container`
-You should now be able to access the app from your [localhost](localhost:7000)
+*Prerequisites: Docker installed on your computer and basic knowledge of running docker containers*  
+[Docker Image](https://hub.docker.com/r/eroubekas/seng350)  
+`docker pull eroubekas/seng350 # Pull the docker image to a local repository`  
+`docker ps -l # Verify that the image seng350 exists`  
+`docker run -p 7000:7000 seng350 # To start the node instance in the container`  
+You should now be able to access the app from your [localhost](http://localhost:7000)  
 
 
 ### Written Docs:
