@@ -7,10 +7,10 @@
 
 #### 1. Local Copy
 `git clone https://github.com/seng350/seng350f19-project-2-3.git`  
-`npm install`
-`npm run-script build # build`
-`npm start # start`  
-`npm test # testing suite`
+`npm install`  
+`npm run-script build # build`  
+`npm start # start`   
+`npm test # testing suite`  
 
 #### 2. Docker
 *Prerequisites: Docker installed on your computer and basic knowledge of running docker containers*  
@@ -18,7 +18,7 @@
 `docker pull eroubekas/seng350 # Pull the docker image to a local repository`  
 `docker ps -l # Verify that the image seng350 exists`  
 `docker run -p 7000:7000 seng350 # To start the node instance in the container`  
-You should now be able to access the app from your [localhost](http://localhost:7000)  
+You should now be able to access the app from your [localhost on port 7000](http://localhost:7000)  
 
 
 ### Written Docs:
