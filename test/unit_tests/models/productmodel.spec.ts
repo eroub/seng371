@@ -9,7 +9,7 @@ describe ('Testing ProductModel Functionality:', () => {
         const shoes:any = await SM.getAllShoes(test_arr);
         chai.expect(shoes[0].shoe_id).to.equal(3);
     }).timeout(5000);
-    it('getOneShoe: return one correct shoes', async () => {
+    it('getOneShoe: return one correct shoe', async () => {
         const SM = new ProductModel();
         const shoe:any = await SM.getOneShoe(2);
         chai.expect(shoe.shoe_id).to.equal(2);
