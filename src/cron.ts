@@ -20,14 +20,13 @@ function delay(ms: number) {
 /*************
  * CRON JOBS *
  *************/
-function crons() {
-    /**
+/**
  * The purpose of this cron job is to update the database every minute (in an attempt to mock data)
  * If the mock is successful, the job appends a success log to the end of a local log file
  */
+function update() {
     const shoeUpdate = new ProductModel();
     cron.schedule("* * * * *", (err: any) => {
-        console.log('still running')
         if (err) {
             throw err;
         }
@@ -59,16 +58,18 @@ function crons() {
             updateSuccess = false;
         }
     });
+}
 
-    /**
-     * *** INTEGRITY QUALITY ATTRIBUTE AUTOMATIC TEST ***
-     *
-     * The purpose of this cron job is to automatically test our integrity quality attribute (issue #14)
-     * The cron job open it's own connection to the database and grab the list of shoes. It will then
-     * compare this list of shoes to the shoe list post update to verify an price change has occured.
-     * From there it will use one of the apps routes that will run a similar query, and compare the results.
-     * If there are any discrepencies the cron job will log it. This is done at the beginning of every hour.
-     */
+/**
+ * *** INTEGRITY QUALITY ATTRIBUTE AUTOMATIC TEST ***
+ *
+ * The purpose of this cron job is to automatically test our integrity quality attribute (issue #14)
+ * The cron job open it's own connection to the database and grab the list of shoes. It will then
+ * compare this list of shoes to the shoe list post update to verify an price change has occured.
+ * From there it will use one of the apps routes that will run a similar query, and compare the results.
+ * If there are any discrepencies the cron job will log it. This is done at the beginning of every hour.
+ */
+function integrity() {
     cron.schedule("0 * * * *", async (err: any) => {
         if (err) {
             throw err;
@@ -135,14 +136,16 @@ function crons() {
                 });
         }
     });
+}
 
-    /**
-     * *** AVAILABILITY QUALITY ATTRIBUTE AUTOMATIC TEST ***
-     *
-     * The purpose of this cron job is to send a request to the live application every 15 minutes.
-     * This is to check if the app is live (i.e. available). If the app is live, make a log of it
-     * otherwise, log an error and shuts down the node process (process exit code 1).
-     */
+/**
+ * *** AVAILABILITY QUALITY ATTRIBUTE AUTOMATIC TEST ***
+ *
+ * The purpose of this cron job is to send a request to the live application every 15 minutes.
+ * This is to check if the app is live (i.e. available). If the app is live, make a log of it
+ * otherwise, log an error and shuts down the node process (process exit code 1).
+ */
+function availability() {
     cron.schedule("0,15,30,45 * * * *", () => {
         const date = new Date();
         request("https://seng350.roubekas.com", async (error: any, response: any, body: any) => {
@@ -165,11 +168,13 @@ function crons() {
             }
         });
     });
+}
 
-    /**
-     * The purpose of this cron job is to renew the log files at the end of every Sunday and Thursday
-     * This is done with the goal of not having 20gb log files that crash the server
-     */
+/**
+ * The purpose of this cron job is to renew the log files at the end of every Sunday and Thursday
+ * This is done with the goal of not having 20gb log files that crash the server
+ */
+function renew() {
     cron.schedule("59 23 * * 3,7", () => {
         fs.unlink("./logs/update.log", (err: any) => {
             if (err) {
@@ -205,4 +210,7 @@ function crons() {
     });
 }
 
-crons();
+update();
+integrity();
+availability();
+renew();
