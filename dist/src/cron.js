@@ -40,7 +40,7 @@ require("mocha");
 var DbClient = require("./DbClient");
 var productModel_1 = require("./models/productModel");
 var chai = require("chai");
-var request = require('request');
+var request = require("request");
 var cron = require("node-cron");
 var fs = require("fs");
 var datab = DbClient.connect();
@@ -53,197 +53,200 @@ function delay(ms) {
 /*************
  * CRON JOBS *
  *************/
-/**
+function crons() {
+    var _this = this;
+    /**
  * The purpose of this cron job is to update the database every minute (in an attempt to mock data)
  * If the mock is successful, the job appends a success log to the end of a local log file
  */
-var shoeUpdate = new productModel_1.ProductModel();
-cron.schedule("* * * * *", function (err) {
-    if (err) {
-        throw err;
-    }
-    var date = new Date();
-    var update = datab.then(function (db) {
-        db.collection("shoes").updateMany({}, { $inc: { current_price: 1 } });
-        return true;
-    })
-        .catch(function (err) {
-        console.log("Failed to update shoes");
-        return false;
-    });
-    if (update) {
-        fs.appendFile("./logs/update.log", date.toLocaleString() + " --- Updated all shoes by $2 successfully\n", function (err) {
-            if (err) {
-                throw err;
-            }
+    var shoeUpdate = new productModel_1.ProductModel();
+    cron.schedule("* * * * *", function (err) {
+        console.log('still running');
+        if (err) {
+            throw err;
+        }
+        var date = new Date();
+        var update = datab.then(function (db) {
+            db.collection("shoes").updateMany({}, { $inc: { current_price: 1 } });
+            return true;
+        })
+            .catch(function (err) {
+            console.log("Failed to update shoes");
+            return false;
         });
-        updateSuccess = true;
-    }
-    else {
-        fs.appendFile("./logs/update.log", date.toLocaleString() + " --- FATAL ERROR: FAILED TO UPDATE SHOES ***********\n", function (err) {
-            if (err) {
-                throw err;
-            }
-        });
-        updateSuccess = false;
-    }
-});
-/**
- * *** INTEGRITY QUALITY ATTRIBUTE AUTOMATIC TEST ***
- *
- * The purpose of this cron job is to automatically test our integrity quality attribute (issue #14)
- * The cron job open it's own connection to the database and grab the list of shoes. It will then
- * compare this list of shoes to the shoe list post update to verify an price change has occured.
- * From there it will use one of the apps routes that will run a similar query, and compare the results.
- * If there are any discrepencies the cron job will log it. This is done at the beginning of every hour.
- */
-cron.schedule("0 * * * *", function (err) { return __awaiter(void 0, void 0, void 0, function () {
-    var date, shoes, allShoes;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
+        if (update) {
+            fs.appendFile("./logs/update.log", date.toLocaleString() + " --- Updated all shoes by $2 successfully\n", function (err) {
                 if (err) {
                     throw err;
                 }
-                date = new Date();
-                return [4 /*yield*/, datab.then(function (db) {
-                        return db.collection("shoes").find().toArray();
-                    })
-                        .catch(function (err) {
-                        console.log("Failed to grab shoe array");
-                        return false;
-                    })];
-            case 1:
-                // Grab integral data to be compared
-                integrityOld = _a.sent();
-                // Wait just over one minute. Enough time to data to update
-                return [4 /*yield*/, delay(63000)];
-            case 2:
-                // Wait just over one minute. Enough time to data to update
-                _a.sent();
-                if (!updateSuccess) return [3 /*break*/, 4];
-                return [4 /*yield*/, datab.then(function (db) {
-                        return db.collection("shoes").find().toArray();
-                    })
-                        .catch(function (err) {
-                        console.log("Failed to grab shoe array");
-                        return false;
-                    })];
-            case 3:
-                // Grab new data to be compared
-                integrityNew = _a.sent();
-                return [3 /*break*/, 5];
-            case 4:
-                fs.appendFile("./logs/integrity.log", date.toLocaleString() + " --- FATAL ERROR: LAST UPDATE FAILED\n", function (err) {
-                    if (err) {
-                        throw err;
-                    }
-                });
-                return [2 /*return*/];
-            case 5:
-                // Verify that the update occured
-                try {
-                    chai.expect(integrityNew).to.not.deep.equal(integrityOld);
+            });
+            updateSuccess = true;
+        }
+        else {
+            fs.appendFile("./logs/update.log", date.toLocaleString() + " --- FATAL ERROR: FAILED TO UPDATE SHOES ***********\n", function (err) {
+                if (err) {
+                    throw err;
                 }
-                catch (_b) {
-                    fs.appendFile("./logs/integrity.log", date.toLocaleString() +
-                        " --- FATAL ERROR: OLD DATA == NEW DATA. SOMETHING WEIRD HAPPENED\n", function (err) {
-                        if (err) {
-                            throw err;
-                        }
-                    });
-                }
-                shoes = new productModel_1.ProductModel();
-                return [4 /*yield*/, shoes.getAllDB()];
-            case 6:
-                allShoes = _a.sent();
-                // Verify that the shoe list is the same
-                try {
-                    chai.expect(allShoes).to.deep.equal(integrityNew);
-                }
-                catch (_c) {
-                    fs.appendFile("./logs/integrity.log", date.toLocaleString() + " --- FATAL ERROR: NEW DATA NOT REFLECTED ON APP\n", function (err) {
-                        if (err) {
-                            throw err;
-                        }
-                    });
-                }
-                return [2 /*return*/];
+            });
+            updateSuccess = false;
         }
     });
-}); });
-/**
- * *** AVAILABILITY QUALITY ATTRIBUTE AUTOMATIC TEST ***
- *
- * The purpose of this cron job is to send a request to the live application every hour.
- * This is to check if the app is live (i.e. available). If the app is live, make a log of it
- * otherwise, log an error and shuts down the node process (process exit code 1). 0,15,30,45
- */
-cron.schedule("* * * * *", function () {
-    var date = new Date();
-    request('https://seng350.roubekas.com', function (error, response, body) { return __awaiter(void 0, void 0, void 0, function () {
+    /**
+     * *** INTEGRITY QUALITY ATTRIBUTE AUTOMATIC TEST ***
+     *
+     * The purpose of this cron job is to automatically test our integrity quality attribute (issue #14)
+     * The cron job open it's own connection to the database and grab the list of shoes. It will then
+     * compare this list of shoes to the shoe list post update to verify an price change has occured.
+     * From there it will use one of the apps routes that will run a similar query, and compare the results.
+     * If there are any discrepencies the cron job will log it. This is done at the beginning of every hour.
+     */
+    cron.schedule("0 * * * *", function (err) { return __awaiter(_this, void 0, void 0, function () {
+        var date, shoes, allShoes;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!(response.statusCode === 200)) return [3 /*break*/, 1];
-                    console.log("Alive");
-                    fs.appendFile("./logs/availability.log", date.toLocaleString() + " --- Heartbeat confirmed, server is alive and well\n", function (err) {
-                        if (err) {
-                            throw err;
-                        }
-                    });
-                    return [3 /*break*/, 3];
+                    if (err) {
+                        throw err;
+                    }
+                    date = new Date();
+                    return [4 /*yield*/, datab.then(function (db) {
+                            return db.collection("shoes").find().toArray();
+                        })
+                            .catch(function (err) {
+                            console.log("Failed to grab shoe array");
+                            return false;
+                        })];
                 case 1:
-                    console.log("Dead");
-                    fs.appendFile("./logs/availability.log", date.toLocaleString() + " --- FATAL ERROR: Heartbeat dead, shutting down\n", function (err) {
+                    // Grab integral data to be compared
+                    integrityOld = _a.sent();
+                    // Wait just over one minute. Enough time to data to update
+                    return [4 /*yield*/, delay(63000)];
+                case 2:
+                    // Wait just over one minute. Enough time to data to update
+                    _a.sent();
+                    if (!updateSuccess) return [3 /*break*/, 4];
+                    return [4 /*yield*/, datab.then(function (db) {
+                            return db.collection("shoes").find().toArray();
+                        })
+                            .catch(function (err) {
+                            console.log("Failed to grab shoe array");
+                            return false;
+                        })];
+                case 3:
+                    // Grab new data to be compared
+                    integrityNew = _a.sent();
+                    return [3 /*break*/, 5];
+                case 4:
+                    fs.appendFile("./logs/integrity.log", date.toLocaleString() + " --- FATAL ERROR: LAST UPDATE FAILED\n", function (err) {
                         if (err) {
                             throw err;
                         }
                     });
-                    return [4 /*yield*/, delay(10000)];
-                case 2:
-                    _a.sent();
-                    return [2 /*return*/, process.exit(1)];
-                case 3: return [2 /*return*/];
+                    return [2 /*return*/];
+                case 5:
+                    // Verify that the update occured
+                    try {
+                        chai.expect(integrityNew).to.not.deep.equal(integrityOld);
+                    }
+                    catch (_b) {
+                        fs.appendFile("./logs/integrity.log", date.toLocaleString() +
+                            " --- FATAL ERROR: OLD DATA == NEW DATA. SOMETHING WEIRD HAPPENED\n", function (err) {
+                            if (err) {
+                                throw err;
+                            }
+                        });
+                    }
+                    shoes = new productModel_1.ProductModel();
+                    return [4 /*yield*/, shoes.getAllDB()];
+                case 6:
+                    allShoes = _a.sent();
+                    // Verify that the shoe list is the same
+                    try {
+                        chai.expect(allShoes).to.deep.equal(integrityNew);
+                    }
+                    catch (_c) {
+                        fs.appendFile("./logs/integrity.log", date.toLocaleString() + " --- FATAL ERROR: NEW DATA NOT REFLECTED ON APP\n", function (err) {
+                            if (err) {
+                                throw err;
+                            }
+                        });
+                    }
+                    return [2 /*return*/];
             }
         });
     }); });
-});
-/**
- * The pusepose of this cron jobs is to renew the log files at the end of every Sunday and Thursday
- * This is done with the goal of not having 20gb log files that crash the server
- */
-cron.schedule("59 23 * * 3,7", function () {
-    fs.unlink("./logs/update.log", function (err) {
-        if (err) {
-            throw err;
-        }
+    /**
+     * *** AVAILABILITY QUALITY ATTRIBUTE AUTOMATIC TEST ***
+     *
+     * The purpose of this cron job is to send a request to the live application every 15 minutes.
+     * This is to check if the app is live (i.e. available). If the app is live, make a log of it
+     * otherwise, log an error and shuts down the node process (process exit code 1).
+     */
+    cron.schedule("0,15,30,45 * * * *", function () {
+        var date = new Date();
+        request("https://seng350.roubekas.com", function (error, response, body) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(response.statusCode === 200)) return [3 /*break*/, 1];
+                        fs.appendFile("./logs/availability.log", date.toLocaleString() + " --- Heartbeat confirmed, server is alive and well\n", function (err) {
+                            if (err) {
+                                throw err;
+                            }
+                        });
+                        return [3 /*break*/, 3];
+                    case 1:
+                        fs.appendFile("./logs/availability.log", date.toLocaleString() + " --- FATAL ERROR: Heartbeat dead, shutting down\n", function (err) {
+                            if (err) {
+                                throw err;
+                            }
+                        });
+                        return [4 /*yield*/, delay(10000)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/, process.exit(1)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); });
     });
-    fs.link("./logs/update.log", function (err) {
-        if (err) {
-            throw err;
-        }
+    /**
+     * The purpose of this cron job is to renew the log files at the end of every Sunday and Thursday
+     * This is done with the goal of not having 20gb log files that crash the server
+     */
+    cron.schedule("59 23 * * 3,7", function () {
+        fs.unlink("./logs/update.log", function (err) {
+            if (err) {
+                throw err;
+            }
+        });
+        fs.link("./logs/update.log", function (err) {
+            if (err) {
+                throw err;
+            }
+        });
+        fs.unlink("./logs/integrity.log", function (err) {
+            if (err) {
+                throw err;
+            }
+        });
+        fs.link("./logs/integrity.log", function (err) {
+            if (err) {
+                throw err;
+            }
+        });
+        fs.unlink("./logs/availability.log", function (err) {
+            if (err) {
+                throw err;
+            }
+        });
+        fs.link("./logs/availability.log", function (err) {
+            if (err) {
+                throw err;
+            }
+        });
+        console.log("All log files successfully re-created!");
     });
-    fs.unlink("./logs/integrity.log", function (err) {
-        if (err) {
-            throw err;
-        }
-    });
-    fs.link("./logs/integrity.log", function (err) {
-        if (err) {
-            throw err;
-        }
-    });
-    fs.unlink("./logs/availability.log", function (err) {
-        if (err) {
-            throw err;
-        }
-    });
-    fs.link("./logs/availability.log", function (err) {
-        if (err) {
-            throw err;
-        }
-    });
-    console.log("All log files successfully re-created!");
-});
+}
+crons();
 //# sourceMappingURL=cron.js.map
