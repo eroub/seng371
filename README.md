@@ -1,7 +1,11 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/seng350/seng350f19-project-2-3?branch=master&token=d44e8327fcddd173a59f492a77f358ea3719611a)](https://bettercodehub.com/)
+[![Build Status](https://travis-ci.com/seng350/seng350f19-project-2-3.svg?token=pqsMuNR5Bvw3zLAy57V9&branch=master)](https://travis-ci.com/seng350/seng350f19-project-2-3)  
 
 ## Team AES
 #### Authored by: Evan Roubekas, Asim Ali, & Shaun Lyne
+
+### The live app can be accessed [here](https://seng350.roubekas.com)
+Note: The app may not be available 100% of the time
 
 ### Instructions:
 
