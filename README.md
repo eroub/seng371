@@ -14,7 +14,7 @@
 
 #### 2. Docker
 *Prerequisites: Docker installed on your computer and basic knowledge of running docker containers*  
-[Docker Image](https://hub.docker.com/r/eroubekas/seng350)  
+[The Docker Image can be found here](https://hub.docker.com/r/eroubekas/seng350)  
 `docker pull eroubekas/seng350 # Pull the docker image to a local repository`  
 `docker ps -l # Verify that the image seng350 exists`  
 `docker run -p 7000:7000 seng350 # To start the node instance in the container`  
