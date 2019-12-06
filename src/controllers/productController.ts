@@ -162,9 +162,7 @@ export class ProductController extends BaseRoute {
      * Checks if the allShoes array has already been set otherwise it will call setlocal to query the db
      * @class ProductController extends BaseRoute
      * @method check_local
-     * @param req {Request} The request object.
-     * @param res {Response} The response object.
-     * @param next {NextFunction} The NextFunction.
+     * @param userID the id of the user currently viewing all shoes.
      * @return void
      */
 
