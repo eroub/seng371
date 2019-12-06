@@ -1,13 +1,14 @@
 import "mocha";
 const chai = require("chai");
-import { Server } from "../../../src/app"
-const request = require('supertest');
-import { CustomerModel } from "../../../src/models/customerModel";
-import { ProductModel } from "../../../src/models/productModel";
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 const expect = chai.expect;
+/*
+Pre req: have the server running locally
+QAS response measure: The system should not time out or make users wait over 0.75 seconds
+                        for the system to respond to their reques
 
+ */
 
 describe('Testing main admin view:', () => {
 
