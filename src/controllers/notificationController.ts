@@ -9,6 +9,14 @@ let Shoes: any;
 let id: number;
 
 export class NotificationController extends BaseRoute {
+    /**
+     * Creates NotificationController routes.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method create
+     * @param router {Router} The router object.
+     * @return void
+     */
 
     public static create(router: Router) {
         router.get("/user/:id/notifications", (req: Request, res: Response, next: NextFunction) => {
@@ -44,9 +52,18 @@ export class NotificationController extends BaseRoute {
         });
     }
 
-    // constructor() {
-        // not much here yet
-    // }
+
+
+    /**
+     * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method notificationCentre
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
 
     public async notificationCentre(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -62,6 +79,17 @@ export class NotificationController extends BaseRoute {
             });        }
     }
 
+
+    /**
+     * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications/filter/fulfilled.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method filterFulfilled
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async filterFulfilled(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
@@ -83,6 +111,18 @@ export class NotificationController extends BaseRoute {
                     status: res.status,
                 });        }
     }
+
+
+    /**
+     * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications/filter/unfulfilled.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method filterUnulfilled
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
 
     public async filterUnfulfilled(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -106,6 +146,17 @@ export class NotificationController extends BaseRoute {
                 });        }
     }
 
+    /**
+     * redirects to allShoes view when the user navigates to /user/<user_id>/notifications/add_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method addNotification
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
+
     public async addNotification(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const sString = "id2";
@@ -121,6 +172,17 @@ export class NotificationController extends BaseRoute {
 
     }
 
+
+    /**
+     * redirects to notifications view when the user navigates to /user/<user_id>/remove_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method removeNotification
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     public async removeNotification(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
         const idString = "id2";
@@ -130,6 +192,17 @@ export class NotificationController extends BaseRoute {
         await nIF.remove_notif(notifID);
         res.redirect("/user/" + userID + "/notifications");
     }
+
+    /**
+     * redirects to notifications view when the user navigates to /user/<user_id>/edit_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method editNotifications
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
 
     public async editNotification(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
@@ -143,6 +216,17 @@ export class NotificationController extends BaseRoute {
         await nIF.edit_notif(notifID, req.body.threshold, req.body.type);
         res.redirect("/user/" + userID + "/notifications");
     }
+
+    /**
+     * fetches the addNotification view when the user navigates to /user/<user_id>/add_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method inputNotifications
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
 
     public async inputNotification(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
@@ -168,6 +252,17 @@ export class NotificationController extends BaseRoute {
 
     }
 
+    /**
+     * fetches the ditNotification view when the user navigates to /user/<user_id>/edit_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method editNotificationForm
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
+
     public async editNotificationForm(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
@@ -176,6 +271,18 @@ export class NotificationController extends BaseRoute {
         const notification = await this.getNotif(notId);
         this.render(req, res, "editNotification", { id: userId, title: "Notification", notification });
     }
+
+
+    /**
+     * A helper function to set the usrs notifications.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method buildNotifications
+     * @param UserID, the ID of the user for whom to return notifications for
+     * @return boolean
+     */
+
+
 
     private async buildNotifications(userID: number) {
         if (await Helpers.isUser(userID)) {
@@ -200,6 +307,17 @@ export class NotificationController extends BaseRoute {
         }
     }
 
+
+
+    /**
+     * A helper function that checks if a notification has been fulfilled
+     * @class NotificationController extends BaseRoute
+     * @method editNotificationForm
+     * @param notification
+     * @param currentPrice
+     * @return void
+     */
+
     private async checkFulfilled(notification: any, currentPrice: any) {
         if (!notification.fulfilled) {
             if ((notification.type === "Below") && (notification.threshold > currentPrice)) {
@@ -213,10 +331,29 @@ export class NotificationController extends BaseRoute {
         }
     }
 
+    /**
+     * Queries the db to update status of a notification.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method fulfill
+     * @param Notification  the notification Object.
+     * @return true if the notification was successfully fulfilled, otherwise false.
+     */
+
     private async fulfill(notification: any) {
         const nIF = new NotificationModel();
         await nIF.fulfill(notification._id);
     }
+
+    /**
+     * calls buildNotifications is userNotifications is empty or if id != userID
+     *
+     * @class NotificationController extends BaseRoute
+     * @method check_local
+     * @param UserID  the id of the current user.
+     * @return true if buildnotifications returns succesfully
+     */
+
 
     private async check_local(userID: number) {
         if (!userNotifications) {
@@ -227,15 +364,46 @@ export class NotificationController extends BaseRoute {
         return true;
     }
 
+    /**
+     * calls local function setUserNotifications to set local variable userNotification
+     *
+     * @class NotificationController extends BaseRoute
+     * @method setLocals
+     * @param UserID  the id of the current user.
+     * @return void
+     */
+
+
     private async setLocals(userID: number) {
         await this.setUserNotifications(userID);
         Shoes = await Helpers.getAllDbShoes();
     }
 
+
+    /**
+     * Queries the DB to set local variable userNotification
+     *
+     * @class NotificationController extends BaseRoute
+     * @method setUserNotifications
+     * @param UserID  the id of the current user.
+     * @return void
+     */
+
+
     private async setUserNotifications(userID: number) {
         const notifIf = new NotificationModel();
         userNotifications = await notifIf.getUserNotifications(userID);
     }
+
+
+    /**
+     * returns a shoe object
+     *
+     * @class NotificationController extends BaseRoute
+     * @method getShoe
+     * @param UserID  the id of the current user.
+     * @return shoe object
+     */
 
     private getShoe(shoeID: number) {
         for (const item in Shoes) {
@@ -247,6 +415,15 @@ export class NotificationController extends BaseRoute {
             }
         }
     }
+
+    /**
+     * returns a shoe object
+     *
+     * @class NotificationController extends BaseRoute
+     * @method getShoe
+     * @param id (any)   the id of the notification.
+     * @return notification object
+     */
 
     private async getNotif(id: any) {
         const nIF = new NotificationModel();

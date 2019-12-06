@@ -75,9 +75,6 @@ export class ProductController extends BaseRoute {
      */
 
 
-
-
-
     public async inputShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
