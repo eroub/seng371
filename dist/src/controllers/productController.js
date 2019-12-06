@@ -199,7 +199,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return a.current_price - b.current_price; });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -226,7 +226,7 @@ var ProductController = /** @class */ (function (_super) {
                                 var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return bname.toLowerCase().localeCompare(aname.toLowerCase());
                             });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -253,7 +253,7 @@ var ProductController = /** @class */ (function (_super) {
                                 var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -276,7 +276,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return b.current_price - a.current_price; });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -299,7 +299,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return a.retail_price - b.retail_price; });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -322,7 +322,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return b.retail_price - a.retail_price; });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -345,7 +345,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return (a.current_price - a.retail_price) - (b.current_price - b.retail_price); });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -368,7 +368,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return (b.current_price - b.retail_price) - (a.current_price - a.retail_price); });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -399,7 +399,7 @@ var ProductController = /** @class */ (function (_super) {
                                 }
                             }
                             allShoes = underRetail;
-                            this.render(req, res, "shoeList", { data: allShoes, id: userId, title: "Shoes", });
+                            this.render(req, res, "shoeList", { data: allShoes, id: userId, title: "Shoes" });
                         }
                         else {
                             Helpers.ID404(res);

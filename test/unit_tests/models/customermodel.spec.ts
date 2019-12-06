@@ -60,7 +60,7 @@ describe ('Testing CustomerModel Functionality:', () => {
     }).timeout(5000);
     it('delete_user: should return true', async () => {
         const UM = new CustomerModel();
-        const editedUser: any = await UM.edit_userName(777, 'world');
+        const editedUser: any = await UM.remove_user(777);
         chai.expect(editedUser).to.equal(true)
     }).timeout(5000);
 });

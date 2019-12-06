@@ -110,7 +110,7 @@ export class ProductController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
             allShoes.sort((a: any, b: any) => a.current_price - b.current_price);
-            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes"});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -126,7 +126,7 @@ export class ProductController extends BaseRoute {
                 const bname = b.brand + " " + b.model + " " + b.colorway;
                 return bname.toLowerCase().localeCompare(aname.toLowerCase());
             });
-            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes"});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -142,7 +142,7 @@ export class ProductController extends BaseRoute {
                 const bname = b.brand + " " + b.model + " " + b.colorway;
                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
             });
-            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes"});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -154,7 +154,7 @@ export class ProductController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
             allShoes.sort((a: any, b: any) => b.current_price - a.current_price);
-            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes"});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -166,7 +166,7 @@ export class ProductController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
             allShoes.sort((a: any, b: any) => a.retail_price - b.retail_price);
-            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes"});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -178,7 +178,7 @@ export class ProductController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
             allShoes.sort((a: any, b: any) => b.retail_price - a.retail_price);
-            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes"});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -190,7 +190,7 @@ export class ProductController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
             allShoes.sort((a: any, b: any) => (a.current_price - a.retail_price) - (b.current_price - b.retail_price));
-            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes"});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -202,7 +202,7 @@ export class ProductController extends BaseRoute {
         const queryint = parseInt(req.params[idString], 10);
         if (await this.check_local(queryint)) {
             allShoes.sort((a: any, b: any) => (b.current_price - b.retail_price) - (a.current_price - a.retail_price));
-            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: queryint, title: "Shoes"});
         } else {
             res.status(404);
             res.send("invalid user");
@@ -222,7 +222,7 @@ export class ProductController extends BaseRoute {
                 }
             }
             allShoes = underRetail;
-            this.render(req, res, "shoeList", {data: allShoes, id: userId, title: "Shoes",});
+            this.render(req, res, "shoeList", {data: allShoes, id: userId, title: "Shoes"});
         } else {
             Helpers.ID404(res);
         }

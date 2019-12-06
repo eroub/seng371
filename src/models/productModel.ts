@@ -91,7 +91,7 @@ export class ProductModel {
      */
 
     public updateShoes(priceChange: any) {
-        const shoeUpdate = DbClient.connect()
+        const shoeUpdate = datab
             .then((db) => {
                 db!.collection("shoes").updateMany({}, { $inc: { current_price: priceChange }});
                 return true;

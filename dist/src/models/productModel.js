@@ -82,7 +82,7 @@ var ProductModel = /** @class */ (function () {
             Return all the shoes for the view where we need to see all shoes available in db
      */
     ProductModel.prototype.updateShoes = function (priceChange) {
-        var shoeUpdate = DbClient.connect()
+        var shoeUpdate = datab
             .then(function (db) {
             db.collection("shoes").updateMany({}, { $inc: { current_price: priceChange } });
             return true;
