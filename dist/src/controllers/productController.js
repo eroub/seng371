@@ -199,15 +199,11 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return a.current_price - b.current_price; });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.renderThis(req, res, queryint);
                         }
                         else {
-                            res.status(404);
                             res.send("invalid user");
+                            res.status(404);
                         }
                         return [2 /*return*/];
                 }
@@ -230,11 +226,7 @@ var ProductController = /** @class */ (function (_super) {
                                 var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return bname.toLowerCase().localeCompare(aname.toLowerCase());
                             });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.renderThis(req, res, queryint);
                         }
                         else {
                             res.status(404);
@@ -288,11 +280,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return b.current_price - a.current_price; });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.renderThis(req, res, queryint);
                         }
                         else {
                             res.status(404);
@@ -442,6 +430,18 @@ var ProductController = /** @class */ (function (_super) {
                         }
                         return [2 /*return*/];
                 }
+            });
+        });
+    };
+    ProductController.prototype.renderThis = function (req, res, queryint) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.render(req, res, "shoeList", {
+                    title: "Shoes",
+                    id: queryint,
+                    data: allShoes,
+                });
+                return [2 /*return*/];
             });
         });
     };
