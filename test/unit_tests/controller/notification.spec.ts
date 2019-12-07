@@ -35,13 +35,15 @@ describe('Testing notificationController Functionality:', () => {
 
         const shoe: any = await SM.add_shoe('v1.1', 99, 10, 100, 100, 'nike', 'red');
 
-        // pre req: there is a user with user id =id, and there is a shoe with id =1 .
+        //and add a notification for that id
+        const NM = new NotificationModel();
+        const nInfo: any = await NM.addNotification(id,99,100,"Above");
+
+
+        // pre req: there is a user with user id =id, and there is a shoe with id =99 .
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/add_notification/99');
 
 
-
-
-        chai.expect(response.statusCode).to.equal(200);
 
 
 
@@ -54,30 +56,16 @@ describe('Testing notificationController Functionality:', () => {
         const response = await request(serve.getExpressInstance()).post('/user/'+id+'/add_notification/99');
 
         chai.expect(response.statusCode).to.equal(302);
-        //remove the shoe after making it
 
 
     }).timeout(5000);
-
-
-
-
-    it('remove_notification: return code 302(redirects)', async () => {
-
-        const NM = new NotificationModel();
-        const nInfo: any = await NM.addNotification(id,99,100,"Above");
-
-        const response = await request(serve.getExpressInstance()).post('/user/'+id+'/remove_notification/'+id);
-
-        chai.expect(response.statusCode).to.equal(302);
-        const not: any = await NM.getUserNotifications(id);
-        const nrInfo: any = await NM.remove_notif(not[not.length-1]._id);
-
-    }).timeout(5000);
-
-
 
     it('edit_notification (form): return code ', async () => {
+
+        const NM = new NotificationModel();
+        const not: any = await NM.getUserNotifications(id);
+        let notification_id = not[not.length-1]._id
+
 
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/edit_notification/'+notification_id);
 
@@ -88,11 +76,33 @@ describe('Testing notificationController Functionality:', () => {
 
     it('edit_notification: return code 302(redirects)', async () => {
 
+        const NM = new NotificationModel();
+        const not: any = await NM.getUserNotifications(id);
+        let notification_id = not[not.length-1]._id
+
+
         const response = await request(serve.getExpressInstance()).post('/user/'+id+'/edit_notification/'+notification_id);
 
         chai.expect(response.statusCode).to.equal(302);
 
     }).timeout(10000);
+
+
+
+    it('remove_notification: return code 302(redirects)', async () => {
+
+        const response = await request(serve.getExpressInstance()).post('/user/'+id+'/remove_notification/'+id);
+
+        chai.expect(response.statusCode).to.equal(302);
+
+        const NM = new NotificationModel();
+        const not: any = await NM.getUserNotifications(id);
+        const nrInfo: any = await NM.remove_notif(not[not.length-1]._id);
+
+    }).timeout(5000);
+
+
+
 
     it('fulfilled: return code 200', async () => {
 
@@ -102,15 +112,18 @@ describe('Testing notificationController Functionality:', () => {
 
     }).timeout(10000);
 
+
     it('unfulfilled: return code 200', async () => {
 
-        const SM = new ProductModel();
-
-        const rmshoe: any = await SM.remove_shoe(99);
 
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/notifications/filter/unfulfilled');
 
         chai.expect(response.statusCode).to.equal(200);
+
+            // delete the shoe created in this test
+        const SM = new ProductModel();
+
+        const rmshoe: any = await SM.remove_shoe(99);
 
     }).timeout(10000);
 
