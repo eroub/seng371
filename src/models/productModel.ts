@@ -1,4 +1,5 @@
  import DbClient = require("../DbClient");
+ const datab = DbClient.connect();
 
 export class ProductModel {
 
@@ -129,7 +130,7 @@ export class ProductModel {
      * @return An array of shoe JSON objects.
      */
     public getAllDB() {
-        const shoes = DbClient.connect()
+        const shoes = datab
             .then((db) => {
                 return db!.collection("shoes").find().toArray();
             })

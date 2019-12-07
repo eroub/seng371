@@ -63,6 +63,14 @@ var CustomerController = /** @class */ (function (_super) {
     function CustomerController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * Creates customer routes.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method create
+     * @param router {Router} The router object.
+     * @return void
+     */
     CustomerController.create = function (router) {
         // sorting all the shoes the user (id) owns from low to high
         router.get("/user/:id/shoes/sort/current_price_low", function (req, res, next) {
@@ -105,6 +113,16 @@ var CustomerController = /** @class */ (function (_super) {
             new CustomerController().editUsername(req, res, next);
         });
     };
+    /**
+     * Renders the settings view for a specific user when they navigate to /user/<user_id>/settings.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method settings
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.settings = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -128,6 +146,16 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent from the settings view to edit a user's username.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method editUsername
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.editUsername = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, userID, uIF;
@@ -137,7 +165,7 @@ var CustomerController = /** @class */ (function (_super) {
                         uString = "id";
                         userID = parseInt(req.params[uString], 10);
                         uIF = new customerModel_1.CustomerModel();
-                        if (!req.body.uname) {
+                        if (!req.body.uname && this.check_local(userID)) {
                             req.body.uname = userJson.username;
                         }
                         return [4 /*yield*/, uIF.edit_userName(userID, req.body.uname)];
@@ -149,6 +177,16 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the allShoes view for a specific user with shoes sorted by the lowest current price to the highest current price.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method sortCurrentPriceLow
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.sortCurrentPriceLow = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, sortedShoes;
@@ -174,6 +212,16 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the allShoes view for a specific user with shoes sorted by the highest current price to the lowest current price.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method sortCurrentPriceHigh
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.sortCurrentPriceHigh = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, sortedShoes;
@@ -199,6 +247,16 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the allShoes view for a specific user with shoes sorted by the lowest purchase price to the highest purchase price.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method sortPurchasePriceLow
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.sortPurchasePriceLow = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, sortedShoes;
@@ -224,6 +282,16 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the allShoes view for a specific user with shoes sorted by the highest purchase price to the lowest purchase price.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method sortPurchasePriceHigh
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.sortPurchasePriceHigh = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint, sortedShoes;
@@ -249,6 +317,16 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent by the addShoe view to add a shoe to a specific user's portfolio.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method addShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.addShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var userIdString, userId, shoeIdString, shoeId, uif, price;
@@ -278,13 +356,22 @@ var CustomerController = /** @class */ (function (_super) {
                             message: "No user with associated ID. Check the entered number.",
                             status: res.status,
                         });
-                        res.send("invalid user");
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Handles the POST request sent by the oneShoe view to edit a shoe in a specific user's portfolio.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method editShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.editShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, idString, userID, shoeID, uIF;
@@ -308,6 +395,16 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent by the allShoes view to remove a shoe in a specific user's portfolio.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method removeShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.removeShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var userIdString, userId, idString, docID, uif;
@@ -338,7 +435,14 @@ var CustomerController = /** @class */ (function (_super) {
         });
     };
     /**
-     * GET all Shoes. Take user id from the url parameter. Then get all shoes for that user.
+     * Renders the allShoes view (with shoes sorted alphabetically ascending) when a user navigates to /user/<user_id>/shoes.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method getAll
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
      */
     CustomerController.prototype.getAll = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
@@ -369,6 +473,16 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the oneShoe view when a user navigates to /user/<user_id>/shoes/<shoe_id>.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method getAll
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     CustomerController.prototype.getOne = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var userIdString, userId, shoeIdString, shoeId, shoe, diff;
@@ -388,6 +502,7 @@ var CustomerController = /** @class */ (function (_super) {
                                 this.render(req, res, "oneShoe", { id: userId, diff: diff, purchase: shoe.purchase_price, shoe: shoe });
                             }
                             else {
+                                console.log("shoe wasn't found");
                                 res.status(404)
                                     .send({
                                     message: "No shoe found with the given id.",
@@ -407,6 +522,14 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Checks if local variables are set for sorting functions, and whether or not the local variables are correct for the current user.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method check_local
+     * @param userID {Number} The id of the current user.
+     * @return true
+     */
     CustomerController.prototype.check_local = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -424,6 +547,14 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Sets local variables for a specific user.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method setLocal
+     * @param userID {Any} The id of the user.
+     * @return true if the local variables were set, false if the user does not exist and the local variables could not be set.
+     */
     CustomerController.prototype.setLocal = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -451,6 +582,14 @@ var CustomerController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Sets local variables for net gain/loss, etc. for a users shoe list.
+     *
+     * @class CustomerController extends BaseRoute
+     * @method setNet
+     * @param userShoes {Any} A list of user shoe JSON objects.
+     * @return true
+     */
     CustomerController.prototype.setNet = function (userShoes) {
         var _a;
         _a = Helpers.setNet(userShoes), netGain = _a[0], sunkCost = _a[1], totalRevenue = _a[2], numShoes = _a[3];

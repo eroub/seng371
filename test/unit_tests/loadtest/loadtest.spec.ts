@@ -18,7 +18,7 @@ describe("Performance Test", function() {
         this.timeout(100000 * 60);
 
         const options = {
-            url: 'http://localhost:7000',
+            url: 'http://localhost:7000/user/1/allShoes',
             maxRequests:1000,
             requestsPerSecond: 0.5,
             concurrency: 1,

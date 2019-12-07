@@ -9,10 +9,11 @@ echo "Running through unit tests via mocha ... "
 # istanbul cover mocha --exit
 #mocha -r ts-node/register --exit **/**/*.spec.ts
 #mocha -r ts-node/register --exit **/**/loadTestForloop.spec.ts
-mocha -r ts-node/register --exit **/**/product.spec.ts
-mocha -r ts-node/register --exit **/**/leaderboard.spec.ts
-mocha -r ts-node/register --exit **/**/notification.spec.ts
+#tsmocha -r ts-node/register --exit **/**/product.spec.ts
+#mocha -r ts-node/register --exit **/**/leaderboard.spec.ts
+#mocha -r ts-node/register --exit **/**/notification.spec.ts
 
+mocha -r ts-node/register --exit **/**/loadTestForloop.spec.ts
 
 
 

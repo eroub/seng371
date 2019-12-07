@@ -15,7 +15,7 @@ describe('Testing main admin view:', () => {
 for(let i=0; i<1000; i++) {
     it('loadtests admin page', function (done) {
         chai.request('http://localhost:7000')
-            .get('/admin')
+            .get('/user/1/allShoes')
             .end(function (err: any, res: any) {
                 expect(res).to.have.status(200);
                 done();
