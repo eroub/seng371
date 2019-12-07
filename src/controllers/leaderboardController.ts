@@ -53,7 +53,6 @@ export class LeaderboardController extends BaseRoute {
      * @return void
      */
 
-
     public async leaderboard(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const userId = parseInt(req.params[idString], 10);
@@ -67,7 +66,6 @@ export class LeaderboardController extends BaseRoute {
             });        }
     }
 
-
     /**
      * Renders the leaderboard view in sorted order when user navigates to /user/<user_id>/leaderboard/avgNetHigh.
      *
@@ -78,7 +76,6 @@ export class LeaderboardController extends BaseRoute {
      * @param next {NextFunction} The NextFunction.
      * @return void
      */
-
 
     public async avgNetHigh(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -118,7 +115,6 @@ export class LeaderboardController extends BaseRoute {
                     status: res.status,
                 });        }
     }
-
 
     /**
      * Renders the leaderboard view in sorted order when user navigates to /user/<user_id>/leaderboard/netLow.
@@ -175,7 +171,6 @@ export class LeaderboardController extends BaseRoute {
      * @class LeaderboardController extends BaseRoute
      * @method check_local
      * @param userID The ID number of the user currently viewing the leaderboard.
-
      * @return void
      */
 
@@ -220,7 +215,6 @@ export class LeaderboardController extends BaseRoute {
      * @method buildRanking
      * @param userShoes an array of the users shoe objects.
      * @param An object that holds the properties important for ranking (net, sunk,revenue,avg_net,num) .
-
      * @return void
      */
 
@@ -274,7 +268,6 @@ export class LeaderboardController extends BaseRoute {
 
     /**
      * gets all the shoes for a user
-
      * @class LeaderboardController extends BaseRoute
      * @method getUserShoes
      * @return array of shoe objects

@@ -13,7 +13,8 @@ export class NotificationModel {
      * @class NotificationModel
      * @method getUserNotifications
      * @param userId {Any} the user_id of the user to get notifications for.
-     * @return An array of notification JSON objects ({fulfilled, shoe_id, threshold, type, user_id} if the user has notifications.
+     * @return An array of notification JSON objects
+     * ({fulfilled, shoe_id, threshold, type, user_id} if the user has notifications.
      */
     public getUserNotifications(userId: any) {
         const notifications = DbClient.connect()

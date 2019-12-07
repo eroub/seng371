@@ -124,7 +124,7 @@ export class AdminController extends BaseRoute {
      */
     public async editUserForm(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = parseInt(req.params[uString]);
+        const userID = parseInt(req.params[uString], 10);
         const CM = new CustomerModel();
         let user = await CM.userInfo(userID);
         user = user[0];
@@ -143,10 +143,10 @@ export class AdminController extends BaseRoute {
      */
     public async editUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = parseInt(req.params[uString]);
+        const userID = parseInt(req.params[uString], 10);
         const CM = new CustomerModel();
         let editedName: any = req.body.newusername;
-        if(!editedName) {
+        if (!editedName) {
             editedName = "USER";
         }
         await CM.edit_userName(userID, editedName);
@@ -166,7 +166,7 @@ export class AdminController extends BaseRoute {
     public async addUser(req: Request, res: Response, next: NextFunction) {
         const CM = new CustomerModel();
         let editedName: any = req.body.newusername;
-        if(!editedName) {
+        if (!editedName) {
             editedName = "USER";
         }
         const newID: any = (await Helpers.getMaxUser()) + 1;
@@ -186,7 +186,7 @@ export class AdminController extends BaseRoute {
      */
     public async delUser(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const userID = parseInt(req.params[uString]);
+        const userID = parseInt(req.params[uString], 10);
         const CM = new CustomerModel();
         await CM.remove_user(userID);
         res.redirect("/admin/users");
@@ -213,7 +213,7 @@ export class AdminController extends BaseRoute {
         let shoeSize: number;
         let shoeID = (await Helpers.getMaxShoe()) + 1;
 
-        if(!req.body.model) {
+        if (!req.body.model) {
             shoeModel = "MODEL";
             colorway = "COLORWAY";
             brand = "BRAND";
@@ -221,8 +221,7 @@ export class AdminController extends BaseRoute {
             shoeRP = 0;
             shoeSize = 0;
             shoeID = (await Helpers.getMaxShoe()) + 1;
-        }
-        else {
+        } else {
             shoeModel = req.body.model;
             colorway = req.body.colorway;
             brand = req.body.brand;
@@ -230,8 +229,6 @@ export class AdminController extends BaseRoute {
             shoeRP = parseInt(req.body.retail_price, 10);
             shoeSize = parseInt(req.body.size, 10);
         }
-
-
         await PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway);
         res.redirect("/admin/shoes");
     }
@@ -266,11 +263,8 @@ export class AdminController extends BaseRoute {
      */
     public async editShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const shoeID = parseInt(req.params[uString]);
+        const shoeID = parseInt(req.params[uString], 10);
         const PM = new ProductModel();
-
-
-
         let shoeModel: any;
         let colorway: any;
         let brand: any;
@@ -278,15 +272,14 @@ export class AdminController extends BaseRoute {
         let shoeRP: number;
         let shoeSize: number;
 
-        if(!req.body.model) {
+        if (!req.body.model) {
             shoeModel = "MODEL";
             colorway = "COLORWAY";
             brand = "BRAND";
             shoeCP = 0;
             shoeRP = 0;
             shoeSize = 0;
-        }
-        else {
+        } else {
             shoeModel = req.body.model;
             colorway = req.body.colorway;
             brand = req.body.brand;
@@ -312,7 +305,7 @@ export class AdminController extends BaseRoute {
      */
     public async delShoe(req: Request, res: Response, next: NextFunction) {
         const uString = "id";
-        const shoeID = parseInt(req.params[uString]);
+        const shoeID = parseInt(req.params[uString], 10);
         const PM = new ProductModel();
         await PM.remove_shoe(shoeID);
         res.redirect("/admin/shoes");
