@@ -1,24 +1,54 @@
 import "mocha";
-import chai from "chai";
+const chai = require("chai");
 import { Server } from "../../../src/app"
 const request = require('supertest');
 
 const serve = new Server();
 
 describe('Testing leaderboardController Functionality:', () => {
-    it('leaderboard: return code ___', async () => {
+    let id = 1;
+    let xid = 'a';
+
+    it('leaderboard: return code 200', async () => {
+
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/leaderboard');
+
+        chai.expect(response.statusCode).to.equal(200);
+
+    }).timeout(10000);
+
+    it('avgNetHigh: return code 200', async () => {
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/leaderboard/avgNetHigh');
+
+        chai.expect(response.statusCode).to.equal(200);
+
+    }).timeout(10000);
+
+    it('avgNetLow: return code 200', async () => {
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/leaderboard/avgNetLow');
+
+        chai.expect(response.statusCode).to.equal(200);
+
+
+    }).timeout(10000);
+
+    it('netHigh: return code 200', async () => {
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/leaderboard/netHigh');
+
+        chai.expect(response.statusCode).to.equal(200);
         
-    }).timeout(5000);
-    it('avgNetHigh: return code ___', async () => {
-        
-    }).timeout(5000);
-    it('avgNetLot: return code ___', async () => {
-        
-    }).timeout(5000);
-    it('netHigh: return code ___', async () => {
-        
-    }).timeout(5000);
-    it('netLow: return code ___', async () => {
-        
-    }).timeout(5000);
+    }).timeout(10000);
+
+    it('netLow: return code 200', async () => {
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/leaderboard/netLow');
+
+        chai.expect(response.statusCode).to.equal(200);
+
+
+    }).timeout(10000);
 });

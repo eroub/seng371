@@ -1,36 +1,29 @@
 import "mocha";
-import chai from "chai";
+const chai = require("chai");
 import { Server } from "../../../src/app"
 const request = require('supertest');
+import { CustomerModel } from "../../../src/models/customerModel";
 
 const serve = new Server();
 
 describe('Testing customerController Functionality:', () => {
 
     /*
-    pre condition there must be no user with the id 0 and there must be a user with id 1
+    pre condition there must be no user with the id 999 and there must be a user with id 99
     and  there must be a shoe with id =1.
      */
-    let xid =0, id=1, shoe_id='5de450dcdd707d17516235c1', xshoe_id='x';
-    it('/user/4/shoes (Should have status 404)', async () => {
+    let xid =999, id=99, shoe_id='1', xshoe_id='x';
+    it('/user/999/shoes (Should have status 404)', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user'+xid+'/shoes');
+        const response = await request(serve.getExpressInstance()).get('/user/'+xid+'/shoes');
 
         chai.expect(response.statusCode).to.equal(404);
 
     }).timeout(5000);
 
-    it('/user/1/shoes (Should have status 200)', async () => {
+    it('/user/99/shoes (Should have status 200)', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user'+id+'/shoes')
-
-        chai.expect(response.statusCode).to.equal(200);
-
-    }).timeout(5000);
-
-    it('/user/1/shoes/1 (Should have status 200)', async () => {
-
-        const response = await request(serve.getExpressInstance()).get('/user'+id+'/shoes/'+shoe_id);
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes')
 
         chai.expect(response.statusCode).to.equal(200);
 
@@ -38,24 +31,43 @@ describe('Testing customerController Functionality:', () => {
 
     it('return 404 for non existent user ', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user'+xid+'/shoes/'+shoe_id);
+        const response = await request(serve.getExpressInstance()).get('/user/'+xid+'/shoes/'+shoe_id);
 
         chai.expect(response.statusCode).to.equal(404);
+
+    }).timeout(5000);
+
+    it('Gets a shoe from user 99 (should return 200)', async () => {
+
+        const serve = new Server();
+
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/5de89f0cf27f704a0c4a5b82');
+
+        chai.expect(response.statusCode).to.equal(200);
 
     }).timeout(5000);
 
     it('return 404 for a user accessing non existent shoe', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user'+id+'/shoes/'+xshoe_id);
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/'+xshoe_id);
 
         chai.expect(response.statusCode).to.equal(404);
 
     }).timeout(5000);
 
-    it('Successfully adds a shoe to user portfolio (redirects)', async () => {
+    it('Adds a shoe to user 99\'s portfolio, gets it, edits it, then removes it', async () => {
 
-        const response = await request(serve.getExpressInstance()).post('/user/1/add_shoe/1');
+        let response = await request(serve.getExpressInstance()).post('/user/99/add_shoe/1');
+        chai.expect(response.statusCode).to.equal(302);
 
+        const cm: any = new CustomerModel();
+        const userShoes: any = await cm.getKeys(99);
+        const objectID: any = userShoes[userShoes.length-1]._id;
+
+        response = await request(serve.getExpressInstance()).post("/user/"+id+"/edit_shoe/"+objectID);
+        chai.expect(response.statusCode).to.equal(302);
+
+        response = await request(serve.getExpressInstance()).post('/user/99/remove_shoe/' + objectID);
         chai.expect(response.statusCode).to.equal(302);
 
     }).timeout(5000);
@@ -70,19 +82,19 @@ describe('Testing customerController Functionality:', () => {
 
     }).timeout(5000);
 
-    it('Successfully removes shoe from portfolio (redirects)', async () => {
-
-        const response = await request(serve.getExpressInstance()).post('/user/1/remove_shoe/1');
-
-        chai.expect(response.statusCode).to.equal(302);
-
-    }).timeout(5000);
-
     it('Fails to remove a shoe from non-existent user portfolio (404)', async () => {
 
         const response = await request(serve.getExpressInstance()).post('/user/'+xid+ '/remove_shoe/'+shoe_id);
 
         chai.expect(response.statusCode).to.equal(404);
+
+    }).timeout(5000);
+
+    it('Fails to edit a shoe from non-existent user portfolio (302)', async () => {
+
+        const response = await request(serve.getExpressInstance()).post('/user/'+xid+ '/edit_shoe/'+shoe_id);
+
+        chai.expect(response.statusCode).to.equal(302);
 
     }).timeout(5000);
 
@@ -110,7 +122,7 @@ describe('Testing customerController Functionality:', () => {
     }).timeout(5000);
     it(' should  return 404 when for invalid ids (users shoes high to low) ', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user/' + xid + '/shoes/sort/_current_price_high');
+        const response = await request(serve.getExpressInstance()).get('/user/' + xid + '/shoes/sort/current_price_high');
 
         chai.expect(response.statusCode).to.equal(404);
 
@@ -142,9 +154,10 @@ describe('Testing customerController Functionality:', () => {
 
     }).timeout(5000);
 
-    it('edit_shoe: return code 200', async () => {
 
-        const response = await request(serve.getExpressInstance()).get("/user/"+id+"/edit_shoe/"+shoe_id);
+    it('edit_username: return code 200', async () => {
+
+        const response = await request(serve.getExpressInstance()).get("/user/"+id+"/settings");
 
         chai.expect(response.statusCode).to.equal(200);
 
@@ -152,9 +165,9 @@ describe('Testing customerController Functionality:', () => {
 
     it('edit_username: return code 200', async () => {
 
-        const response = await request(serve.getExpressInstance()).get("/user/"+id+"/edit_username/");
+        const response = await request(serve.getExpressInstance()).post("/user/"+id+"/edit_username");
 
-        chai.expect(response.statusCode).to.equal(200);
+        chai.expect(response.statusCode).to.equal(302);
 
     }).timeout(5000);
     

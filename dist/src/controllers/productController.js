@@ -59,6 +59,14 @@ var ProductController = /** @class */ (function (_super) {
     function ProductController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * Creates ProductController routes.
+     *
+     * @class ProductController extends BaseRoute
+     * @method create
+     * @param router {Router} The router object.
+     * @return void
+     */
     ProductController.create = function (router) {
         // show all shoes
         router.get("/user/:id/allShoes", function (req, res, next) {
@@ -100,6 +108,16 @@ var ProductController = /** @class */ (function (_super) {
             new ProductController().inputShoe(req, res, next);
         });
     };
+    /**
+     * Renders the addShoe view when user navigates to /user/<user_id>/add_shoe/<shoe_id>.
+     *
+     * @class ProductController extends BaseRoute
+     * @method inputShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.inputShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var userIdString, userId, shoeIdString, shoeId, shoe;
@@ -117,14 +135,27 @@ var ProductController = /** @class */ (function (_super) {
                             this.render(req, res, "addShoe", { id: userId, shoe: shoe });
                         }
                         else {
-                            Helpers.shoe404(res);
+                            res.status(404)
+                                .send({
+                                message: "No shoe found with the given id.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
-    // get all the shoes from the db and render to shoesList view
+    /**
+     * Renders the shoeList view when user navigates to /user/<user_id>/allShoes/<shoe_id>.
+     *
+     * @class ProductController extends BaseRoute
+     * @method allShoes
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.allShoes = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;
@@ -138,20 +169,34 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 var aname = a.brand + " " + a.model + " " + a.colorway;
+                                var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user found with the given user id.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * queries the db to get allShoes array,called in allShoes when a user navigates to /user/<user_id>/allShoes/<shoe_id>
+     *
+     * @class ProductController extends BaseRoute
+     * @method allShoes
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.setLocal = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var shoeIf;
@@ -170,6 +215,13 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Checks if the allShoes array has already been set otherwise it will call setlocal to query the db
+     * @class ProductController extends BaseRoute
+     * @method check_local
+     * @param userID the id of the user currently viewing all shoes.
+     * @return void
+     */
     ProductController.prototype.check_local = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -187,6 +239,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/current_price_low"
+     * @class ProductController extends BaseRoute
+     * @method sortCurrentPriceLowDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.sortCurrentPriceLowDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -199,7 +260,11 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return a.current_price - b.current_price; });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: queryint,
+                                title: "Shoes",
+                            });
                         }
                         else {
                             res.status(404);
@@ -210,6 +275,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/alpha_desc"
+     * @class ProductController extends BaseRoute
+     * @method sortAlphaDesc
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.sortAlphaDesc = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -226,7 +300,11 @@ var ProductController = /** @class */ (function (_super) {
                                 var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return bname.toLowerCase().localeCompare(aname.toLowerCase());
                             });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: queryint,
+                                title: "Shoes",
+                            });
                         }
                         else {
                             res.status(404);
@@ -237,6 +315,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/alpha_asc"
+     * @class ProductController extends BaseRoute
+     * @method sortAlphaAsc
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.sortAlphaAsc = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -253,7 +340,11 @@ var ProductController = /** @class */ (function (_super) {
                                 var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: queryint,
+                                title: "Shoes",
+                            });
                         }
                         else {
                             res.status(404);
@@ -264,6 +355,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/current_price_high"
+     * @class ProductController extends BaseRoute
+     * @method sortCurrentPriceHighDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.sortCurrentPriceHighDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -276,7 +376,11 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return b.current_price - a.current_price; });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: queryint,
+                                title: "Shoes",
+                            });
                         }
                         else {
                             res.status(404);
@@ -287,6 +391,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/retail_price_low"
+     * @class ProductController extends BaseRoute
+     * @method sortRetailPriceLowDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.sortRetailPriceLowDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -299,7 +412,11 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return a.retail_price - b.retail_price; });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: queryint,
+                                title: "Shoes",
+                            });
                         }
                         else {
                             res.status(404);
@@ -310,6 +427,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/retail_price_high"
+     * @class ProductController extends BaseRoute
+     * @method sortRetailPriceHighDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.sortRetailPriceHighDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -322,7 +448,11 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return b.retail_price - a.retail_price; });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: queryint,
+                                title: "Shoes",
+                            });
                         }
                         else {
                             res.status(404);
@@ -333,6 +463,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/diff_low"
+     * @class ProductController extends BaseRoute
+     * @method sortDiffPriceLowDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.sortDiffPriceLowDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -345,7 +484,11 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return (a.current_price - a.retail_price) - (b.current_price - b.retail_price); });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: queryint,
+                                title: "Shoes",
+                            });
                         }
                         else {
                             res.status(404);
@@ -356,6 +499,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/diff_high"
+     * @class ProductController extends BaseRoute
+     * @method sortDiffPriceHighDb
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.sortDiffPriceHighDb = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, queryint;
@@ -368,7 +520,11 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return (b.current_price - b.retail_price) - (a.current_price - a.retail_price); });
-                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: queryint,
+                                title: "Shoes",
+                            });
                         }
                         else {
                             res.status(404);
@@ -379,6 +535,15 @@ var ProductController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/filter/under_retail"
+     * @class ProductController extends BaseRoute
+     * @method underRetail
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     ProductController.prototype.underRetail = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId, underRetail, item;
@@ -399,10 +564,18 @@ var ProductController = /** @class */ (function (_super) {
                                 }
                             }
                             allShoes = underRetail;
-                            this.render(req, res, "shoeList", { data: allShoes, id: userId, title: "Shoes" });
+                            this.render(req, res, "shoeList", {
+                                data: allShoes,
+                                id: userId,
+                                title: "Shoes",
+                            });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }

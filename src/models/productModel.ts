@@ -1,13 +1,17 @@
-import DbClient = require("../DbClient");
-
-const datab = DbClient.connect();
+ import DbClient = require("../DbClient");
+ const datab = DbClient.connect();
 
 export class ProductModel {
 
     constructor() {}
-    /*
-        input type: key value arr, example :  [{"1":300}, {"3":400},{"5":500}]
-        returns an array of shoe objects ex: [ {shoe_1 ...}, {shoe_2 ...}, {shoe_3}...]
+
+    /**
+     * Gets shoe info for a set of shoe keys (deprecated).
+     *
+     * @class ProductModel
+     * @method getAllShoes
+     * @param shoeKeysVal {Any} An array of shoe key JSON objects.
+     * @return An array of shoe JSON objects.
      */
     public getAllShoes(shoeKeysVal: any) {
 
@@ -25,14 +29,14 @@ export class ProductModel {
 
         const shoes = DbClient.connect()
             .then((db) => {
-                // returns shoes in db
+                // will return all the shoes in db
                 return db!.collection("shoes").find().toArray();
             })
             .then((sneakers: any) => {
                 // loop over all the shoes in db and push into jsonShoeArr only those that are
                 // owned by user
-                let id;
                 let shoe;
+                let id;
                 for (shoe of sneakers ) {
                     for (id of keyArr) {
                         // if current shoe is also a shoe owned by user, id is type string so we typecast to number
@@ -51,11 +55,14 @@ export class ProductModel {
         return shoes;
     }
 
-    /*
-     Input type: integer that refers to the shoe_id. ex: 3
-     Output type: a json shoe obejct ex: {shoe_id:3 ... }
+    /**
+     * Gets shoe info for a specific shoe.
+     *
+     * @class ProductModel
+     * @method getOneShoe
+     * @param shoeID {Any} The shoe_id of the shoe to get info for.
+     * @return A single shoe JSON object (if the shoe exists).
      */
-
     public getOneShoe(shoeID: any) {
 
         // an array of objects holding indvidual json objects for each of the shoes the user has
@@ -63,10 +70,14 @@ export class ProductModel {
 
         const shoes = DbClient.connect()
             .then((db) => {
+
                 // will return all the shoes in db
                 return db!.collection("shoes").find().toArray();
+
             })
+
             .then((sneakers: any) => {
+
                 // loop over all the shoes in db and push into jsonShoeArr only the shoe that has id
                 // shoeID
                 let shoe;
@@ -90,8 +101,16 @@ export class ProductModel {
             Return all the shoes for the view where we need to see all shoes available in db
      */
 
+    /**
+     * Updates the current price of all shoes.
+     *
+     * @class ProductModel
+     * @method updateShoes
+     * @param priceChange {Any} The new current price.
+     * @return true if the prices were updated successfully, otherwise false.
+     */
     public updateShoes(priceChange: any) {
-        const shoeUpdate = datab
+        const shoeUpdate = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").updateMany({}, { $inc: { current_price: priceChange }});
                 return true;
@@ -103,6 +122,13 @@ export class ProductModel {
         return shoeUpdate;
     }
 
+    /**
+     * Gets all the shoes in the database.
+     *
+     * @class ProductModel
+     * @method getAllDB
+     * @return An array of shoe JSON objects.
+     */
     public getAllDB() {
         const shoes = datab
             .then((db) => {
@@ -118,6 +144,20 @@ export class ProductModel {
         return shoes;
     }
 
+    /**
+     * Adds a shoe to the database.
+     *
+     * @class ProductModel
+     * @method add_shoe
+     * @param model {Any} the model of the new shoe.
+     * @param shoeID {Number} the shoe_id of the new shoe.
+     * @param size {Any} the size of the new shoe
+     * @param cp {Any} the current_price of the new shoe.
+     * @param rp {Any} the retail_price of the new shoe.
+     * @param brand {Any} the brand of the new shoe.
+     * @param colorway {Any} the colorway of the new shoe.
+     * @return true if the shoe was added successfully, otherwise false.
+     */
     public add_shoe(model: any, shoeId: number, size: any, cp: any, rp: any, brand: any, colorway: any) {
         const addShoes = DbClient.connect()
             .then((db) => {
@@ -128,12 +168,26 @@ export class ProductModel {
                 return true;
             })
             .catch((err) => {
-                console.log("Failed to add a shoe");
+                console.log("Adding a shoe to the database has failed");
                 return false;
             });
         return addShoes;
     }
 
+    /**
+     * Edits a shoe in the database.
+     *
+     * @class ProductModel
+     * @method edit_shoe
+     * @param model {Any} the new model of the shoe.
+     * @param shoeId {Number} the shoe_id of the shoe.
+     * @param size {Any} the new size of the shoe
+     * @param cp {Any} the new current_price of the shoe.
+     * @param rp {Any} the new retail_price of the shoe.
+     * @param brand {Any} the new brand of the shoe.
+     * @param colorway {Any} the new colorway of the shoe.
+     * @return true if the shoe was edited successfully, otherwise false.
+     */
     public edit_shoe(model: any, shoeId: any, size: any, cp: any, rp: any, brand: any, colorway: any) {
         const result = DbClient.connect()
             .then((db) => {
@@ -148,12 +202,21 @@ export class ProductModel {
         return result;
     }
 
+    /**
+     * Removes a shoe from the database.
+     *
+     * @class ProductModel
+     * @method remove_shoe
+     * @param shoeId {Any} the shoe_id of the new shoe.
+     * @return true if the shoe was added successfully, otherwise false.
+     */
     public remove_shoe(shoeId: any) {
         const removeShoe = DbClient.connect()
             .then((db) => {
                 db!.collection("shoes").deleteOne( {shoe_id: shoeId});
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
                 db!.collection("notifications").deleteMany({ shoe_id: shoeId});
+                console.log("deleted a shoe with id",+shoeId);
                 return true;
             })
             .catch((err) => {

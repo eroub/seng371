@@ -1,1 +1,0 @@
-{"version":3,"file":"hello-world.js","sourceRoot":"","sources":["../../../test/unit_tests/hello-world.ts"],"names":[],"mappings":";;AAAa,QAAA,KAAK,GAAG,cAAM,OAAA,cAAc,EAAd,CAAc,CAAC","sourcesContent":["export const hello = () => 'Hello World!';\n\n"]}

@@ -61,6 +61,14 @@ var NotificationController = /** @class */ (function (_super) {
     function NotificationController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * Creates NotificationController routes.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method create
+     * @param router {Router} The router object.
+     * @return void
+     */
     NotificationController.create = function (router) {
         router.get("/user/:id/notifications", function (req, res, next) {
             new NotificationController().notificationCentre(req, res, next);
@@ -87,9 +95,16 @@ var NotificationController = /** @class */ (function (_super) {
             new NotificationController().editNotification(req, res, next);
         });
     };
-    // constructor() {
-    // not much here yet
-    // }
+    /**
+     * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method notificationCentre
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     NotificationController.prototype.notificationCentre = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;
@@ -104,13 +119,27 @@ var NotificationController = /** @class */ (function (_super) {
                             this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: userNotifications });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications/filter/fulfilled.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method filterFulfilled
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     NotificationController.prototype.filterFulfilled = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId, fulfilledNots, item;
@@ -133,13 +162,27 @@ var NotificationController = /** @class */ (function (_super) {
                             this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: fulfilledNots });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications/filter/unfulfilled.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method filterUnulfilled
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     NotificationController.prototype.filterUnfulfilled = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId, unfulfilledNots, item;
@@ -162,13 +205,27 @@ var NotificationController = /** @class */ (function (_super) {
                             this.render(req, res, "notificationCentre", { id: userId, title: "Notifications", notifications: unfulfilledNots });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * redirects to allShoes view when the user navigates to /user/<user_id>/notifications/add_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method addNotification
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     NotificationController.prototype.addNotification = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, sString, userID, shoeID, nIF, threshold;
@@ -193,6 +250,16 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * redirects to notifications view when the user navigates to /user/<user_id>/remove_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method removeNotification
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     NotificationController.prototype.removeNotification = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, idString, userID, notifID, nIF;
@@ -213,6 +280,16 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * redirects to notifications view when the user navigates to /user/<user_id>/edit_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method editNotifications
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     NotificationController.prototype.editNotification = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, idString, userID, notifID, nIF;
@@ -236,6 +313,16 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * fetches the addNotification view when the user navigates to /user/<user_id>/add_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method inputNotifications
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     NotificationController.prototype.inputNotification = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var userIdString, userId, shoeIdString, shoeId, shoeIF, shoe, _a;
@@ -259,15 +346,34 @@ var NotificationController = /** @class */ (function (_super) {
                     case 3:
                         if (_a) {
                             this.render(req, res, "addNotification", { id: userId, shoe: shoe });
+                            res.status(200)
+                                .send({
+                                message: 'Success',
+                                status: res.status,
+                            });
                         }
                         else {
-                            Helpers.shoe404(res);
+                            res.status(404)
+                                .send({
+                                message: "No shoe found with the given id.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * fetches the ditNotification view when the user navigates to /user/<user_id>/edit_notification/<notification_id>.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method editNotificationForm
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     NotificationController.prototype.editNotificationForm = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var userIdString, userId, notIdString, notId, notification;
@@ -287,6 +393,14 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * A helper function to set the usrs notifications.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method buildNotifications
+     * @param UserID, the ID of the user for whom to return notifications for
+     * @return boolean
+     */
     NotificationController.prototype.buildNotifications = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var _a, _b, _i, item, notification, shoe;
@@ -330,6 +444,14 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * A helper function that checks if a notification has been fulfilled
+     * @class NotificationController extends BaseRoute
+     * @method editNotificationForm
+     * @param notification
+     * @param currentPrice
+     * @return void
+     */
     NotificationController.prototype.checkFulfilled = function (notification, currentPrice) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -354,6 +476,14 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Queries the db to update status of a notification.
+     *
+     * @class NotificationController extends BaseRoute
+     * @method fulfill
+     * @param Notification  the notification Object.
+     * @return true if the notification was successfully fulfilled, otherwise false.
+     */
     NotificationController.prototype.fulfill = function (notification) {
         return __awaiter(this, void 0, void 0, function () {
             var nIF;
@@ -369,6 +499,14 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * calls buildNotifications is userNotifications is empty or if id != userID
+     *
+     * @class NotificationController extends BaseRoute
+     * @method check_local
+     * @param UserID  the id of the current user.
+     * @return true if buildnotifications returns succesfully
+     */
     NotificationController.prototype.check_local = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -386,6 +524,14 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * calls local function setUserNotifications to set local variable userNotification
+     *
+     * @class NotificationController extends BaseRoute
+     * @method setLocals
+     * @param UserID  the id of the current user.
+     * @return void
+     */
     NotificationController.prototype.setLocals = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -401,6 +547,14 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Queries the DB to set local variable userNotification
+     *
+     * @class NotificationController extends BaseRoute
+     * @method setUserNotifications
+     * @param UserID  the id of the current user.
+     * @return void
+     */
     NotificationController.prototype.setUserNotifications = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var notifIf;
@@ -416,6 +570,14 @@ var NotificationController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * returns a shoe object
+     *
+     * @class NotificationController extends BaseRoute
+     * @method getShoe
+     * @param UserID  the id of the current user.
+     * @return shoe object
+     */
     NotificationController.prototype.getShoe = function (shoeID) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
@@ -426,6 +588,14 @@ var NotificationController = /** @class */ (function (_super) {
             }
         }
     };
+    /**
+     * returns a shoe object
+     *
+     * @class NotificationController extends BaseRoute
+     * @method getShoe
+     * @param id (any)   the id of the notification.
+     * @return notification object
+     */
     NotificationController.prototype.getNotif = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var nIF, notif;

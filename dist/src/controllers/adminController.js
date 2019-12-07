@@ -58,6 +58,14 @@ var AdminController = /** @class */ (function (_super) {
     function AdminController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * Creates admin routes.
+     *
+     * @class AdminController extends BaseRoute
+     * @method create
+     * @param router {Router} The router object.
+     * @return void
+     */
     AdminController.create = function (router) {
         router.get("/admin", function (req, res, next) {
             new AdminController().showAdmin(req, res, next);
@@ -95,6 +103,16 @@ var AdminController = /** @class */ (function (_super) {
             new AdminController().delShoe(req, res, next);
         });
     };
+    /**
+     * Renders the admin view when user navigates to /admin.
+     *
+     * @class AdminController extends BaseRoute
+     * @method showAdmin
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.showAdmin = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -104,8 +122,15 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
-    /*
-    Shows all users in the db in a list.
+    /**
+     * Renders the admin_user view when user navigates to /admin/users.
+     *
+     * @class AdminController extends BaseRoute
+     * @method showAllUsers
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
      */
     AdminController.prototype.showAllUsers = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
@@ -123,6 +148,16 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the admin_shoes view when user navigates to /admin/shoes.
+     *
+     * @class AdminController extends BaseRoute
+     * @method showAllShoes
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.showAllShoes = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var shoeArr;
@@ -139,6 +174,16 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the editUser view for a specific user when an admin navigates to /admin/users/edit_user/<user_id>.
+     *
+     * @class AdminController extends BaseRoute
+     * @method editUserForm
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.editUserForm = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, userID, CM, user;
@@ -146,7 +191,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString], 10);
+                        userID = parseInt(req.params[uString]);
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.userInfo(userID)];
                     case 1:
@@ -158,6 +203,16 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent by the editUser view to edit a user.
+     *
+     * @class AdminController extends BaseRoute
+     * @method editUser
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.editUser = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, userID, CM, editedName;
@@ -165,9 +220,12 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString], 10);
+                        userID = parseInt(req.params[uString]);
                         CM = new customerModel_1.CustomerModel();
-                        editedName = req.body.editedusername;
+                        editedName = req.body.newusername;
+                        if (!editedName) {
+                            editedName = "USER";
+                        }
                         return [4 /*yield*/, CM.edit_userName(userID, editedName)];
                     case 1:
                         _a.sent();
@@ -177,6 +235,16 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent from the admin_users view to add a user.
+     *
+     * @class AdminController extends BaseRoute
+     * @method addUser
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.addUser = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var CM, editedName, newID;
@@ -185,6 +253,9 @@ var AdminController = /** @class */ (function (_super) {
                     case 0:
                         CM = new customerModel_1.CustomerModel();
                         editedName = req.body.newusername;
+                        if (!editedName) {
+                            editedName = "USER";
+                        }
                         return [4 /*yield*/, Helpers.getMaxUser()];
                     case 1:
                         newID = (_a.sent()) + 1;
@@ -197,6 +268,16 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent from the admin_users view to delete a user.
+     *
+     * @class AdminController extends BaseRoute
+     * @method delUser
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.delUser = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, userID, CM;
@@ -204,7 +285,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        userID = parseInt(req.params[uString], 10);
+                        userID = parseInt(req.params[uString]);
                         CM = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, CM.remove_user(userID)];
                     case 1:
@@ -215,9 +296,19 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent from the admin_shoes view to add a shoe.
+     *
+     * @class AdminController extends BaseRoute
+     * @method addShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.addShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var PM, shoeID, shoeSize, shoeRP, shoeCP, brand, colorway, shoeModel;
+            var PM, shoeModel, colorway, brand, shoeCP, shoeRP, shoeSize, shoeID;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -225,14 +316,27 @@ var AdminController = /** @class */ (function (_super) {
                         return [4 /*yield*/, Helpers.getMaxShoe()];
                     case 1:
                         shoeID = (_a.sent()) + 1;
-                        shoeSize = parseInt(req.body.size, 10);
-                        shoeRP = parseInt(req.body.retail_price, 10);
-                        shoeCP = parseInt(req.body.current_price, 10);
-                        brand = req.body.brand;
-                        colorway = req.body.colorway;
-                        shoeModel = req.body.model;
-                        return [4 /*yield*/, PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                        if (!!req.body.model) return [3 /*break*/, 3];
+                        shoeModel = "MODEL";
+                        colorway = "COLORWAY";
+                        brand = "BRAND";
+                        shoeCP = 0;
+                        shoeRP = 0;
+                        shoeSize = 0;
+                        return [4 /*yield*/, Helpers.getMaxShoe()];
                     case 2:
+                        shoeID = (_a.sent()) + 1;
+                        return [3 /*break*/, 4];
+                    case 3:
+                        shoeModel = req.body.model;
+                        colorway = req.body.colorway;
+                        brand = req.body.brand;
+                        shoeCP = parseInt(req.body.current_price, 10);
+                        shoeRP = parseInt(req.body.retail_price, 10);
+                        shoeSize = parseInt(req.body.size, 10);
+                        _a.label = 4;
+                    case 4: return [4 /*yield*/, PM.add_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
+                    case 5:
                         _a.sent();
                         res.redirect("/admin/shoes");
                         return [2 /*return*/];
@@ -240,6 +344,16 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Renders the editShoe view for a specific shoe when an admin navigates to /admin/shoes/edit_shoe/<shoe_id>.
+     *
+     * @class AdminController extends BaseRoute
+     * @method editShoeForm
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.editShoeForm = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, shoeID, PM, shoe;
@@ -258,6 +372,16 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent from the editShoe view to edit a shoe.
+     *
+     * @class AdminController extends BaseRoute
+     * @method editShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.editShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, shoeID, PM, shoeModel, colorway, brand, shoeCP, shoeRP, shoeSize;
@@ -265,14 +389,24 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        shoeID = parseInt(req.params[uString], 10);
+                        shoeID = parseInt(req.params[uString]);
                         PM = new productModel_1.ProductModel();
-                        shoeModel = req.body.model;
-                        colorway = req.body.colorway;
-                        brand = req.body.brand;
-                        shoeCP = parseInt(req.body.current_price, 10);
-                        shoeRP = parseInt(req.body.retail_price, 10);
-                        shoeSize = parseInt(req.body.size, 10);
+                        if (!req.body.model) {
+                            shoeModel = "MODEL";
+                            colorway = "COLORWAY";
+                            brand = "BRAND";
+                            shoeCP = 0;
+                            shoeRP = 0;
+                            shoeSize = 0;
+                        }
+                        else {
+                            shoeModel = req.body.model;
+                            colorway = req.body.colorway;
+                            brand = req.body.brand;
+                            shoeCP = parseInt(req.body.current_price, 10);
+                            shoeRP = parseInt(req.body.retail_price, 10);
+                            shoeSize = parseInt(req.body.size, 10);
+                        }
                         return [4 /*yield*/, PM.edit_shoe(shoeModel, shoeID, shoeSize, shoeCP, shoeRP, brand, colorway)];
                     case 1:
                         _a.sent();
@@ -282,6 +416,16 @@ var AdminController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Handles the POST request sent from the admin_shoes view to delete a shoe.
+     *
+     * @class AdminController extends BaseRoute
+     * @method delShoe
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     AdminController.prototype.delShoe = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var uString, shoeID, PM;
@@ -289,7 +433,7 @@ var AdminController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         uString = "id";
-                        shoeID = parseInt(req.params[uString], 10);
+                        shoeID = parseInt(req.params[uString]);
                         PM = new productModel_1.ProductModel();
                         return [4 /*yield*/, PM.remove_shoe(shoeID)];
                     case 1:
