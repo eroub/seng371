@@ -281,12 +281,14 @@ export class CustomerController extends BaseRoute {
         const userId = parseInt(req.params[userIdString], 10);
         if (!(await this.check_local(userId))) {
             Helpers.ID404(res);
+        } else {
+            const idString = "id2";
+            const docID = req.params[idString];
+            const uif = new CustomerModel();
+            await uif.remove_shoe(docID);
+            res.redirect("/user/" + userId + "/shoes/");
         }
-        const idString = "id2";
-        const docID = req.params[idString];
-        const uif = new CustomerModel();
-        await uif.remove_shoe(docID);
-        res.redirect("/user/" + userId + "/shoes/");
+
     }
 
     /**

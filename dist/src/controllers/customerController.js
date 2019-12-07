@@ -411,17 +411,19 @@ var CustomerController = /** @class */ (function (_super) {
                         userId = parseInt(req.params[userIdString], 10);
                         return [4 /*yield*/, this.check_local(userId)];
                     case 1:
-                        if (!(_a.sent())) {
-                            Helpers.ID404(res);
-                        }
+                        if (!!(_a.sent())) return [3 /*break*/, 2];
+                        Helpers.ID404(res);
+                        return [3 /*break*/, 4];
+                    case 2:
                         idString = "id2";
                         docID = req.params[idString];
                         uif = new customerModel_1.CustomerModel();
                         return [4 /*yield*/, uif.remove_shoe(docID)];
-                    case 2:
+                    case 3:
                         _a.sent();
                         res.redirect("/user/" + userId + "/shoes/");
-                        return [2 /*return*/];
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });

@@ -1,5 +1,5 @@
- import DbClient = require("../DbClient");
- const datab = DbClient.connect();
+import DbClient = require("../DbClient");
+const datab = DbClient.connect();
 
 export class ProductModel {
 

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongodb = require("mongodb");
 var DbClient = require("../DbClient");
+var datab = DbClient.connect();
 var ObjectID = mongodb.ObjectID;
 var CustomerModel = /** @class */ (function () {
     function CustomerModel() {
@@ -16,7 +17,7 @@ var CustomerModel = /** @class */ (function () {
      * ({isAdmin, user_id, username}) if the id is valid.
      */
     CustomerModel.prototype.userInfo = function (userId) {
-        var users = DbClient.connect()
+        var users = datab
             .then(function (db) {
             return db.collection("users").find({ user_id: userId }).toArray();
         })
@@ -39,7 +40,7 @@ var CustomerModel = /** @class */ (function () {
      * @return true if the shoe was added successfully, otherwise false.
      */
     CustomerModel.prototype.add_shoe = function (userId, shoeID, purchase) {
-        var shoeAdd = DbClient.connect()
+        var shoeAdd = datab
             .then(function (db) {
             db.collection("user_shoes").insertOne({ user_id: userId, shoe_id: shoeID, purchase_price: purchase });
             return true;
@@ -60,7 +61,7 @@ var CustomerModel = /** @class */ (function () {
      * @return true if the shoe was edited successfully, otherwise false.
      */
     CustomerModel.prototype.edit_shoe = function (id, purchasePrice) {
-        var result = DbClient.connect()
+        var result = datab
             .then(function (db) {
             db.collection("user_shoes").updateOne({ _id: ObjectID(id) }, { $set: { purchase_price: purchasePrice } });
             return true;
@@ -80,7 +81,7 @@ var CustomerModel = /** @class */ (function () {
      * @return true if the shoe was removed successfully, otherwise false.
      */
     CustomerModel.prototype.remove_shoe = function (id) {
-        var shoeRemove = DbClient.connect()
+        var shoeRemove = datab
             .then(function (db) {
             db.collection("user_shoes").deleteOne({ _id: ObjectID(id) });
             return true;
@@ -100,7 +101,7 @@ var CustomerModel = /** @class */ (function () {
      * @return true if the user_id exists, otherwise false
      */
     CustomerModel.prototype.isUser = function (userID) {
-        var result = DbClient.connect()
+        var result = datab
             .then(function (db) {
             return db.collection("users").find({ user_id: userID }).toArray();
         })
@@ -127,7 +128,7 @@ var CustomerModel = /** @class */ (function () {
      * ({user_id, shoe_id, purchase_price}) if the user has shoes. Otherwise an empty array.
      */
     CustomerModel.prototype.getKeys = function (userID) {
-        var userKeys = DbClient.connect()
+        var userKeys = datab
             .then(function (db) {
             return db.collection("user_shoes").find({ user_id: userID }).toArray();
         })
@@ -147,7 +148,7 @@ var CustomerModel = /** @class */ (function () {
      * @return An array of user JSON objects ({isAdmin, user_id, username}).
      */
     CustomerModel.prototype.get_users = function () {
-        var users = DbClient.connect()
+        var users = datab
             .then(function (db) {
             return db.collection("users").find().toArray();
         })
@@ -167,7 +168,7 @@ var CustomerModel = /** @class */ (function () {
      * @return An array of user key JSON objects ({user_id, shoe_id, purchase_price}).
      */
     CustomerModel.prototype.get_all_keys = function () {
-        var userKeys = DbClient.connect()
+        var userKeys = datab
             .then(function (db) {
             return db.collection("user_shoes").find().toArray();
         })
@@ -189,7 +190,7 @@ var CustomerModel = /** @class */ (function () {
      * @return true if the username was edited successfully, otherwise false.
      */
     CustomerModel.prototype.edit_userName = function (id, editedName) {
-        var result = DbClient.connect()
+        var result = datab
             .then(function (db) {
             db.collection("users").updateOne({ user_id: id }, { $set: { username: editedName } });
             return true;
@@ -210,7 +211,7 @@ var CustomerModel = /** @class */ (function () {
      * @return true if the user was added successfully, otherwise false.
      */
     CustomerModel.prototype.add_user = function (userId, username) {
-        var addUser = DbClient.connect()
+        var addUser = datab
             .then(function (db) {
             db.collection("users").insertOne({ isAdmin: false, user_id: userId, username: username });
             return true;
@@ -230,7 +231,7 @@ var CustomerModel = /** @class */ (function () {
      * @return true if the user was removed successfully, otherwise false.
      */
     CustomerModel.prototype.remove_user = function (userId) {
-        var removeUser = DbClient.connect()
+        var removeUser = datab
             .then(function (db) {
             db.collection("users").deleteOne({ user_id: userId });
             db.collection("user_shoes").deleteMany({ user_id: userId });

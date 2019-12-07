@@ -3,6 +3,7 @@ const chai = require("chai");
 import { Server } from "../../../src/app"
 const request = require('supertest');
 import { CustomerModel } from "../../../src/models/customerModel";
+import {ProductModel} from "../../../src/models/productModel";
 
 const serve = new Server();
 
@@ -12,7 +13,8 @@ describe('Testing customerController Functionality:', () => {
     pre condition there must be no user with the id 999 and there must be a user with id 99
     and  there must be a shoe with id =1.
      */
-    let xid =999, id=99, shoe_id='1', xshoe_id='x';
+    let xid =999, id=1, shoe_id='1', xshoe_id='x';
+
     it('/user/999/shoes (Should have status 404)', async () => {
 
         const response = await request(serve.getExpressInstance()).get('/user/'+xid+'/shoes');
@@ -37,11 +39,14 @@ describe('Testing customerController Functionality:', () => {
 
     }).timeout(5000);
 
-    it('Gets a shoe from user 99 (should return 200)', async () => {
+    it('Gets a shoe from user 1 (should return 200)', async () => {
 
         const serve = new Server();
-
-        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/5de89f0cf27f704a0c4a5b82');
+        const SM = new ProductModel();
+        const cm: any = new CustomerModel();
+        const userShoes: any = await cm.getKeys(1);
+        const objectID: any = userShoes[userShoes.length-1]._id;
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/'+objectID);
 
         chai.expect(response.statusCode).to.equal(200);
 

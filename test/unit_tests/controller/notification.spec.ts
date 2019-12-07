@@ -2,12 +2,14 @@ import "mocha";
 const chai = require("chai");
 import { Server } from "../../../src/app"
 const request = require('supertest');
+import { ProductModel } from "../../../src/models/productModel";
+import {NotificationModel} from "../../../src/models/notificationModel";
 
 const serve = new Server();
 
 describe('Testing notificationController Functionality:', () => {
     let id = 1;
-    let notification_id='5de6f98778a1291e244e3992';
+    let notification_id='5dd62647abad2534b480a0ec';
 
     it('notifications: return code 200 from correct user_id', async () => {
 
@@ -28,38 +30,47 @@ describe('Testing notificationController Functionality:', () => {
 
 
     it('add_notification (input): return code  200', async () => {
+        // ensure that there is a shoe with id 99
+        const SM = new ProductModel();
+        const shoe:any = await SM.getOneShoe(99);
 
-        //const response = await request(serve.getExpressInstance()).get('/user/'+id+'/add_notification/'+id);
+        if ((shoe == null)){
+            const shoe: any = await SM.add_shoe('v1.1', 99, 10, 100, 100, 'nike', 'red');
 
-        const response = await request(serve.getExpressInstance()).get('/user/1/add_notification/6');
+        }
 
-        chai.expect(response.statusCode).to.equal(200);
+
+        //and add a notification for that id
+        const NM = new NotificationModel();
+        const nInfo: any = await NM.addNotification(id,99,100,"Above");
+
+
+        // pre req: there is a user with user id =id, and there is a shoe with id =99 .
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/add_notification/99');
+
+
+
+
 
     }).timeout(5000);
 
 
     it('add_notification (add): 200 (redirects)', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/add_notification/'+id);
 
-        chai.expect(response.statusCode).to.equal(200);
-
-    }).timeout(5000);
-
-
-
-
-    it('remove_notification: return code 302(redirects)', async () => {
-
-        const response = await request(serve.getExpressInstance()).post('/user/'+id+'/remove_notification/'+id);
+        const response = await request(serve.getExpressInstance()).post('/user/'+id+'/add_notification/99');
 
         chai.expect(response.statusCode).to.equal(302);
 
+
     }).timeout(5000);
 
-
-
     it('edit_notification (form): return code ', async () => {
+
+        const NM = new NotificationModel();
+        const not: any = await NM.getUserNotifications(id);
+        let notification_id = not[not.length-1]._id
+
 
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/edit_notification/'+notification_id);
 
@@ -70,11 +81,36 @@ describe('Testing notificationController Functionality:', () => {
 
     it('edit_notification: return code 302(redirects)', async () => {
 
-        const response = await request(serve.getExpressInstance()).post('/user/'+id+'/edit_notification/'+id);
+        const NM = new NotificationModel();
+        const not: any = await NM.getUserNotifications(id);
+        let notification_id = not[not.length-1]._id
+
+
+        const response = await request(serve.getExpressInstance()).post('/user/'+id+'/edit_notification/'+notification_id);
 
         chai.expect(response.statusCode).to.equal(302);
 
     }).timeout(10000);
+
+
+
+    it('remove_notification: return code 302(redirects)', async () => {
+
+        const response = await request(serve.getExpressInstance()).post('/user/'+id+'/remove_notification/'+id);
+        const NM = new NotificationModel();
+        const not: any = await NM.getUserNotifications(id);
+        let notification_id = not[not.length-1]._id
+
+        const nrInfo: any = await NM.remove_notif(notification_id);
+
+        chai.expect(response.statusCode).to.equal(302);
+
+
+
+    }).timeout(5000);
+
+
+
 
     it('fulfilled: return code 200', async () => {
 
@@ -84,7 +120,9 @@ describe('Testing notificationController Functionality:', () => {
 
     }).timeout(10000);
 
+
     it('unfulfilled: return code 200', async () => {
+
 
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/notifications/filter/unfulfilled');
 

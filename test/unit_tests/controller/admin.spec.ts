@@ -26,15 +26,18 @@ describe('Testing main admin view:', () => {
     }).timeout(5000);
 
 
-    it('add/edit/delUser: adds, gets the edit form for, edits, and deletes a new user', async () => {
+    it('addUser: adds a new user', async () => {
         let response = await request(serve.getExpressInstance()).post('/admin/users/add_user');
         chai.expect(response.statusCode).to.equal(302);
 
+     }).timeout(5000);
+
+    it('edit/delUser: gets the edit form for, edits, and deletes a new user', async () => {
         const cm = new CustomerModel();
         const users = await cm.get_users();
         const userID = users[users.length-1].user_id;
 
-        response = await request(serve.getExpressInstance()).get('/admin/users/edit_user/' + userID);
+        let response = await request(serve.getExpressInstance()).get('/admin/users/edit_user/' + userID);
         chai.expect(response.statusCode).to.equal(200);
 
         response = await request(serve.getExpressInstance()).post('/admin/users/edit_user/' + userID);
@@ -42,26 +45,30 @@ describe('Testing main admin view:', () => {
 
         response = await request(serve.getExpressInstance()).post("/admin/users/del_user/" + userID);
         chai.expect(response.statusCode).to.equal(302);
-     }).timeout(5000);
+    }).timeout(5000);
 
-     it('add/edit/delShoe: adds, gets the edit for for, edits, and deletes a new shoe', async () => {
+     it('add/editShoe: adds, gets the edit for for, edits, and deletes a new shoe', async () => {
 
          let response = await request(serve.getExpressInstance()).post('/admin/shoes/add_shoe');
          chai.expect(response.statusCode).to.equal(302);
 
-         const pm = new ProductModel();
-         const shoes = await pm.getAllDB();
-         const shoeID = shoes[shoes.length-1].shoe_id;
-
-         response = await request(serve.getExpressInstance()).get("/admin/shoes/edit_shoe/" + shoeID);
-         chai.expect(response.statusCode).to.equal(200);
-
-         response = await request(serve.getExpressInstance()).post("/admin/shoes/edit_shoe/" + shoeID);
-         chai.expect(response.statusCode).to.equal(302);
-
-         response = await request(serve.getExpressInstance()).post("/admin/shoes/del_shoe/" + shoeID);
-         chai.expect(response.statusCode).to.equal(302);
-
      }).timeout(5000);
+
+    it('delShoe: deletes a new shoe', async () => {
+
+        const pm = new ProductModel();
+        const shoes = await pm.getAllDB();
+        const shoeID = shoes[shoes.length-1].shoe_id;
+
+        let response = await request(serve.getExpressInstance()).get("/admin/shoes/edit_shoe/" + shoeID);
+        chai.expect(response.statusCode).to.equal(200);
+
+        response = await request(serve.getExpressInstance()).post("/admin/shoes/edit_shoe/" + shoeID);
+        chai.expect(response.statusCode).to.equal(302);
+
+        response = await request(serve.getExpressInstance()).post("/admin/shoes/del_shoe/" + shoeID);
+        chai.expect(response.statusCode).to.equal(302);
+
+    }).timeout(5000);
 
 });

@@ -74,7 +74,7 @@ describe('Testing productController Functionality:', () => {
     it('add_shoe: return code 200', async () => {
 
 
-        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/add_shoe/6');
+        const response = await request(serve.getExpressInstance()).get('/user/' + id + '/add_shoe/99');
 
         chai.expect(response.statusCode).to.equal(200);
 
