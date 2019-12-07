@@ -57,3 +57,8 @@ As shown above. The test looks similar to a unit test, we are creating a model, 
 However, this test is technically an integration test in that the add_user() method needs to interface with the database, in order to create and store the data.  
 
 This is true for majority of our testing, as we have very little functionality that doesn't interact with the database in some form or another (data creation, reading, updating, or deletion). 
+
+Finally we can boast over the fact that we have over 75 such tests, and that across our whole app we have a line coverage of 80%!
+
+![Code Coverage Report](https://github.com/seng350/seng350f19-project-2-3/blob/master/written_docs/milestone_4/code_coverage.png "Code Coverage Report")
+
