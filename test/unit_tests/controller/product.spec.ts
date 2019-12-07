@@ -57,14 +57,14 @@ describe('Testing productController Functionality:', () => {
         
     }).timeout(5000);
 
-    it('alpha_asc: return code ___', async () => {
+    it('alpha_asc: return code 200', async () => {
         const response = await request(serve.getExpressInstance()).get('/user/' + id + '/allShoes/sort/alpha_asc');
 
         chai.expect(response.statusCode).to.equal(200);
         
     }).timeout(5000);
 
-    it('under_retail: return code ___', async () => {
+    it('under_retail: return code 200', async () => {
         const response = await request(serve.getExpressInstance()).get('/user/' + id + '/allShoes/filter/under_retail');
 
         chai.expect(response.statusCode).to.equal(200);

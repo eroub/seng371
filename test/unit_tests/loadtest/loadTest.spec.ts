@@ -10,7 +10,7 @@ QAS response measure: The system should not time out or make users wait over 0.7
 
  */
 
-describe('Testing shoelist view, /user/1/allshoes :', () => {
+describe('loadTesting shoelist view, /user/1/allshoes :', () => {
 
 for(let i=0; i<1000; i++) {
     it('loadtests allShoes page', function (done) {
@@ -23,4 +23,3 @@ for(let i=0; i<1000; i++) {
     }).timeout(750);
 }
 })
-

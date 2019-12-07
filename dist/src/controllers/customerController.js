@@ -351,11 +351,7 @@ var CustomerController = /** @class */ (function (_super) {
                         res.redirect("/user/" + userId + "/shoes/");
                         return [3 /*break*/, 4];
                     case 3:
-                        res.status(404)
-                            .send({
-                            message: "No user with associated ID. Check the entered number.",
-                            status: res.status,
-                        });
+                        Helpers.ID404(res);
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
@@ -416,11 +412,7 @@ var CustomerController = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.check_local(userId)];
                     case 1:
                         if (!(_a.sent())) {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         idString = "id2";
                         docID = req.params[idString];
@@ -462,11 +454,7 @@ var CustomerController = /** @class */ (function (_super) {
                                 title: "Shoes", total: totalRevenue, username: userJson.username });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user found with the given id.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -502,20 +490,11 @@ var CustomerController = /** @class */ (function (_super) {
                                 this.render(req, res, "oneShoe", { id: userId, diff: diff, purchase: shoe.purchase_price, shoe: shoe });
                             }
                             else {
-                                console.log("shoe wasn't found");
-                                res.status(404)
-                                    .send({
-                                    message: "No shoe found with the given id.",
-                                    status: res.status,
-                                });
+                                Helpers.shoe404(res);
                             }
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user found with the given id.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
