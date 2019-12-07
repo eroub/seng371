@@ -148,7 +148,6 @@ var ProductModel = /** @class */ (function () {
             .then(function (db) {
             db.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
                 model: model, retail_price: rp, shoe_id: shoeId, size: size });
-            console.log("adding shoe");
             return true;
         })
             .catch(function (err) {
@@ -197,7 +196,6 @@ var ProductModel = /** @class */ (function () {
             db.collection("shoes").deleteOne({ shoe_id: shoeId });
             db.collection("user_shoes").deleteMany({ shoe_id: shoeId });
             db.collection("notifications").deleteMany({ shoe_id: shoeId });
-            console.log("deleted a shoe with id", +shoeId);
             return true;
         })
             .catch(function (err) {

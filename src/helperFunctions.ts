@@ -25,7 +25,6 @@ class Helpers {
         let max: number = 0;
         for (const item in users) {
             if (users.hasOwnProperty(item)) {
-                console.log(users[item].user_id, max);
                 if (users[item].user_id > max) {
                     max = users[item].user_id;
                 }
@@ -128,7 +127,6 @@ class Helpers {
         for (const item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 const shoe = userShoes[item];
-                console.log(shoe._id, shoeID);
                 if (shoe._id.toString() === shoeID.toString()) {
                     return shoe;
                 }

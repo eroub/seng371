@@ -178,7 +178,7 @@ var CustomerController = /** @class */ (function (_super) {
         });
     };
     /**
-     * Renders the allShoes view for a specific user with shoes sorted by the lowest current price to the highest current price.
+     * Renders the allShoes view for a specific user with shoes sorted by the lowest to highest current price.
      *
      * @class CustomerController extends BaseRoute
      * @method sortCurrentPriceLow
@@ -213,7 +213,7 @@ var CustomerController = /** @class */ (function (_super) {
         });
     };
     /**
-     * Renders the allShoes view for a specific user with shoes sorted by the highest current price to the lowest current price.
+     * Renders the allShoes view for a specific user with shoes sorted by the highest to the lowest current price.
      *
      * @class CustomerController extends BaseRoute
      * @method sortCurrentPriceHigh
@@ -248,7 +248,7 @@ var CustomerController = /** @class */ (function (_super) {
         });
     };
     /**
-     * Renders the allShoes view for a specific user with shoes sorted by the lowest purchase price to the highest purchase price.
+     * Renders the allShoes view for a specific user with shoes sorted by the lowest to highest purchase price.
      *
      * @class CustomerController extends BaseRoute
      * @method sortPurchasePriceLow
@@ -283,7 +283,7 @@ var CustomerController = /** @class */ (function (_super) {
         });
     };
     /**
-     * Renders the allShoes view for a specific user with shoes sorted by the highest purchase price to the lowest purchase price.
+     * Renders the allShoes view for a specific user with shoes sorted by the highest to the lowest purchase price.
      *
      * @class CustomerController extends BaseRoute
      * @method sortPurchasePriceHigh
@@ -427,7 +427,8 @@ var CustomerController = /** @class */ (function (_super) {
         });
     };
     /**
-     * Renders the allShoes view (with shoes sorted alphabetically ascending) when a user navigates to /user/<user_id>/shoes.
+     * Renders the allShoes view (with shoes sorted alphabetically ascending)
+     * when a user navigates to /user/<user_id>/shoes.
      *
      * @class CustomerController extends BaseRoute
      * @method getAll
@@ -502,7 +503,8 @@ var CustomerController = /** @class */ (function (_super) {
         });
     };
     /**
-     * Checks if local variables are set for sorting functions, and whether or not the local variables are correct for the current user.
+     * Checks if local variables are set for sorting functions, and whether or not the local
+     * variables are correct for the current user.
      *
      * @class CustomerController extends BaseRoute
      * @method check_local
@@ -532,7 +534,8 @@ var CustomerController = /** @class */ (function (_super) {
      * @class CustomerController extends BaseRoute
      * @method setLocal
      * @param userID {Any} The id of the user.
-     * @return true if the local variables were set, false if the user does not exist and the local variables could not be set.
+     * @return true if the local variables were set, false if
+     * the user does not exist and the local variables could not be set.
      */
     CustomerController.prototype.setLocal = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
