@@ -1,18 +1,22 @@
 import "mocha";
 import chai from "chai";
 import { ProductModel } from "../../../src/models/productModel";
+/*
+ IMPORTANT if the first two test are failing, check if the db has a shoe with shoe_id =99
+ */
+
 
 describe ('Testing ProductModel Functionality:', () => {
     it('getAllShoes: return all correct shoes', async () => {
-        const test_arr = [{"shoe_id":3, "purchase_price":200}];
+        const test_arr = [{"shoe_id":99, "purchase_price":200}];
         const SM = new ProductModel();
         const shoes:any = await SM.getAllShoes(test_arr);
-        chai.expect(shoes[0].shoe_id).to.equal(3);
+        chai.expect(shoes[0].shoe_id).to.equal(99);
     }).timeout(5000);
     it('getOneShoe: return one correct shoe', async () => {
         const SM = new ProductModel();
-        const shoe:any = await SM.getOneShoe(2);
-        chai.expect(shoe.shoe_id).to.equal(2);
+        const shoe:any = await SM.getOneShoe(99);
+        chai.expect(shoe.shoe_id).to.equal(99);
     }).timeout(5000);
     it('getAllDB: return all shoes in the database', async () => {
         const SM = new ProductModel();

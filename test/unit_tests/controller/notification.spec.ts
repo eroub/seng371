@@ -32,8 +32,13 @@ describe('Testing notificationController Functionality:', () => {
     it('add_notification (input): return code  200', async () => {
         // ensure that there is a shoe with id 99
         const SM = new ProductModel();
+        const shoe:any = await SM.getOneShoe(99);
 
-        const shoe: any = await SM.add_shoe('v1.1', 99, 10, 100, 100, 'nike', 'red');
+        if ((shoe == null)){
+            const shoe: any = await SM.add_shoe('v1.1', 99, 10, 100, 100, 'nike', 'red');
+
+        }
+
 
         //and add a notification for that id
         const NM = new NotificationModel();
@@ -92,12 +97,15 @@ describe('Testing notificationController Functionality:', () => {
     it('remove_notification: return code 302(redirects)', async () => {
 
         const response = await request(serve.getExpressInstance()).post('/user/'+id+'/remove_notification/'+id);
+        const NM = new NotificationModel();
+        const not: any = await NM.getUserNotifications(id);
+        let notification_id = not[not.length-1]._id
+
+        const nrInfo: any = await NM.remove_notif(notification_id);
 
         chai.expect(response.statusCode).to.equal(302);
 
-        const NM = new NotificationModel();
-        const not: any = await NM.getUserNotifications(id);
-        const nrInfo: any = await NM.remove_notif(not[not.length-1]._id);
+
 
     }).timeout(5000);
 
@@ -119,11 +127,6 @@ describe('Testing notificationController Functionality:', () => {
         const response = await request(serve.getExpressInstance()).get('/user/'+id+'/notifications/filter/unfulfilled');
 
         chai.expect(response.statusCode).to.equal(200);
-
-            // delete the shoe created in this test
-        const SM = new ProductModel();
-
-        const rmshoe: any = await SM.remove_shoe(99);
 
     }).timeout(10000);
 

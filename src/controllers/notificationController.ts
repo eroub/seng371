@@ -292,10 +292,15 @@ export class NotificationController extends BaseRoute {
                 }
             }
             userNotifications.sort((a: any, b: any) => {
+                console.log("false!!!",userID)
+
                 return a.shoename.toLowerCase().localeCompare(b.shoename.toLowerCase());
+
             });
+
             return true;
         } else {
+
             return false;
         }
     }
@@ -366,6 +371,7 @@ export class NotificationController extends BaseRoute {
     private async setLocals(userID: number) {
         await this.setUserNotifications(userID);
         Shoes = await Helpers.getAllDbShoes();
+
     }
 
     /**
@@ -380,6 +386,7 @@ export class NotificationController extends BaseRoute {
     private async setUserNotifications(userID: number) {
         const notifIf = new NotificationModel();
         userNotifications = await notifIf.getUserNotifications(userID);
+
     }
 
     /**

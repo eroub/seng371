@@ -22,6 +22,7 @@ export class NotificationModel {
                 return db!.collection("notifications").find({user_id: userId}).toArray();
             })
             .then((notif: any) => {
+
                 return notif;
             })
             .catch((err) => {

@@ -437,6 +437,7 @@ var NotificationController = /** @class */ (function (_super) {
                         return [3 /*break*/, 3];
                     case 6:
                         userNotifications.sort(function (a, b) {
+                            console.log("false!!!", userID);
                             return a.shoename.toLowerCase().localeCompare(b.shoename.toLowerCase());
                         });
                         return [2 /*return*/, true];
