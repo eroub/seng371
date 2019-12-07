@@ -270,7 +270,6 @@ var LeaderboardController = /** @class */ (function (_super) {
      * @class LeaderboardController extends BaseRoute
      * @method check_local
      * @param userID The ID number of the user currently viewing the leaderboard.
-
      * @return void
      */
     LeaderboardController.prototype.check_local = function (userID) {
@@ -331,7 +330,6 @@ var LeaderboardController = /** @class */ (function (_super) {
      * @method buildRanking
      * @param userShoes an array of the users shoe objects.
      * @param An object that holds the properties important for ranking (net, sunk,revenue,avg_net,num) .
-
      * @return void
      */
     LeaderboardController.prototype.buildRanking = function (userShoes, ranking) {
@@ -395,7 +393,6 @@ var LeaderboardController = /** @class */ (function (_super) {
     };
     /**
      * gets all the shoes for a user
-
      * @class LeaderboardController extends BaseRoute
      * @method getUserShoes
      * @return array of shoe objects
