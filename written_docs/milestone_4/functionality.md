@@ -1,4 +1,5 @@
-### User Stories/Functionality
+## User Stories/Functionality
+
 The 7 user stories covered in this app are as follows:
 
 1. User should be able to see all their shoes
@@ -15,7 +16,7 @@ In addition to these 7 user stories, there is also additional functionality such
 
 There is also an admin module where an admininstrator can CRUD users and shoes.
 
-### Adherence to Design Document
+## Adherence to Design Document
 
 Admin: Making a product inactive functionality was removed (admin can simply remove shoes from the database now).
 
