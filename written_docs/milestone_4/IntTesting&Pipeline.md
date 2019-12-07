@@ -51,7 +51,9 @@ it('add_user: should return true', async () => {
         const newUser: any = await UM.add_user(777, 'hello');
         chai.expect(newUser).to.equal(true)
 }).timeout(5000);
-```
-As shown above. The test looks similar to a unit test, we are creating a model, using that model to create a new user (which returns true if it was successful), then asserting that the method did what it was supposed to.
+```  
+As shown above. The test looks similar to a unit test, we are creating a model, using that model to create a new user (which returns true if it was successful), then asserting that the method did what it was supposed to.  
 
-However, 
+However, this test is technically an integration test in that the add_user() method needs to interface with the database, in order to create and store the data.  
+
+This is true for majority of our testing, as we have very little functionality that doesn't interact with the database in some form or another (data creation, reading, updating, or deletion). 
