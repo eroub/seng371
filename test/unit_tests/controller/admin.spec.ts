@@ -26,15 +26,18 @@ describe('Testing main admin view:', () => {
     }).timeout(5000);
 
 
-    it('add/edit/delUser: adds, gets the edit form for, edits, and deletes a new user', async () => {
+    it('addUser: adds a new user', async () => {
         let response = await request(serve.getExpressInstance()).post('/admin/users/add_user');
         chai.expect(response.statusCode).to.equal(302);
 
+     }).timeout(5000);
+
+    it('edit/delUser: gets the edit form for, edits, and deletes a new user', async () => {
         const cm = new CustomerModel();
         const users = await cm.get_users();
         const userID = users[users.length-1].user_id;
 
-        response = await request(serve.getExpressInstance()).get('/admin/users/edit_user/' + userID);
+        let response = await request(serve.getExpressInstance()).get('/admin/users/edit_user/' + userID);
         chai.expect(response.statusCode).to.equal(200);
 
         response = await request(serve.getExpressInstance()).post('/admin/users/edit_user/' + userID);
@@ -42,7 +45,7 @@ describe('Testing main admin view:', () => {
 
         response = await request(serve.getExpressInstance()).post("/admin/users/del_user/" + userID);
         chai.expect(response.statusCode).to.equal(302);
-     }).timeout(5000);
+    }).timeout(5000);
 
      it('add/editShoe: adds, gets the edit for for, edits, and deletes a new shoe', async () => {
 

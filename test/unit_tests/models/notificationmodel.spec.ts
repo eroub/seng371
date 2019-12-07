@@ -33,10 +33,18 @@ describe ('Testing NotificationModel Functionality:', () => {
         chai.expect(nInfo).to.equal(true);
     }).timeout(5000);
 
-    it('remove_notif: return true for removing existing notification', async () => {
+    it('remove_notif/get_notif/edit_notif/fulfill notif: return true for removing existing notification', async () => {
         const NM = new NotificationModel();
         const not: any = await NM.getUserNotifications(0);
-        const nInfo: any = await NM.remove_notif(not[not.length-1]._id);
+        const id: any = not[not.length-1]._id;
+        let nInfo: any = await NM.fulfill(id);
+        chai.expect(nInfo).to.equal(true);
+        await NM.edit_notif(id, 1000, "Above");
+        nInfo = await NM.get_notif(id);
+        chai.expect(nInfo[0].threshold).to.equal(1000);
+        nInfo = await NM.get_notif(id);
+        chai.expect(nInfo[0]).to.not.equal(undefined);
+        nInfo = await NM.remove_notif(id);
         chai.expect(nInfo).to.equal(true);
     }).timeout(5000);
 
@@ -46,23 +54,10 @@ describe ('Testing NotificationModel Functionality:', () => {
         chai.expect(nInfo).to.equal(false);
     }).timeout(5000);
 
-    it('get_notif: return true for getting existing notification', async () => {
-        const NM = new NotificationModel();
-        const nInfo: any = await NM.get_notif("5de6f71c82a52147301f9354");
-        chai.expect(nInfo[0].fulfilled).to.equal(true);
-    }).timeout(5000);
-
     it('get_notif: return undefined for non-existent notification', async () => {
         const NM = new NotificationModel();
         const nInfo: any = await NM.get_notif("yeet");
         chai.expect(nInfo).to.equal(undefined);
-    }).timeout(5000);
-
-    it('edit_notif: new changes should be reflected', async () => {
-        const NM = new NotificationModel();
-        await NM.edit_notif("5de6f71c82a52147301f9354", 1000, "Above");
-        const nInfo: any = await NM.get_notif("5de6f71c82a52147301f9354");
-        chai.expect(nInfo[0].threshold).to.equal(1000);
     }).timeout(5000);
 
     it('edit_notif: return false for editing non-existent notification', async () => {
