@@ -1,8 +1,8 @@
-##Pipeline
+## Pipeline
 
 We took a very wholistic approach with our continuous integration and pipeline. With almost every aspect of the process automated.  
 
-###Workflow  
+### Workflow  
 For the development of a feature. Our groups workflow was usually as follows.  
 
 1. Work on the feature on either a feature branch (to be deleted after the feature was completed) or on the general "Develop" branch.  
@@ -36,3 +36,5 @@ npm install \
 ```
 
 When that is completed we should see the new feature [live!](https://seng350.roubekas.com)
+
+## Testing
