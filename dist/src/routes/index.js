@@ -109,16 +109,18 @@ var IndexRoute = /** @class */ (function (_super) {
                         regularUsers = [];
                         for (item in users) {
                             if (users.hasOwnProperty(item)) {
-                                if (users[item].isAdmin)
+                                if (users[item].isAdmin) {
                                     admins.push(users[item]);
-                                else
+                                }
+                                else {
                                     regularUsers.push(users[item]);
+                                }
                             }
                         }
                         options = {
+                            admins: admins,
                             message: "Welcome!",
                             regularUsers: regularUsers,
-                            admins: admins
                         };
                         // render template
                         this.render(req, res, "index", options);

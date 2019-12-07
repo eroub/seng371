@@ -57,17 +57,20 @@ export class IndexRoute extends BaseRoute {
         const admins: any = [];
         const regularUsers: any = [];
 
-        for(const item in users) {
-            if(users.hasOwnProperty(item)) {
-                if(users[item].isAdmin) admins.push(users[item]);
-                else regularUsers.push(users[item]);
+        for (const item in users) {
+            if (users.hasOwnProperty(item)) {
+                if (users[item].isAdmin) {
+                    admins.push(users[item]);
+                } else {
+                    regularUsers.push(users[item]);
+                }
             }
         }
 
         const options: object = {
+            admins,
             message: "Welcome!",
             regularUsers,
-            admins
         };
 
         // render template

@@ -117,11 +117,7 @@ var ProductController = /** @class */ (function (_super) {
                             this.render(req, res, "addShoe", { id: userId, shoe: shoe });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No shoe found with the given id.",
-                                status: res.status,
-                            });
+                            Helpers.shoe404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -142,18 +138,14 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) {
-                                var aname = a.brand + " " + a.model + " " + a.colorway;
                                 var bname = b.brand + " " + b.model + " " + b.colorway;
+                                var aname = a.brand + " " + a.model + " " + a.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
                             this.render(req, res, "shoeList", { id: userId, title: "Shoes", data: allShoes });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user found with the given user id.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }
@@ -207,11 +199,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return a.current_price - b.current_price; });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -238,11 +226,7 @@ var ProductController = /** @class */ (function (_super) {
                                 var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return bname.toLowerCase().localeCompare(aname.toLowerCase());
                             });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -269,11 +253,7 @@ var ProductController = /** @class */ (function (_super) {
                                 var bname = b.brand + " " + b.model + " " + b.colorway;
                                 return aname.toLowerCase().localeCompare(bname.toLowerCase());
                             });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -296,11 +276,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return b.current_price - a.current_price; });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -323,11 +299,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return a.retail_price - b.retail_price; });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -350,11 +322,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return b.retail_price - a.retail_price; });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -377,11 +345,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return (a.current_price - a.retail_price) - (b.current_price - b.retail_price); });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -404,11 +368,7 @@ var ProductController = /** @class */ (function (_super) {
                     case 1:
                         if (_a.sent()) {
                             allShoes.sort(function (a, b) { return (b.current_price - b.retail_price) - (a.current_price - a.retail_price); });
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: queryint,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: queryint, title: "Shoes" });
                         }
                         else {
                             res.status(404);
@@ -439,18 +399,10 @@ var ProductController = /** @class */ (function (_super) {
                                 }
                             }
                             allShoes = underRetail;
-                            this.render(req, res, "shoeList", {
-                                data: allShoes,
-                                id: userId,
-                                title: "Shoes",
-                            });
+                            this.render(req, res, "shoeList", { data: allShoes, id: userId, title: "Shoes" });
                         }
                         else {
-                            res.status(404)
-                                .send({
-                                message: "No user with associated ID. Check the entered number.",
-                                status: res.status,
-                            });
+                            Helpers.ID404(res);
                         }
                         return [2 /*return*/];
                 }

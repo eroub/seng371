@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var DbClient = require("../DbClient");
+var datab = DbClient.connect();
 var ProductModel = /** @class */ (function () {
     function ProductModel() {
     }
@@ -20,14 +21,14 @@ var ProductModel = /** @class */ (function () {
         var jsonShoeArr = [];
         var shoes = DbClient.connect()
             .then(function (db) {
-            // will return all the shoes in db
+            // returns shoes in db
             return db.collection("shoes").find().toArray();
         })
             .then(function (sneakers) {
             // loop over all the shoes in db and push into jsonShoeArr only those that are
             // owned by user
-            var shoe;
             var id;
+            var shoe;
             for (var _i = 0, sneakers_1 = sneakers; _i < sneakers_1.length; _i++) {
                 shoe = sneakers_1[_i];
                 for (var _a = 0, keyArr_1 = keyArr; _a < keyArr_1.length; _a++) {
@@ -81,7 +82,7 @@ var ProductModel = /** @class */ (function () {
             Return all the shoes for the view where we need to see all shoes available in db
      */
     ProductModel.prototype.updateShoes = function (priceChange) {
-        var shoeUpdate = DbClient.connect()
+        var shoeUpdate = datab
             .then(function (db) {
             db.collection("shoes").updateMany({}, { $inc: { current_price: priceChange } });
             return true;
@@ -93,7 +94,7 @@ var ProductModel = /** @class */ (function () {
         return shoeUpdate;
     };
     ProductModel.prototype.getAllDB = function () {
-        var shoes = DbClient.connect()
+        var shoes = datab
             .then(function (db) {
             return db.collection("shoes").find().toArray();
         })
@@ -114,7 +115,7 @@ var ProductModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("Adding a shoe to the database has failed");
+            console.log("Failed to add a shoe");
             return false;
         });
         return addShoes;
@@ -137,7 +138,6 @@ var ProductModel = /** @class */ (function () {
             db.collection("shoes").deleteOne({ shoe_id: shoeId });
             db.collection("user_shoes").deleteMany({ shoe_id: shoeId });
             db.collection("notifications").deleteMany({ shoe_id: shoeId });
-            console.log("deleted a shoe with id", +shoeId);
             return true;
         })
             .catch(function (err) {

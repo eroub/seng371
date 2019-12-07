@@ -1,22 +1,11 @@
 #!/bin/sh
-
 echo "***********************"
 echo "**** TESTING SUITE ****"
 echo "***********************" 
-
 echo "Running through unit tests via mocha ... "
-# istanbul cover --reporter=html --reporter=text mocha --require source-map-support/register --require ts-node/register --exit **/**/*.spec.ts
+nyc --reporter=html --reporter=text mocha --require source-map-support/register --require ts-node/register --exit **/**/*.spec.ts
 # istanbul cover mocha --exit
-#mocha -r ts-node/register --exit **/**/*.spec.ts
-#mocha -r ts-node/register --exit **/**/loadTestForloop.spec.ts
-mocha -r ts-node/register --exit **/**/product.spec.ts
-mocha -r ts-node/register --exit **/**/leaderboard.spec.ts
-mocha -r ts-node/register --exit **/**/notification.spec.ts
-
-
-
-
+# mocha -r ts-node/register --exit **/**/*.spec.ts
 echo "Running through static analysis via TSLint ... "
 tslint -c tslint/tslint.json '../src/**/*.ts'
-
 echo "Success ! "
