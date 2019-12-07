@@ -52,8 +52,6 @@ export class NotificationController extends BaseRoute {
         });
     }
 
-
-
     /**
      * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications.
      *
@@ -78,7 +76,6 @@ export class NotificationController extends BaseRoute {
                 status: res.status,
             });        }
     }
-
 
     /**
      * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications/filter/fulfilled.
@@ -111,7 +108,6 @@ export class NotificationController extends BaseRoute {
                     status: res.status,
                 });        }
     }
-
 
     /**
      * Renders the notificationCentre view when user navigates to /user/<user_id>/notifications/filter/unfulfilled.
@@ -147,7 +143,8 @@ export class NotificationController extends BaseRoute {
     }
 
     /**
-     * redirects to allShoes view when the user navigates to /user/<user_id>/notifications/add_notification/<notification_id>.
+     * redirects to allShoes view when the user navigates to
+     * /user/<user_id>/notifications/add_notification/<notification_id>.
      *
      * @class NotificationController extends BaseRoute
      * @method addNotification
@@ -171,7 +168,6 @@ export class NotificationController extends BaseRoute {
         res.redirect("/user/" + userID + "/allShoes");
 
     }
-
 
     /**
      * redirects to notifications view when the user navigates to /user/<user_id>/remove_notification/<notification_id>.
@@ -239,7 +235,7 @@ export class NotificationController extends BaseRoute {
             this.render(req, res, "addNotification", { id: userId, shoe });
             res.status(200)
                 .send({
-                    message: 'Success',
+                    message: "Success",
                     status: res.status,
                 });
         } else {
@@ -272,7 +268,6 @@ export class NotificationController extends BaseRoute {
         this.render(req, res, "editNotification", { id: userId, title: "Notification", notification });
     }
 
-
     /**
      * A helper function to set the usrs notifications.
      *
@@ -281,8 +276,6 @@ export class NotificationController extends BaseRoute {
      * @param UserID, the ID of the user for whom to return notifications for
      * @return boolean
      */
-
-
 
     private async buildNotifications(userID: number) {
         if (await Helpers.isUser(userID)) {
@@ -306,8 +299,6 @@ export class NotificationController extends BaseRoute {
             return false;
         }
     }
-
-
 
     /**
      * A helper function that checks if a notification has been fulfilled
@@ -354,7 +345,6 @@ export class NotificationController extends BaseRoute {
      * @return true if buildnotifications returns succesfully
      */
 
-
     private async check_local(userID: number) {
         if (!userNotifications) {
             return await this.buildNotifications(userID);
@@ -373,12 +363,10 @@ export class NotificationController extends BaseRoute {
      * @return void
      */
 
-
     private async setLocals(userID: number) {
         await this.setUserNotifications(userID);
         Shoes = await Helpers.getAllDbShoes();
     }
-
 
     /**
      * Queries the DB to set local variable userNotification
@@ -389,12 +377,10 @@ export class NotificationController extends BaseRoute {
      * @return void
      */
 
-
     private async setUserNotifications(userID: number) {
         const notifIf = new NotificationModel();
         userNotifications = await notifIf.getUserNotifications(userID);
     }
-
 
     /**
      * returns a shoe object

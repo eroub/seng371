@@ -74,7 +74,6 @@ export class ProductController extends BaseRoute {
      * @return void
      */
 
-
     public async inputShoe(req: Request, res: Response, next: NextFunction) {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
@@ -93,7 +92,6 @@ export class ProductController extends BaseRoute {
 
     }
 
-
     /**
      * Renders the shoeList view when user navigates to /user/<user_id>/allShoes/<shoe_id>.
      *
@@ -104,8 +102,6 @@ export class ProductController extends BaseRoute {
      * @param next {NextFunction} The NextFunction.
      * @return void
      */
-
-
 
     public async allShoes(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -127,11 +123,9 @@ export class ProductController extends BaseRoute {
         }
     }
 
-
-
-
     /**
-     * queries the db to get allShoes array,called in allShoes when a user navigates to /user/<user_id>/allShoes/<shoe_id>
+     * queries the db to get allShoes array,called in allShoes
+     * when a user navigates to /user/<user_id>/allShoes/<shoe_id>
      *
      * @class ProductController extends BaseRoute
      * @method allShoes
@@ -140,7 +134,6 @@ export class ProductController extends BaseRoute {
      * @param next {NextFunction} The NextFunction.
      * @return void
      */
-
 
     public async setLocal(userID: any) {
         if (Helpers.isUser(userID)) {
@@ -152,8 +145,6 @@ export class ProductController extends BaseRoute {
             return false;
         }
     }
-
-
 
     /**
      * Checks if the allShoes array has already been set otherwise it will call setlocal to query the db
@@ -172,8 +163,6 @@ export class ProductController extends BaseRoute {
         return true;
     }
 
-
-
     /**
      * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/current_price_low"
      * @class ProductController extends BaseRoute
@@ -183,9 +172,6 @@ export class ProductController extends BaseRoute {
      * @param next {NextFunction} The NextFunction.
      * @return void
      */
-
-
-
 
     public async sortCurrentPriceLowDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -202,8 +188,6 @@ export class ProductController extends BaseRoute {
             res.send("invalid user");
         }
     }
-
-
 
     /**
      * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/alpha_desc"
@@ -235,7 +219,6 @@ export class ProductController extends BaseRoute {
         }
     }
 
-
     /**
      * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/alpha_asc"
      * @class ProductController extends BaseRoute
@@ -266,7 +249,6 @@ export class ProductController extends BaseRoute {
         }
     }
 
-
     /**
      * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/sort/current_price_high"
      * @class ProductController extends BaseRoute
@@ -276,7 +258,6 @@ export class ProductController extends BaseRoute {
      * @param next {NextFunction} The NextFunction.
      * @return void
      */
-
 
     public async sortCurrentPriceHighDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
@@ -356,7 +337,6 @@ export class ProductController extends BaseRoute {
      * @return void
      */
 
-
     public async sortDiffPriceLowDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -383,7 +363,6 @@ export class ProductController extends BaseRoute {
      * @return void
      */
 
-
     public async sortDiffPriceHighDb(req: Request, res: Response, next: NextFunction) {
         const idString = "id";
         const queryint = parseInt(req.params[idString], 10);
@@ -400,7 +379,6 @@ export class ProductController extends BaseRoute {
         }
     }
 
-
     /**
      * Renders the view shoeList when a user navigates to the url : /user/<user_id>/allShoes/filter/under_retail"
      * @class ProductController extends BaseRoute
@@ -410,7 +388,6 @@ export class ProductController extends BaseRoute {
      * @param next {NextFunction} The NextFunction.
      * @return void
      */
-
 
     public async underRetail(req: Request, res: Response, next: NextFunction) {
         const idString = "id";

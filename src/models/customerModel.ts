@@ -13,7 +13,8 @@ export class CustomerModel {
      * @class CustomerModel
      * @method userInfo
      * @param userId {Number} The user_id of the user.
-     * @return An array containing a JSON object with the users info ({isAdmin, user_id, username}) if the id is valid.
+     * @return An array containing a JSON object with the users info
+     * ({isAdmin, user_id, username}) if the id is valid.
      */
     public userInfo(userId: number) {
         const users = DbClient.connect()
@@ -129,7 +130,8 @@ export class CustomerModel {
      * @class CustomerModel
      * @method getKeys
      * @param userID {Any} The user_id to get keys for.
-     * @return An array of user key JSON objects ({user_id, shoe_id, purchase_price}) if the user has shoes. Otherwise an empty array.
+     * @return An array of user key JSON objects
+     * ({user_id, shoe_id, purchase_price}) if the user has shoes. Otherwise an empty array.
      */
     public getKeys(userID: any) {
         const userKeys = DbClient.connect()

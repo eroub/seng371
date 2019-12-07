@@ -1,0 +1,29 @@
+extends layout
+
+block content
+    a(href='/user/' + id + '/shoes') Back
+    h1 Notifications:
+    p Filter: #[a(href='/user/' + id + '/notifications') All]&nbsp #[a(href='/user/' + id + '/notifications/filter/fulfilled') Fulfilled]&nbsp #[a(href='/user/' + id + '/notifications/filter/unfulfilled') Unfulfilled]
+    for notif in notifications
+        p #{notif.shoename}
+        p Size: #{notif.size}
+        if notif.type == 'Above'
+            p Threshold: Greater Then $#{notif.threshold}
+        else
+            p Threshold: Less Then $#{notif.threshold}
+        p Current Price: $#{notif.current_price}
+        if notif.fulfilled
+            p Fulfilled: YES
+            if notif.type == 'Above'
+                p Amount Above: $#{notif.current_price - notif.threshold}
+            else
+                p Amount Below: $#{notif.threshold - notif.current_price}
+        else
+            p Fulfilled: NO
+        a(href='/user/' + id + '/edit_notification/' + notif._id)
+            button.btn.btn-primary(type='button') Edit Notification
+        p
+        form(method='POST' action='/user/' + id + '/remove_notification/' + notif._id)
+            button.btn.btn-primary(type='submit') Remove Notification
+        p ----------------------
+
