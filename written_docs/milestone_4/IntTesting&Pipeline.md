@@ -12,7 +12,7 @@ For the development of a feature. Our groups workflow was usually as follows.
   For our project the build was quite simple and only had three stages. Build, test, and deploy.  
   *Build*: In this stage travis merely installs the apps dependencies via `npm i` as well as builds the app  
   *Test*: For this stage travis utilizes our test-suite which is ran via script through the use of `npm test` (expanded on later)  
-  *Deploy*: Finally, if both the build and test stages were successful, travis build and deploys a docker image via our DOCKERFILE  
+  *Deploy*: Finally, if both the build and test stages were successful, travis build and deploys a docker image via our `DOCKERFILE`  
 5. When we get the check mark from travis, we will then proceed to finish the pull request with master.  
 6. Lastly, when merged, a group member would also push master to a live DigitalOcean droplet server which is used to serve our app.  
   This is done through a post-receive githook running on a bare repository on the server.
@@ -38,3 +38,20 @@ npm install \
 When that is completed we should see the new feature [live!](https://seng350.roubekas.com)
 
 ## Testing
+
+Like our continuous integration and pipeline, we took testing very seriously and were sure to test majority of our functionality thoroughly.
+
+### Unit/Integration Testing
+Keeping to a strict definition of *unit test*. Unfortunately, most of our app is unable to be tested as an isolated unit, save for the helper functions. However, we still used a unit test style of approach to testing our main functionality.
+
+#### Example Test 
+```
+it('add_user: should return true', async () => {
+        const UM = new CustomerModel();
+        const newUser: any = await UM.add_user(777, 'hello');
+        chai.expect(newUser).to.equal(true)
+}).timeout(5000);
+```
+As shown above. The test looks similar to a unit test, we are creating a model, using that model to create a new user (which returns true if it was successful), then asserting that the method did what it was supposed to.
+
+However, 
