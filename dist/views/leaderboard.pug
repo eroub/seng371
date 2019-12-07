@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    a(href='/user/' + id + '/shoes') Back
+    h1 Leaderboard:
+    p Sort #[a(href='/user/' + id + '/leaderboard/avgNetHigh') Avg Net High]&nbsp #[a(href='/user/' + id + '/leaderboard/avgNetLow') Avg Net Low]&nbsp #[a(href='/user/' + id + '/leaderboard/netHigh') Net High]&nbsp #[a(href='/user/' + id + '/leaderboard/netLow') Net Low]
+    for user, index in leaderboard
+        if user.user_id == id
+            p
+            strong #{index+1}: #{user.username}
+        else
+            p #{index+1}: #{user.username}
+        p Net Gain/Loss: $#{user.net}
+        p Avg Net Gain/Loss: $#{user.avg_net}
+        p Number of Shoes: #{user.num}
+        p -----------------
+
+
