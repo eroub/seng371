@@ -3,6 +3,7 @@ const chai = require("chai");
 import { Server } from "../../../src/app"
 const request = require('supertest');
 import { CustomerModel } from "../../../src/models/customerModel";
+import {ProductModel} from "../../../src/models/productModel";
 
 const serve = new Server();
 
@@ -13,6 +14,7 @@ describe('Testing customerController Functionality:', () => {
     and  there must be a shoe with id =1.
      */
     let xid =999, id=99, shoe_id='1', xshoe_id='x';
+
     it('/user/999/shoes (Should have status 404)', async () => {
 
         const response = await request(serve.getExpressInstance()).get('/user/'+xid+'/shoes');
@@ -40,8 +42,10 @@ describe('Testing customerController Functionality:', () => {
     it('Gets a shoe from user 99 (should return 200)', async () => {
 
         const serve = new Server();
-
-        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/5de89f0cf27f704a0c4a5b82');
+        const SM = new ProductModel();
+        const shoe:any = await SM.getOneShoe(99);
+        let shoe_obj_id = shoe._id;
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/'+shoe_obj_id);
 
         chai.expect(response.statusCode).to.equal(200);
 
