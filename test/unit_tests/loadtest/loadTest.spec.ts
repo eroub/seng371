@@ -10,10 +10,10 @@ QAS response measure: The system should not time out or make users wait over 0.7
 
  */
 
-describe('Testing main admin view:', () => {
+describe('Testing shoelist view, /user/1/allshoes :', () => {
 
 for(let i=0; i<1000; i++) {
-    it('loadtests admin page', function (done) {
+    it('loadtests allShoes page', function (done) {
         chai.request('http://localhost:7000')
             .get('/user/1/allShoes')
             .end(function (err: any, res: any) {
