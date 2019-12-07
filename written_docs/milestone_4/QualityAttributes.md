@@ -25,3 +25,14 @@ User should successfully be able to navigate the app as well as create, update, 
 Availability testing is done every every 15 minutes, and also runs on a cron job. This test is much more simple. It makes a request to https://seng350.roubekas.com where the live app is being served. If the request returns with anything other than a `statusCode: 200` the test is considered to have failed and is logged, this failure also shuts down all other cron processes. If a status code of 200 is returned the app is considered to be available and the success is logged. We can safely assume that the rest of the app is available if the index page can be reached, as there are no obvious cases to the developers where the index page is accessible but the rest of the app would not be (unless in the case of corrupted data).  
 
 If at any point the test failed, it is logged with the date to an availability.log found in `logs/availability.log`. If passed, the passed test is also logged.
+
+
+### 3. Reliability (issue #9):
+**Stimulus**:  
+Spike in amount of requests 
+**Reponse**:  
+User should successfully be able to navigate the app as well as create, update, read, and delete data without without smoothly without disruption.   
+**Response Measure**:  
+No requests should drop and each request should be responed to within 0.75 seconds. 
+
+Reliability testing is within the app. The test file, named loadtest and located under the unittests directory tests a data heavy route, /user/1/allShoes. This route renders the shoeList view and contains a list of all the shoes in the db. A benifit of using this route to test the reliability is because it is the route that contains all the shoes and if this route conforms to the reliability goals then so should all the other routes. 
