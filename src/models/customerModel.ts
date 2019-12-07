@@ -1,6 +1,7 @@
 import mongodb = require("mongodb");
 import DbClient = require("../DbClient");
 
+const datab = DbClient.connect();
 const ObjectID: any = mongodb.ObjectID;
 
 export class CustomerModel {
@@ -17,7 +18,7 @@ export class CustomerModel {
      * ({isAdmin, user_id, username}) if the id is valid.
      */
     public userInfo(userId: number) {
-        const users = DbClient.connect()
+        const users = datab
             .then((db) => {
                 return db!.collection("users").find({user_id: userId}).toArray();
             })
@@ -42,7 +43,7 @@ export class CustomerModel {
      * @return true if the shoe was added successfully, otherwise false.
      */
     public add_shoe(userId: any, shoeID: number, purchase: number) {
-        const shoeAdd = DbClient.connect()
+        const shoeAdd = datab
             .then((db) => {
                 db!.collection("user_shoes").insertOne({user_id: userId, shoe_id: shoeID, purchase_price: purchase});
                 return true;
@@ -64,7 +65,7 @@ export class CustomerModel {
      * @return true if the shoe was edited successfully, otherwise false.
      */
     public edit_shoe(id: any, purchasePrice: number) {
-        const result = DbClient.connect()
+        const result = datab
             .then((db) => {
                 db!.collection("user_shoes").updateOne({_id: ObjectID(id)},
                     {$set: {purchase_price: purchasePrice}});
@@ -86,7 +87,7 @@ export class CustomerModel {
      * @return true if the shoe was removed successfully, otherwise false.
      */
     public remove_shoe(id: any) {
-        const shoeRemove = DbClient.connect()
+        const shoeRemove = datab
             .then((db) => {
                 db!.collection("user_shoes").deleteOne({_id: ObjectID(id)});
                 return true;
@@ -107,7 +108,7 @@ export class CustomerModel {
      * @return true if the user_id exists, otherwise false
      */
     public isUser(userID: any) {
-        const result = DbClient.connect()
+        const result = datab
             .then((db) => {
                 return db!.collection("users").find({user_id: userID}).toArray();
             })
@@ -134,7 +135,7 @@ export class CustomerModel {
      * ({user_id, shoe_id, purchase_price}) if the user has shoes. Otherwise an empty array.
      */
     public getKeys(userID: any) {
-        const userKeys = DbClient.connect()
+        const userKeys = datab
             .then((db) => {
                 return db!.collection("user_shoes").find({user_id: userID}).toArray();
             })
@@ -155,7 +156,7 @@ export class CustomerModel {
      * @return An array of user JSON objects ({isAdmin, user_id, username}).
      */
     public get_users() {
-        const users = DbClient.connect()
+        const users = datab
             .then((db) => {
                 return db!.collection("users").find().toArray();
             })
@@ -176,7 +177,7 @@ export class CustomerModel {
      * @return An array of user key JSON objects ({user_id, shoe_id, purchase_price}).
      */
     public get_all_keys() {
-        const userKeys = DbClient.connect()
+        const userKeys = datab
             .then((db) => {
                 return db!.collection("user_shoes").find().toArray();
             })
@@ -199,7 +200,7 @@ export class CustomerModel {
      * @return true if the username was edited successfully, otherwise false.
      */
     public edit_userName(id: any, editedName: any) {
-        const result = DbClient.connect()
+        const result = datab
             .then((db) => {
                 db!.collection("users").updateOne({user_id: id},
                     {$set: {username: editedName}});
@@ -222,7 +223,7 @@ export class CustomerModel {
      * @return true if the user was added successfully, otherwise false.
      */
     public add_user(userId: number, username: any) {
-        const addUser = DbClient.connect()
+        const addUser = datab
             .then((db) => {
                 db!.collection("users").insertOne({ isAdmin: false, user_id: userId, username});
                 return true;
@@ -243,7 +244,7 @@ export class CustomerModel {
      * @return true if the user was removed successfully, otherwise false.
      */
     public remove_user(userId: any) {
-        const removeUser = DbClient.connect()
+        const removeUser = datab
             .then((db) => {
                 db!.collection("users").deleteOne({ user_id: userId});
                 db!.collection("user_shoes").deleteMany({ user_id: userId});
