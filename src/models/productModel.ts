@@ -1,5 +1,5 @@
- import DbClient = require("../DbClient");
- const datab = DbClient.connect();
+import DbClient = require("../DbClient");
+const datab = DbClient.connect();
 
 export class ProductModel {
 
@@ -163,8 +163,6 @@ export class ProductModel {
             .then((db) => {
                 db!.collection("shoes").insertOne({ brand, colorway, current_price: cp,
                     model, retail_price: rp, shoe_id: shoeId, size});
-
-                console.log("adding shoe");
                 return true;
             })
             .catch((err) => {
@@ -216,7 +214,6 @@ export class ProductModel {
                 db!.collection("shoes").deleteOne( {shoe_id: shoeId});
                 db!.collection("user_shoes").deleteMany({ shoe_id: shoeId});
                 db!.collection("notifications").deleteMany({ shoe_id: shoeId});
-                console.log("deleted a shoe with id",+shoeId);
                 return true;
             })
             .catch((err) => {

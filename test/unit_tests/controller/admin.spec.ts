@@ -44,24 +44,28 @@ describe('Testing main admin view:', () => {
         chai.expect(response.statusCode).to.equal(302);
      }).timeout(5000);
 
-     it('add/edit/delShoe: adds, gets the edit for for, edits, and deletes a new shoe', async () => {
+     it('add/editShoe: adds, gets the edit for for, edits, and deletes a new shoe', async () => {
 
          let response = await request(serve.getExpressInstance()).post('/admin/shoes/add_shoe');
          chai.expect(response.statusCode).to.equal(302);
 
-         const pm = new ProductModel();
-         const shoes = await pm.getAllDB();
-         const shoeID = shoes[shoes.length-1].shoe_id;
-
-         response = await request(serve.getExpressInstance()).get("/admin/shoes/edit_shoe/" + shoeID);
-         chai.expect(response.statusCode).to.equal(200);
-
-         response = await request(serve.getExpressInstance()).post("/admin/shoes/edit_shoe/" + shoeID);
-         chai.expect(response.statusCode).to.equal(302);
-
-         response = await request(serve.getExpressInstance()).post("/admin/shoes/del_shoe/" + shoeID);
-         chai.expect(response.statusCode).to.equal(302);
-
      }).timeout(5000);
+
+    it('delShoe: deletes a new shoe', async () => {
+
+        const pm = new ProductModel();
+        const shoes = await pm.getAllDB();
+        const shoeID = shoes[shoes.length-1].shoe_id;
+
+        let response = await request(serve.getExpressInstance()).get("/admin/shoes/edit_shoe/" + shoeID);
+        chai.expect(response.statusCode).to.equal(200);
+
+        response = await request(serve.getExpressInstance()).post("/admin/shoes/edit_shoe/" + shoeID);
+        chai.expect(response.statusCode).to.equal(302);
+
+        response = await request(serve.getExpressInstance()).post("/admin/shoes/del_shoe/" + shoeID);
+        chai.expect(response.statusCode).to.equal(302);
+
+    }).timeout(5000);
 
 });
