@@ -5,9 +5,13 @@ var datab = DbClient.connect();
 var ProductModel = /** @class */ (function () {
     function ProductModel() {
     }
-    /*
-        input type: key value arr, example :  [{"1":300}, {"3":400},{"5":500}]
-        returns an array of shoe objects ex: [ {shoe_1 ...}, {shoe_2 ...}, {shoe_3}...]
+    /**
+     * Gets shoe info for a set of shoe keys (deprecated).
+     *
+     * @class ProductModel
+     * @method getAllShoes
+     * @param shoeKeysVal {Any} An array of shoe key JSON objects.
+     * @return An array of shoe JSON objects.
      */
     ProductModel.prototype.getAllShoes = function (shoeKeysVal) {
         var keyArr = [];
@@ -21,14 +25,14 @@ var ProductModel = /** @class */ (function () {
         var jsonShoeArr = [];
         var shoes = DbClient.connect()
             .then(function (db) {
-            // returns shoes in db
+            // will return all the shoes in db
             return db.collection("shoes").find().toArray();
         })
             .then(function (sneakers) {
             // loop over all the shoes in db and push into jsonShoeArr only those that are
             // owned by user
-            var id;
             var shoe;
+            var id;
             for (var _i = 0, sneakers_1 = sneakers; _i < sneakers_1.length; _i++) {
                 shoe = sneakers_1[_i];
                 for (var _a = 0, keyArr_1 = keyArr; _a < keyArr_1.length; _a++) {
@@ -47,9 +51,13 @@ var ProductModel = /** @class */ (function () {
         });
         return shoes;
     };
-    /*
-     Input type: integer that refers to the shoe_id. ex: 3
-     Output type: a json shoe obejct ex: {shoe_id:3 ... }
+    /**
+     * Gets shoe info for a specific shoe.
+     *
+     * @class ProductModel
+     * @method getOneShoe
+     * @param shoeID {Any} The shoe_id of the shoe to get info for.
+     * @return A single shoe JSON object (if the shoe exists).
      */
     ProductModel.prototype.getOneShoe = function (shoeID) {
         // an array of objects holding indvidual json objects for each of the shoes the user has
@@ -81,8 +89,16 @@ var ProductModel = /** @class */ (function () {
     /*
             Return all the shoes for the view where we need to see all shoes available in db
      */
+    /**
+     * Updates the current price of all shoes.
+     *
+     * @class ProductModel
+     * @method updateShoes
+     * @param priceChange {Any} The new current price.
+     * @return true if the prices were updated successfully, otherwise false.
+     */
     ProductModel.prototype.updateShoes = function (priceChange) {
-        var shoeUpdate = datab
+        var shoeUpdate = DbClient.connect()
             .then(function (db) {
             db.collection("shoes").updateMany({}, { $inc: { current_price: priceChange } });
             return true;
@@ -93,6 +109,13 @@ var ProductModel = /** @class */ (function () {
         });
         return shoeUpdate;
     };
+    /**
+     * Gets all the shoes in the database.
+     *
+     * @class ProductModel
+     * @method getAllDB
+     * @return An array of shoe JSON objects.
+     */
     ProductModel.prototype.getAllDB = function () {
         var shoes = datab
             .then(function (db) {
@@ -106,6 +129,20 @@ var ProductModel = /** @class */ (function () {
         });
         return shoes;
     };
+    /**
+     * Adds a shoe to the database.
+     *
+     * @class ProductModel
+     * @method add_shoe
+     * @param model {Any} the model of the new shoe.
+     * @param shoeID {Number} the shoe_id of the new shoe.
+     * @param size {Any} the size of the new shoe
+     * @param cp {Any} the current_price of the new shoe.
+     * @param rp {Any} the retail_price of the new shoe.
+     * @param brand {Any} the brand of the new shoe.
+     * @param colorway {Any} the colorway of the new shoe.
+     * @return true if the shoe was added successfully, otherwise false.
+     */
     ProductModel.prototype.add_shoe = function (model, shoeId, size, cp, rp, brand, colorway) {
         var addShoes = DbClient.connect()
             .then(function (db) {
@@ -115,11 +152,25 @@ var ProductModel = /** @class */ (function () {
             return true;
         })
             .catch(function (err) {
-            console.log("Failed to add a shoe");
+            console.log("Adding a shoe to the database has failed");
             return false;
         });
         return addShoes;
     };
+    /**
+     * Edits a shoe in the database.
+     *
+     * @class ProductModel
+     * @method edit_shoe
+     * @param model {Any} the new model of the shoe.
+     * @param shoeId {Number} the shoe_id of the shoe.
+     * @param size {Any} the new size of the shoe
+     * @param cp {Any} the new current_price of the shoe.
+     * @param rp {Any} the new retail_price of the shoe.
+     * @param brand {Any} the new brand of the shoe.
+     * @param colorway {Any} the new colorway of the shoe.
+     * @return true if the shoe was edited successfully, otherwise false.
+     */
     ProductModel.prototype.edit_shoe = function (model, shoeId, size, cp, rp, brand, colorway) {
         var result = DbClient.connect()
             .then(function (db) {
@@ -132,12 +183,21 @@ var ProductModel = /** @class */ (function () {
         });
         return result;
     };
+    /**
+     * Removes a shoe from the database.
+     *
+     * @class ProductModel
+     * @method remove_shoe
+     * @param shoeId {Any} the shoe_id of the new shoe.
+     * @return true if the shoe was added successfully, otherwise false.
+     */
     ProductModel.prototype.remove_shoe = function (shoeId) {
         var removeShoe = DbClient.connect()
             .then(function (db) {
             db.collection("shoes").deleteOne({ shoe_id: shoeId });
             db.collection("user_shoes").deleteMany({ shoe_id: shoeId });
             db.collection("notifications").deleteMany({ shoe_id: shoeId });
+            console.log("deleted a shoe with id", +shoeId);
             return true;
         })
             .catch(function (err) {

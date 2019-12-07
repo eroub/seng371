@@ -61,6 +61,14 @@ var LeaderboardController = /** @class */ (function (_super) {
     function LeaderboardController() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * Creates LeaderboardController routes.
+     *
+     * @class LeaderboardController extends BaseRoute
+     * @method create
+     * @param router {Router} The router object.
+     * @return void
+     */
     LeaderboardController.create = function (router) {
         router.get("/user/:id/leaderboard", function (req, res, next) {
             new LeaderboardController().leaderboard(req, res, next);
@@ -78,6 +86,16 @@ var LeaderboardController = /** @class */ (function (_super) {
             new LeaderboardController().netLow(req, res, next);
         });
     };
+    /**
+     * Renders the leaderboard view when user navigates to /user/<user_id>/leaderboard.
+     *
+     * @class leaderboard extends BaseRoute
+     * @method leaderboard
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     LeaderboardController.prototype.leaderboard = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;
@@ -92,13 +110,27 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Renders the leaderboard view in sorted order when user navigates to /user/<user_id>/leaderboard/avgNetHigh.
+     *
+     * @class leaderboard extends BaseRoute
+     * @method avgNetHigh
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     LeaderboardController.prototype.avgNetHigh = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;
@@ -114,13 +146,27 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Renders the leaderboard view in sorted order when user navigates to /user/<user_id>/leaderboard/avgNetLow.
+     *
+     * @class leaderboard extends BaseRoute
+     * @method avgNetLow
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     LeaderboardController.prototype.avgNetLow = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;
@@ -136,13 +182,27 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Renders the leaderboard view in sorted order when user navigates to /user/<user_id>/leaderboard/netLow.
+     *
+     * @class leaderboard extends BaseRoute
+     * @method netLow
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     LeaderboardController.prototype.netLow = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;
@@ -158,13 +218,27 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Renders the leaderboard view in sorted order when user navigates to /user/<user_id>/leaderboard/netHigh.
+     *
+     * @class leaderboard extends BaseRoute
+     * @method netHigh
+     * @param req {Request} The request object.
+     * @param res {Response} The response object.
+     * @param next {NextFunction} The NextFunction.
+     * @return void
+     */
     LeaderboardController.prototype.netHigh = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var idString, userId;
@@ -180,13 +254,25 @@ var LeaderboardController = /** @class */ (function (_super) {
                             this.render(req, res, "leaderboard", { id: userId, title: "Leaderboard", leaderboard: leaderboard });
                         }
                         else {
-                            Helpers.ID404(res);
+                            res.status(404)
+                                .send({
+                                message: "No user with associated ID. Check the entered number.",
+                                status: res.status,
+                            });
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Checks if the leaderboard array has already been set otherwise it will call createBoard to query the db
+     * @class LeaderboardController extends BaseRoute
+     * @method check_local
+     * @param userID The ID number of the user currently viewing the leaderboard.
+
+     * @return void
+     */
     LeaderboardController.prototype.check_local = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -204,6 +290,13 @@ var LeaderboardController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     *  query the db to get the ranking data
+     * @class LeaderboardController extends BaseRoute
+     * @method createBoard
+     * @param userID The ID number of the user currently viewing the leaderboard.
+     * @return void
+     */
     LeaderboardController.prototype.createBoard = function (userID) {
         return __awaiter(this, void 0, void 0, function () {
             var item, ranking, userShoes;
@@ -232,6 +325,15 @@ var LeaderboardController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     *  sets the data for a users ranking (net, sunk,revenue,avg_net,num) for leaderboard
+     * @class LeaderboardController extends BaseRoute
+     * @method buildRanking
+     * @param userShoes an array of the users shoe objects.
+     * @param An object that holds the properties important for ranking (net, sunk,revenue,avg_net,num) .
+
+     * @return void
+     */
     LeaderboardController.prototype.buildRanking = function (userShoes, ranking) {
         var _a;
         var net;
@@ -252,6 +354,12 @@ var LeaderboardController = /** @class */ (function (_super) {
         ranking["num"] = userShoes.length;
         leaderboard.push(ranking);
     };
+    /**
+     *  sets the data for users,shoes and allUserShoes variables by querying helpers class
+     * @class LeaderboardController extends BaseRoute
+     * @method setLocals
+     * @return void
+     */
     LeaderboardController.prototype.setLocals = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -270,6 +378,11 @@ var LeaderboardController = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * @class LeaderboardController extends BaseRoute
+     * @method getShoe
+     * @return shoe object
+     */
     LeaderboardController.prototype.getShoe = function (shoeID) {
         for (var item in Shoes) {
             if (Shoes.hasOwnProperty(item)) {
@@ -280,6 +393,13 @@ var LeaderboardController = /** @class */ (function (_super) {
             }
         }
     };
+    /**
+     * gets all the shoes for a user
+
+     * @class LeaderboardController extends BaseRoute
+     * @method getUserShoes
+     * @return array of shoe objects
+     */
     LeaderboardController.prototype.getUserShoes = function (userID) {
         var userShoes = [];
         for (var item in allUserShoes) {
