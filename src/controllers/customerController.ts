@@ -239,12 +239,7 @@ export class CustomerController extends BaseRoute {
             await uif.add_shoe(userId, shoeId, price);
             res.redirect("/user/" + userId + "/shoes/");
         } else {
-            res.status(404)
-            .send({
-                message: "No user with associated ID. Check the entered number.",
-                status: res.status,
-            });
-
+            Helpers.ID404(res);
         }
     }
 
@@ -285,11 +280,7 @@ export class CustomerController extends BaseRoute {
         const userIdString = "id";
         const userId = parseInt(req.params[userIdString], 10);
         if (!(await this.check_local(userId))) {
-            res.status(404)
-                .send({
-                    message: "No user with associated ID. Check the entered number.",
-                    status: res.status,
-                });
+            Helpers.ID404(res);
         }
         const idString = "id2";
         const docID = req.params[idString];
@@ -320,11 +311,7 @@ export class CustomerController extends BaseRoute {
                 {data: userShoes, id: queryint, net: netGain, num: numShoes, sunk: sunkCost,
                     title: "Shoes", total: totalRevenue, username: userJson.username});
         } else {
-            res.status(404)
-                .send({
-                    message: "No user found with the given id.",
-                    status: res.status,
-                });
+            Helpers.ID404(res);
         }
     }
 
@@ -349,19 +336,10 @@ export class CustomerController extends BaseRoute {
                 const diff = shoe.current_price - shoe.purchase_price;
                 this.render(req, res, "oneShoe", {id: userId, diff, purchase: shoe.purchase_price, shoe});
             } else {
-                console.log("shoe wasn't found");
-                res.status(404)
-                    .send({
-                        message: "No shoe found with the given id.",
-                        status: res.status,
-                    });
+                Helpers.shoe404(res);
             }
         } else {
-            res.status(404)
-                .send({
-                    message: "No user found with the given id.",
-                    status: res.status,
-                });
+            Helpers.ID404(res);
         }
 
     }

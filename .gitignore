@@ -2,3 +2,5 @@
 .idea
 .nyc_output
 /coverage
+/logs
+/dist

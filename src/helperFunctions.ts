@@ -3,6 +3,22 @@ import { ProductModel } from "./models/productModel";
 
 class Helpers {
 
+    public ID404(res: any) {
+        res.status(404)
+            .send({
+                message: "No user with associated ID. Check the entered number.",
+                status: res.status,
+            });
+    }
+
+    public shoe404(res: any) {
+        res.status(404)
+            .send({
+                message: "No shoe found with the given id.",
+                status: res.status,
+            });
+    }
+
     public async getMaxUser() {
         const c = new CustomerModel();
         const users: any = await c.get_users();

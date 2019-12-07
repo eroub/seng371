@@ -11,7 +11,7 @@ describe('Testing notificationController Functionality:', () => {
 
     it('notifications: return code 200 from correct user_id', async () => {
 
-        const response = await request(serve.getExpressInstance()).get('/user/2/notifications');
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/notifications');
 
         chai.expect(response.statusCode).to.equal(200);
 
