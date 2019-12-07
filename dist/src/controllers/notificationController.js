@@ -217,7 +217,8 @@ var NotificationController = /** @class */ (function (_super) {
         });
     };
     /**
-     * redirects to allShoes view when the user navigates to /user/<user_id>/notifications/add_notification/<notification_id>.
+     * redirects to allShoes view when the user navigates to
+     * /user/<user_id>/notifications/add_notification/<notification_id>.
      *
      * @class NotificationController extends BaseRoute
      * @method addNotification
@@ -348,7 +349,7 @@ var NotificationController = /** @class */ (function (_super) {
                             this.render(req, res, "addNotification", { id: userId, shoe: shoe });
                             res.status(200)
                                 .send({
-                                message: 'Success',
+                                message: "Success",
                                 status: res.status,
                             });
                         }

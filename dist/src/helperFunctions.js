@@ -67,7 +67,6 @@ var Helpers = /** @class */ (function () {
                         max = 0;
                         for (item in users) {
                             if (users.hasOwnProperty(item)) {
-                                console.log(users[item].user_id, max);
                                 if (users[item].user_id > max) {
                                     max = users[item].user_id;
                                 }
@@ -244,7 +243,6 @@ var Helpers = /** @class */ (function () {
         for (var item in userShoes) {
             if (userShoes.hasOwnProperty(item)) {
                 var shoe = userShoes[item];
-                console.log(shoe._id, shoeID);
                 if (shoe._id.toString() === shoeID.toString()) {
                     return shoe;
                 }

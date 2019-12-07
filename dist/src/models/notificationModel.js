@@ -12,7 +12,8 @@ var NotificationModel = /** @class */ (function () {
      * @class NotificationModel
      * @method getUserNotifications
      * @param userId {Any} the user_id of the user to get notifications for.
-     * @return An array of notification JSON objects ({fulfilled, shoe_id, threshold, type, user_id} if the user has notifications.
+     * @return An array of notification JSON objects
+     * ({fulfilled, shoe_id, threshold, type, user_id} if the user has notifications.
      */
     NotificationModel.prototype.getUserNotifications = function (userId) {
         var notifications = DbClient.connect()

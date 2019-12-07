@@ -188,7 +188,8 @@ var ProductController = /** @class */ (function (_super) {
         });
     };
     /**
-     * queries the db to get allShoes array,called in allShoes when a user navigates to /user/<user_id>/allShoes/<shoe_id>
+     * queries the db to get allShoes array,called in allShoes
+     * when a user navigates to /user/<user_id>/allShoes/<shoe_id>
      *
      * @class ProductController extends BaseRoute
      * @method allShoes
