@@ -13,7 +13,7 @@ describe('Testing customerController Functionality:', () => {
     pre condition there must be no user with the id 999 and there must be a user with id 99
     and  there must be a shoe with id =1.
      */
-    let xid =999, id=99, shoe_id='1', xshoe_id='x';
+    let xid =999, id=1, shoe_id='1', xshoe_id='x';
 
     it('/user/999/shoes (Should have status 404)', async () => {
 
@@ -45,7 +45,7 @@ describe('Testing customerController Functionality:', () => {
         const SM = new ProductModel();
         const shoe:any = await SM.getOneShoe(99);
         let shoe_obj_id = shoe._id;
-        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/'+shoe_obj_id);
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/'+'5deb45edd7a0fd260fc3b8e4');
 
         chai.expect(response.statusCode).to.equal(200);
 
