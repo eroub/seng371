@@ -39,13 +39,14 @@ describe('Testing customerController Functionality:', () => {
 
     }).timeout(5000);
 
-    it('Gets a shoe from user 99 (should return 200)', async () => {
+    it('Gets a shoe from user 1 (should return 200)', async () => {
 
         const serve = new Server();
         const SM = new ProductModel();
-        const shoe:any = await SM.getOneShoe(99);
-        let shoe_obj_id = shoe._id;
-        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/'+'5deb45edd7a0fd260fc3b8e4');
+        const cm: any = new CustomerModel();
+        const userShoes: any = await cm.getKeys(1);
+        const objectID: any = userShoes[userShoes.length-1]._id;
+        const response = await request(serve.getExpressInstance()).get('/user/'+id+'/shoes/'+objectID);
 
         chai.expect(response.statusCode).to.equal(200);
 
