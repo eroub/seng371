@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.com/seng350/seng350f19-project-2-3.svg?token=pqsMuNR5Bvw3zLAy57V9&branch=master)](https://travis-ci.com/seng350/seng350f19-project-2-3)  
 
 ### This repo is being repurposed for SENG371 where the majority of work is being done to re-engineer the CI/CD process.
-### Go-to the original forked repo to see the unchanged project
+### Go-to the original forked repo to see the [unchanged project](https://github.com/seng350/seng350f19-project-2-3)
 
 ### The live app can be accessed [here](https://seng371.roubekas.com)
 Note: The app may not be available 100% of the time
