@@ -1,5 +1,5 @@
 FROM node:lts-alpine
-MAINTAINER Evan Roubekas, evan@roubekas.com
+LABEL author=EvanRoubekas email=evan@roubekas.com
 
 # Env
 ENV TIME_ZONE=Canada/Pacific
@@ -16,7 +16,8 @@ RUN apk add --no-cache bash
 WORKDIR /usr/src/app
 
 # Only copy the package.json file to work directory
-COPY package.json package-lock.json ./
+# COPY package-lock.json ./
+COPY package.json ./
 
 # Install all Packages
 RUN npm install

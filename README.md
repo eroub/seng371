@@ -19,7 +19,7 @@ Note: The app may not be available 100% of the time
 #### 2. Docker
 *Prerequisites: Docker installed on your computer and basic knowledge of running docker containers*  
 [The Docker Image can be found here](https://hub.docker.com/r/eroubekas/seng350)  
-`docker pull eroubekas/seng350 # Pull the docker image to a local repository`  
-`docker ps -l # Verify that the image seng350 exists`  
-`docker run -p 7000:7000 seng350 # To start the node instance in the container`  
+`docker pull eroubekas/seng371 # Pull the docker image to a local repository`  
+`docker ps -l # Verify that the image seng370 exists`  
+`docker run -p 7000:7000 eroubekas/seng371 # To start the node instance in the container`  
 You should now be able to access the app from your [localhost on port 7000](http://localhost:7000)  
