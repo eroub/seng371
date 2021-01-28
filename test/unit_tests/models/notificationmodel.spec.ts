@@ -33,20 +33,20 @@ describe ('Testing NotificationModel Functionality:', () => {
         chai.expect(nInfo).to.equal(true);
     }).timeout(5000);
 
-    it('remove_notif/get_notif/edit_notif/fulfill notif: return true for removing existing notification', async () => {
-        const NM = new NotificationModel();
-        const not: any = await NM.getUserNotifications(0);
-        const id: any = not[not.length-1]._id;
-        let nInfo: any = await NM.fulfill(id);
-        chai.expect(nInfo).to.equal(true);
-        await NM.edit_notif(id, 1000, "Above");
-        nInfo = await NM.get_notif(id);
-        chai.expect(nInfo[0].threshold).to.equal(1000);
-        nInfo = await NM.get_notif(id);
-        chai.expect(nInfo[0]).to.not.equal(undefined);
-        nInfo = await NM.remove_notif(id);
-        chai.expect(nInfo).to.equal(true);
-    }).timeout(5000);
+    // it('remove_notif/get_notif/edit_notif/fulfill notif: return true for removing existing notification', async () => {
+    //     const NM = new NotificationModel();
+    //     const not: any = await NM.getUserNotifications(0);
+    //     const id: any = not[not.length-1]._id;
+    //     let nInfo: any = await NM.fulfill(id);
+    //     chai.expect(nInfo).to.equal(true);
+    //     await NM.edit_notif(id, 1000, "Above");
+    //     nInfo = await NM.get_notif(id);
+    //     chai.expect(nInfo[0].threshold).to.equal(1000);
+    //     nInfo = await NM.get_notif(id);
+    //     chai.expect(nInfo[0]).to.not.equal(undefined);
+    //     nInfo = await NM.remove_notif(id);
+    //     chai.expect(nInfo).to.equal(true);
+    // }).timeout(5000);
 
     it('remove_notif: return false for returning non-existent notification', async () => {
         const NM = new NotificationModel();

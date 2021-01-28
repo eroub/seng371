@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProductModel = void 0;
 var DbClient = require("../DbClient");
 var datab = DbClient.connect();
 var ProductModel = /** @class */ (function () {
@@ -146,8 +147,7 @@ var ProductModel = /** @class */ (function () {
     ProductModel.prototype.add_shoe = function (model, shoeId, size, cp, rp, brand, colorway) {
         var addShoes = DbClient.connect()
             .then(function (db) {
-            db.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp,
-                model: model, retail_price: rp, shoe_id: shoeId, size: size });
+            db.collection("shoes").insertOne({ brand: brand, colorway: colorway, current_price: cp, model: model, retail_price: rp, shoe_id: shoeId, size: size });
             return true;
         })
             .catch(function (err) {

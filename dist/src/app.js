@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Server = void 0;
 var body_parser_1 = __importDefault(require("body-parser"));
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var errorhandler_1 = __importDefault(require("errorhandler"));

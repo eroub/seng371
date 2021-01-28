@@ -49,6 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminController = void 0;
 var Helpers = require("../helperFunctions");
 var customerModel_1 = require("../models/customerModel");
 var productModel_1 = require("../models/productModel");

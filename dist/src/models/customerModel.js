@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CustomerModel = void 0;
 var mongodb = require("mongodb");
 var DbClient = require("../DbClient");
 var datab = DbClient.connect();

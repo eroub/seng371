@@ -292,7 +292,7 @@ export class NotificationController extends BaseRoute {
                 }
             }
             userNotifications.sort((a: any, b: any) => {
-                console.log("false!!!",userID)
+                console.log("false!!!", userID);
 
                 return a.shoename.toLowerCase().localeCompare(b.shoename.toLowerCase());
 
